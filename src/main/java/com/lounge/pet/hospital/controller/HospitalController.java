@@ -7,14 +7,13 @@ import javax.servlet.http.HttpSession;
 import org.locationtech.proj4j.BasicCoordinateTransform;
 import org.locationtech.proj4j.CRSFactory;
 import org.locationtech.proj4j.CoordinateReferenceSystem;
-import org.locationtech.proj4j.CoordinateTransform;
-import org.locationtech.proj4j.CoordinateTransformFactory;
 import org.locationtech.proj4j.ProjCoordinate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,7 +28,7 @@ public class HospitalController {
 	private HospitalService hService;
 	
 	// 동물병원 안내 페이지
-	@RequestMapping(value="/page.do", method = RequestMethod.GET)
+	@GetMapping("/page.do")
 	public ModelAndView hospitalPage(HttpSession session
 									, ModelAndView mv) {
 		try {
@@ -72,7 +71,7 @@ public class HospitalController {
 	}
 	
 	// 동물병원 안내 세부 페이지
-	@RequestMapping(value="/detail.do", method = RequestMethod.GET)
+	@GetMapping("/detail.do")
 	public ModelAndView hospitalDetailPage(int hNo, ModelAndView mv) {
 		Hospital hOne = hService.selectOneByhNo(hNo);
 		mv.addObject("hOne", hOne)
@@ -81,7 +80,7 @@ public class HospitalController {
 	}
 		
 	// 동물병원 검색 기능
-	@RequestMapping(value="/search.do", method = RequestMethod.POST)
+	@PostMapping("/search.do")
 	public ModelAndView hospitalSearch(@ModelAttribute Hospital hospital
 									, @RequestParam("hSearchKeyword") String hSearchKeyword
 									, HttpSession session

@@ -1,7 +1,3 @@
-body {
-    background-color: #fafafa;
-}
-
 main {
     width: 90%;
     height: auto;
@@ -96,12 +92,13 @@ main {
                 }
 
 
-            #map-div > div:nth-child(2) {
+            #map {
                 width: 65%; 
                 height: 380px; 
                 background-color: lightgray;
                 margin: 10px;
             } 
+            
 
     #hospital-list-section {
         display: flex;
@@ -142,7 +139,8 @@ main {
 
             td > div {
                 display: flex;
-                align-items: flex-end;
+                --align-items: flex-end;
+                align-items: center;
             }
 
                 .arrow-icon {

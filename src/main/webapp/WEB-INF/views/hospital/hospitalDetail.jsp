@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <jsp:include page="../include/importSource.jsp"></jsp:include>
         <link rel="stylesheet" href="/resources/css/hospital/hospitalDetail.css">
-                <link rel="stylesheet" href="/resources/css/hospital/hosMap.css">        
+        <link rel="stylesheet" href="/resources/css/hospital/hosMap.css">        
         <!-- 카카오맵 API services와 clusterer 라이브러리 불러오기 -->
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9674da3ceea3cb3a1acdb7044a416e8&libraries=services,clusterer"></script>
         <title>${ hOne.hName } 상세 안내</title>
