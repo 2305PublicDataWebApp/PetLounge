@@ -1,5 +1,6 @@
 package com.lounge.pet.hospital.controller;
 
+import java.io.Console;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lounge.pet.hospital.domain.Hospital;
@@ -28,39 +30,33 @@ public class HospitalController {
 	private HospitalService hService;
 	
 	// 동물병원 안내 페이지
+	@ResponseBody
 	@GetMapping("/page.do")
-	public ModelAndView hospitalPage(HttpSession session
+	public ModelAndView hospitalPage(@RequestParam(value="latitude", required = false) Double latitude
+									, @RequestParam(value="longitude", required = false) Double longitude
+									, HttpSession session
 									, ModelAndView mv) {
 		try {
 			String sessionId = (String) session.getAttribute("userId");
 			Hospital userLocation = null;
 			
-			if(sessionId == null) {
-				userLocation = new Hospital(37.5679212, 126.9830358); // 기본 주소 (종로)
-			} else {
-				// ======== 여기에 sessionId로 user select하는 쿼리
-				// ======== 여기에 회원 주소 위도 경도로 변환하는 쿼리
-				userLocation = new Hospital(37.5555739, 126.953635); // 회원 기본 주소
+			if(latitude == null && longitude == null) { // 좌표이동을 하지 X
+				if(sessionId == null) {
+					userLocation = new Hospital(37.5679212, 126.9830358); // 기본 주소 (종로)
+				} else {
+					// ======== 여기에 sessionId로 user select하는 쿼리
+					// ======== 여기에 회원 주소 위도 경도로 변환하는 쿼리
+					userLocation = new Hospital(37.5555739, 126.953635); // 회원 기본 주소
+				}
+			} else { // 좌표이동을 함
+				userLocation = new Hospital(latitude, longitude);
 			}
 			
 			List<Hospital> hList = hService.selectFiveHos(userLocation);
 			
 			
 			//  EPSG:2097 좌표를 보정하여(EPSG:5174) 위경도 좌표로 변환 (1회 업데이트 완료 후 주석처리)
-//			List<Hospital> transList = hService.selectAllList();
-//			for (Hospital items : transList) {
-//				double latitude = items.gethY(); // 병원 항목의 위도 (EPSG:2097 좌표)
-//			    double longitude = items.gethX(); // 병원 항목의 경도 (EPSG:2097 좌표)
-//
-//			    // 좌표 변환을 수행하여 위경도 좌표로 변환
-//			    ProjCoordinate targetCoord = transform(longitude, latitude);
-//
-//			    // 변환된 좌표를 사용하여 Hospital 객체 업데이트
-//			    Hospital hosLocation = new Hospital(items.gethNo(), targetCoord.y, targetCoord.x);
-//
-//			    // 각 병원 항목에 대해 업데이트 수행
-//			    int result = hService.updateXYtoLatLng(hosLocation);
-//			}			
+			// updateTransform();
 			
 			mv.addObject("hList", hList)
 			.setViewName("/hospital/hospitalPage");
@@ -130,6 +126,23 @@ public class HospitalController {
 
         // targetCoord.y : 위도 / targetCoord.x : 경도;
         return targetCoord;
+    }
+    
+    public void updateTransform() {
+		List<Hospital> transList = hService.selectAllList();
+		for (Hospital items : transList) {
+			double latitude = items.gethY(); // 병원 항목의 위도 (EPSG:2097 좌표)
+		    double longitude = items.gethX(); // 병원 항목의 경도 (EPSG:2097 좌표)
+
+		    // 좌표 변환을 수행하여 위경도 좌표로 변환
+		    ProjCoordinate targetCoord = transform(longitude, latitude);
+
+		    // 변환된 좌표를 사용하여 Hospital 객체 업데이트
+		    Hospital hosLocation = new Hospital(items.gethNo(), targetCoord.y, targetCoord.x);
+
+		    // 각 병원 항목에 대해 업데이트 수행
+		    int result = hService.updateXYtoLatLng(hosLocation);
+		}		
     }
 
 }

@@ -13,7 +13,7 @@
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9674da3ceea3cb3a1acdb7044a416e8&libraries=services,clusterer"></script>
         <title>동물병원 안내</title>
         <style>
-            .star-icon-fill, .call-icon, .location-icon, .home-icon, .search-icon {
+            .bookmark-icon-fill, .call-icon, .location-icon, .home-icon, .search-icon {
                 margin-right: 10px;
                 font-size: 20px;
                 font-variation-settings:
@@ -23,7 +23,7 @@
                 'opsz' 24
             }
 
-            .star-icon-none {
+            .bookmark-icon-none {
                 margin-right: 10px;
                 font-size: 20px;
                 font-variation-settings:
@@ -68,6 +68,10 @@
                             home_pin
                         </span>
                         <p class="home-info-box">기본 주소로 이동</p>
+                        <span class="material-symbols-outlined gps-icon" style="font-size: 2.5em; cursor: pointer;" onclick="myGps();">
+							my_location
+						</span>
+<!-- 						<p class="home-info-box">현위치</p> -->
                     </div>
                     <!-- 지도 -->
                     <div id="map" style="position:relative;overflow:hidden;">
@@ -117,11 +121,11 @@
 <!-- 								<tr onclick="location.href='/hospital/detail.do'"> -->
 								<tr onclick="changeCenter(${ hosList.hLat }, ${ hosList.hLng });">
 									<td class="">
-										<!-- <span class="material-symbols-outlined star-icon-fill" style="color: #FFD370;">
-			                                    star
-			                                </span> --> <span
-										class="material-symbols-outlined star-icon-none"
-										style="color: #FFD370;"> star </span>
+										<!-- <span class="material-symbols-outlined bookmark-icon-fill" style="color: #FFD370;">
+			                                    bookmark
+			                                </span> --> 
+		                                <span class="material-symbols-outlined bookmark-icon-none"
+										style="color: #FFD370;"> bookmark </span>
 									</td>
 									<td class="">
 										<!-- 동물병원 이름 --> 
@@ -313,8 +317,7 @@
 				        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 				    });
 				}
-			}
-			
+			}			
 			
 			// 지도가 이동, 확대, 축소로 인해 중심좌표가 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록
 			kakao.maps.event.addListener(map, 'center_changed', function() {
@@ -327,15 +330,14 @@
 			
 			    $.ajax({
 			        url: '/hospital/page.do', 
-			        type: 'POST',
+			        type: 'GET',
 			        data: {
-			        	level: level, // 업데이트된 레벨 값
+	//			        	level: level, // 업데이트된 레벨 값
 			            latitude: latlng.getLat(), // 업데이트된 위도 값
 			            longitude: latlng.getLng() // 업데이트된 경도 값
 			        },
-			        success: function(response) {
-			            // 성공적으로 응답을 받은 경우 처리할 내용을 추가
-			            console.log('Coordinates updated successfully.');
+			        success: function(hList) {
+			        	marker.setMap(null);
 			        },
 			        error: function(error) {
 			            // 오류가 발생한 경우 처리할 내용을 추가
@@ -380,6 +382,30 @@
 			function changeCenter(lat, lng) {
 			    var moveLatLon = new kakao.maps.LatLng(lat, lng);
 			    map.panTo(moveLatLon);
+			}
+		</script>
+		<!-- 현위치로 중심좌표 이동 -->
+		<script>
+			function myGps() {
+				// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+				if (navigator.geolocation) {
+				    
+				    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+				    navigator.geolocation.getCurrentPosition(function(position) {
+				        
+				        var lat = position.coords.latitude, // 위도
+				            lon = position.coords.longitude; // 경도
+						map.panTo(new kakao.maps.LatLng(lat, lon));
+				            
+				      });
+				    
+				} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+				    
+// 				    var locPosition = new kakao.maps.LatLng(37.5679212, 126.9830358),    // ============================ 로그인 시 기본 주소 설정 필요 ========================
+				    alert('현위치를 가져올 수 없습니다...');
+				    map.panTo(new kakao.maps.LatLng(37.5679212, 126.9830358)); // ============================ 로그인 시 기본 주소 설정 필요 ========================
+				}
+				        
 			}
 		</script>
 		<!-- 동물병원 검색 -->

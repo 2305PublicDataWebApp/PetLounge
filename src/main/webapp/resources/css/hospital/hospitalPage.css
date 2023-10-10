@@ -51,6 +51,8 @@ main {
             #map-div > div:first-child {
                 width: 65%; 
                 text-align: left;
+                display: flex;
+                align-items: center;
             } 
 
                 .home-icon {
@@ -123,14 +125,14 @@ main {
                 cursor: pointer;
             }
 
-                tr:not(thead > tr:first-child):hover td {
-                    font-size: 1.1em;
-                    transition: font-size 0.3s ease;
-                }
+/*                 tr:not(thead > tr:first-child):hover td { */
+/*                     font-size: 1.1em; */
+/*                     transition: font-size 0.3s ease; */
+/*                 } */
 
-                tr:not(thead > tr:first-child) td {
-                    transition: font-size 0.3s ease;
-                }
+/*                 tr:not(thead > tr:first-child) td { */
+/*                     transition: font-size 0.3s ease; */
+/*                 } */
 
             th, td {
                 padding: 20px 10px;

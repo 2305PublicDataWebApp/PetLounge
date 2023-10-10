@@ -13,7 +13,7 @@
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9674da3ceea3cb3a1acdb7044a416e8&libraries=services,clusterer"></script>
         <title>${ hOne.hName } 상세 안내</title>
         <style>
-            .star-icon-fill, .call-icon, .location-icon, .home-icon, .search-icon {
+            .bookmark-icon-fill, .call-icon, .location-icon, .home-icon, .search-icon {
                 margin-right: 10px;
                 font-size: 20px;
                 font-variation-settings:
@@ -23,7 +23,7 @@
                 'opsz' 24
             }
 
-            .star-icon-none {
+            .bookmark-icon-none {
                 font-variation-settings:
                 'FILL' 0,
                 'wght' 400,
@@ -31,7 +31,7 @@
                 'opsz' 24
             }
 
-            .star-icon-fill, .star-icon-none {
+            .bookmark-icon-fill, .star-icon-none {
                 font-size: 3em;
                 cursor: pointer;
             }
@@ -71,11 +71,11 @@
                 <div id="map-div">
                     <!-- 지도 -->
                     <div>
-                        <!-- <span class="material-symbols-outlined star-icon-fill" style="color: #FFD370;">
-                                    star
+                        <!-- <span class="material-symbols-outlined bookmark-icon-fill" style="color: #FFD370;">
+                                    bookmark
                         </span> -->
-                        <span class="material-symbols-outlined star-icon-none" style="color: #FFD370;">
-                            star
+                        <span class="material-symbols-outlined bookmark-icon-none" style="color: #FFD370;">
+                            bookmark
                         </span>
                     </div>
                     <div id="map" style="position:relative;overflow:hidden;">
