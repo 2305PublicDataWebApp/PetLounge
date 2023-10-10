@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+table {
+    border-spacing: 0;
+}
+
+.clearfix::before,
+.clearfix::after {
+    display: block;
+    content: '';
+    clear: both;
+}
+
+
+
+#wrap {
+    border: 2px solid lightgray;
+    width: 960px;
+    height: 1050px;
+    margin: 0 auto;
+    padding: 5px;
+    margin-bottom: 120px;
+    box-sizing: content-box !important;
+}
+
+.aside {
+    --border: 1px solid #000;
+    float: left;
+    width: 200px;
+    height: 1000px;
+    margin-right: 5px;
+}
+
+.aside .logo {
+    border: 1px solid #ffd370;
+    margin: 5px;
+    text-align: center;
+    height: 150px;
+    line-height: 150px;
+    border-radius: 20px;
+    font-size: 1em;
+}
+
+.aside .nav {
+    border: 1px solid #ffd370;
+    margin: 5px;
+    border-radius: 20px;
+    margin-top: 20px;
+    box-sizing: content-box !important;
+}
+
+.aside .nav li {
+    text-align: center;
+    border-bottom: 1px solid #ffd370;
+}
+
+.aside .nav li:last-child {
+    border-bottom: 0;
+}
+
+.aside .nav li a {
+    padding: 10px;
+    display: block;
+    height: 18px;
+    /* text-align: center; */
+    margin: 0 auto;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    padding-top: 18px;
+    box-sizing: content-box !important;
+    text-decoration: none;
+}
+
+.aside .nav li a:hover {
+    color: #ffd370;
+}
+
+.aside .nav .subMenu {
+    display: none;
+}
+
+.aside .nav .subMenu li {
+    border-bottom: 0;
+}
+
+.aside .nav .subMenu li:first-child {
+    border-top: 1px solid #ffd370;
+}
+
+.aside .nav .subMenu li a {}
+
+.aside .nav li.active .subMenu {
+    display: block;
+}
+
+.contents {
+    border-radius: 20px;
+    border: 1px solid #ffd370;
+    float: left;
+    width: 751px;
+    height: 1050px;
+}
+
+.title {
+    float: left;
+    margin-top: 140px;
+    width: 100%;
+    /* display: inline-block; */
+    display: flex;
+    margin-left: 35px;
+    justify-content: flex-start;
+}
+
+.info_img>img {
+    width: 35px;
+    height: 35px;
+}
+
+.info_h1 {
+    width: 200px;
+    font-size: 25px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.info_hr {
+    width: 700px;
+    color: black;
+    margin-left: 30px;
+}

@@ -1,0 +1,208 @@
+/* @import url(https://fonts.googleapis.com/css?family=Open+Sans); */
+.btn {
+	display: inline-block;
+	display: inline;
+	zoom: 1;
+	padding: 4px 10px 4px;
+	margin-bottom: 0;
+	font-size: 13px;
+	line-height: 18px;
+	color: #333333;
+	text-align: center;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+	vertical-align: middle;
+	background-color: #f5f5f5;
+	background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff),
+		to(#e6e6e6));
+	background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: linear-gradient(top, #ffffff, #e6e6e6);
+	background-repeat: repeat-x;
+	filter: progid:dximagetransform.microsoft.gradient(startColorstr=#ffffff,
+		endColorstr=#e6e6e6, GradientType=0);
+	border-color: #e6e6e6 #e6e6e6 #e6e6e6;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	border: 1px solid #e6e6e6;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px
+		rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px
+		rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px
+		rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+}
+
+.btn:hover, .btn:active, .btn.active, .btn.disabled, .btn[disabled] {
+	background-color: #e6e6e6;
+}
+
+.btn-large {
+	padding: 9px 14px;
+	font-size: 15px;
+	line-height: normal;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+}
+
+.btn:hover {
+	color: #FFD370;
+	text-decoration: none;
+	background-color: #e6e6e6;
+	background-position: 0 -15px;
+	-webkit-transition: background-position 0.1s linear;
+	-moz-transition: background-position 0.1s linear;
+	-ms-transition: background-position 0.1s linear;
+	-o-transition: background-position 0.1s linear;
+	transition: background-position 0.1s linear;
+}
+
+.btn-primary, .btn-primary:hover {
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	color: #ffffff;
+}
+
+.btn-primary.active {
+	color: rgba(255, 255, 255, 0.75);
+}
+
+.btn-primary {
+	background-color: #FFD370;
+	background-image: -moz-linear-gradient(top, #FFD370, #FFD370);
+	background-image: -ms-linear-gradient(top, #FFD370, #FFD370);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFD370),
+		to(#FFD370));
+	background-image: -webkit-linear-gradient(top, #FFD370, #FFD370);
+	background-image: -o-linear-gradient(top, #FFD370, #FFD370);
+	background-image: linear-gradient(top, #FFD370, #FFD370);
+	background-repeat: repeat-x;
+	filter: progid:dximagetransform.microsoft.gradient(startColorstr=#FFD370,
+		endColorstr=#FFD370, GradientType=0);
+	border: 1px solid #FFD370;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px
+		rgba(0, 0, 0, 0.5);
+}
+
+.btn-primary:hover, .btn-primary:active, .btn-primary.active,
+	.btn-primary.disabled, .btn-primary[disabled] {
+	filter: none;
+	background-color: #FFD370;
+}
+
+.btn-block {
+	width: 100%;
+	display: block;
+}
+
+.btn_2 {
+	background-color: white;
+	border: 1px solid #FFD370;
+	border-radius: 20px;
+	margin-top: 13px;
+	text-decoration-color: #FFD370;
+	font-size: 15px;
+	width: 190px;
+}
+
+.btn_3 {
+	background-color: white;
+	border: 1px solid #FFD370;
+	border-radius: 20px;
+	margin-top: 13px;
+	text-decoration-color: #FFD370;
+	font-size: 15px;
+	width: 100px;
+}
+
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	/* font-family: 'Open Sans', sans-serif; */
+	/* background: #FFD370; */
+	/* background: -moz-radial-gradient(0% 100%, ellipse cover, #FFD370 10%,#FFD370 40%),-moz-linear-gradient(top,  #FFD370 0%, #FFD370 100%), -moz-linear-gradient(-45deg,  #FFD370 0%, #FFD370 100%); */
+	/* background: -webkit-radial-gradient(0% 100%, ellipse cover, #FFD370 10%,#FFD370 40%), -webkit-linear-gradient(top,  #FFD370 0%,#FFD370 100%), -webkit-linear-gradient(-45deg,  #FFD370 0%,#FFD370 100%); */
+	/* background: -o-radial-gradient(0% 100%, ellipse cover, #FFD370 10%,#FFD370 40%), -o-linear-gradient(top,  #FFD370 0%,#FFD370 100%), -o-linear-gradient(-45deg,  #FFD370 0%,#FFD370 100%); */
+	/* background: -ms-radial-gradient(0% 100%, ellipse cover, #FFD370 10%,#FFD370 40%), -ms-linear-gradient(top,  #FFD370 0%,#FFD370 100%), -ms-linear-gradient(-45deg,  #FFD370 0%,#FFD370 100%); */
+	/* background: -webkit-radial-gradient(0% 100%, ellipse cover, #FFD370 10%,#FFD370 40%), linear-gradient(to bottom,  #FFD370 0%,#FFD370 100%), linear-gradient(135deg,  #FFD370 0%,#FFD370 100%); */
+	/* filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D', endColorstr='#092756',GradientType=1 ); */
+}
+
+.login {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -150px 0 0 -150px;
+	width: 300px;
+	height: 300px;
+}
+
+.introduce img {
+	display: block; /* 이미지를 블록 요소로 만들어 가로 중앙 정렬 가능하게 함 */
+	margin: 0 auto; /* 가로 중앙 정렬 */
+	width: 90px;
+}
+
+.introduce {
+	text-align: center;
+}
+
+.login h1 {
+	/* color: #fff;  */
+	/* text-shadow: 0 0 10px rgba(0,0,0,0.3);  */
+	padding-top: 20px;
+	font-size: 2.5em;
+	color: #FFD370;;
+	letter-spacing: 1px;
+	text-align: center;
+}
+
+input {
+	width: 100%;
+	margin-bottom: 10px;
+	background: rgb(246, 247, 231);
+	border: none;
+	outline: none;
+	padding: 10px;
+	font-size: 13px;
+	color: #fff;
+	/* text-shadow: 1px 1px 1px rgba(0,0,0,0.3); */
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	border-radius: 20px;
+	/* box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2); */
+	-webkit-transition: box-shadow .5s ease;
+	-moz-transition: box-shadow .5s ease;
+	-o-transition: box-shadow .5s ease;
+	-ms-transition: box-shadow .5s ease;
+	transition: box-shadow .5s ease;
+}
+
+input:focus {
+	box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.4), 0 1px 1px
+		rgba(255, 255, 255, 0.2);
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
