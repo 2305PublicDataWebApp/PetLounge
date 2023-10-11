@@ -62,10 +62,10 @@
 	                        <div class="input">
 	                            <select name="sCategory" id="s-category" class="no-border">
 	                                <option value="none" style="color:#ccc;" selected disabled>카테고리를 선택해주세요.</option>
-	                                <option value="residence" <c:if test="${support.sCategory == 'residence' }">selected</c:if>>주거</option>
-	                                <option value="living" <c:if test="${support.sCategory == 'living' }">selected</c:if>>생계</option>
-	                                <option value="health" <c:if test="${support.sCategory == 'health' }">selected</c:if>>건강</option>
-	                                <option value="improvement" <c:if test="${support.sCategory == 'improvement' }">selected</c:if>>개선</option>
+	                                <option value="주거" <c:if test="${support.sCategory == '주거' }">selected</c:if>>주거</option>
+	                                <option value="생계" <c:if test="${support.sCategory == '생계' }">selected</c:if>>생계</option>
+	                                <option value="건강" <c:if test="${support.sCategory == '건강' }">selected</c:if>>건강</option>
+	                                <option value="개선" <c:if test="${support.sCategory == '개선' }">selected</c:if>>개선</option>
 	                            </select> 
 	                        </div>
 	                        <div class="input">
@@ -78,7 +78,7 @@
 	                        <div class="input">
 	                            <input type="text" name="sTargetAmountInput" id="s-target-amount-input" class="no-border" 
 	                            onKeyup="this.value=this.value.replace(/[^-0-9]/g,'');" maxlength="15" value=""> 
-	                            <input type="hidden" name="sTargetAmount" id="s-target-amount" value="">
+	                            <input type="hidden" name="sTargetAmount" id="s-target-amount" value="${support.sTargetAmount }">
 	                            원
 	                        </div>
 	                        <div class="input">
@@ -194,7 +194,7 @@
                         ['table', ['table']],
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['height', ['height']],
-                        ['insert',['link']],
+                        ['insert',['picture', 'link']],
                         ['view', ['fullscreen', 'help']]
                     ],
                     fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],

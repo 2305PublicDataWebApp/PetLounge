@@ -23,8 +23,8 @@
                 <div id="line"></div>
 			</section>
             <section id="contents">
-                <h2 class="h-tag h2" id="s-title">나비야의 아이들이 건강한 모습으로 만날 수 있도록</h2>
-                <h4 class="h-tag h4" id="s-group">by 사단법인 나비야 사랑해</h4>
+                <h2 class="h-tag h2" id="s-title">${support.sTitle }</h2>
+                <h4 class="h-tag h4" id="s-group">${support.sGroup }</h4>
                 <div class="content-hr"></div>
                 <h2 class="h-tag h2">"기부자님의 소중한 마음으로 놀라운 변화가 일어납니다."</h2>
                 <h3 class="space h3">투명한 기부 후기로 그 변화를 소개하고 보답하겠습니다!</h3>
@@ -205,7 +205,7 @@
             </section> 
             <section id="button" style="margin-bottom: 100px;">
                 <button class="btn-payment" onclick="requestPay()">후원 결제</button>
-                <button class="btn-cancel">돌아가기</button>
+                <button class="btn-cancel" onClick="location.href='/support/detail.do?sNo='+${support.sNo }">돌아가기</button>
             </section>
         </main>
 		

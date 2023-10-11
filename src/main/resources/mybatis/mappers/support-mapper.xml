@@ -3,22 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="SupportMapper">
-	<resultMap type="Support" id="SupportResultMap">
-		<id 	property="sNo" 		  	 column="S_NO"/>
-		<result property="sCategory" 	 column="S_CATEGORY"/>
-		<result property="sTitle" 	  	 column="S_TITLE"/>
-		<result property="sContent" 	 column="S_CONTENT"/>
-		<result property="sGroup" 	  	 column="S_GROUP"/>
-		<result property="sCreate"   	 column="S_CREATE"/>
-		<result property="sUpdate" 		 column="S_UPDATE"/>
-		<result property="sStart"   	 column="S_START"/>
-		<result property="sEnd"   		 column="S_END"/>
-		<result property="sTargetAmount" column="S_TARGET_AMOUNT"/>
-		<result property="sFundAmount" 	 column="S_FUND_AMOUNT"/>
-		<result property="sCount" 	  	 column="S_COUNT"/>
-		<result property="sStatus" 	  	 column="S_STATUS"/>
-		<result property="sImageUrl" 	 column="S_IMAGE_URL"/>
-	</resultMap>
+
 	
 	<insert id="insertSupport">
 		INSERT INTO SUPPORT_TBL VALUES(S_SEQ_NO.NEXTVAL, #{sCategory}, #{sTitle}, #{sContent}, #{sGroup}, DEFAULT, DEFAULT, 
@@ -40,14 +25,14 @@
 	</update>
 	
 	
-	<select id="selectSupportByNo" resultMap="SupportResultMap">
+	<select id="selectSupportByNo" resultType="Support">
 		SELECT * FROM SUPPORT_TBL WHERE S_NO = #{sNo}
 	</select>
 	
 	<select id="getTotalCount" resultType="_int">
 		SELECT COUNT(*) FROM SUPPORT_TBL WHERE S_STATUS = 'Y'
 	</select>
-	<select id="selectSupportList" resultMap="SupportResultMap">
+	<select id="selectSupportList" resultType="Support">
 		SELECT * FROM SUPPORT_TBL WHERE S_STATUS = 'Y' ORDER BY S_NO DESC
 	</select>
 	

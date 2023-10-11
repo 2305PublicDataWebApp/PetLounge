@@ -1,6 +1,10 @@
 package com.lounge.pet.support.service;
 
+import java.util.List;
+
+import com.lounge.pet.support.domain.PageInfo;
 import com.lounge.pet.support.domain.Support;
+import com.lounge.pet.support.domain.SupportReply;
 
 public interface SupportService {
 
@@ -38,5 +42,38 @@ public interface SupportService {
 	 * @return int
 	 */
 	int deleteSupport(int sNo);
+
+	/**
+	 * 후원글 전체 갯수 조회 Service
+	 * @return int
+	 */
+	int getListCount();
+
+	/**
+	 * 후원글 전체 조회 Service
+	 * @param pInfo
+	 * @return List
+	 */
+	List<Support> selectSupportList(PageInfo pInfo);
+
+	/**
+	 * 후원댓글 등록 Service
+	 * @param sReply
+	 * @return int
+	 */
+	int insertReply(SupportReply sReply);
+
+	/**
+	 * 후원댓글 조회 Service
+	 * @param sNo
+	 * @return List
+	 */
+	List<SupportReply> selectSReplyList(int sNo);
+
+	/**
+	 * 후원댓글 갯수 조회 Service
+	 * @return int 
+	 */
+	int getReplyListCount(int sNo);
 
 }

@@ -1,10 +1,14 @@
 package com.lounge.pet.support.service.impl;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lounge.pet.support.domain.PageInfo;
 import com.lounge.pet.support.domain.Support;
+import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.support.service.SupportService;
 import com.lounge.pet.support.store.SupportStore;
 
@@ -44,6 +48,36 @@ public class SupportServiceImpl implements SupportService{
 	@Override
 	public int deleteSupport(int sNo) {
 		int result = sStore.deleteSupport(sqlSession, sNo);
+		return result;
+	}
+
+	@Override
+	public int getListCount() {
+		int result = sStore.getListCount(sqlSession);
+		return result;
+	}
+
+	@Override
+	public List<Support> selectSupportList(PageInfo pInfo) {
+		List<Support> sList = sStore.selectSupportList(sqlSession, pInfo);
+		return sList;
+	}
+
+	@Override
+	public int insertReply(SupportReply sReply) {
+		int result = sStore.insertReply(sqlSession, sReply);
+		return result;
+	}
+
+	@Override
+	public List<SupportReply> selectSReplyList(int sNo) {
+		List<SupportReply> sRList = sStore.selectSReplyList(sqlSession, sNo);
+		return sRList;
+	}
+
+	@Override
+	public int getReplyListCount(int sNo) {
+		int result = sStore.getListCount(sqlSession, sNo);
 		return result;
 	}
 

@@ -1,8 +1,12 @@
 package com.lounge.pet.support.store;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
+import com.lounge.pet.support.domain.PageInfo;
 import com.lounge.pet.support.domain.Support;
+import com.lounge.pet.support.domain.SupportReply;
 
 public interface SupportStore {
 
@@ -45,5 +49,43 @@ public interface SupportStore {
 	 * @return int
 	 */
 	int deleteSupport(SqlSession sqlSession, int sNo);
+
+	/**
+	 * 후원글 전체 갯수 조회 Store
+	 * @param sqlSession
+	 * @return int
+	 */
+	int getListCount(SqlSession sqlSession);
+
+	/**
+	 * 후원글 전체 조회 Store
+	 * @param sqlSession
+	 * @param pInfo
+	 * @return List
+	 */
+	List<Support> selectSupportList(SqlSession sqlSession, PageInfo pInfo);
+
+	/**
+	 * 후원댓글 등록 Store
+	 * @param sqlSession
+	 * @param sReply
+	 * @return int
+	 */
+	int insertReply(SqlSession sqlSession, SupportReply sReply);
+	
+	/**
+	 * 후원댓글 조회 Store
+	 * @param sqlSession
+	 * @param sNo
+	 * @return List
+	 */
+	List<SupportReply> selectSReplyList(SqlSession sqlSession, int sNo);
+
+	/**
+	 * 후원댓글 갯수 조회 Store
+	 * @return int 
+	 */
+	int getListCount(SqlSession sqlSession, int sNo);
+
 
 }

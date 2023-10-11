@@ -1,21 +1,33 @@
 package com.lounge.pet.support.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.lounge.pet.support.domain.PageInfo;
 import com.lounge.pet.support.domain.Support;
+import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.support.service.SupportService;
 
 
@@ -27,15 +39,47 @@ public class SupportController {
 
 	// 후원 목록 페이지
 	@RequestMapping(value="/support/list.do", method = RequestMethod.GET)
-	public ModelAndView supportListPage(ModelAndView mv) {
-		mv.setViewName("/support/supportList");
+	public ModelAndView supportListPage(ModelAndView mv
+			, @RequestParam(value = "page", required=false, defaultValue = "1") Integer currentPage) {
+		try {
+			Integer totalCount = sService.getListCount();
+			PageInfo pInfo = this.getPageInfo(currentPage, totalCount);
+			List<Support> sList = sService.selectSupportList(pInfo);
+			if(!sList.isEmpty()) {
+				mv.addObject("pInfo", pInfo).addObject("sList", sList).setViewName("/support/supportList");
+			} else {
+				mv.addObject("msg", "게시글 목록 조회가 완료되지 않았습니다.");
+				mv.addObject("url", "/index.jsp");
+				mv.setViewName("common/message");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의하세요.");
+			mv.addObject("url", "/index.jsp");
+			mv.setViewName("common/message");
+		}
 		return mv;
 	}
 	
-	// 후원 세부 페이지
+	// 후원 상세 페이지
 	@RequestMapping(value="/support/detail.do", method = RequestMethod.GET)
-	public ModelAndView supportDetailPage(ModelAndView mv) {
-		mv.setViewName("/support/supportDetail");
+	public ModelAndView supportDetailPage(ModelAndView mv
+			, @RequestParam("sNo") int sNo) {
+		try { 
+			Support support = sService.selectSupportByNo(sNo);
+			if(support != null) {
+				mv.addObject("support", support);
+				mv.setViewName("/support/supportDetail");
+			} else {
+				mv.addObject("msg", "데이터 조회가 완료되지 않았습니다.");
+				mv.addObject("url", "/support/list.do");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의하세요.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/support/list.do");
+			mv.setViewName("common/errorPage");
+		}
 		return mv;
 	}
 	
@@ -49,7 +93,7 @@ public class SupportController {
 	// 후원 수정 페이지
 	@RequestMapping(value="/support/update.do", method = RequestMethod.GET)
 	public ModelAndView supportUpdatePage(ModelAndView mv
-			,@RequestParam("sNo") int sNo) {
+			, @RequestParam("sNo") int sNo) {
 		try {
 			Support support = sService.selectSupportByNo(sNo);
 			if(support != null) {
@@ -71,9 +115,26 @@ public class SupportController {
 	
 	// 후원 결제 페이지
 	@RequestMapping(value="/support/payment.do", method = RequestMethod.GET)
-	public ModelAndView supportPaymentPage(ModelAndView mv) {
-		mv.setViewName("/support/supportPayment");
+	public ModelAndView supportPaymentPage(ModelAndView mv
+			, @RequestParam("sNo") int sNo) {
+		try {
+			Support support = sService.selectSupportByNo(sNo);
+			if(support != null) {
+				mv.addObject("support", support);
+				mv.setViewName("/support/supportPayment");
+			} else {
+				mv.addObject("msg", "데이터 조회가 완료되지 않았습니다.");
+				mv.addObject("url", "/support/detail.do?sNo="+sNo);
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의하세요.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/support/detail.do?sNo="+sNo);
+			mv.setViewName("common/errorPage");
+		}
 		return mv;
+		
 	}
 	
 	// 후원 결제완료 페이지
@@ -191,7 +252,90 @@ public class SupportController {
 		}
 		return mv;
 	}
+	
+	// 댓글 등록 
+	@ResponseBody
+	@RequestMapping(value="/sReply/insert.do", method=RequestMethod.POST)
+	public String insertReply(ModelAndView mv
+			, @ModelAttribute SupportReply sReply
+			, HttpSession session) {
+//		String uId = (String)session.getAttribute("uId");
+		String uId = "user01";
+		// session의 id로 유저 정보 접근해서 닉네임 불러와서 같이 넘겨줌
+		String uNickname = "동숲주민"; // 화면에만 보여주면 되니까 나중에 uId로 셀렉트해와서 넘겨주기 
+		int result = 0;
+		if(uNickname != null && !uNickname.equals("")) {
+			sReply.setuId(uId);
+			result = sService.insertReply(sReply);
+		}
+		if(result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	// 댓글 목록 조회 
+	@ResponseBody
+	@RequestMapping(value = "/sReply/list.do"
+					, produces = "application/json; charset=utf-8"
+					, method = RequestMethod.GET)
+	public String showReplyList(Integer sNo) {
+		List<SupportReply> sRList = sService.selectSReplyList(sNo);
+		// List 데이터를 JSON 형태로 만드는 방법 
+		// 1. JSONObject, JSONArray 
+		// 2. Gson
+		// 3. HashMap 
+		Gson gson = new Gson();
+		return gson.toJson(sRList);
+	}
+	
 		
+	// 썸머노트 이미지 업로드 구현 
+	@PostMapping(value="/uploadSummernoteImageFile", produces = "application/json")
+	@ResponseBody
+	public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
+		
+		JsonObject jsonObject = new JsonObject();
+		
+		String fileRoot = "C:\\summernote_image\\";	//저장될 외부 파일 경로
+		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+				
+		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+		
+		File targetFile = new File(fileRoot + savedFileName);	
+		
+		try {
+			InputStream fileStream = multipartFile.getInputStream();
+			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
+			jsonObject.addProperty("url", "/summernoteImage/"+savedFileName);
+			jsonObject.addProperty("responseCode", "success");
+				
+		} catch (IOException e) {
+			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
+			jsonObject.addProperty("responseCode", "error");
+			e.printStackTrace();
+		}
+		
+		return jsonObject;
+	}
+	
+	// 후원글 페이징 
+	private PageInfo getPageInfo(Integer currentPage, Integer totalCount) {
+		int recordCountPerPage = 11;
+		int naviCountPerPage = 5;
+		int naviTotalCount = (int)Math.ceil((double)totalCount / recordCountPerPage);
+		int startNavi = ((int)((double)currentPage/naviCountPerPage+0.9)-1)*naviCountPerPage+1;
+		int endNavi = startNavi + naviCountPerPage - 1;
+		if(endNavi > naviTotalCount) {
+			endNavi = naviTotalCount;
+		}
+		PageInfo pInfo = new PageInfo(currentPage, totalCount, naviTotalCount, recordCountPerPage, naviCountPerPage, startNavi, endNavi);
+		return pInfo;
+	}
+	
+	
 	
 	
 }
