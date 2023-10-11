@@ -31,7 +31,7 @@
                 'opsz' 24
             }
 
-            .bookmark-icon-fill, .star-icon-none {
+            .bookmark-icon-fill, .bookmark-icon-none {
                 font-size: 3em;
                 cursor: pointer;
             }

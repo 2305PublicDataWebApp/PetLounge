@@ -1,6 +1,5 @@
 package com.lounge.pet.hospital.controller;
 
-import java.io.Console;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.hospital.service.HospitalService;
 
@@ -32,24 +32,18 @@ public class HospitalController {
 	// 동물병원 안내 페이지
 	@ResponseBody
 	@GetMapping("/page.do")
-	public ModelAndView hospitalPage(@RequestParam(value="latitude", required = false) Double latitude
-									, @RequestParam(value="longitude", required = false) Double longitude
-									, HttpSession session
+	public ModelAndView hospitalPage(HttpSession session
 									, ModelAndView mv) {
 		try {
 			String sessionId = (String) session.getAttribute("userId");
 			Hospital userLocation = null;
 			
-			if(latitude == null && longitude == null) { // 좌표이동을 하지 X
-				if(sessionId == null) {
-					userLocation = new Hospital(37.5679212, 126.9830358); // 기본 주소 (종로)
-				} else {
-					// ======== 여기에 sessionId로 user select하는 쿼리
-					// ======== 여기에 회원 주소 위도 경도로 변환하는 쿼리
-					userLocation = new Hospital(37.5555739, 126.953635); // 회원 기본 주소
-				}
-			} else { // 좌표이동을 함
-				userLocation = new Hospital(latitude, longitude);
+			if(sessionId == null) {
+				userLocation = new Hospital(37.5679212, 126.9830358); // 기본 주소 (종로)
+			} else {
+				// ======== 여기에 sessionId로 user select하는 쿼리
+				// ======== 여기에 회원 주소 위도 경도로 변환하는 쿼리
+				userLocation = new Hospital(37.5555739, 126.953635); // 회원 기본 주소
 			}
 			
 			List<Hospital> hList = hService.selectFiveHos(userLocation);
@@ -103,6 +97,19 @@ public class HospitalController {
 		return mv;
 	}
 	
+	// 좌표 이동
+	@ResponseBody
+	@GetMapping("/moveLocation.do")
+	public String hospitalPage(@RequestParam(value="latitude", required = false) Double latitude
+							 , @RequestParam(value="longitude", required = false) Double longitude) {
+		Hospital userLocation = null;
+		userLocation = new Hospital(latitude, longitude);
+		
+		List<Hospital> hList = hService.selectFiveHos(userLocation);
+		Gson gson = new Gson();
+			System.out.println( gson.toJson(hList));
+		return gson.toJson(hList); 
+	}
 	
 	
 	
