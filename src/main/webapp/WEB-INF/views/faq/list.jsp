@@ -5,15 +5,14 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>FAQ</title>
-        <link rel="stylesheet" href="/resources/css/faq/faq.css">
+        <jsp:include page="../include/importSource.jsp"></jsp:include>
+        <link rel="stylesheet" href="/resources/css/faq/list.css">
         <link rel="stylesheet" href="/resources/css/reset.css">
         <link rel="stylesheet" href="/resources/css/font.css">
+        <title>FAQ</title>
     </head>
     <body>
-        <header>
-
-        </header>
+        <jsp:include page="../include/header.jsp"></jsp:include> <!-- header -->
 
         <main class="main">
             <div class="contanier">
@@ -38,9 +37,7 @@
             </div>
         </main>
 
-        <footer>
-
-        </footer>
+        <jsp:include page="../include/footer.jsp"></jsp:include>
 
         <!-- js -->
         <script>
