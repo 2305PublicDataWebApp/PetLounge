@@ -5,200 +5,18 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-        body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: row;
-        }
-
-        header {
-            width: 100%;
-            height: 60px;
-            background: #ffd370;
-            position: fixed;
-            z-index: 1000;
-        }
-        
-        a {
-            text-decoration: none;
-            color: #505D68;
-        }
-
-        li {
-            list-style: none;
-        }
-
-        ul {
-        padding-inline-start: 0px;
-        }
-
-
-        /* 왼쪽 메뉴 바 스타일 설정 */
-        .menu {
-            width: 250px;
-            height: 800px;
-            background-color: #fff;
-            color: #ffffff; /* 텍스트 색상 설정 */
-            padding: 20px; /* 여백 설정 */
-            margin-top: 60px;
-        }
-
-        .menu .sub-menu {
-            list-style: none;
-            padding: 0px;
-        }
-
-        .menu .sub-menu > li {
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 20px 0px;
-        }
-
-        .menu .sub-menu > li .m-name {
-            display: flex;
-            gap: 15px;
-            font-family: Pretendard;
-            font-style: normal;
-            letter-spacing: -0.02em;
-            text-align: center;
-        }
-
-        .m-container {
-            width: 140px;
-            border: 2px solid black;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .m-name {
-            justify-content: center;
-        }
-
-        .sub-title {
-            /* display: flex; */
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin-top: 10px;
-            min-height: 20px;
-        }
-        .sub-title-name {
-            color: black;
-            margin: 0;
-            font-family: Pretendard;
-            font-style: normal;
-            letter-spacing: -0.02em;
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .line4 {
-            border: none;
-            border-top: 3px solid black;
-            width: 70%;
-            margin: 10px auto;
-        }
-        /* 오른쪽 메인 화면 스타일 설정 */
-        .main {
-            flex: 1; /* 남은 공간을 차지하도록 설정 */
-            padding: 20px; /* 여백 설정 */
-            margin-top: 60px;
-        }
-
-        .square-container {
-            max-width: 800px;
-            border: none;
-            margin: 0;
-            padding: 50px 50px 70px 50px;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 30px;
-        }
-        th, td {
-            padding: 8px;
-            line-height: 0px; /* li 세로 간격 */
-            font-family: Pretendard;
-            font-style: normal;
-            letter-spacing: -0.02em;
-            text-align: center;
-        }
-        .right1 {
-            color: #505D68;            
-        }
-        .right2 {
-            font-family: Pretendard;
-            font-style: normal;
-            letter-spacing: -0.02em;
-            color: rgb(184, 186, 190);
-            font-size: 16px;            
-        }
-        .main-title-name {
-            color: black;
-            margin: 0;
-            font-family: Pretendard;
-            font-style: normal;
-            letter-spacing: -0.02em;
-            text-align: right;
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .line5 {
-            border: none;
-            border-top: 3px solid black;
-            width: 100%;
-            margin: 10px auto;
-        }
-
-        .line3 {
-            border-width: 0;
-            border-style: solid;
-            border-color: rgba(145, 158, 171, 0.24);
-            border-bottom-width: thin;
-                }
-
-        .line3-1 {
-            border-width: 0;
-            border-top: 2px solid;
-            border-color: rgba(145, 158, 171, 0.24);
-            border-bottom-width: thin;
-                }
-                
-        .sub-title2 {
-            border: 1px solid #ffd370;
-            width: 100%;
-            height: 30px;
-            margin-top: 30px;
-        }
-        .sub-title-name2 {
-            margin: 0;
-            font-family: Pretendard;
-            font-style: normal;
-            letter-spacing: -0.02em;
-            color: rgb(184, 186, 190);
-            font-size: 18px; 
-            margin-top: 5px;
-            margin-left: 10px;
-        }
-
-
-        </style>
+        <jsp:include page="../include/importSource.jsp"></jsp:include>
+        <link rel="stylesheet" href="/resources/css/admin/main_stats.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css" />
+        <title>관리자 페이지</title>
     </head>
     <body>
-        <header>
-        </header>
+        <jsp:include page="../include/header.jsp"></jsp:include>
+
+        <main>
 
     <!-- 왼쪽 메뉴 바 -->
+  <section class="left-section">
     <div class="menu">
         <div class="m-container">
             <div class="sub-title">
@@ -242,8 +60,10 @@
             </ul>
         </div>
     </div>
+  </section>
 
     <!-- 오른쪽 메인 화면 -->
+    <section class="right-section">    
     <div class="main">
         <div class="square-container">
             <div class="sub-title">
@@ -454,9 +274,13 @@
                     </table>
                 </ul>
             </div>
-    </div>
-
-
+    	</div>
+	</div>
+	</section>
+	</main>   
+  	<footer>
+	<jsp:include page="../include/footer.jsp"></jsp:include>
+	</footer>
 
     </body>
     </html>
