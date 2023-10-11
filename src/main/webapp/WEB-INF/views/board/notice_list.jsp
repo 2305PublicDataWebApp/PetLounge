@@ -62,7 +62,7 @@
             width: 100%;
         }
         #notice ul li {
-            line-height: 50px; /* li ì¸ë¡ ê°ê²© */
+            line-height: 50px; /* li 세로 간격 */
             font-family: Pretendard;
             font-style: normal;
             letter-spacing: -0.02em;
@@ -173,21 +173,21 @@
 
         <main class="custom-main">
         <br><br><br><br>
-        <h2>ê³µì§ì¬í­</h2>
+        <h2>공지사항</h2>
         <div id="line"></div>
 
         <div class="square-container">
             <div id="notice">
                 <ul>
-                    <li><a href="#">[ê³µì§ì¬í­] ê³µì§1</a><span>10</span></span><span>2023.10.03</span></li>
+                    <li><a href="#">[공지사항] 공지1</a><span>10</span></span><span>2023.10.03</span></li>
                     <hr class="line3">
-                    <li><a href="#">[ê³µì§ì¬í­] ê³µì§2</a><span>6</span><span>2023.10.02</span></li>
+                    <li><a href="#">[공지사항] 공지2</a><span>6</span><span>2023.10.02</span></li>
                     <hr class="line3">
-                    <li><a href="#">[ê³µì§ì¬í­] ê³µì§3</a><span>9</span><span>2023.10.01</span></li>
+                    <li><a href="#">[공지사항] 공지3</a><span>9</span><span>2023.10.01</span></li>
                     <hr class="line3">
-                    <li><a href="#">[ê³µì§ì¬í­] ê³µì§4</a><span>24</span><span>2023.09.30</span></li>
+                    <li><a href="#">[공지사항] 공지4</a><span>24</span><span>2023.09.30</span></li>
                     <hr class="line3">
-                    <li><a href="#">[ê³µì§ì¬í­] ê³µì§5</a><span>11</span><span>2023.09.28</span></li>
+                    <li><a href="#">[공지사항] 공지5</a><span>11</span><span>2023.09.28</span></li>
                     <hr class="line3">
                 </ul>
             </div>
@@ -197,17 +197,18 @@
                     <li><a href="#">3</a></li>
                     <li><a href="#">4</a></li>
                     <li><a href="#">5</a></li>
-                    <li><a href="#">ë¤ì</a></li>
+                    <li><a href="#">다음</a></li>
                 </ul>
         </div>
             <div class="search-container">
                 <input type="text" class="search-input">
-                <button class="search-button">ê²ì</button>
+                <button class="search-button">검색</button>
             </div>
 
         </main>
     </body>
     </html>
+    
     
     
     
