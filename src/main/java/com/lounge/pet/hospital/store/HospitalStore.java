@@ -4,9 +4,18 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import com.lounge.pet.hospital.domain.HReview;
 import com.lounge.pet.hospital.domain.Hospital;
 
 public interface HospitalStore {
+
+	/**
+	 * 동물병원 리뷰 등록 Store
+	 * @param session
+	 * @param hReview
+	 * @return
+	 */
+	int insertHosReview(SqlSession session, HReview hReview);
 
 	/**
 	 * EPSG:2097 좌표를 위경도 좌표로 변환 Store

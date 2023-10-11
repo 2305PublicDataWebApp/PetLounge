@@ -16,7 +16,7 @@
 	<body>
 		<jsp:include page="../include/header.jsp"></jsp:include>
 		<main>
-			<section>
+			<section id="login-section">
 				<div class="login">
 					<div class="introduce">
 						<img src="/resources/images/pet.png"><br> <br>
@@ -38,7 +38,7 @@
 				</div>
 			</section>
 		</main>
-	<%-- 	<jsp:include page="../include/footer.jsp"></jsp:include> --%>
+		<jsp:include page="../include/footer.jsp"></jsp:include>
 		<script>
 		function showIdPwFindPage() {
 			location.href="/user/idpwFind.do"

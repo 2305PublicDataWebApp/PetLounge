@@ -112,8 +112,8 @@
 						</c:if>
 						<c:if test="${ !empty hList }">
 							<!-- 기본 주소 리스트 -->
-							<c:forEach var="hosList" items="${ hList }" end="5">
-								<tr onclick="changeCenter(${ hosList.hLat }, ${ hosList.hLng });">
+							<c:forEach var="hosList" items="${ hList }" end="5" varStatus="status">
+								<tr onclick="changeCenter(${ hosList.hLat }, ${ hosList.hLng }, ${ status.index });">
 									<td class="">
 										<!-- <span class="material-symbols-outlined bookmark-icon-fill" style="color: #FFD370;">
 			                                    bookmark
@@ -249,9 +249,9 @@
 					closeBtn.title = '닫기';
 					
 					// 닫기 버튼 클릭 이벤트 핸들러
-					closeBtn.addEventListener('click', function () {
-					    overlay.setMap(null);
-					});
+// 					closeBtn.addEventListener('click', function () {
+// 					    overlay.setMap(null);
+// 					});
 					
 					titleDiv.appendChild(closeBtn);
 					infoDiv.appendChild(titleDiv);
@@ -295,6 +295,7 @@
 					// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
 					var overlay = new kakao.maps.CustomOverlay({
 					    content: content,
+					    //map: null,      
 					    map: map,      
 					    position: positions[i].latlng     
 					});
@@ -307,6 +308,7 @@
 				    }
 				    					
 					markers[i].setMap(map); // 지도 위에 마커 표시
+// 					overlays[0].setMap(map); // 첫번째 결과만 우선 표시
 					
 			 		// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
 					(function (marker, overlay) {
@@ -382,7 +384,7 @@
 			}        
 			
 			// 리스트 클릭 시 중심좌표 부드럽게 이동
-			function changeCenter(lat, lng) {
+			function changeCenter(lat, lng, count) {
 			    var moveLatLon = new kakao.maps.LatLng(lat, lng);
 			    map.panTo(moveLatLon);
 			}

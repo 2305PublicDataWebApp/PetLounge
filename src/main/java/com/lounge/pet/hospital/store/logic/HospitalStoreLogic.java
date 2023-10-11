@@ -5,11 +5,18 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.lounge.pet.hospital.domain.HReview;
 import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.hospital.store.HospitalStore;
 
 @Repository
 public class HospitalStoreLogic implements HospitalStore {
+
+	@Override
+	public int insertHosReview(SqlSession session, HReview hReview) {
+		int result = session.insert("HosMapper.insertHosReview", hReview);
+		return result;
+	}
 
 	@Override
 	public int updateXYtoLatLng(SqlSession session, Hospital hosLocation) {

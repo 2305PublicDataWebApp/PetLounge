@@ -2,9 +2,17 @@ package com.lounge.pet.hospital.service;
 
 import java.util.List;
 
+import com.lounge.pet.hospital.domain.HReview;
 import com.lounge.pet.hospital.domain.Hospital;
 
 public interface HospitalService {
+
+	/**
+	 * 동물병원 리뷰 등록 Service
+	 * @param hReview
+	 * @return
+	 */
+	int insertHosReview(HReview hReview);
 
 	/**
 	 * EPSG:2097 좌표를 위경도 좌표로 변환 Service

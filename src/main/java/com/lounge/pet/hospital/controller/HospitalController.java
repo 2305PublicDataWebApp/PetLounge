@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.lounge.pet.hospital.domain.HReview;
 import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.hospital.service.HospitalService;
 
 @Controller
-@RequestMapping("/hospital")
 public class HospitalController {
 	
 	@Autowired
@@ -31,14 +31,15 @@ public class HospitalController {
 	
 	// 동물병원 안내 페이지
 	@ResponseBody
-	@GetMapping("/page.do")
+	@GetMapping("/hospital/page.do")
 	public ModelAndView hospitalPage(HttpSession session
 									, ModelAndView mv) {
 		try {
-			String sessionId = (String) session.getAttribute("userId");
+//			String sessionId = (String) session.getAttribute("userId");
+			String sessionId = "user01";
 			Hospital userLocation = null;
 			
-			if(sessionId == null) {
+			if(sessionId.equals("")) {
 				userLocation = new Hospital(37.5679212, 126.9830358); // 기본 주소 (종로)
 			} else {
 				// ======== 여기에 sessionId로 user select하는 쿼리
@@ -60,27 +61,29 @@ public class HospitalController {
 		return mv;
 	}
 	
-	// 동물병원 안내 세부 페이지
-	@GetMapping("/detail.do")
+	// 동물병원 안내 상세 페이지
+	@GetMapping("/hospital/detail.do")
 	public ModelAndView hospitalDetailPage(int hNo, ModelAndView mv) {
 		Hospital hOne = hService.selectOneByhNo(hNo);
+		
 		mv.addObject("hOne", hOne)
 		.setViewName("/hospital/hospitalDetail");
 		return mv;
 	}
 		
 	// 동물병원 검색 기능
-	@PostMapping("/search.do")
+	@PostMapping("/hospital/search.do")
 	public ModelAndView hospitalSearch(@ModelAttribute Hospital hospital
 									, @RequestParam("hSearchKeyword") String hSearchKeyword
 									, HttpSession session
 									, ModelAndView mv) {
 		
 		try {
-			String sessionId = (String) session.getAttribute("userId");
+//			String sessionId = (String) session.getAttribute("userId");
+			String sessionId = "user01";
 			Hospital userSearchLocation = null;
 			
-			if(sessionId == null) {
+			if(sessionId.equals("")) {
 				userSearchLocation = new Hospital(37.5679212, 126.9830358, hSearchKeyword); // 기본 주소 (종로)
 			} else {
 				// ======== 여기에 sessionId로 user select하는 쿼리
@@ -97,9 +100,38 @@ public class HospitalController {
 		return mv;
 	}
 	
+	// 동물병원 리뷰 작성 기능 
+	@PostMapping("/hReview/insert.do")
+	public ModelAndView hospitalReviewInsert(@ModelAttribute HReview hReview
+									, HttpSession session
+									, ModelAndView mv) {
+		
+		try {
+//			String sessionId = (String) session.getAttribute("userId");
+			String sessionId = "user01";
+			
+			if(!sessionId.equals("")) {
+				hReview.setuId(sessionId);
+				int result = hService.insertHosReview(hReview);
+				if(result > 0) {
+					mv.setViewName("redirect:/hospital/detail.do?hNo=" + hReview.gethNo());
+				} else {
+					
+				}
+			} else {
+				mv.addObject("msg", "로그인이 필요한 서비스입니다.");
+				mv.addObject("url", "/user/login.do");
+				mv.setViewName("common/message");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mv;
+	}
+	
 	// 좌표 이동
 	@ResponseBody
-	@GetMapping("/moveLocation.do")
+	@GetMapping("/hospital/moveLocation.do")
 	public String hospitalPage(@RequestParam(value="latitude", required = false) Double latitude
 							 , @RequestParam(value="longitude", required = false) Double longitude) {
 		Hospital userLocation = null;
@@ -110,8 +142,6 @@ public class HospitalController {
 			System.out.println( gson.toJson(hList));
 		return gson.toJson(hList); 
 	}
-	
-	
 	
 	// Proj4J 라이브러리를 사용하여 EPSG:2097 좌표를 보정하여(EPSG:5174) 위경도 좌표로 변환
     public ProjCoordinate transform(double dblX, double dblY) {

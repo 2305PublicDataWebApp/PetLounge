@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -185,6 +186,37 @@
                                 <a href="#">Learn more</a>
                             </div>
                         </div>
+                        
+<!--                         <div class="item"> -->
+<%-- 	                        <c:forEach var="support" items="${ sList }" varStatus="i" end="3"> --%>
+<!-- 			                	<div class="col-xl-3 col-md-6 portfolio-item filter-books"> -->
+<!-- 					                <div class="cards" style="border-radius: 20px;"> -->
+<!-- 					                	<div> -->
+<%-- 						                	<a href="/support/detail.do?sNo=${support.sNo }" > --%>
+<!-- 			                                         <img src="/resources/images/cat.jpg" class="card-img" -->
+<!-- 						                    	onerror="this.src='https://petrounge.s3.ap-northeast-2.amazonaws.com/noimage.png'"></a> -->
+<!-- 					                	</div> -->
+<!-- 					                    <div class="card-content"> -->
+<%-- 					                        <strong class="card-title"><a href="/support/detail.do?sNo=${support.sNo }" title="More Details">${support.sTitle }</a></strong> --%>
+<%-- 					                        <div class="card-group">${support.sGroup }</div> --%>
+<!-- 					                        <div class="card-bar"> -->
+<%-- 					                            <span class="card-bar-collection" id="graph-num" style="width: ${(support.sFundAmount / support.sTargetAmount) * 100}%;"></span> --%>
+<!-- 					                        </div> -->
+<!-- 					                        <div> -->
+<%-- 						                        <fmt:parseNumber var="percent" --%>
+<%-- 														value="${(support.sFundAmount / support.sTargetAmount) * 100 }" --%>
+<%-- 														integerOnly="true" /> --%>
+<%-- 						                        <strong class="card-percent" id="per-num">${percent}%</strong> --%>
+<!-- 						                        <strong class="card-money"> -->
+<%-- 						                            ${support.sFundAmount } --%>
+<!-- 						                            <span class="text">원</span> -->
+<!-- 						                        </strong> -->
+<!-- 					                        </div> -->
+<!-- 					                    </div> -->
+<!-- 					                </div> -->
+<!-- 				                </div> -->
+<%-- 			                </c:forEach> --%>
+<!--                         </div> -->
                     </div>
                     <div>
                         <button class="link-btn" onclick="location.href='/support/list.do'">더 많은 후원 보기</button>
