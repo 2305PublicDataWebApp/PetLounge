@@ -5,17 +5,16 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>산책 날씨 예보</title>
-        <script src="http://code.jquery.com/jquery-1.7.min.js"></script>
+        <jsp:include page="../include/importSource.jsp"></jsp:include>
         <link rel="stylesheet" href="/resources/css/weather/weather.css">
         <link rel="stylesheet" href="/resources/css/reset.css">
         <link rel="stylesheet" href="/resources/css/font.css">
+        <title>산책 날씨 예보</title>
+        <script src="http://code.jquery.com/jquery-1.7.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     </head>
     <body>
-        <header>
-            
-        </header>
-        
+        <jsp:include page="../include/header.jsp"></jsp:include>
 
         <main class="main">
             <div class="contanier">
@@ -35,12 +34,12 @@
                         </div>
                             <ul class="region-list">
                                 <li>
-                                    <button class="button-item active">
+                                    <button id="seoul" class="button-item active">
                                         서울
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item">
+                                    <button id="sejong" class="button-item">
                                         세종
                                     </button>
                                 </li>
@@ -144,7 +143,7 @@
                         </div>
                         <!-- 기온 -->
                         <div class="today-weather-Temperature">
-                            <img src=""> <span class="tTemp"></span>℃
+                            <div class="tIcon"></div> <span class="tTemp"></span>℃
                         </div>
                         <div class="img-area">
                             <img class="dog-img" src="/resources/images/weather/dog.png">
@@ -182,10 +181,7 @@
             </div>
         </main>
 
-
-        <footer>
-            
-        </footer>
+        <jsp:include page="../include/footer.jsp"></jsp:include>
 
         <script>
             // 지역 선택
@@ -211,27 +207,34 @@
                 });
             });
 
-            // 현재 날씨 정보 (서울)
+        // 현재 날씨 정보 (서울)
         // 서울 현재 온도
-        $.getJSON ('https://api.openweathermap.org/data/2.5/weather?id=1835848&appid=a5d1dc2dfcf28e0c9a351c9a21ef186f&units=metric', function(data){
-            var $minTemp = data.main.temp_min;         // 최저 온도
-            var $roundedLTemp = Math.round($minTemp);  // 최저 온도(반올림)
-            var $maxTemp = data.main.temp_max;         // 최고 온도
-            var $roundedHTemp = Math.round($maxTemp);  // 최고 온도(반올림)
-            var $temp = data.main.temp;                // 현재 온도
-            var $roundedTemp = Math.round($temp);      // 현재 온도(반올림)
-            var $now = new Date($.now());              // 오늘 날짜
-            var $date = $now.getFullYear() + '년 ' + ($now.getMonth() + 1) +'월 ' + $now.getDate() +'일 ' +$now.getHours() + '시 ' + $now.getMinutes() + '분';           // 오늘 날짜s
-            var $wIcon = data.weather[0].icon;         // 날씨 아이콘
-
-            $('.tLowtemp').append($roundedLTemp);
-            $('.tHightemp').append($roundedHTemp);
-            $('.tTemp').append($roundedTemp);
-            $('.tDate').prepend($date);
-            $('.tIcon').append('<img src="https://openweathermap.org/img/wn/' + $wIcon + '.png" />')
-        });
-
-
+	        $.getJSON ('https://api.openweathermap.org/data/2.5/weather?id=1835848&appid=a5d1dc2dfcf28e0c9a351c9a21ef186f&units=metric', function(data){
+	//         $.getJSON ('https://api.openweathermap.org/data/2.5/weather?lat=37.5683&lon=126.9778&appid=a5d1dc2dfcf28e0c9a351c9a21ef186f&units=metric', function(data){
+	//             var $minTemp = data.main.temp_min;         // 최저 온도
+	//             var $roundedLTemp = Math.round($minTemp);  // 최저 온도(반올림)
+	//             var $maxTemp = data.main.temp_max;         // 최고 온도
+	//             var $roundedHTemp = Math.round($maxTemp);  // 최고 온도(반올림)
+	            var $temp = data.main.temp;                // 현재 온도
+	            var $roundedTemp = Math.round($temp);      // 현재 온도(반올림)
+	            var $now = new Date($.now());              // 오늘 날짜
+	            var $date = $now.getFullYear() + '년 ' + ($now.getMonth() + 1) +'월 ' + $now.getDate() +'일 ' +$now.getHours() + '시 ' + $now.getMinutes() + '분';           // 오늘 날짜s
+	            var $wIcon = data.weather[0].icon;         // 날씨 아이콘
+	
+	//             $('.tLowtemp').append($roundedLTemp);
+	//             $('.tHightemp').append($roundedHTemp);
+	            $('.tTemp').append($roundedTemp);
+	            $('.tDate').prepend($date);
+	            $('.tIcon').append('<img src="https://openweathermap.org/img/wn/' + $wIcon + '.png" />')
+	        });
+	        // 시간별 날씨 정보
+	        $.getJSON ('https://api.openweathermap.org/data/2.5/weather?id=1835848&appid=a5d1dc2dfcf28e0c9a351c9a21ef186f&units=metric', function(data){
+	//             $.ajax({
+	//                 url: "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=4pYTUL0IAyNldYcuL1CFGcJpGrgPllaY%2BkD8xcBEHAbaLSA8xraNMsfHFO%2BXhGJmos%2FBszyn6LH7HoSBORAAhQ%3D%3D&pageNo=1&numOfRows=1000&dataType=JSON&base_date=20231011&base_time=0500&nx=60&ny=127",
+	//                 success: function(result) {
+	//                     console.log(result);
+	//                 },
+	//             });
         </script>
     </body>
 </html>
