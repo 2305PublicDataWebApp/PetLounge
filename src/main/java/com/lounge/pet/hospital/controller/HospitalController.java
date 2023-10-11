@@ -7,17 +7,18 @@ import javax.servlet.http.HttpSession;
 import org.locationtech.proj4j.BasicCoordinateTransform;
 import org.locationtech.proj4j.CRSFactory;
 import org.locationtech.proj4j.CoordinateReferenceSystem;
-import org.locationtech.proj4j.CoordinateTransform;
-import org.locationtech.proj4j.CoordinateTransformFactory;
 import org.locationtech.proj4j.ProjCoordinate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.hospital.service.HospitalService;
 
@@ -29,7 +30,8 @@ public class HospitalController {
 	private HospitalService hService;
 	
 	// 동물병원 안내 페이지
-	@RequestMapping(value="/page.do", method = RequestMethod.GET)
+	@ResponseBody
+	@GetMapping("/page.do")
 	public ModelAndView hospitalPage(HttpSession session
 									, ModelAndView mv) {
 		try {
@@ -48,20 +50,7 @@ public class HospitalController {
 			
 			
 			//  EPSG:2097 좌표를 보정하여(EPSG:5174) 위경도 좌표로 변환 (1회 업데이트 완료 후 주석처리)
-//			List<Hospital> transList = hService.selectAllList();
-//			for (Hospital items : transList) {
-//				double latitude = items.gethY(); // 병원 항목의 위도 (EPSG:2097 좌표)
-//			    double longitude = items.gethX(); // 병원 항목의 경도 (EPSG:2097 좌표)
-//
-//			    // 좌표 변환을 수행하여 위경도 좌표로 변환
-//			    ProjCoordinate targetCoord = transform(longitude, latitude);
-//
-//			    // 변환된 좌표를 사용하여 Hospital 객체 업데이트
-//			    Hospital hosLocation = new Hospital(items.gethNo(), targetCoord.y, targetCoord.x);
-//
-//			    // 각 병원 항목에 대해 업데이트 수행
-//			    int result = hService.updateXYtoLatLng(hosLocation);
-//			}			
+			// updateTransform();
 			
 			mv.addObject("hList", hList)
 			.setViewName("/hospital/hospitalPage");
@@ -72,7 +61,7 @@ public class HospitalController {
 	}
 	
 	// 동물병원 안내 세부 페이지
-	@RequestMapping(value="/detail.do", method = RequestMethod.GET)
+	@GetMapping("/detail.do")
 	public ModelAndView hospitalDetailPage(int hNo, ModelAndView mv) {
 		Hospital hOne = hService.selectOneByhNo(hNo);
 		mv.addObject("hOne", hOne)
@@ -81,7 +70,7 @@ public class HospitalController {
 	}
 		
 	// 동물병원 검색 기능
-	@RequestMapping(value="/search.do", method = RequestMethod.POST)
+	@PostMapping("/search.do")
 	public ModelAndView hospitalSearch(@ModelAttribute Hospital hospital
 									, @RequestParam("hSearchKeyword") String hSearchKeyword
 									, HttpSession session
@@ -108,6 +97,19 @@ public class HospitalController {
 		return mv;
 	}
 	
+	// 좌표 이동
+	@ResponseBody
+	@GetMapping("/moveLocation.do")
+	public String hospitalPage(@RequestParam(value="latitude", required = false) Double latitude
+							 , @RequestParam(value="longitude", required = false) Double longitude) {
+		Hospital userLocation = null;
+		userLocation = new Hospital(latitude, longitude);
+		
+		List<Hospital> hList = hService.selectFiveHos(userLocation);
+		Gson gson = new Gson();
+			System.out.println( gson.toJson(hList));
+		return gson.toJson(hList); 
+	}
 	
 	
 	
@@ -131,6 +133,23 @@ public class HospitalController {
 
         // targetCoord.y : 위도 / targetCoord.x : 경도;
         return targetCoord;
+    }
+    
+    public void updateTransform() {
+		List<Hospital> transList = hService.selectAllList();
+		for (Hospital items : transList) {
+			double latitude = items.gethY(); // 병원 항목의 위도 (EPSG:2097 좌표)
+		    double longitude = items.gethX(); // 병원 항목의 경도 (EPSG:2097 좌표)
+
+		    // 좌표 변환을 수행하여 위경도 좌표로 변환
+		    ProjCoordinate targetCoord = transform(longitude, latitude);
+
+		    // 변환된 좌표를 사용하여 Hospital 객체 업데이트
+		    Hospital hosLocation = new Hospital(items.gethNo(), targetCoord.y, targetCoord.x);
+
+		    // 각 병원 항목에 대해 업데이트 수행
+		    int result = hService.updateXYtoLatLng(hosLocation);
+		}		
     }
 
 }
