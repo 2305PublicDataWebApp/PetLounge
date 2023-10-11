@@ -1,0 +1,259 @@
+:root{
+--color: #333; 
+}
+
+html {
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Red Hat Text', sans-serif;
+}
+
+html, body {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    
+}
+
+.container {
+    text-align: center;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url(/resources/images/main-background.jpg);
+    background-size: cover;
+    background-position: center;
+    
+    /*  this is where the magic happens:  */
+    background-attachment: fixed;
+    position: relative;
+}
+
+.container-box {
+    background-color: rgba(0, 0, 0, 0.32);
+    margin: 0 auto;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+h1 {
+    font-weight: 700;
+    font-size: 3rem;
+}
+
+.main-title {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 7em;
+    color: white;
+    margin-top: 80px;
+    margin-bottom: 25px;
+}
+
+.title {
+    font-size: 3.4em;
+    color: white;
+    margin-bottom: 0;
+}
+
+.info {
+    max-width: none;
+    color: white;
+    font-size: 1.8em;
+    font-weight: normal;
+    margin-bottom: 50px;
+}
+
+p {
+    --max-width: 52ch;
+    line-height: 1.5;
+    padding: 1em;
+}
+
+a {
+    display: inline-block;
+    padding: 1em 3.5em;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-radius: 0.3em;
+    font-weight: 700;
+    letter-spacing: .5px;
+    font-size: 1.2em;
+}
+
+.blank,
+.other {
+    width: 100%;
+    min-height: 30vh;
+    background-color: var(--color);
+}
+
+h3 {
+    font-weight: 700;
+    font-size: 1.6rem;
+    margin-top: 1em;
+}
+
+.card > a {
+    margin-bottom: 2em;
+}
+
+.item {
+    display: flex;
+    max-width: 320px;
+    background-color: white;;
+    flex-direction: column;
+    align-items: center;
+    border-radius: .5em;
+    -webkit-box-shadow: 0px 29px 38px -15px rgba(0,0,0,0.43);
+    -moz-box-shadow: 0px 29px 38px -15px rgba(0,0,0,0.43);
+    box-shadow: 0px 29px 38px -15px rgba(0,0,0,0.43);
+}
+
+.img {
+    width: 90%;
+    height: 200px;
+    background-color: lightgrey;
+    background-size: cover;
+    background-position: center;
+    margin-top: 20px;
+    border-radius: .3em;;
+}
+
+.img-first {
+    background-image: url(https://images.unsplash.com/photo-1522163182402-834f871fd851?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1606&q=80);
+}
+
+.img-second {
+    background-image: url(https://images.unsplash.com/photo-1628746404106-4d3843b231b3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8Y2F2aW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60);
+}
+
+.img-third {
+    background-image: url(https://images.unsplash.com/photo-1632853073412-782bf0279d65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80);
+}
+
+.second {
+    background-image:url(/resources/images/hospital.jpg);
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+.second > div {
+    width: 100%;
+    text-align: center;
+}
+
+.second form {
+    width: 100%;
+}
+
+.second form > div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 90px;
+    margin-left: 20px;
+}
+
+.third {
+    background-image:url(/resources/images/pet-walking.jpg);
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+.fourth {
+    background-image:url(/resources/images/support.jpg);
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+.fourth > div > div:nth-child(2) {
+    display: flex;
+    gap: 1.6em;
+    margin-bottom: 70px;
+}
+
+/* 버튼 스타일 */
+.link-btn {
+    background-color: transparent;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border: 2px solid white; 
+    border-radius: 50px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s; 
+}
+
+.link-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+
+/* 검색 input 스타일 */
+.search-input {
+    width: 480px;
+    padding: 15px 35px;
+    font-size: 16px;
+    border: 4px solid #CCCCCC; 
+    border-radius: 30px; 
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.search-input:hover,
+.search-input:focus {
+    border-color: #FFD370;
+}
+
+/* 네비게이션 바 스타일 */
+.page-navigation {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    border-radius: 5px;
+    padding: 10px 20px;
+    z-index: 1000;
+}
+
+.page-navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.page-navigation li {
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.page-navigation a {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    text-align: center;
+    line-height: 30px;
+    text-decoration: none;
+    padding: 0;
+}
+
+/* 활성화된 네비게이션 링크 스타일 */
+.page-navigation a.active {
+    background-color: #FFD370;
+    color: #333; 
+}

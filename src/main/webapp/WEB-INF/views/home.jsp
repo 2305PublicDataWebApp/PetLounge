@@ -64,13 +64,13 @@
                     	<c:if test="${ sessionScope.userId eq null }">
 	                        <ul>
 	                            <li>
-	                                <a href="/userLogin/page.do">
+	                                <a href="/user/login.do">
 	                                    <i class="fa fa-sign-in user-icon"></i>
 	                                    login
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="/userRegister/page.do">
+	                                <a href="/user/register.do">
 	                                    <i class="fa fa-solid fa-plus user-icon"></i>
 	                                    register
 	                                </a>
@@ -86,7 +86,7 @@
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="/userInfo/page.do">
+	                                <a href="/user/userInfo.do">
 	                                    <i class="fa fa-regular fa-user user-icon"></i>
 	                                    my page
 	                                </a>

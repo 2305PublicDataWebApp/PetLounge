@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SHistoryMapper">
+	<resultMap type="SupportHistory" id="SHistoryResultMap">
+		<id 	property="sHNo" 	 column="S_H_NO"/>
+		<result property="sNo" 	 	 column="S_NO"/>
+		<result property="uId" 	  	 column="U_ID"/>
+		<result property="sHName" 	 column="S_H_NAME"/>
+		<result property="sHAmount"	 column="S_H_AMOUNT"/>
+		<result property="sHPaydate" column="S_H_PAYDATE"/>
+		<result property="sHPaytype" column="S_H_PAYTYPE"/>
+		<result property="sHType"	 column="S_H_TYPE"/>
+	</resultMap>
+	
+	<insert id="insertSHistory">
+		INSERT INTO S_HISTORY_TBL VALUES(S_SEQ_NO.NEXTVAL, #{sNo}, #{uId}, #{sHName}, #{sHAmount}, DEFAULT, #{sHPayType}, #{sHType}) 
+	</insert>
+	
+	
+	
+	<select id="getTotalCount" resultType="_int">
+		SELECT COUNT(*) FROM S_HISTORY_TBL WHERE S_NO = #{sNo}
+	</select>
+	<select id="selectSHistoryList" resultMap="SHistoryResultMap">
+		SELECT * FROM S_HISTORY_TBL WHERE S_NO = #{sNo} ORDER BY S_H_NO DESC
+	</select>
+	
+
+</mapper>

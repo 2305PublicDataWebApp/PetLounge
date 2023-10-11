@@ -1,0 +1,350 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #FAFAFA;
+}
+header {
+    width: 100%;
+    height: 60px;
+    background: #ffd370;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+footer {
+    display: flex;
+    width: 100%;
+    height: 200px;
+    background-color: rgb(24, 21, 21);
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    height: 1300px;
+    margin: 0 auto;
+    /* border: 1px solid black; */
+    background: #FAFAFA;
+}
+
+.contanier {
+    width: 65%;
+    height: 100vh;
+    /* border : 1px solid black; */
+    background: #FAFAFA;
+}
+
+/* ********** 타이틀 ********** */
+.main-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 120px;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+#line {
+    width: 30%;
+    height: 1.5px;
+    background-color: lightgray;
+    margin: 40px auto 60px auto;
+}
+
+/* ********** 지역 선택 ********** */
+button {
+    background: none;
+    border: none;
+    --padding: 0;
+    --margin: 0;
+    cursor: pointer;
+}
+
+.choice-area {
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    margin: 0 130px;
+    width: 100%;
+    height: 100px;
+
+}
+
+.region-selector {
+    position: relative;
+    display: inline-block;
+}
+
+#region {
+    display: flex;
+    align-items: center;
+    background-color: #FAFAFA;
+    color: black;
+    border : 1px solid #FFD370;
+    border-radius: 6px;
+    width: 122px;
+    height: 50px;   
+    padding: 10px 5px;
+}
+
+.select-button {
+    background-color: #FAFAFA;
+    color: #000000;
+    font-size: 1.1em;
+    border-radius: 6px;
+    padding: 10px 10px;
+    cursor: pointer;
+}
+
+#select-region {
+    color: rgb(192, 117, 102);
+    font-size: 1.1em;
+    padding-left: 10px;
+}
+
+.button-item {
+    padding: 5px;
+    background-color: white;
+}
+
+.button-item.active {
+    background-color: #FFD370; /* 클릭한 버튼 배경색 */
+    color: #fff; /* 클릭한 버튼 텍스트 색상 */
+}
+
+.region-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    width: 400px; /* 목록의 너비를 조정하세요. */
+    max-height: 300px; /* 목록의 최대 높이를 조정하세요. */
+    overflow-y: auto; /* 스크롤이 필요한 경우 스크롤 표시 */
+    column-count: 4; /* 4개의 열로 항목 표시 */
+    column-gap: 40px; /* 열 간격 설정 */
+    z-index: 500;
+}
+
+.region-list li {
+    padding: 3px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    border-bottom: none;
+    break-inside: avoid; /* 열 안에서 줄 바꿈 방지 */
+}
+
+/* 버튼 클릭 시 목록 표시 */
+.region-selector:hover .region-list {
+    display: block;
+}
+
+.button-item active {
+    border: 1px solid black;
+    color: #171717;
+    background-color: #fff;
+}
+
+ul li button {
+    font-size: 17px;
+    line-height: 22px;
+    background: #f8f8f8;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    
+}
+
+
+
+/* ********** 오늘의 tmi ********** */
+.today-tmi {
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    margin: 0 130px 50px;
+    width: 100%;
+    height: 100px;
+}
+
+label {
+    display: flex;
+    align-items: center;
+}
+
+.free-img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.tmi-text {
+    background: #FAFAFA;
+    color : black;
+    width: 655px;
+    height: 50px;
+    border: 1px solid black;
+    padding: 15px;
+    border-radius: 6px;
+    margin-right: 20px;
+}
+
+.free-board {
+    display: flex;
+    align-items: center;
+    color: white;
+    background-color: #FFD370;
+    /* border : 1px solid #FFD370; */
+    width: 180px;
+    height: 50px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.board-logo {
+    width: 35px;
+    height: 35px;
+    margin-left: 7px;
+    margin-right: 20px;
+}
+
+/* ********** 오늘의 날씨 ********** */
+.today-weather {
+    position: relative;
+    display: flex;
+    margin: 30px 100px 0 100px;
+    width: 500px;
+    height: 150px;
+    padding: 25px;
+    margin-left: 130px;
+    /* border : 2px solid #ccc; */
+    border-radius: 6px;
+    background-color: #ffd47061;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.today-left {
+    width: 50%;
+    height: 150px;
+    text-align: center;
+}
+
+.today-weather-date {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    width: 100%;
+    height: 40%;
+}
+
+.tDate {
+    width: 220px;
+    height: 70%;
+    /* border: 1px solid black; */
+}
+
+.today-weather-Temperature {
+    display: flex;
+    justify-content: center;
+    align-items: first baseline;
+    width: 100%;
+    height: 60%;
+    font-size: 1.5em;
+    font-weight: bolder;
+}
+
+.today-weather-Temperature span {
+    display: block;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.today-rigth {
+    width: 50%;
+    height: 100%;
+    text-align: center;
+}
+
+.today-precipitation {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40%;
+}
+
+.max-temperature {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 30%;
+    font-weight: bolder;
+}
+
+.min-temperature {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 30%;
+    font-weight: bolder;
+}
+
+.img-area {
+    position: absolute;
+    bottom: -100px;
+    left: 530px;
+}
+.dog-img {
+    /* display: flex; */
+    width: 300px;
+    height: 300px;
+}
+
+
+/* ********** 시간별 기온 ********** */
+.time-weather {
+    display: flex;
+    margin: 80px 100px 0 100px;
+    width: 855px;
+    height: 150px;
+    margin-left: 130px;
+    /* border : 2px solid #ccc; */
+    border-radius: 6px;
+    background-color: #ffffff;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.time-weather h2 {
+    margin : 20px
+}
+
+
+/* ********** 일별 기온 ********** */
+.date-weather {
+    display: flex;
+    margin: 80px 100px 0 100px;
+    width: 855px;
+    height: 150px;
+    margin-left: 130px;
+    /* border : 2px solid #ccc; */
+    border-radius: 6px;
+    background-color: #ffffff;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.date-weather h2 {
+    margin : 20px
+}
