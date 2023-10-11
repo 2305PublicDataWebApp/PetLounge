@@ -35,10 +35,10 @@
             <c:if test="${ sessionScope.userId eq null }">
 	            <ul class="navbar-nav ml-auto">
 	                <li class="nav-item">
-	                    <a class="nav-link" href="/userLogin/page.do">로그인</a>
+	                    <a class="nav-link" href="/user/login.do">로그인</a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link" href="/userRegister/page.do">회원가입</a>
+	                    <a class="nav-link" href="/user/register.do">회원가입</a>
 	                </li>
 	            </ul>            
             </c:if>
@@ -48,7 +48,7 @@
 	                    <a class="nav-link" href="javascript:void(0);">로그아웃</a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link" href="/userInfo/page.do">마이페이지</a>
+	                    <a class="nav-link" href="/user/userInfo.do">마이페이지</a>
 	                </li>
 	            </ul>            
             </c:if>

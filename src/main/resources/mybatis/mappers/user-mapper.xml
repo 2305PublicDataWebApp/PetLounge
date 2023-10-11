@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="UserMapper">
+  
+<!--   <resultMap type="User" id="userResultMap"> -->
+<!-- 		<id property="uId" 					column="U_ID" /> -->
+<!-- 		<result property="uPw" 				column="U_PW" /> -->
+<!-- 		<result property="uPwRe" 			column="U_PWRE" /> -->
+<!-- 		<result property="uName" 			column="U_NAME" /> -->
+<!-- 		<result property="uNickName" 		column="U_NICKNAME" /> -->
+<!-- 		<result property="uEmail" 			column="U_EMAIL" /> -->
+<!-- 		<result property="uPhone" 			column="U_PHONE" /> -->
+<!-- 		<result property="uAddr" 			column="U_ADDR" /> -->
+<!-- 		<result property="uFileName" 		column="U_FILENAME" /> -->
+<!-- 		<result property="uFileReName" 		column="U_FILERENAME" /> -->
+<!-- 		<result property="uFilePath" 		column="U_FILEPATH" /> -->
+<!-- 		<result property="uFileLength" 		column="U_FILELENGTH" /> -->
+<!-- 		<result property="uRegDate" 		column="U_REGDATE" /> -->
+<!-- 		<result property="uStatus" 			column="U_STATUS" /> -->
+<!-- 	</resultMap> -->
+	
+	<!-- 회원 회원가입 -->
+	<insert id="userRegister">
+		INSERT INTO USER_TBL VALUES(#{ uId }, #{ uPw }, #{ uPwRe }, #{ uName }, #{ uNickName }, #{ uEmail }, #{ uPhone }, #{ uAddr }, #{ uFileName }, #{ uFileReName }, #{ uFilePath }, #{ uFileLength }, DEFAULT, DEFAULT)
+	</insert>
+  
+  
+  </mapper>
