@@ -37,7 +37,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/weather/weather.do">
                                 산책 날씨 예보
                             </a>
                         </li>
@@ -52,6 +52,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">공지사항</a></li>
+                                <li><a href="/faq/list.do">FAQ</a></li>
                                 <li><a href="#">자유게시판</a></li>
                             </ul>
                         </li>
@@ -147,7 +148,7 @@
                     <h1 class="title">산책 날씨 예보</h1>
                     <p class="info">펫 라운지는 반려동물과 함께 안전하고 즐거운 산책을 즐기는 데 도움을 드립니다</p>
                     <div>
-                        <button class="link-btn">오늘의 날씨 확인하기</button>
+                        <button class="link-btn" onclick="location.href='/weather/weather.do'">오늘의 날씨 확인하기</button>
                     </div>
                 </div>
             </section>
