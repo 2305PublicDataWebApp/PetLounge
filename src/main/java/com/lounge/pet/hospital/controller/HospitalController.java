@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,12 +21,16 @@ import com.google.gson.Gson;
 import com.lounge.pet.hospital.domain.HReview;
 import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.hospital.service.HospitalService;
+import com.lounge.pet.user.domain.User;
+import com.lounge.pet.user.service.UserService;
 
 @Controller
 public class HospitalController {
 	
 	@Autowired
 	private HospitalService hService;
+	@Autowired
+	private UserService uService;
 	
 	// 동물병원 안내 페이지
 	@ResponseBody
@@ -35,30 +38,49 @@ public class HospitalController {
 	public ModelAndView hospitalPage(HttpSession session
 									, ModelAndView mv) {
 		try {
-//			String sessionId = (String) session.getAttribute("userId");
-			String sessionId = "user01";
+			String sessionId = (String) session.getAttribute("uId");
+//			String sessionId = "user01";
 			Hospital userLocation = null;
+			User user = null;
 			
-			if(sessionId.equals("")) {
+			if(sessionId == null) {
 				userLocation = new Hospital(37.5679212, 126.9830358); // 기본 주소 (종로)
+				List<Hospital> hList = hService.selectFiveHos(userLocation);
+				mv.addObject("hList", hList);
 			} else {
 				// ======== 여기에 sessionId로 user select하는 쿼리
+				user = uService.selectOneById(sessionId);
+				
 				// ======== 여기에 회원 주소 위도 경도로 변환하는 쿼리
-				userLocation = new Hospital(37.5555739, 126.953635); // 회원 기본 주소
+//				userLocation = new Hospital(37.5555739, 126.953635); // 회원 기본 주소
+//				userLocation = new Hospital(37.5679212, 126.9830358); // 기본 주소 (종로)
+				mv.addObject("user", user);
 			}
 			
-			List<Hospital> hList = hService.selectFiveHos(userLocation);
 			
 			
 			//  EPSG:2097 좌표를 보정하여(EPSG:5174) 위경도 좌표로 변환 (1회 업데이트 완료 후 주석처리)
 			// updateTransform();
 			
-			mv.addObject("hList", hList)
-			.setViewName("/hospital/hospitalPage");
+			
+			mv.setViewName("/hospital/hospitalPage");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mv;
+	}
+	
+	// 동물병원 리스트 가져오기 (로그인 시)
+	@ResponseBody
+	@GetMapping("/hospital/findList.do")
+	public String hosFindList(@RequestParam("latitude") Double latitude
+			 				, @RequestParam("longitude") Double longitude) {
+		Hospital userLocation = new Hospital(latitude, longitude);
+		System.out.println(userLocation);
+		List<Hospital> hList = hService.selectFiveHos(userLocation);
+		System.out.println(hList);
+		Gson gson = new Gson();
+		return gson.toJson(hList);
 	}
 	
 	// 동물병원 안내 상세 페이지
@@ -79,11 +101,11 @@ public class HospitalController {
 									, ModelAndView mv) {
 		
 		try {
-//			String sessionId = (String) session.getAttribute("userId");
-			String sessionId = "user01";
+			String sessionId = (String) session.getAttribute("uId");
+//			String sessionId = "user01";
 			Hospital userSearchLocation = null;
 			
-			if(sessionId.equals("")) {
+			if(sessionId == null) {
 				userSearchLocation = new Hospital(37.5679212, 126.9830358, hSearchKeyword); // 기본 주소 (종로)
 			} else {
 				// ======== 여기에 sessionId로 user select하는 쿼리
@@ -107,8 +129,8 @@ public class HospitalController {
 									, ModelAndView mv) {
 		
 		try {
-//			String sessionId = (String) session.getAttribute("userId");
-			String sessionId = "user01";
+			String sessionId = (String) session.getAttribute("uId");
+//			String sessionId = "user01";
 			
 			if(!sessionId.equals("")) {
 				hReview.setuId(sessionId);

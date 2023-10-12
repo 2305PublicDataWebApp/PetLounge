@@ -90,96 +90,118 @@
             </section>
 
        		<!-- 동물병원 리스트 -->
+<!-- 			<section id="hospital-list-section"> -->
+<!-- 				<table> -->
+<%-- 					<colgroup> --%>
+<%-- 						<col style="width: 5%;"> --%>
+<%-- 						<col style="width: 23%;"> --%>
+<%-- 						<col style="width: 22%;"> --%>
+<%-- 						<col style="width: 50%;"> --%>
+<%-- 					</colgroup> --%>
+<!-- 					<thead> -->
+<!-- 						<th colspan="4">내 주변 동물병원</th> -->
+<!-- 					</thead> -->
+<!-- 					<tbody> -->
+<!-- 						검색 결과 없음 -->
+<%-- 						<c:if test="${ empty hList }"> --%>
+<!-- 							<tr> -->
+<!-- 								<td colspan="4"> -->
+<!-- 									검색 결과 없음 -->
+<!-- 								</td> -->
+<!-- 							</tr> -->
+<%-- 						</c:if> --%>
+<%-- 						<c:if test="${ !empty hList }"> --%>
+<!-- 							기본 주소 리스트 -->
+<%-- 							<c:forEach var="hosList" items="${ hList }" end="5" varStatus="status"> --%>
+<%-- 								<tr onclick="changeCenter(${ hosList.hLat }, ${ hosList.hLng }, ${ status.index });"> --%>
+<!-- 									<td class=""> -->
+<!-- 										<span class="material-symbols-outlined bookmark-icon-fill" style="color: #FFD370;">
+<!-- 			                                    bookmark -->
+<!-- 			                                </span> -->  
+<!-- 		                                <span class="material-symbols-outlined bookmark-icon-none" -->
+<!-- 										style="color: #FFD370;"> bookmark </span> -->
+<!-- 									</td> -->
+<!-- 									<td class=""> -->
+<!-- 										동물병원 이름  -->
+<%-- 										${ hosList.hName } --%>
+<!-- 									</td> -->
+<!-- 									<td class=""> -->
+<!-- 										<div> -->
+<!-- 											<span class="material-symbols-outlined call-icon" -->
+<!-- 												style="color: #56b983;"> call </span> -->
+<!-- 											전화번호 -->
+<%-- 											<c:if test="${ hosList.hPhone eq null }"> --%>
+<!-- 												- -->
+<%-- 											</c:if> --%>
+<%-- 											<c:if test="${ hosList.hPhone ne null }"> --%>
+<%-- 												${ hosList.hPhone } --%>
+<%-- 											</c:if> --%>
+<!-- 										</div> -->
+<!-- 									</td> -->
+<!-- 									<td class=""> -->
+<!-- 										<div> -->
+<!-- 											<span class="material-symbols-outlined location-icon" -->
+<!-- 												style="color: #e54242;"> location_on </span> -->
+<!-- 											주소 -->
+<%-- 											${ hosList.hRoadAddr } --%>
+<!-- 										</div> -->
+<!-- 									</td> -->
+<!-- 								</tr> -->
+<%-- 							</c:forEach> --%>
+<%-- 						</c:if> --%>
+<!-- 					</tbody> -->
+<!-- 				</table> -->
+<!-- 			</section> -->
+
+
 			<section id="hospital-list-section">
-				<table>
-					<colgroup>
-						<col style="width: 5%;">
-						<col style="width: 23%;">
-						<col style="width: 22%;">
-						<col style="width: 50%;">
-					</colgroup>
-					<thead>
-						<th colspan="4">내 주변 동물병원</th>
-					</thead>
-					<tbody>
-						<!-- 검색 결과 없음 -->
-						<c:if test="${ empty hList }">
-							<tr>
-								<td colspan="4">
-									검색 결과 없음
-								</td>
-							</tr>
-						</c:if>
-						<c:if test="${ !empty hList }">
-							<!-- 기본 주소 리스트 -->
-							<c:forEach var="hosList" items="${ hList }" end="5" varStatus="status">
-								<tr onclick="changeCenter(${ hosList.hLat }, ${ hosList.hLng }, ${ status.index });">
-									<td class="">
-										<!-- <span class="material-symbols-outlined bookmark-icon-fill" style="color: #FFD370;">
-			                                    bookmark
-			                                </span> --> 
-		                                <span class="material-symbols-outlined bookmark-icon-none"
-										style="color: #FFD370;"> bookmark </span>
-									</td>
-									<td class="">
-										<!-- 동물병원 이름 --> 
-										${ hosList.hName }
-									</td>
-									<td class="">
-										<div>
-											<span class="material-symbols-outlined call-icon"
-												style="color: #56b983;"> call </span>
-											<!-- 전화번호 -->
-											<c:if test="${ hosList.hPhone eq null }">
-												-
-											</c:if>
-											<c:if test="${ hosList.hPhone ne null }">
-												${ hosList.hPhone }
-											</c:if>
-										</div>
-									</td>
-									<td class="">
-										<div>
-											<span class="material-symbols-outlined location-icon"
-												style="color: #e54242;"> location_on </span>
-											<!-- 주소 -->
-											${ hosList.hRoadAddr }
-										</div>
-									</td>
-								</tr>
-							</c:forEach>
-						</c:if>
-					</tbody>
-				</table>
+			    <table>
+			        <colgroup>
+			            <col style="width: 5%;">
+			            <col style="width: 23%;">
+			            <col style="width: 22%;">
+			            <col style="width: 50%;">
+			        </colgroup>
+			        <thead>
+			            <th colspan="4">내 주변 동물병원</th>
+			        </thead>
+			        <tbody id="hospital-list-body">
+			        </tbody>
+			    </table>
 			</section>
+
         </main>
         
 		<jsp:include page="../include/footer.jsp"></jsp:include>
 		
 		<!-- 카카오맵 API 지도 스크립트 -->
 		<script>
-			if(${sessionScope.userId eq null}) {
+			var overlay;
+			
+			if(${sessionScope.uId eq null}) {
 				// ************************* 비회원 기본 주소 *****************************			
 				var lat = 37.5679212;
 				var lng = 126.9830358;
-				createMap(37.5679212, 126.9830358);
+				createMap(lat, lng);
 			} else {
 				// ************************* 회원가입 시 받은 주소로 기본 주소 *****************************
 				// 주소-좌표 변환 객체를 생성합니다
 				var geocoder = new kakao.maps.services.Geocoder();
 				
 				// 주소로 좌표를 검색합니다
-				const userAddr = '${ user.userAddr }'; // 회원의 주소
+				const userAddr = '${ user.uAddr }'; // 회원의 주소
 				geocoder.addressSearch(userAddr, function(result, status) {
 				
 				    // 정상적으로 검색이 완료됐으면 
 				     if (status === kakao.maps.services.Status.OK) {
+				    	var lat = result[0].y;
+				    	var lng = result[0].x;
+				    	 
+				        createMap(lat, lng);
 				
-				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-				
+// 				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-				        map.setCenter(coords);
-				        createMap(result[0].y, result[0].x);
+// 				        map.setCenter(coords);
 				    } 
 				});  
 				
@@ -194,26 +216,56 @@
 				};
 		
 				map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-				
-			    makeMarkerAndOverlay(map); // 마커와 커스텀 오버레이 생성
+				findList(map, lat, lng);
 			}
 			
-			var overlay;
+			// 리스트를 불러오는 ajax
+			function findList(map, lat, lng) {
+				var positions = [];
+		    	 $.ajax ({
+		    		 url: "/hospital/findList.do",
+		    		 data: {
+		    			latitude: lat,
+			            longitude: lng
+		    		 },
+		    		 type: "GET",
+		    		 dataType: "json",
+		    		 success: function(hList) {
+		    			console.log(hList);
+//		    			// 마커를 표시할 위치와 name 객체 배열입니다 		    			
+						for(let i = 0; i < hList.length; i++){
+							var position = {
+								no: hList[i].hNo,
+								name: hList[i].hName,
+								roadAddr: hList[i].hRoadAddr,
+								phone: hList[i].hPhone,
+								latlng: new kakao.maps.LatLng(hList[i].hLat, hList[i].hLng)
+							};
+							positions.push(position);
+						}
+						console.log(positions);
+						makeMarkerAndOverlay(map, positions); // 마커 표시
+		    		 },
+		    		 error: function(data){
+		    			 
+		    		 }
+		    	 });
+			}
 			
 			// 마커와 커스텀 오버레이 생성
-			function makeMarkerAndOverlay(map) {
-				// 마커를 표시할 위치와 name 객체 배열입니다 
-			    var positions = [
-			        <c:forEach items="${ hList }" var="hos" varStatus="loop">
-			            {
-			            	no: '${ hos.hNo }',
-			            	name: '${ hos.hName }',
-			            	roadAddr: '${ hos.hRoadAddr }',
-			            	phone: '${ hos.hPhone }',
-					        latlng: new kakao.maps.LatLng('${ hos.hLat }', '${ hos.hLng }')
-			            }<c:if test="${!loop.last}">,</c:if>
-			        </c:forEach>
-			    ];
+			function makeMarkerAndOverlay(map, positions) {
+//     			// 마커를 표시할 위치와 name 객체 배열입니다 
+// 			    var positions = [
+// 			        <c:forEach items="${ hList }" var="hos" varStatus="loop">
+// 			            {
+// 			            	no: '${ hos.hNo }',
+// 			            	name: '${ hos.hName }',
+// 			            	roadAddr: '${ hos.hRoadAddr }',
+// 			            	phone: '${ hos.hPhone }',
+// 					        latlng: new kakao.maps.LatLng('${ hos.hLat }', '${ hos.hLng }')
+// 			            }<c:if test="${!loop.last}">,</c:if>
+// 			        </c:forEach>
+// 				];
 				
 				var markers = [];
 				var overlays = [];
@@ -295,8 +347,8 @@
 					// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
 					var overlay = new kakao.maps.CustomOverlay({
 					    content: content,
-					    //map: null,      
-					    map: map,      
+					    map: null,      
+// 					    map: map,      
 					    position: positions[i].latlng     
 					});
 					
@@ -308,7 +360,7 @@
 				    }
 				    					
 					markers[i].setMap(map); // 지도 위에 마커 표시
-// 					overlays[0].setMap(map); // 첫번째 결과만 우선 표시
+					overlays[0].setMap(map); // 첫번째 결과만 우선 표시
 					
 			 		// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
 					(function (marker, overlay) {
