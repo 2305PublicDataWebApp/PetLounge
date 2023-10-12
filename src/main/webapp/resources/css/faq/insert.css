@@ -31,12 +31,12 @@ footer {
     background: #FAFAFA;
 }
 
-.contanier {
-    width: 60%;
-    height: 100vh;
-    /* border : 1px solid black; */
-    background: #FAFAFA;
-}
+/* .contanier { */
+/*     width: 60%; */
+/*     height: 100vh; */
+/*     border : 1px solid black; */
+/*     background: #FAFAFA; */
+/* } */
 
 /* ********** 타이틀 ********** */
 .main-title {
@@ -44,20 +44,18 @@ footer {
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding-top: 132px;
+    --padding-top: 120px;
 }
 
-#title-text {
-    font-size: 2.3em;
-    margin-bottom: 0;
-}
-
-#title-text{
+.main-title h1 {
+    font-size: 2.5em;
     font-weight: bold;
+	line-height: 1;
+	padding-top: 120px;
 }
 
 #line {
-    width: 30%;
+    width: 57%;
     height: 1.5px;
     background-color: lightgray;
     margin: 40px auto 60px auto;

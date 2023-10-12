@@ -152,18 +152,17 @@
 
                     <div class="today-rigth">
                         <!-- 강수 확률 -->
-                        <div class="today-info">
-                            강수 확률<span></span>
+                        <div id="pro-rain" class="today-info">
+                            강수 확률 <span class="pro-rain"></span>%
                         </div>
                         <!-- 최고 기온 -->
-                        <div class="">
-                            최고 기온<span></span>
-                            <span class="tHightemp"></span>℃
+                        <div id="temp-max" class="today-info">
+                            최고 기온<span class="temp-max"></span>℃
                         </div>
                         <!-- 최저 기온 -->
-                        <div>
+                        <div id="temp-min" class="today-info">
                             최저 기온<span></span>
-                            <span class="tLowtemp"></span>℃
+                            <span class="temp-min"></span>℃
                         </div>
                     </div>
                 </div>
@@ -218,43 +217,94 @@
 // 	        console.log(initDate);
 	
 	        // 현재 시간
-	        const now = new Date();
-	        const hours = String(now.getHours()).padStart(2, '0');
-	        const minutes = String(now.getMinutes()).padStart(2, '0');
-	     	// base_time이 정시 이후일 경우 40분에 api 시간이 제공되기 때문에 
-	     	// 정시 이후부터 40분 이전까지의 시간의 날씨를 제공하기 위해 시간에 오차를 줌
-	        const formattedTime = (hours + minutes)-50;  
-	        console.log(formattedTime); 
+			const now = new Date();
+			const hours = String(now.getHours()).padStart(2, '0');
+			const minutes = String(now.getMinutes()).padStart(2, '0');
+			
+			let formattedTime = hours + minutes;
+			console.log(formattedTime);
 	
 	        // parameter, serviceKey
-	        let apiUrl1 = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst";
+	        let apiUrl = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst";
             const serviceKey = "4pYTUL0IAyNldYcuL1CFGcJpGrgPllaY%2BkD8xcBEHAbaLSA8xraNMsfHFO%2BXhGJmos%2FBszyn6LH7HoSBORAAhQ%3D%3D";
             const pageNo = "1";
             const numOfRows = "1000";
             const dataType = "JSON";
             let base_date = initDate;
-            let base_time = formattedTime;
             let nx = "60";
             let ny = "127";
-            apiUrl1 += "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-          	console.log(apiUrl1);  
+            
             // ************************************************ 초단기 실황(현재 온도) ************************************************//
-            $.getJSON (apiUrl1, function(data){
+            // !!!!!!!!!! 이거 시간 어떻게 계산해야할 지 강사님께 여쭤보기
+            let base_time = formattedTime-60;	// 시간
+            console.log(base_time);
+            
+            const apiUrlLive = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
+          	console.log(apiUrlLive);  
+          	
+            $.getJSON (apiUrlLive, function(data){
 	            const $now = new Date($.now());
             	const $date = $now.getFullYear() + '년 ' + ($now.getMonth() + 1) +'월 ' + $now.getDate() +'일 ' +$now.getHours() + '시 ' + $now.getMinutes() + '분';
-				
 	            const temp = data.response.body.items.item[3].obsrValue;
+	            
 	            $('.tDate').prepend($date); // 오늘 날짜
 	            $('.tTemp').append(temp);   // 현재 온도
 	        });
             
-         // ************************************************ 단기 예보(강수량, 최고/최저 기온, ) ************************************************//
-         	let apiUrl2 = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
-         	apiUrl2 += "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-         	console.log(apiUrl2);
-			$.getJSON (apiUrl2, function(data){
+         	// ************************************************ 단기 예보(강수량) ************************************************//
+         	// 단기 예보 시간 구하는 함수
+			function getTimeByCondition(base_time) {
+			    // base_time을 "HHMM" 형식의 문자열로 가정합니다.
+			    // 문자열로 변환하고 앞에 0을 붙입니다.
+			    const time = base_time.toString().padStart(4, '0');
+			
+			    if (time >= '0211' && time <= '0459') {
+			        return "0200";
+			    } else if (time >= '0511' && time <= '0810') {
+			        return "0500";
+			    } else if (time >= '0811' && time <= '1110') {
+			        return "0800";
+			    } else if (time >= '1111' && time <= '1410') {
+			        return "1100";
+			    } else if (time >= '1411' && time <= '1710') {
+			        return "1400";
+			    } else if (time >= '1711' && time <= '2010') {
+			        return "1700";
+			    } else if (time >= '2011' && time <= '2310') {
+			        return "2000";
+			    } else if ((time >= '2311' && time <= '2400') || (time >= '0000' && time <= '0200')) {
+			        return "2300";
+			    } else {
+			        return "Unknown";
+			    }
+			}
+			
+			// 함수 호출하여 가져온 시간 문자열을 base_time에 넣음
+			base_time = getTimeByCondition(base_time);
+			console.log(base_time);
+         	
+         	// api url
+         	apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
+         	const apiUrlShort = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
+         	console.log(apiUrlShort);
+         	
+			$.getJSON (apiUrlShort, function(data){
 				const probRain = data.response.body.items.item[7].fcstValue;
-				console.log(probRain);
+// 				const tempMax = data.response.body.items.item[].fcstValue;
+				
+				$('.pro-rain').append(probRain); // 강수 확률
+// 				$('.temp-max').append(tempMax); // 강수 확률
+			});
+			
+			// ************************************************ 단기 예보(최고/최저 기온) ************************************************//
+			base_time = "0200";
+			console.log(base_time);
+			$.getJSON (apiUrlShort, function(data){
+				const tempMax = data.response.body.items.item[55].fcstValue;
+				const tempMin = data.response.body.items.item[48].fcstValue;
+				
+				$('.temp-max').append(tempMax); // 최고 기온
+				$('.temp-min').append(tempMin); // 최고 기온
 			});
         </script>
     </body>

@@ -26,14 +26,6 @@ footer {
     width: 90%;
     height: 1300px;
     margin: 0 auto;
-    /* border: 1px solid black; */
-    background: #FAFAFA;
-}
-
-.contanier {
-    width: 65%;
-    height: 100vh;
-    /* border : 1px solid black; */
     background: #FAFAFA;
 }
 
@@ -48,10 +40,13 @@ footer {
 
 h1 {
     font-size: 2.5em;
+    font-weight: bold;
+	line-height: 1;
+	padding-top: 120px;
 }
 
 #line {
-    width: 30%;
+    width: 46%;
     height: 1.5px;
     background-color: lightgray;
     margin: 40px auto 60px auto;
@@ -235,7 +230,7 @@ label {
 }
 
 .today-left {
-    width: 50%;
+    width: 60%;
     height: 150px;
     text-align: center;
 }
@@ -249,7 +244,7 @@ label {
 }
 
 .tDate {
-    width: 220px;
+    width: 230px;
     height: 70%;
     /* border: 1px solid black; */
 }
@@ -277,9 +272,30 @@ label {
 }
 
 .today-rigth {
-    width: 50%;
+    width: 40%;
     height: 100%;
     text-align: center;
+    background-color: rgba(255, 255, 255, 0.5);	
+    border-radius: 15px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.today-info {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#pro-rain {
+	height: 33%;
+}
+
+#temp-max {
+	height: 33%;
+}
+
+#temp-min {
+	height: 33%;
 }
 
 .today-precipitation {
