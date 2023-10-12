@@ -11,4 +11,18 @@ public interface UserService {
 	 */
 	int userRegister(User user);
 
+	/**
+	 * 로그인
+	 * @param user
+	 * @return
+	 */
+	User userLogin(User user);
+
+	/**
+	 * 회원정보조회
+	 * @param uId
+	 * @return
+	 */
+	User selectOneById(String uId);
+
 }

@@ -22,10 +22,20 @@
 <!-- 		<result property="uStatus" 			column="U_STATUS" /> -->
 <!-- 	</resultMap> -->
 	
-	<!-- 회원 회원가입 -->
+	<!-- 회원가입 -->
 	<insert id="userRegister">
 		INSERT INTO USER_TBL VALUES(#{ uId }, #{ uPw }, #{ uPwRe }, #{ uName }, #{ uNickName }, #{ uEmail }, #{ uPhone }, #{ uAddr }, #{ uFileName }, #{ uFileReName }, #{ uFilePath }, #{ uFileLength }, DEFAULT, DEFAULT)
 	</insert>
+	
+	<!-- 로그인 -->
+	<select id="userLogin" resultType="User">
+		SELECT * FROM USER_TBL WHERE U_ID = #{ uId } AND U_PW = #{ uPw } AND U_STATUS = 'Y'
+	</select>
+	
+	<!-- 회원정보조회 -->
+	<select id="selectOneById" resultType="User">
+		SELECT * FROM USER_TBL WHERE U_ID = #{ uId } AND U_STATUS = 'Y'
+	</select>
   
   
   </mapper>

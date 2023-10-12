@@ -22,4 +22,16 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}
 
+	@Override
+	public User userLogin(User user) {
+		User uOne = uStore.userLogin(session, user);
+		return uOne;
+	}
+
+	@Override
+	public User selectOneById(String uId) {
+		User user = uStore.selectOneById(session, uId);
+		return user;
+	}
+
 }

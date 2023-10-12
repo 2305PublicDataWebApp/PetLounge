@@ -52,131 +52,129 @@ section[id^="content"]:target {
 	<main>
 
 		<section>
-			<form action="/user/register.do" method="post"
-				enctype="multipart/form-data">
-				<article class="find1">
-					<h2 class="register_h2">회원가입</h2>
-					<p>
-						펫 라운지 회원가입을 환영합니다.<br>회원으로 가입하시면 다양한 혜택과 서비스를 이용하실 수 있습니다.
-					</p>
+			<article class="find1">
+				<h2 class="register_h2">회원가입</h2>
+				<p>
+					펫 라운지 회원가입을 환영합니다.<br>회원으로 가입하시면 다양한 혜택과 서비스를 이용하실 수 있습니다.
+				</p>
 
-					<div>
-						<input id="tab1" type="radio" name="tabs" checked>
-						<!--디폴트 메뉴-->
-						<label for="tab1"><img
-							src="/resources/images/user/join.png"><br>STEP 1<br>가입하기</label>
-						<input id="tab2" type="radio" name="tabs"> <label
-							for="tab2"><img src="/resources/images/user/checked.png"><br>STEP
-							2<br>약관동의</label> <input id="tab3" type="radio" name="tabs">
-						<label for="tab3"><img
-							src="/resources/images/user/infoInput.png"><br>STEP 3<br>정보입력</label>
-						<input id="tab4" type="radio" name="tabs"> <label
-							for="tab4"><img src="/resources/images/user/done.png"><br>STEP
-							4<br>가입완료</label>
+				<div>
+					<input id="tab1" type="radio" name="tabs" checked>
+					<!--디폴트 메뉴-->
+					<label for="tab1"><img
+						src="/resources/images/user/join.png"><br>STEP 1<br>가입하기</label>
+					<input id="tab2" type="radio" name="tabs"> <label
+						for="tab2"><img src="/resources/images/user/checked.png"><br>STEP
+						2<br>약관동의</label> <input id="tab3" type="radio" name="tabs">
+					<label for="tab3"><img
+						src="/resources/images/user/infoInput.png"><br>STEP 3<br>정보입력</label>
+					<input id="tab4" type="radio" name="tabs"> <label
+						for="tab4"><img src="/resources/images/user/done.png"><br>STEP
+						4<br>가입완료</label>
 
-						<section id="content1">
+					<section id="content1">
+						<div>
+							<h4 style="margin-top: 20px;">펫 라운지 간편 회원가입</h4>
+							<p>펫 라운지 회원으로 가입합니다.</p>
+							<br>
+							<button id="가입하기1" style="border-radius: 20px;">회원가입</button>
+						</div>
+
+						<div></div>
+
+						<div>
+							<h4>SNS 계정 회원가입</h4>
+							<p>SNS 계정을 이용하여 펫 라운지 회원으로 가입합니다.</p>
+							<br>
 							<div>
-								<h4 style="margin-top: 20px;">펫 라운지 간편 회원가입</h4>
-								<p>펫 라운지 회원으로 가입합니다.</p>
-								<br>
-								<button id="가입하기1" style="border-radius: 20px;">회원가입</button>
+								<img src="/resources/images/user/kakaoBtn.png">
+								<p>카카오톡으로 회원가입</p>
 							</div>
-
-							<div></div>
-
 							<div>
-								<h4>SNS 계정 회원가입</h4>
-								<p>SNS 계정을 이용하여 펫 라운지 회원으로 가입합니다.</p>
-								<br>
-								<div>
-									<img src="/resources/images/user/kakaoBtn.png">
-									<p>카카오톡으로 회원가입</p>
-								</div>
-								<div>
-									<img src="/resources/images/user/googleBtn.png">
-									<p>구글로 회원가입</p>
-								</div>
-								<div>
-									<img src="/resources/images/user/naverBtn.png">
-									<p>네이버로 회원가입</p>
-								</div>
+								<img src="/resources/images/user/googleBtn.png">
+								<p>구글로 회원가입</p>
 							</div>
-						</section>
+							<div>
+								<img src="/resources/images/user/naverBtn.png">
+								<p>네이버로 회원가입</p>
+							</div>
+						</div>
+					</section>
 
-						<section id="content2">
-							<label style="margin-top: 30px;"><input type="checkbox"
-								id="전체동의"> 전체 동의</label>
-							<hr>
-							<div class="accordion" id="accordionExample">
-								<div class="accordion-item">
-									<h2 class="accordion-header">
-										<label class="accordion-button collapsed" type="button"
-											data-bs-toggle="collapse" data-bs-target="#collapseOne"
-											aria-expanded="false" aria-controls="collapseOne"><input
-											type="checkbox" required> 회원 이용 약관 (필수) </label>
-									</h2>
-									<div id="collapseOne" class="accordion-collapse collapse"
-										data-bs-parent="#accordionExample">
-										<div class="accordion-body">
-											<strong style="color: red">아닙니다</strong> 그렇지 않습니다.
-										</div>
-									</div>
-								</div>
-
-								<div class="accordion-item">
-									<h2 class="accordion-header">
-										<label class="accordion-button collapsed" type="button"
-											data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-											aria-expanded="false" aria-controls="collapseTwo"><input
-											type="checkbox" required> 개인정보 수집 및 이용 (필수) </label>
-									</h2>
-									<div id="collapseTwo" class="accordion-collapse collapse"
-										data-bs-parent="#accordionExample">
-										<div class="accordion-body">
-											<strong>This is the second item's accordion body.</strong> It
-											is hidden by default, until the collapse plugin adds the
-											appropriate classes that we use to style each element. These
-											classes control the overall appearance, as well as the
-											showing and hiding via CSS transitions. You can modify any of
-											this with custom CSS or overriding our default variables.
-											It's also worth noting that just about any HTML can go within
-											the
-											<code>.accordion-body</code>
-											, though the transition does limit overflow.
-										</div>
-									</div>
-								</div>
-
-								<div class="accordion-item">
-									<h2 class="accordion-header">
-										<label class="accordion-button collapsed" type="button"
-											data-bs-toggle="collapse" data-bs-target="#collapseThree"
-											aria-expanded="false" aria-controls="collapseThree"><input
-											type="checkbox"> SMS 마케팅 수신 동의 (선택)</label>
-									</h2>
-									<div id="collapseThree" class="accordion-collapse collapse"
-										data-bs-parent="#accordionExample">
-										<div class="accordion-body">
-											<strong>This is the third item's accordion body.</strong> It
-											is hidden by default, until the collapse plugin adds the
-											appropriate classes that we use to style each element. These
-											classes control the overall appearance, as well as the
-											showing and hiding via CSS transitions. You can modify any of
-											this with custom CSS or overriding our default variables.
-											It's also worth noting that just about any HTML can go within
-											the
-											<code>.accordion-body</code>
-											, though the transition does limit overflow.
-										</div>
+					<section id="content2">
+						<label style="margin-top: 30px;"><input type="checkbox"
+							id="전체동의"> 전체 동의</label>
+						<hr>
+						<div class="accordion" id="accordionExample">
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<label class="accordion-button collapsed" type="button"
+										data-bs-toggle="collapse" data-bs-target="#collapseOne"
+										aria-expanded="false" aria-controls="collapseOne"><input
+										type="checkbox" required> 회원 이용 약관 (필수) </label>
+								</h2>
+								<div id="collapseOne" class="accordion-collapse collapse"
+									data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<strong style="color: red">아닙니다</strong> 그렇지 않습니다.
 									</div>
 								</div>
 							</div>
 
-							<p>정보수신에 동의하지 않아도 정상적인 서비스 이용이 가능합니다. 거래 정보, 결제/교환/환불 등과 관련된
-								내용은 거래 안전을 위하여 수신동의 여부와 관계없이 발송됩니다.</p>
-							<button id="다음으로1">다음으로</button>
-						</section>
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<label class="accordion-button collapsed" type="button"
+										data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+										aria-expanded="false" aria-controls="collapseTwo"><input
+										type="checkbox" required> 개인정보 수집 및 이용 (필수) </label>
+								</h2>
+								<div id="collapseTwo" class="accordion-collapse collapse"
+									data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<strong>This is the second item's accordion body.</strong> It
+										is hidden by default, until the collapse plugin adds the
+										appropriate classes that we use to style each element. These
+										classes control the overall appearance, as well as the showing
+										and hiding via CSS transitions. You can modify any of this
+										with custom CSS or overriding our default variables. It's also
+										worth noting that just about any HTML can go within the
+										<code>.accordion-body</code>
+										, though the transition does limit overflow.
+									</div>
+								</div>
+							</div>
 
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<label class="accordion-button collapsed" type="button"
+										data-bs-toggle="collapse" data-bs-target="#collapseThree"
+										aria-expanded="false" aria-controls="collapseThree"><input
+										type="checkbox"> SMS 마케팅 수신 동의 (선택)</label>
+								</h2>
+								<div id="collapseThree" class="accordion-collapse collapse"
+									data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<strong>This is the third item's accordion body.</strong> It
+										is hidden by default, until the collapse plugin adds the
+										appropriate classes that we use to style each element. These
+										classes control the overall appearance, as well as the showing
+										and hiding via CSS transitions. You can modify any of this
+										with custom CSS or overriding our default variables. It's also
+										worth noting that just about any HTML can go within the
+										<code>.accordion-body</code>
+										, though the transition does limit overflow.
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<p>정보수신에 동의하지 않아도 정상적인 서비스 이용이 가능합니다. 거래 정보, 결제/교환/환불 등과 관련된
+							내용은 거래 안전을 위하여 수신동의 여부와 관계없이 발송됩니다.</p>
+						<button id="다음으로1">다음으로</button>
+					</section>
+
+					<form action="/user/register.do" method="post"
+						enctype="multipart/form-data" id="registration-form">
 						<section id="content3">
 							<h5 style="margin-bottom: 25px; margin-top: 70px;">필수 입력 정보</h5>
 
@@ -243,7 +241,7 @@ section[id^="content"]:target {
 									<div>
 										<input type="address" id="userZipcode" placeholder="우편번호"
 											required>
-										<button onclick="sample4_exeDaumPostcode()">주소검색</button>
+										<button id="addrsearch" onclick="sample4_exeDaumPostcode()">주소검색</button>
 										<br> <input type="address" name="uAddr" id="userAddr"
 											placeholder="도로명주소" required><br>
 									</div>
@@ -255,7 +253,8 @@ section[id^="content"]:target {
 
 							<button type="submit" id="가입하기2">가입하기</button>
 						</section>
-						</form>
+
+
 
 						<section id="content4">
 							<img src="/resources/images/pet.png"">
@@ -263,11 +262,12 @@ section[id^="content"]:target {
 							<p>
 								모든 회원가입 절차가 완료되었습니다.<br>로그인 후 다양한 혜택과 서비스를 이용하실 수 있습니다.
 							</p>
-							<button type="button" onclick="showMainPage()" style="border-radius: 20px;">메인으로</button>
+							<button type="button" id="showMain" onclick="location.href='/home.do'"
+								style="border-radius: 20px;">메인으로</button>
 						</section>
-					</div>
-				</article>
-			
+					</form>
+				</div>
+			</article>
 
 
 		</section>
@@ -278,6 +278,7 @@ section[id^="content"]:target {
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
+	
 		document.addEventListener("DOMContentLoaded", function () {
 		    // 모든 탭을 숨기고 content1만 표시
 		    const contents = document.querySelectorAll('section[id^="content"]');
@@ -299,6 +300,25 @@ section[id^="content"]:target {
 		        document.getElementById('tab2').checked = true;
 		    });
 
+		    
+		 // "가입하기2" 버튼 클릭 이벤트 처리
+		    const 가입하기2 = document.getElementById('가입하기2');
+		    가입하기2.addEventListener('click', (event) => {
+		      event.preventDefault(); // 기본 폼 제출 동작 방지
+
+		      // 가입하기2 버튼 클릭 시 content4로 전환
+		      contents.forEach(content => {
+		        content.style.display = 'none';
+		      });
+		      document.getElementById('content4').style.display = 'block';
+
+		      // 탭 버튼도 변경
+		      const tabs = document.querySelectorAll('input[name="tabs"]');
+		      tabs.forEach(tab => (tab.checked = false));
+		      document.getElementById('tab4').checked = true;
+		    });
+		
+		    
 		    // "다음으로" 버튼 클릭 이벤트 처리
 		    const 다음으로1 = document.getElementById('다음으로1');
 		    다음으로1.addEventListener('click', () => {
@@ -330,31 +350,7 @@ section[id^="content"]:target {
 
 		   
 
-			// "가입하기" 버튼 클릭 이벤트 처리
-			const 가입하기2 = document.getElementById('가입하기2');
-			가입하기2.addEventListener('click', () => {
-			    // 이 부분에 실제 회원가입 로직을 처리한 뒤, 성공일 때 탭 4로 전환합니다.
-			    // 예시로 성공 상황을 가정합니다.
-			    const 회원가입성공 = true; // 실제 성공 여부에 따라서 조절
-			
-			    if (회원가입성공) {
-			        // 가입완료 탭으로 변경
-			        contents.forEach(content => {
-			            content.style.display = 'none';
-			        });
-			        document.getElementById('content4').style.display = 'block';
-			
-			        // 탭 버튼도 변경
-			        document.getElementById('tab4').checked = true;
-			
-			        // URL에 #tab4를 추가하여 탭이 열리도록 함
-			        window.location.hash = 'tab4';
-			        
-			    } else {
-			        // 가입 실패 처리
-			        alert('회원가입에 실패하였습니다. 다시 시도해주세요.');
-			    }
-			});
+
 		    
 
 		    // 탭 클릭 이벤트 처리
@@ -467,47 +463,79 @@ section[id^="content"]:target {
         
         
         
-        document.addEventListener("DOMContentLoaded", function () {
-            const registrationForm = document.getElementById("registration-form");
-            const submitButton = document.getElementById("가입하기2");
-            const tabs = document.querySelectorAll('input[name="tabs"]');
 
-            submitButton.addEventListener("click", function (e) {
-                e.preventDefault(); // 폼 제출 막기
-                
-                // FormData를 사용하여 폼 데이터 수집
-                const formData = new FormData(registrationForm);
-                
-                // AJAX 요청 생성
-                const xhr = new XMLHttpRequest();
-                xhr.open("POST", "/user/register.do", true);
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        // 성공한 경우
+
+
+
+
+
+
+
+
+     // "가입하기2" 버튼 클릭 이벤트 처리
+        const 가입하기2 = document.getElementById('가입하기2');
+        가입하기2.addEventListener('click', (event) => {
+            event.preventDefault(); // 기본 폼 제출 동작 방지
+
+            // 폼 데이터 수집
+            const formData = new FormData(document.getElementById('registration-form'));
+
+            // AJAX 요청 생성
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/user/register.do", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        // 서버 응답이 성공인 경우
                         const response = JSON.parse(xhr.responseText);
                         if (response.success) {
                             // 가입완료 탭으로 변경
+                            const tabs = document.querySelectorAll('input[name="tabs"]');
                             tabs.forEach(tab => (tab.checked = false));
                             document.getElementById("tab4").checked = true;
 
                             // URL에 #tab4를 추가하여 탭이 열리도록 함
                             window.location.hash = "tab4";
                         } else {
-                            alert("회원가입에 실패하였습니다. 다시 시도해주세요.");
+                            alert("회원가입에 실패했습니다. 다시 시도해주세요.");
                         }
+                    } else {
+                        alert("서버 오류로 인해 회원가입에 실패했습니다. 다시 시도해주세요.");
                     }
-                };
-                
-                // AJAX 요청 전송
-                xhr.send(formData);
-            });
+                }
+            };
+
+            // AJAX 요청 전송
+            xhr.send(formData);
         });
+
         
         
-    	function showMainPage() {
-			window.location.href = "/home.do";
-		}
+     // 주소 API 열기
+        function sample4_execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    // 선택한 주소 정보를 사용해 필요한 작업을 수행합니다.
+                    // 예를 들어, 주소 필드에 주소 정보를 설정하거나 다른 작업을 수행할 수 있습니다.
+                    
+                    // 팝업 창을 닫습니다.
+                    document.querySelector('#daumPostcodeFrame').style.display = 'none';
+                }
+            }).open({
+                autoClose: true
+            });
+        }
         
+     
+     // 주소 검색 버튼 클릭 이벤트 처리
+        const 주소검색버튼 = document.getElementById('addrsearch'); // 주소검색버튼의 ID에 실제 ID를 넣어주어야 합니다.
+
+        주소검색버튼.addEventListener('click', function (event) {
+            event.preventDefault(); // 폼 제출 동작을 막음
+            // 주소 검색 팝업 또는 로직을 실행하도록 추가 코드를 넣으세요
+            // 주소 검색 팝업 또는 로직은 이 코드 블록 내에 들어가야 합니다.
+        });
+
 	    </script>
 
 

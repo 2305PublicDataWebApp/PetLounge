@@ -9,7 +9,7 @@ public class User {
 	private String uName;
 	private String uNickName;
 	private String uEmail;
-	private int uPhone;
+	private String uPhone;
 	private String uAddr;
 	private String uFileName;
 	private String uFileReName;
@@ -53,10 +53,10 @@ public class User {
 	public void setuEmail(String uEmail) {
 		this.uEmail = uEmail;
 	}
-	public int getuPhone() {
+	public String getuPhone() {
 		return uPhone;
 	}
-	public void setuPhone(int uPhone) {
+	public void setuPhone(String uPhone) {
 		this.uPhone = uPhone;
 	}
 	public String getuAddr() {
@@ -110,5 +110,5 @@ public class User {
 	}
 	
 	
-
+	
 }

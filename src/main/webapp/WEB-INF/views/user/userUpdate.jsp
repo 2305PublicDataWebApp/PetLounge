@@ -29,7 +29,7 @@
 							<ul>
 								<li><a href="#">회원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/userInfo.do">회원정보조회</a></li>
+										<li><a href="/user/userInfo.do?uId=${uId}">회원정보조회</a></li>
 										<li><a href="/user/checkPw.do">회원정보수정</a></li>
 										<li><a href="/user/delete.do">회원탈퇴</a></li>
 									</ul></li>
