@@ -52,7 +52,7 @@
                                 휴게실
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">공지사항</a></li>
+                                <li><a href="/board/notice_list.do">공지사항</a></li>
                                 <li><a href="/faq/list.do">FAQ</a></li>
                                 <li><a href="#">자유게시판</a></li>
                             </ul>

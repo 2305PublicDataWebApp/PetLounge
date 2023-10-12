@@ -26,7 +26,7 @@
                     <a class="nav-link" href="/support/list.do">펫 라운지 모금함</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0);">공지사항</a>
+                    <a class="nav-link" href="/board/notice_list.do">공지사항</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/faq/list.do">FAQ</a>
