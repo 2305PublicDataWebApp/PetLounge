@@ -206,35 +206,69 @@
                     selectRegion.textContent = buttonText;
                 });
             });
-
+		// 이건 openweathermap api -> 죽어ㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓㅓ
         // 현재 날씨 정보 (서울)
         // 서울 현재 온도
-	        $.getJSON ('https://api.openweathermap.org/data/2.5/weather?id=1835848&appid=a5d1dc2dfcf28e0c9a351c9a21ef186f&units=metric', function(data){
-	//         $.getJSON ('https://api.openweathermap.org/data/2.5/weather?lat=37.5683&lon=126.9778&appid=a5d1dc2dfcf28e0c9a351c9a21ef186f&units=metric', function(data){
-	//             var $minTemp = data.main.temp_min;         // 최저 온도
-	//             var $roundedLTemp = Math.round($minTemp);  // 최저 온도(반올림)
-	//             var $maxTemp = data.main.temp_max;         // 최고 온도
-	//             var $roundedHTemp = Math.round($maxTemp);  // 최고 온도(반올림)
-	            var $temp = data.main.temp;                // 현재 온도
-	            var $roundedTemp = Math.round($temp);      // 현재 온도(반올림)
-	            var $now = new Date($.now());              // 오늘 날짜
-	            var $date = $now.getFullYear() + '년 ' + ($now.getMonth() + 1) +'월 ' + $now.getDate() +'일 ' +$now.getHours() + '시 ' + $now.getMinutes() + '분';           // 오늘 날짜s
-	            var $wIcon = data.weather[0].icon;         // 날씨 아이콘
+// 	        $.getJSON ('https://api.openweathermap.org/data/2.5/weather?id=1835848&appid=a5d1dc2dfcf28e0c9a351c9a21ef186f&units=metric', function(data){
+// 	        $.getJSON ('https://api.openweathermap.org/data/2.5/weather?lat=37.5683&lon=126.9778&appid=a5d1dc2dfcf28e0c9a351c9a21ef186f&units=metric', function(data){
+// 	            var $minTemp = data.main.temp_min;         // 최저 온도
+// 	            var $roundedLTemp = Math.round($minTemp);  // 최저 온도(반올림)
+// 	            var $maxTemp = data.main.temp_max;         // 최고 온도
+// 	            var $roundedHTemp = Math.round($maxTemp);  // 최고 온도(반올림)
+// 	            var $temp = data.main.temp;                // 현재 온도
+// 	            var $roundedTemp = Math.round($temp);      // 현재 온도(반올림)
+// 	            var $now = new Date($.now());              // 오늘 날짜
+// 	            var $date = $now.getFullYear() + '년 ' + ($now.getMonth() + 1) +'월 ' + $now.getDate() +'일 ' +$now.getHours() + '시 ' + $now.getMinutes() + '분';           // 오늘 날짜s
+// 	            var $wIcon = data.weather[0].icon;         // 날씨 아이콘
 	
-	//             $('.tLowtemp').append($roundedLTemp);
-	//             $('.tHightemp').append($roundedHTemp);
-	            $('.tTemp').append($roundedTemp);
-	            $('.tDate').prepend($date);
-	            $('.tIcon').append('<img src="https://openweathermap.org/img/wn/' + $wIcon + '.png" />')
+// 	            $('.tLowtemp').append($roundedLTemp);
+// 	            $('.tHightemp').append($roundedHTemp);
+// 	            $('.tTemp').append($roundedTemp);
+// 	            $('.tDate').prepend($date);
+// 	            $('.tIcon').append('<img src="https://openweathermap.org/img/wn/' + $wIcon + '.png" />')
+// 	        });
+			// 기상청 api
+			// 오늘 날짜
+	        let date = new Date();
+	        let year = date.getFullYear();          // 2023
+	        let month = "0" + (date.getMonth() +1);
+	        let month2 = month.substr(-2);          // 월
+	        let day = "0" + date.getDate();
+	        let day2 = day.substr(-2);              // 일
+	        let initDate = year + month2 + day2;    // 오늘 날짜
+	        console.log(initDate);
+	
+	        // 현재 시간
+	        const now = new Date();
+	        const hours = String(now.getHours()).padStart(2, '0');
+	        const minutes = String(now.getMinutes()).padStart(2, '0');
+	        const formattedTime = hours + minutes;  // 현재 시간
+	        console.log(formattedTime); //
+	
+	        const apiUrl = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst";
+	        const serviceKey = "4pYTUL0IAyNldYcuL1CFGcJpGrgPllaY%2BkD8xcBEHAbaLSA8xraNMsfHFO%2BXhGJmos%2FBszyn6LH7HoSBORAAhQ%3D%3D";
+	        const pageNo = "1";
+	        const numOfRows = "1000";
+	        const dataType = "JSON";
+	        let base_date = initDate;
+	        let base_time = formattedTime;
+	        let nx = "60";
+	        let ny = "127";
+	        const url = `${apiUrl}?serviceKey=${serviceKey}&pageNo=${pageNo}&numOfRows=${numOfRows}&dataType=${dataType}&base_date=${initDate}&base_time=${formattedTime}&nx=${nx}&ny=${ny}`;
+	        
+// 	        $.getJSON (url, function(data){
+			$.getJSON ('https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?serviceKey=4pYTUL0IAyNldYcuL1CFGcJpGrgPllaY%2BkD8xcBEHAbaLSA8xraNMsfHFO%2BXhGJmos%2FBszyn6LH7HoSBORAAhQ%3D%3D&pageNo=1&numOfRows=1000&dataType=JSON&base_date=20231011&base_time=2000&nx=60&ny=127', 
+        	function(data){
+	            const $now = new Date($.now());
+            	const $date = $now.getFullYear() + '년 ' + ($now.getMonth() + 1) +'월 ' + $now.getDate() +'일 ' +$now.getHours() + '시 ' + $now.getMinutes() + '분';
+            	console.log($date);
+				
+				
+	            const temp = data.response.body.items.item[3].obsrValue;
+	            $('.tDate').prepend($date); // 오늘 날짜
+	            $('.tTemp').append(temp);   // 현재 온도
 	        });
-	        // 시간별 날씨 정보
-	        $.getJSON ('https://api.openweathermap.org/data/2.5/weather?id=1835848&appid=a5d1dc2dfcf28e0c9a351c9a21ef186f&units=metric', function(data){
-	//             $.ajax({
-	//                 url: "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=4pYTUL0IAyNldYcuL1CFGcJpGrgPllaY%2BkD8xcBEHAbaLSA8xraNMsfHFO%2BXhGJmos%2FBszyn6LH7HoSBORAAhQ%3D%3D&pageNo=1&numOfRows=1000&dataType=JSON&base_date=20231011&base_time=0500&nx=60&ny=127",
-	//                 success: function(result) {
-	//                     console.log(result);
-	//                 },
-	//             });
+
         </script>
     </body>
 </html>
