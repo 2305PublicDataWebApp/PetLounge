@@ -29,6 +29,8 @@ import com.lounge.pet.support.domain.PageInfo;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.support.service.SupportService;
+import com.lounge.pet.user.domain.User;
+import com.lounge.pet.user.service.UserService;
 
 
 @Controller
@@ -36,6 +38,9 @@ public class SupportController {
 	
 	@Autowired
 	private SupportService sService;
+	
+	@Autowired
+	private UserService uService;
 
 	// 후원 목록 페이지
 	@RequestMapping(value="/support/list.do", method = RequestMethod.GET)
@@ -259,14 +264,31 @@ public class SupportController {
 	public String insertReply(ModelAndView mv
 			, @ModelAttribute SupportReply sReply
 			, HttpSession session) {
-//		String uId = (String)session.getAttribute("uId");
-		String uId = "user01";
-		// session의 id로 유저 정보 접근해서 닉네임 불러와서 같이 넘겨줌
-		String uNickname = "동숲주민"; // 화면에만 보여주면 되니까 나중에 uId로 셀렉트해와서 넘겨주기 
+		String uId = (String)session.getAttribute("uId");
 		int result = 0;
-		if(uNickname != null && !uNickname.equals("")) {
+		if(uId != null && !uId.equals("")) {
 			sReply.setuId(uId);
 			result = sService.insertReply(sReply);
+		}
+		if(result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	// 댓글 수정 
+	
+	// 댓글 삭제 
+	@ResponseBody
+	@RequestMapping(value="/sReply/delete.do", method=RequestMethod.GET)
+	public String deleteReply(
+			@RequestParam("sRNo") Integer sRNo
+			, HttpSession session) {
+		String uId = (String)session.getAttribute("uId");
+		int result = 0;
+		if(uId != null && uId.equals(uId)) {
+			result = sService.deleteReply(sRNo);
 		}
 		if(result > 0) {
 			return "success";
@@ -282,10 +304,10 @@ public class SupportController {
 					, method = RequestMethod.GET)
 	public String showReplyList(Integer sNo) {
 		List<SupportReply> sRList = sService.selectSReplyList(sNo);
-		// List 데이터를 JSON 형태로 만드는 방법 
-		// 1. JSONObject, JSONArray 
-		// 2. Gson
-		// 3. HashMap 
+		for (SupportReply sReply : sRList) {
+	        User user = uService.selectOneById(sReply.getuId()); 
+	        sReply.setsRWriter(user.getuNickName());
+	    }
 		Gson gson = new Gson();
 		return gson.toJson(sRList);
 	}

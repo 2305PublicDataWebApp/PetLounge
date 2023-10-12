@@ -264,6 +264,7 @@
                     <button class="btn-update" onClick="location.href='/support/update.do?sNo='+${support.sNo }">수정하기</button>
                     <button class="btn-delete" onclick="checkDelete();">삭제하기</button>
                 </div>
+                
             </section>
         </main>
 		
@@ -291,6 +292,27 @@
 					}
 				});
 			});
+			// 댓글 수정 
+			
+			// 댓글 삭제 
+			const deleteReply = (sRNo) => {
+				$.ajax({
+					url : "/sReply/delete.do",
+					data : { sRNo : sRNo },
+					type : "GET",
+					success : function(data) {
+						if(data == "success") {
+							alert("댓글 삭제 성공!");
+							getReplyList();
+						} else {
+							alert("댓글 삭제 실패!");
+						}
+					},
+					error : function() {
+						alert("Ajax 오류! 관리자에게 문의하세요.");
+					}
+				});
+			}
 			// 날짜 포맷팅 
 			const getFormattedDate = (dateString) => {
 			    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'};
@@ -299,6 +321,7 @@
 			};
 			// 댓글 리스트를 불러오는 ajax Function 
 			const getReplyList = () => {
+				let sessionId = "${sessionScope.uId}";
 				const sNo = ${support.sNo };
 				$.ajax({
 					url : "/sReply/list.do",
@@ -311,19 +334,24 @@
 						let left;
 						let center;
 						let right;
-						
 						if(result.length > 0) {
 							for(let i in result) {
 								tr = $("<tr>"); // <tr></tr>
 								left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;'></div>"); // <td>khuser01</td>
 								center = $("<td class='td'>").html(
-										"<div class='user-info-div'><span class='user-nickname'>"+result[i].uId+"</span><span class='reply-create-date'>"+getFormattedDate(result[i].sRCreate)+"</span></div><div class='reply-content'>"+result[i].sRContent+"</div>"); // <td>댓글내용</td>
-								right = $("<td class='td'>").html(
-										"<a href='' class='reply-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal'>수정</a><a href='' class='reply-delete-btn'>삭제</a>"); // <td>2023/09/26</td>
+										"<div class='user-info-div'><span class='user-nickname'>"+result[i].sRWriter+"</span><span class='reply-create-date'>"+getFormattedDate(result[i].sRCreate)+"</span></div><div class='reply-content'>"+result[i].sRContent+"</div>"); // <td>댓글내용</td>
+								if(sessionId === result[i].uId) {
+									right = $("<td class='td'>").html(
+											"<a href='' class='reply-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal'>수정</a><a href='javascript:void(0)' class='reply-delete-btn' onclick='deleteReply("+result[i].sRNo+");'>삭제</a>"); 
+								} else {
+									right = $("<td class='td'>").html("");
+								}
+				
 								tr.append(left);
 								tr.append(center);
 								tr.append(right); // <tr><td></td><td></td>...</tr>
 								tableBody.append(tr); // <tbody><tr><td></td><td></td>...</tr></tbody> -> 눈에 보이게 됨
+								console.log(result[i].uId);
 							}
 						} else {
 							tr = $("<tr class='td'><td class='td'colspan='3'style='width:725px;'><div width='100%'>등록된 댓글이 없습니다.</div></td></tr>");

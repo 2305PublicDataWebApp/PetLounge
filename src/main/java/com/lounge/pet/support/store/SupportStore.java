@@ -87,5 +87,13 @@ public interface SupportStore {
 	 */
 	int getListCount(SqlSession sqlSession, int sNo);
 
+	/**
+	 * 후원댓글 삭제 Store
+	 * @param sqlSession
+	 * @param sRNo
+	 * @return int
+	 */
+	int deleteReply(SqlSession sqlSession, int sRNo);
+
 
 }
