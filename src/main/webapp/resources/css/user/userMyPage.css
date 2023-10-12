@@ -16,6 +16,10 @@ table {
 	border-spacing: 0;
 }
 
+header {
+	line-height: 1.5;
+}
+
 .clearfix::before, .clearfix::after {
 	display: block;
 	content: '';
@@ -34,8 +38,8 @@ table {
 	box-sizing: content-box !important;
 }
 
-.aside { -
-	-border: 1px solid #000;
+.aside { 
+	--border: 1px solid #000;
 	float: left;
 	width: 200px;
 	height: 1000px;
