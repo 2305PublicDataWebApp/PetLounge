@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lounge.pet.hospital.domain.HReview;
 import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.hospital.service.HospitalService;
 import com.lounge.pet.hospital.store.HospitalStore;
@@ -18,6 +19,12 @@ public class HospitalServiceImpl implements HospitalService {
 	@Autowired
 	private HospitalStore hStore;
 	
+	@Override
+	public int insertHosReview(HReview hReview) {
+		int result = hStore.insertHosReview(session, hReview);
+		return result;
+	}
+
 	@Override
 	public int updateXYtoLatLng(Hospital hosLocation) {
 		int result = hStore.updateXYtoLatLng(session, hosLocation);
