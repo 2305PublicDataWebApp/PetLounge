@@ -15,4 +15,5 @@ public class WeatherController {
 		mv.setViewName("weather/weather");
 		return mv;
 	}
+	
 }
