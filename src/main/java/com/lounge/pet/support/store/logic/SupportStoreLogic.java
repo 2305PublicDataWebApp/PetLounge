@@ -77,6 +77,12 @@ public class SupportStoreLogic implements SupportStore{
 		return result;
 	}
 
+	@Override
+	public int deleteReply(SqlSession sqlSession, int sRNo) {
+		int result = sqlSession.delete("SReplyMapper.deleteReply", sRNo);
+		return result;
+	}
+
 	
 
 }

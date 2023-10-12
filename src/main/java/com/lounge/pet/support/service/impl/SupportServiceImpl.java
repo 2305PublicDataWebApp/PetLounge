@@ -81,4 +81,10 @@ public class SupportServiceImpl implements SupportService{
 		return result;
 	}
 
+	@Override
+	public int deleteReply(int sRNo) {
+		int result = sStore.deleteReply(sqlSession, sRNo);
+		return result;
+	}
+
 }

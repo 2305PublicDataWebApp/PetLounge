@@ -76,4 +76,11 @@ public interface SupportService {
 	 */
 	int getReplyListCount(int sNo);
 
+	/**
+	 * 후원댓글 삭제 Service
+	 * @param sRNo
+	 * @return int 
+	 */
+	int deleteReply(int sRNo);
+
 }
