@@ -12,11 +12,20 @@ header {
     z-index: 1000;
 }
 
+h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+    line-height: 1;
+    padding-top: 120px;
+    justify-content: center;
+    display: flex;
+}
+    
 #line {
-	width: 60%;
+	width: 30%;
 	height: 1.5px;
 	background-color: lightgray;
-	margin: 20px auto 60px auto;
+	margin: 40px auto 60px auto;
 }
 
 #line2 {
@@ -27,7 +36,7 @@ header {
 }
 
 .custom-main {
-	height: auto;
+	height: 100vh;
 }
 
 h2 {

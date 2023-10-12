@@ -23,9 +23,14 @@
         <jsp:include page="../include/header.jsp"></jsp:include>
 
         <main class="custom-main">
-        <br><br><br><br>
-        <h2>공지사항</h2>
-        <div id="line"></div>
+<!--         <br><br><br><br> -->
+<!--         <h2>공지사항</h2> -->
+<!--         <div id="line"></div> -->
+        
+        <section id="title-section">
+            <h1>공지사항</h1>
+            <div id="line"></div>
+        </section>
 
         <div class="square-container">
             <div id="notice">
