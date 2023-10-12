@@ -10,8 +10,8 @@ import com.lounge.pet.user.store.UserStore;
 public class UserStoreLogic implements UserStore{
 
 	@Override
-	public int userRegister(SqlSession session, User user) {
-		int result = session.insert("UserMapper.userRegister", user);
+	public int insertUser(SqlSession session, User user) {
+		int result = session.insert("UserMapper.insertUser", user);
 		return result;
 	}
 
@@ -25,6 +25,12 @@ public class UserStoreLogic implements UserStore{
 	public User selectOneById(SqlSession session, String uId) {
 		User user = session.selectOne("UserMapper.selectOneById", uId);
 		return user;
+	}
+
+	@Override
+	public int updateUser(SqlSession session, User user) {
+		int result  = session.update("UserMapper.updateUser", user);
+		return result;
 	}
 
 }

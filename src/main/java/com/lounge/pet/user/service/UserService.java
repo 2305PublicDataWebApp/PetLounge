@@ -9,7 +9,7 @@ public interface UserService {
 	 * @param user
 	 * @return int
 	 */
-	int userRegister(User user);
+	int insertUser(User user);
 
 	/**
 	 * 로그인
@@ -24,5 +24,12 @@ public interface UserService {
 	 * @return
 	 */
 	User selectOneById(String uId);
+
+	/**
+	 * 회원정보수정
+	 * @param user
+	 * @return
+	 */
+	int UpdateUser(User user);
 
 }

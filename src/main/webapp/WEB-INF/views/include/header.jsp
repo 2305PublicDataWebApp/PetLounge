@@ -35,7 +35,7 @@
                     <a class="nav-link" href="javascript:void(0);">자유게시판</a>
                 </li>
             </ul>
-            <c:if test="${ sessionScope.userId eq null }">
+            <c:if test="${ sessionScope.uId eq null }">
 	            <ul class="navbar-nav ml-auto">
 	                <li class="nav-item">
 	                    <a class="nav-link" href="/user/login.do">로그인</a>
@@ -45,7 +45,7 @@
 	                </li>
 	            </ul>            
             </c:if>
-            <c:if test="${ sessionScope.userId ne null }">
+            <c:if test="${ sessionScope.uId ne null }">
 	            <ul class="navbar-nav ml-auto">
 	                <li class="nav-item">
 	                    <a class="nav-link" href="/user/logout.do;">로그아웃</a>

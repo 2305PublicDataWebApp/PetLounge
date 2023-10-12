@@ -67,9 +67,8 @@
 							</div>
 						</div>
 						<div>
-							<form action="/user/idpwFind.do" method="get">
+							<form action="/user/checkPw.do" method="post">
 								<article class="find1">
-									<!-- <h2>회원가입</h2> -->
 									<p>
 										펫 라운지 회원정보수정<br>회원님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인해주세요.
 									</p>
@@ -90,8 +89,8 @@
 												</div>
 	
 												<div style="width: 357px;">
-													<input type="text" placeholder="아이디를 입력하세요." id="input"><br>
-													<br> <input type="text" placeholder="비밀번호를 입력하세요."
+													<input type="text"  value="${uId }" name="uId"  id="input" readonly><br>
+													<br> <input type="password" name="uPw" placeholder="비밀번호를 입력하세요."
 														id="input"><br> <br>
 	
 													<!-- <button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button><br> -->
@@ -101,7 +100,7 @@
 												</div>
 											</div>
 	
-											<button type="button" onclick="showUpdatePage()">확인</button>
+											<button type="submit">확인</button>
 										</section>
 	
 									</div>
@@ -131,9 +130,7 @@
 				$(".subMenu").not(subMenu).slideUp();
 			});
 	
-			function showUpdatePage() {
-				location.href="/user/update.do"
-			}
+		
 			
 			
 		</script>

@@ -12,7 +12,7 @@ public interface UserStore {
 	 * @param user
 	 * @return int
 	 */
-	int userRegister(SqlSession session, User user);
+	int insertUser(SqlSession session, User user);
 
 	/**
 	 * 로그인
@@ -29,5 +29,13 @@ public interface UserStore {
 	 * @return
 	 */
 	User selectOneById(SqlSession session, String uId);
+
+	/**
+	 * 회원정보수정
+	 * @param session
+	 * @param user
+	 * @return
+	 */
+	int updateUser(SqlSession session, User user);
 
 }

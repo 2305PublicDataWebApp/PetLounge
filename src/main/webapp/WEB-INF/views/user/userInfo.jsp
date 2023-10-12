@@ -126,7 +126,7 @@
 												</div>
 											</div>
 	
-										<button type="submit" onclick="showCheckPwPage()">수정하기</button>
+										<button type="button" onclick="showCheckPwPage()">수정하기</button>
 										</section>
 	
 									</div>
@@ -157,8 +157,8 @@
 				$(".subMenu").not(subMenu).slideUp();
 			});
 	
-			function showCheckPwPage() {
-				location.href="/user/checkPw.do"
+			function showCheckPwPage(uId) {
+				location.href="/user/checkPw.do";
 			}
 			
 		</script>

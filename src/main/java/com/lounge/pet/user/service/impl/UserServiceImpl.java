@@ -17,8 +17,8 @@ public class UserServiceImpl implements UserService{
 	private SqlSession session;
 
 	@Override
-	public int userRegister(User user) {
-		int result = uStore.userRegister(session, user);
+	public int insertUser(User user) {
+		int result = uStore.insertUser(session, user);
 		return result;
 	}
 
@@ -32,6 +32,12 @@ public class UserServiceImpl implements UserService{
 	public User selectOneById(String uId) {
 		User user = uStore.selectOneById(session, uId);
 		return user;
+	}
+
+	@Override
+	public int UpdateUser(User user) {
+		int result = uStore.updateUser(session, user);
+		return result;
 	}
 
 }

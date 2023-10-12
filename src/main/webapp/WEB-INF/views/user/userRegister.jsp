@@ -262,8 +262,8 @@ section[id^="content"]:target {
 							<p>
 								모든 회원가입 절차가 완료되었습니다.<br>로그인 후 다양한 혜택과 서비스를 이용하실 수 있습니다.
 							</p>
-							<button type="button" id="showMain" onclick="location.href='/home.do'"
-								style="border-radius: 20px;">메인으로</button>
+							<button type="button" id="showMain"
+								onclick="location.href='/home.do'" style="border-radius: 20px;">메인으로</button>
 						</section>
 					</form>
 				</div>

@@ -82,13 +82,13 @@
                     	<c:if test="${ sessionScope.uId ne null }">
 	                        <ul>
 	                            <li>
-	                                <a href="user/logout.do">
+	                                <a href="/user/logout.do">
 	                                    <i class="fa fa-sign-out user-icon"></i>
 	                                    logout
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="/user/userInfo.do?uId=${uId}">
+	                                <a href="/user/userInfo.do">
 	                                    <i class="fa fa-regular fa-user user-icon"></i>
 	                                    my page
 	                                </a>
