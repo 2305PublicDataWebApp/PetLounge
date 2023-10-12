@@ -21,61 +21,63 @@
 	<body>
 			<jsp:include page="../include/header.jsp"></jsp:include>
 		<main>
-	
-			<div class="container">
-				<div class="backbox">
-					<div class="loginMsg">
-						<div class="textcontent">
-							<div
-								style="float: left; display: flex; width: 300px; margin-bottom: 10px;">
-								<img src="/resources/images/pet.png"
-									style="width: 30px; height: 30px;">
-								<p class="title" style="margin-left: 10px;">펫 라운지</p>
+			<section id="find-section">
+			
+				<div class="find-container">
+					<div class="backbox">
+						<div class="loginMsg">
+							<div class="textcontent">
+								<div
+									style="float: left; display: flex; width: 300px; margin-bottom: 10px;">
+									<img src="/resources/images/pet.png"
+										style="width: 30px; height: 30px;">
+									<p class="title" style="margin-left: 10px;">펫 라운지</p>
+								</div>
+								<p>비밀번호를 잊어버리셨나요?</p>
+								<button id="switch1">비밀번호 찾기</button>
 							</div>
-							<p>비밀번호를 잊어버리셨나요?</p>
-							<button id="switch1">비밀번호 찾기</button>
 						</div>
-					</div>
-					<div class="signupMsg visibility">
-						<div class="textcontent">
-							<div
-								style="float: left; display: flex; width: 300px; margin-bottom: 10px;">
-								<img src="/resources/images/pet.png"
-									style="width: 30px; height: 30px;">
-								<p class="title" style="margin-left: 10px;">펫 라운지</p>
+						<div class="signupMsg visibility">
+							<div class="textcontent">
+								<div
+									style="float: left; display: flex; width: 300px; margin-bottom: 10px;">
+									<img src="/resources/images/pet.png"
+										style="width: 30px; height: 30px;">
+									<p class="title" style="margin-left: 10px;">펫 라운지</p>
+								</div>
+								<p>아이디를 잊어버리셨나요?</p>
+								<button id="switch2">아이디 찾기</button>
 							</div>
-							<p>아이디를 잊어버리셨나요?</p>
-							<button id="switch2">아이디 찾기</button>
 						</div>
 					</div>
+					<!-- backbox -->
+		
+					<div class="frontbox">
+						<div class="login">
+							<h2>아이디 찾기</h2>
+							<div class="inputbox">
+								<input type="text" name="email" placeholder="  FULLNAME">
+								<input type="text" name="password" placeholder="  EMAIL">
+							</div>
+							<!-- <p>FORGET PASSWORD?</p> -->
+							<button>확인</button>
+						</div>
+		
+						<div class="signup hide">
+							<h2>비밀번호 찾기</h2>
+							<div class="inputbox">
+								<input type="text" name="fullname" placeholder="  ID">
+								<!-- <input type="text" name="email" placeholder="  EMAIL"> -->
+								<input type="text" name="password" placeholder="  EMAIL">
+							</div>
+							<button>확인</button>
+						</div>
+		
+					</div>
+					<!-- frontbox -->
 				</div>
-				<!-- backbox -->
-	
-				<div class="frontbox">
-					<div class="login">
-						<h2>아이디 찾기</h2>
-						<div class="inputbox">
-							<input type="text" name="email" placeholder="  FULLNAME">
-							<input type="text" name="password" placeholder="  EMAIL">
-						</div>
-						<!-- <p>FORGET PASSWORD?</p> -->
-						<button>확인</button>
-					</div>
-	
-					<div class="signup hide">
-						<h2>비밀번호 찾기</h2>
-						<div class="inputbox">
-							<input type="text" name="fullname" placeholder="  ID">
-							<!-- <input type="text" name="email" placeholder="  EMAIL"> -->
-							<input type="text" name="password" placeholder="  EMAIL">
-						</div>
-						<button>확인</button>
-					</div>
-	
-				</div>
-				<!-- frontbox -->
-			</div>
-	
+		
+			</section>
 		</main>
 			<jsp:include page="../include/footer.jsp"></jsp:include>
 	
