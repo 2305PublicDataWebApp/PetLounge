@@ -142,7 +142,7 @@ main {
             td > div {
                 display: flex;
                 --align-items: flex-end;
-                align-items: center;
+                --align-items: center;
             }
 
                 .arrow-icon {

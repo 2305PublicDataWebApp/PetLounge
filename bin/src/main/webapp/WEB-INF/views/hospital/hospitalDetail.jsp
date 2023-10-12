@@ -252,7 +252,7 @@
 			    var latlng = map.getCenter(); 
 			
 			    $.ajax({
-			        url: '/hospital/page.do', 
+			        url: '/hospital/page.pet', 
 			        type: 'POST',
 			        data: {
 			        	level: level, // 업데이트된 레벨 값

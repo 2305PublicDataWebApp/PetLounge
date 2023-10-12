@@ -7,6 +7,6 @@
 		<title>펫 라운지에 오신 걸 환영합니다!</title>
 	</head>
 	<body>
-		<jsp:forward page="/home.do"></jsp:forward>
+		<jsp:forward page="/home.pet"></jsp:forward>
 	</body>
 </html>

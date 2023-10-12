@@ -33,17 +33,17 @@
                 <nav class="main-nav">
                     <ul>
                         <li>
-                            <a href="/hospital/page.do">
+                            <a href="/hospital/page.pet">
                                 동물병원 안내
                             </a>
                         </li>
                         <li>
-                            <a href="/weather/weather.do">
+                            <a href="/weather/weather.pet">
                                 산책 날씨 예보
                             </a>
                         </li>
                         <li>
-                            <a href="/support/list.do">
+                            <a href="/support/list.pet">
                                 펫 라운지 모금함
                             </a>
                         </li>
@@ -52,8 +52,8 @@
                                 휴게실
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="/board/notice_list.do">공지사항</a></li>
-                                <li><a href="/faq/list.do">FAQ</a></li>
+                                <li><a href="/board/notice_list.pet">공지사항</a></li>
+                                <li><a href="/faq/list.pet">FAQ</a></li>
                                 <li><a href="#">자유게시판</a></li>
                             </ul>
                         </li>
@@ -66,13 +66,13 @@
                     	<c:if test="${ sessionScope.uId eq null }">
 	                        <ul>
 	                            <li>
-	                                <a href="/user/login.do">
+	                                <a href="/user/login.pet">
 	                                    <i class="fa fa-sign-in user-icon"></i>
 	                                    login
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="/user/register.do">
+	                                <a href="/user/register.pet">
 	                                    <i class="fa fa-solid fa-plus user-icon"></i>
 	                                    register
 	                                </a>
@@ -82,13 +82,13 @@
                     	<c:if test="${ sessionScope.uId ne null }">
 	                        <ul>
 	                            <li>
-	                                <a href="/user/logout.do">
+	                                <a href="/user/logout.pet">
 	                                    <i class="fa fa-sign-out user-icon"></i>
 	                                    logout
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="/user/userInfo.do">
+	                                <a href="/user/userInfo.pet">
 	                                    <i class="fa fa-regular fa-user user-icon"></i>
 	                                    my page
 	                                </a>
@@ -131,7 +131,7 @@
                         <h1 class="title">동물병원 안내</h1>
                         <p class="info">펫 라운지를 통해 주변 동물병원을 간편하게 찾아보세요<br>반려동물의 건강은 행복의 첫걸음입니다</p>
                     </div>
-                    <form action="/hospital/search.do" method="post" id="search-hospital-form">
+                    <form action="/hospital/search.pet" method="post" id="search-hospital-form">
                         <div>
                             <input type="search" name="hSearchKeyword" id="h-search-keyword" class="search-input" placeholder="찾고자 하는 주소 또는 동물 병원의 이름을 입력하세요"> 
                             <span class="material-symbols-outlined search-icon" onclick="searchHospital();" style="font-size: 3.5em; color: #FFD370; cursor: pointer; margin-left: 10px;">
@@ -149,7 +149,7 @@
                     <h1 class="title">산책 날씨 예보</h1>
                     <p class="info">펫 라운지는 반려동물과 함께 안전하고 즐거운 산책을 즐기는 데 도움을 드립니다</p>
                     <div>
-                        <button class="link-btn" onclick="location.href='/weather/weather.do'">오늘의 날씨 확인하기</button>
+                        <button class="link-btn" onclick="location.href='/weather/weather.pet'">오늘의 날씨 확인하기</button>
                     </div>
                 </div>
             </section>
@@ -192,12 +192,12 @@
 <!-- 			                	<div class="col-xl-3 col-md-6 portfolio-item filter-books"> -->
 <!-- 					                <div class="cards" style="border-radius: 20px;"> -->
 <!-- 					                	<div> -->
-<%-- 						                	<a href="/support/detail.do?sNo=${support.sNo }" > --%>
+<%-- 						                	<a href="/support/detail.pet?sNo=${support.sNo }" > --%>
 <!-- 			                                         <img src="/resources/images/cat.jpg" class="card-img" -->
 <!-- 						                    	onerror="this.src='https://petrounge.s3.ap-northeast-2.amazonaws.com/noimage.png'"></a> -->
 <!-- 					                	</div> -->
 <!-- 					                    <div class="card-content"> -->
-<%-- 					                        <strong class="card-title"><a href="/support/detail.do?sNo=${support.sNo }" title="More Details">${support.sTitle }</a></strong> --%>
+<%-- 					                        <strong class="card-title"><a href="/support/detail.pet?sNo=${support.sNo }" title="More Details">${support.sTitle }</a></strong> --%>
 <%-- 					                        <div class="card-group">${support.sGroup }</div> --%>
 <!-- 					                        <div class="card-bar"> -->
 <%-- 					                            <span class="card-bar-collection" id="graph-num" style="width: ${(support.sFundAmount / support.sTargetAmount) * 100}%;"></span> --%>
@@ -219,7 +219,7 @@
 <!--                         </div> -->
                     </div>
                     <div>
-                        <button class="link-btn" onclick="location.href='/support/list.do'">더 많은 후원 보기</button>
+                        <button class="link-btn" onclick="location.href='/support/list.pet'">더 많은 후원 보기</button>
                     </div>
                 </div>
             </section>

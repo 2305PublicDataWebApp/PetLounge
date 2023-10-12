@@ -48,7 +48,7 @@
             <!-- 지도 -->
             <section id="map-section">
                 <!-- 검색창 -->
-                <form action="/hospital/search.do" method="post" id="search-hospital-form">
+                <form action="/hospital/search.pet" method="post" id="search-hospital-form">
                     <div id="search-div">
                     	<c:if test="${ hSearchKeyword ne null }">
 	                        <input type="search" value="${ hSearchKeyword }" name="hSearchKeyword" id="h-search-keyword" class="search-input" placeholder="찾고자 하는 주소 또는 동물 병원의 이름을 입력하세요">                     	
@@ -114,7 +114,7 @@
 						<c:if test="${ !empty hList }">
 							<!-- 기본 주소 리스트 -->
 							<c:forEach var="hosList" items="${ hList }" end="5">
-<!-- 								<tr onclick="location.href='/hospital/detail.do'"> -->
+<!-- 								<tr onclick="location.href='/hospital/detail.pet'"> -->
 								<tr onclick="changeCenter(${ hosList.hLat }, ${ hosList.hLng });">
 									<td class="">
 										<!-- <span class="material-symbols-outlined star-icon-fill" style="color: #FFD370;">
@@ -207,7 +207,7 @@
 					            '					<a href="tel:' + positions[i].phone + '" class="h-tel">' +
 					            						positions[i].phone + 
 					            '					</a>' + 
-					            '					<a href="/hospital/detail.do?hNo=' + positions[i].no + '" class="h-detail">' +
+					            '					<a href="/hospital/detail.pet?hNo=' + positions[i].no + '" class="h-detail">' +
 					            '						상세보기' +
 					            '					</a>' + 
 					            '				</div>' +
@@ -326,7 +326,7 @@
 			    var latlng = map.getCenter(); 
 			
 			    $.ajax({
-			        url: '/hospital/page.do', 
+			        url: '/hospital/page.pet', 
 			        type: 'POST',
 			        data: {
 			        	level: level, // 업데이트된 레벨 값

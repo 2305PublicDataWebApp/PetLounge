@@ -32,7 +32,7 @@
                 <nav class="main-nav">
                     <ul>
                         <li>
-                            <a href="/hospital/page.do">
+                            <a href="/hospital/page.pet">
                                 동물병원 안내
                             </a>
                         </li>
@@ -42,7 +42,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/support/list.do">
+                            <a href="/support/list.pet">
                                 펫 라운지 모금함
                             </a>
                         </li>
@@ -64,13 +64,13 @@
                     	<c:if test="${ sessionScope.userId eq null }">
 	                        <ul>
 	                            <li>
-	                                <a href="/userLogin/page.do">
+	                                <a href="/userLogin/page.pet">
 	                                    <i class="fa fa-sign-in user-icon"></i>
 	                                    login
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="/userRegister/page.do">
+	                                <a href="/userRegister/page.pet">
 	                                    <i class="fa fa-solid fa-plus user-icon"></i>
 	                                    register
 	                                </a>
@@ -86,7 +86,7 @@
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="/userInfo/page.do">
+	                                <a href="/userInfo/page.pet">
 	                                    <i class="fa fa-regular fa-user user-icon"></i>
 	                                    my page
 	                                </a>
@@ -186,7 +186,7 @@
                         </div>
                     </div>
                     <div>
-                        <button class="link-btn" onclick="location.href='/support/list.do'">더 많은 후원 보기</button>
+                        <button class="link-btn" onclick="location.href='/support/list.pet'">더 많은 후원 보기</button>
                     </div>
                 </div>
             </section>

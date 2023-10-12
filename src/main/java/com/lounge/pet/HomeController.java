@@ -19,7 +19,7 @@ public class HomeController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/home.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/home.pet", method = RequestMethod.GET)
 	public ModelAndView home(ModelAndView mv) {
 
 //		List<Support> sList = sService.selectSupportList();
