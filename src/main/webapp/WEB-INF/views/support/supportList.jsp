@@ -84,12 +84,12 @@
 		                	<div class="col-xl-3 col-md-6 portfolio-item filter-books">
 				                <div class="cards" style="border-radius: 20px;">
 				                	<div>
-					                	<a href="/support/detail.do?sNo=${support.sNo }" >
+					                	<a href="/support/detail.do?sNo=${support.sNo }" class="a-detail">
 		                                         <img src="/resources/images/cat.jpg" class="card-img"
 					                    	onerror="this.src='https://petrounge.s3.ap-northeast-2.amazonaws.com/noimage.png'"></a>
 				                	</div>
 				                    <div class="card-content">
-				                        <strong class="card-title"><a href="/support/detail.do?sNo=${support.sNo }" title="More Details">${support.sTitle }</a></strong>
+				                        <strong class="card-title"><a href="/support/detail.do?sNo=${support.sNo }"  class="a-detail" title="More Details">${support.sTitle }</a></strong>
 				                        <div class="card-group">${support.sGroup }</div>
 				                        <div class="card-bar">
 				                            <sapn class="card-bar-collection" id="graph-num" style="width: ${(support.sFundAmount / support.sTargetAmount) * 100}%;"></sapn>

@@ -287,7 +287,7 @@
 						}
 					},
 					error : function() {
-						
+						alert("Ajax 오류! 관리자에게 문의하세요.");
 					}
 				});
 			});
@@ -306,6 +306,7 @@
 					type : "GET",
 					success : function(result) {
 						const tableBody = $("#replyTable tbody");
+						tableBody.html('');
 						let tr;
 						let left;
 						let center;
@@ -334,7 +335,10 @@
 					}
 				});
 			}
-			getReplyList();
+			$(function(){
+				getReplyList();
+				// setInterval(getReplyList, 1000); // 1초 단위로 getReplyList가 호출되어 댓글 실시간 조회
+			})
 			<!-- 디데이 구하기 -->
 			const sStart = new Date('${support.sStart}');
 		    const sEnd = new Date('${support.sEnd}');

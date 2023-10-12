@@ -280,7 +280,7 @@ body {
 }
 
 
-a, a:hover, a:link, a:active, a:visited { 
+.a-detail , .a-detail:hover, .a-detail:link, .a-detail:active, .a-detail:visited { 
 	text-decoration: none; 
 	color : black;
 }
