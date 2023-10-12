@@ -14,4 +14,20 @@ public interface UserStore {
 	 */
 	int userRegister(SqlSession session, User user);
 
+	/**
+	 * 로그인
+	 * @param session
+	 * @param user
+	 * @return int
+	 */
+	User userLogin(SqlSession session, User user);
+
+	/**
+	 * 회원정보조회
+	 * @param session
+	 * @param uId
+	 * @return
+	 */
+	User selectOneById(SqlSession session, String uId);
+
 }

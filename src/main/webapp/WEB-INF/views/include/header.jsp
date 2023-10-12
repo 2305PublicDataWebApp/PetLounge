@@ -48,7 +48,7 @@
             <c:if test="${ sessionScope.userId ne null }">
 	            <ul class="navbar-nav ml-auto">
 	                <li class="nav-item">
-	                    <a class="nav-link" href="javascript:void(0);">로그아웃</a>
+	                    <a class="nav-link" href="/user/logout.do;">로그아웃</a>
 	                </li>
 	                <li class="nav-item">
 	                    <a class="nav-link" href="/user/userInfo.do">마이페이지</a>

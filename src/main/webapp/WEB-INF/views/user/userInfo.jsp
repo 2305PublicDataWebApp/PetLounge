@@ -31,7 +31,7 @@
 							<ul>
 								<li><a href="#">회원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/userInfo.do">회원정보조회</a></li>
+										<li><a href="/user/userInfo.do?uId=${uId}">회원정보조회</a></li>
 										<li><a href="/user/checkPw.do">회원정보수정</a></li>
 										<li><a href="/user/delete.do">회원탈퇴</a></li>
 									</ul></li>
@@ -70,6 +70,7 @@
 						</div>
 						<div>
 							<form action="/user/userInfo.do" method="get">
+							  <input type="hidden" name="uId" value="${uId}">
 								<article class="find1">
 									<!-- <h2>회원가입</h2> -->
 									<p>
@@ -93,26 +94,19 @@
 	
 												</div>
 	
-												<div>
-													<input type="text" placeholder="아이디를 입력하세요."><br>
+												<div style="width: 357.5px;">
+													<input type="text" value="${ user.uId }" readonly><br>
 													<br>
 													<!-- <button class="중복확인버튼">중복확인</button><br> -->
 													<!-- <input type="password" placeholder="영문, 숫자 조합 6~12자"><br><br> -->
 													<!-- <input type="password" placeholder="영문, 숫자 조합 6~12자"><br><br> -->
-													<input type="text" placeholder="이름을 입력하세요."><br>
-													<br> <input type="text" placeholder="닉네임을 입력하세요."><br>
+													<input type="text" value="${ user.uName }" readonly><br>
+													<br> <input type="text" value="${ user.uNickName }" readonly><br>
 													<br>
 													<!-- <button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button><br> -->
-													<input type="email"> @ <select size="1"
-														style="border-radius: 20px;">
-														<option>hanmail.net</option>
-														<option>naver.com</option>
-														<option>gmail.com</option>
-														<option>hotmail.com</option>
-														<option>nate.com</option>
-													</select><br> <br>
+													<input type="email" value="${ user.uEmail }" readonly style="width: 357.5px;"><br><br>
 													<!-- <button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button><br> -->
-													<input type="tel" placeholder="예) 010-1234-1375"><br>
+													<input type="tel" value="${ user.uPhone }" readonly><br>
 													<br>
 												</div>
 											</div>
@@ -124,19 +118,15 @@
 													</div>
 	
 													<div>
-														<input type="address" placeholder="우편번호">
+<!-- 														<input type="address" placeholder="우편번호"> -->
 														<!-- <button>주소검색</button><br> -->
-														<input type="address" placeholder="도로명주소"><br>
-														<input type="address" placeholder="상세주소"><br>
+														<input type="address" value="${ user.uAddr }" readonly style="width: 357.5px;"><br>
 														<br>
 													</div>
 												</div>
 											</div>
 	
-	
-	
-	
-											<button type="button" onclick="showCheckPwPage()">수정하기</button>
+										<button type="submit" onclick="showCheckPwPage()">수정하기</button>
 										</section>
 	
 									</div>

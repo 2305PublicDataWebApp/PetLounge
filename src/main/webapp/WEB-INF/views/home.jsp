@@ -62,7 +62,7 @@
                 <!-- 회원관리 -->
                 <div class="menu-footer">
                     <nav class="footer-nav">
-                    	<c:if test="${ sessionScope.userId eq null }">
+                    	<c:if test="${ sessionScope.uId eq null }">
 	                        <ul>
 	                            <li>
 	                                <a href="/user/login.do">
@@ -78,16 +78,16 @@
 	                            </li>
 	                        </ul>
                         </c:if>
-                    	<c:if test="${ sessionScope.userId ne null }">
+                    	<c:if test="${ sessionScope.uId ne null }">
 	                        <ul>
 	                            <li>
-	                                <a href="#">
+	                                <a href="user/logout.do">
 	                                    <i class="fa fa-sign-out user-icon"></i>
 	                                    logout
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="/user/userInfo.do">
+	                                <a href="/user/userInfo.do?uId=${uId}">
 	                                    <i class="fa fa-regular fa-user user-icon"></i>
 	                                    my page
 	                                </a>
