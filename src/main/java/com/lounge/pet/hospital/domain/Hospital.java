@@ -12,16 +12,13 @@ public class Hospital {
 	private double hY;
 	private double hLat;
 	private double hLng;
+	private double distance;
+	private String uId;
 	private String hSearchKeyword;
+	private String hBookmark;
 	
 	public Hospital() {	}
 	
-	public Hospital(double hLat, double hLng) {
-		super();
-		this.hLat = hLat;
-		this.hLng = hLng;
-	}
-
 	public Hospital(int hNo, double hLat, double hLng) {
 		super();
 		this.hNo = hNo;
@@ -29,10 +26,18 @@ public class Hospital {
 		this.hLng = hLng;
 	}
 	
-	public Hospital(double hLat, double hLng, String hSearchKeyword) {
+	public Hospital(double hLat, double hLng, String uId) {
 		super();
 		this.hLat = hLat;
 		this.hLng = hLng;
+		this.uId = uId;
+	}
+
+	public Hospital(double hLat, double hLng, String uId, String hSearchKeyword) {
+		super();
+		this.hLat = hLat;
+		this.hLng = hLng;
+		this.uId = uId;
 		this.hSearchKeyword = hSearchKeyword;
 	}
 
@@ -102,17 +107,36 @@ public class Hospital {
 	public void sethLng(double hLng) {
 		this.hLng = hLng;
 	}
+	public double getDistance() {
+		return distance;
+	}
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+	public String getuId() {
+		return uId;
+	}
+	public void setuId(String uId) {
+		this.uId = uId;
+	}
 	public String gethSearchKeyword() {
 		return hSearchKeyword;
 	}
 	public void sethSearchKeyword(String hSearchKeyword) {
 		this.hSearchKeyword = hSearchKeyword;
 	}
-
+	public String gethBookmark() {
+		return hBookmark;
+	}
+	public void sethBookmark(String hBookmark) {
+		this.hBookmark = hBookmark;
+	}
 	@Override
 	public String toString() {
-		return "동물병원 [번호=" + hNo + ", 이름=" + hName + ", 개방서비스명=" + hOpen + ", 상세영업상태명=" + hStatus + ", 전화번호="
-				+ hPhone + ", 전체주소=" + hAddr + ", 도로명전체주소=" + hRoadAddr + ", x좌표=" + hX + ", y좌표=" + hY + ", 위도=" 
-				+ hLat + ", 경도=" + hLng + ", 검색어=" + hSearchKeyword + "]";
+		return "Hospital [hNo=" + hNo + ", hName=" + hName + ", hOpen=" + hOpen + ", hStatus=" + hStatus + ", hPhone="
+				+ hPhone + ", hAddr=" + hAddr + ", hRoadAddr=" + hRoadAddr + ", hX=" + hX + ", hY=" + hY + ", hLat="
+				+ hLat + ", hLng=" + hLng + ", distance=" + distance + ", uId=" + uId + ", hSearchKeyword="
+				+ hSearchKeyword + ", hBookmark=" + hBookmark + "]";
 	}
+
 }

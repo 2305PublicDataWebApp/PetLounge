@@ -56,7 +56,7 @@ public interface HospitalStore {
 	 * @param userBook
 	 * @return
 	 */
-	HBookmark selectHBook(SqlSession session, HBookmark userBook);
+	int selectHBook(SqlSession session, HBookmark userBook);
 
 	/**
 	 * 기본 주소 기준으로 동물병원 5개 불러오기 Store

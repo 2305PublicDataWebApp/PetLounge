@@ -308,7 +308,6 @@
 				    }
 				    					
 					markers[i].setMap(map); // 지도 위에 마커 표시
-					overlays[0].setMap(map); // 첫번째 결과만 우선 표시
 					
 			 		// 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
 					(function (marker, overlay) {
@@ -326,6 +325,7 @@
 			            });
 				    })(marker, overlay);
 				}
+				overlays[0].setMap(map); // 첫번째 결과만 우선 표시
 			}
 			
 			function loadHospitalList(hList) {
@@ -354,7 +354,11 @@
 			            var bookmarkDiv = document.createElement('div');
 			            var bookmarkIcon = document.createElement('span');
 			            // if로 즐겨찾기를 했을 때 클래스명, 아닐 때 클래스명 나눠주기
-			            bookmarkIcon.className = 'material-symbols-outlined bookmark-icon-none';
+			            if(hList[i].hBookmark == null) {
+				            bookmarkIcon.className = 'material-symbols-outlined bookmark-icon-none';			            	
+			            } else {
+				            bookmarkIcon.className = 'material-symbols-outlined bookmark-icon-fill';			            	
+			            }
 			            bookmarkIcon.style.color = '#FFD370';
 			            bookmarkIcon.textContent = 'bookmark';
 			            bookmarkDiv.appendChild(bookmarkIcon);
@@ -363,16 +367,8 @@
 			            // 즐겨찾기
 						bookmarkIcon.addEventListener('click', (function (index) {
 						    return function () {
-						        if (this.classList.contains('bookmark-icon-none')) {
-						            this.classList.remove('bookmark-icon-none');
-						            this.classList.add('bookmark-icon-fill');
-						            console.log(hList[index].hNo);
-						        } else {
-						            this.classList.remove('bookmark-icon-fill');
-						            this.classList.add('bookmark-icon-none');
-						        }
 						        var bookmarkHNo = hList[index].hNo;
-						        addToHBookmark(bookmarkHNo);
+						        addToHBookmark(bookmarkHNo, this);
 						    };
 						})(i));
 
@@ -431,7 +427,7 @@
 			                findList(map, latlng.getLat(), latlng.getLng());
 			            },
 			            error: function(error) {
-			
+							alert("지도 이동 이벤트 오류");
 			            }
 			        });
 			    }
@@ -467,6 +463,7 @@
 			    var moveLatLng = new kakao.maps.LatLng(lat, lng);
 			    map.panTo(moveLatLng);            
 			    findList(map, lat, lng);
+			    document.getElementById('h-search-keyword').value = '';
 			}        
 			
 			// 리스트 클릭 시 중심좌표 부드럽게 이동
@@ -498,7 +495,8 @@
 				    alert('현위치를 가져올 수 없습니다...');
 				    map.panTo(new kakao.maps.LatLng(lat, lng)); 
 				}
-				        
+				
+				document.getElementById('h-search-keyword').value = '';
 			}
 			
 			// 동물병원 검색 ajax
@@ -529,18 +527,28 @@
 			}
 			
 			// 즐겨찾기 ajax
-			function addToHBookmark(bookmarkHNo) {
+			function addToHBookmark(bookmarkHNo, bookmark) {
 		        $.ajax({
 		            url: '/hospital/addToHBookmark.pet',
 		            type: 'POST',
 		            data: {
 		                hNo: bookmarkHNo
 		            },
-		            success: function (successYn) {
-		            	
+		            success: function (success) {
+		            	if(success == "insert"){
+// 		            		alert("북마크 등록 성공");
+		            		bookmark.classList.remove('bookmark-icon-none');
+		                    bookmark.classList.add('bookmark-icon-fill');
+		            	} else if(success == "delete") {
+// 		            		alert("북마크 등록 삭제");
+		            		bookmark.classList.remove('bookmark-icon-fill');
+		                    bookmark.classList.add('bookmark-icon-none');
+		            	} else if(success == "fail") {
+			                alert("로그인이 필요한 서비스입니다.");
+		            	}
 		            },
 		            error: function (error) {
-		                alert("로그인이 필요한 서비스입니다.");
+		            	alert("즐겨찾기 오류");
 		            }
 		        });
 		    }

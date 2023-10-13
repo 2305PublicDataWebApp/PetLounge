@@ -13,7 +13,7 @@
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9674da3ceea3cb3a1acdb7044a416e8&libraries=services,clusterer"></script>
         <title>${ hOne.hName } 상세 안내</title>
         <style>
-            .bookmark-icon-fill, .call-icon, .location-icon, .home-icon, .search-icon {
+            .call-icon, .location-icon, .home-icon, .search-icon {
                 margin-right: 10px;
                 font-size: 20px;
                 font-variation-settings:
@@ -26,6 +26,14 @@
             .bookmark-icon-none {
                 font-variation-settings:
                 'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+            }
+
+            .bookmark-icon-fill {
+                font-variation-settings:
+                'FILL' 1,
                 'wght' 400,
                 'GRAD' 0,
                 'opsz' 24
@@ -71,12 +79,16 @@
                 <div id="map-div">
                     <!-- 지도 -->
                     <div>
-                        <!-- <span class="material-symbols-outlined bookmark-icon-fill" style="color: #FFD370;">
-                                    bookmark
-                        </span> -->
-                        <span class="material-symbols-outlined bookmark-icon-none" style="color: #FFD370;">
-                            bookmark
-                        </span>
+                    	<c:if test="${ hBookmark eq 1 }">
+						    <span id="bookmark-icon" class="material-symbols-outlined bookmark-icon-fill" style="color: #FFD370;" onclick="hosBookmark(${ hOne.hNo });">
+						        bookmark
+						    </span>
+						</c:if>
+						<c:if test="${ hBookmark eq 0 }">
+						    <span id="bookmark-icon" class="material-symbols-outlined bookmark-icon-none" style="color: #FFD370;" onclick="hosBookmark(${ hOne.hNo });">
+						        bookmark
+						    </span>
+						</c:if>
                     </div>
                     <div id="map" style="position:relative;overflow:hidden;">
 	                    <!-- 지도타입 컨트롤 div 입니다 -->
@@ -292,6 +304,34 @@
 			function zoomOut() {
 			    map.setLevel(map.getLevel() + 1);
 			}
+		</script>
+		<!-- 즐겨찾기 -->
+		<script>
+		    function hosBookmark(bookmarkHNo) {
+		        var bookmark = document.getElementById('bookmark-icon');
+		
+		        $.ajax({
+		            url: '/hospital/addToHBookmark.pet',
+		            type: 'POST',
+		            data: {
+		                hNo: bookmarkHNo
+		            },
+		            success: function (success) {
+		                if (success == "insert") {
+		                    bookmark.classList.remove('bookmark-icon-none');
+		                    bookmark.classList.add('bookmark-icon-fill');
+		                } else if (success == "delete") {
+		                    bookmark.classList.remove('bookmark-icon-fill');
+		                    bookmark.classList.add('bookmark-icon-none');
+		                } else if (success == "fail") {
+		                    alert("로그인이 필요한 서비스입니다.");
+		                }
+		            },
+		            error: function (error) {
+		                alert("즐겨찾기 오류");
+		            }
+		        });
+		    }
 		</script>
     </body>
 </html>

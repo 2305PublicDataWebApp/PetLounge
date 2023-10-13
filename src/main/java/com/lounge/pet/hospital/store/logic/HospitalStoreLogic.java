@@ -44,6 +44,12 @@ public class HospitalStoreLogic implements HospitalStore {
 	}
 
 	@Override
+	public int selectHBook(SqlSession session, HBookmark userBook) {
+		int hBOne = session.selectOne("HosMapper.selectHBook", userBook);
+		return hBOne;
+	}
+
+	@Override
 	public List<Hospital> selectFiveHos(SqlSession session, Hospital userLocation) {
 		List<Hospital> hList = session.selectList("HosMapper.selectFiveHos", userLocation);
 		return hList;
@@ -59,12 +65,6 @@ public class HospitalStoreLogic implements HospitalStore {
 	public List<Hospital> selectAllList(SqlSession session) {
 		List<Hospital> hList = session.selectList("HosMapper.selectAllList");
 		return hList;
-	}
-
-	@Override
-	public HBookmark selectHBook(SqlSession session, HBookmark userBook) {
-		HBookmark hBOne = session.selectOne("HosMapper.selectHBook", userBook);
-		return hBOne;
 	}
 
 }

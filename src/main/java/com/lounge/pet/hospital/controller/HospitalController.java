@@ -85,8 +85,10 @@ public class HospitalController {
 	@ResponseBody
 	@GetMapping("/hospital/findList.pet")
 	public String hosFindList(@RequestParam("latitude") Double latitude
-			 				, @RequestParam("longitude") Double longitude) {
-		Hospital userLocation = new Hospital(latitude, longitude);
+			 				, @RequestParam("longitude") Double longitude
+			 				, HttpSession session) {
+		String sessionId = (String) session.getAttribute("uId");
+		Hospital userLocation = new Hospital(latitude, longitude, sessionId);
 		List<Hospital> hList = hService.selectFiveHos(userLocation);
 		Gson gson = new Gson();
 		return gson.toJson(hList);
@@ -94,10 +96,15 @@ public class HospitalController {
 	
 	// 동물병원 안내 상세 페이지
 	@GetMapping("/hospital/detail.pet")
-	public ModelAndView hospitalDetailPage(int hNo, ModelAndView mv) {
+	public ModelAndView hospitalDetailPage(int hNo
+										, HttpSession session
+										, ModelAndView mv) {
+		String sessionId = (String) session.getAttribute("uId");
 		Hospital hOne = hService.selectOneByhNo(hNo);
+		HBookmark userBook = new HBookmark(sessionId, hNo);
+		int hBookmark = hService.selectHBook(userBook);
 		
-		mv.addObject("hOne", hOne)
+		mv.addObject("hOne", hOne).addObject("hBookmark", hBookmark)
 		.setViewName("/hospital/hospitalDetail");
 		return mv;
 	}
@@ -107,9 +114,11 @@ public class HospitalController {
 	@GetMapping("/hospital/search.pet")
 	public String hospitalSearch(@RequestParam("latitude") Double latitude
 								, @RequestParam("longitude") Double longitude
-								, @RequestParam("hSearchKeyword") String hSearchKeyword) {
+								, @RequestParam("hSearchKeyword") String hSearchKeyword
+								, HttpSession session) {
 		
-		Hospital userSearchLocation = new Hospital(latitude, longitude, hSearchKeyword);
+		String sessionId = (String) session.getAttribute("uId");
+		Hospital userSearchLocation = new Hospital(latitude, longitude, sessionId, hSearchKeyword);
 		List<Hospital> hList = hService.selectFiveByKeyword(userSearchLocation);
 		Gson gson = new Gson();
 		return gson.toJson(hList);
@@ -117,34 +126,31 @@ public class HospitalController {
 	
 	// 동물병원 즐겨찾기 기능
 	@ResponseBody
-	@GetMapping("/hospital/addToHBookmark.pet")
+	@PostMapping("/hospital/addToHBookmark.pet")
 	public String addToFavorites(int hNo, HttpSession session) {
 		String sessionId = (String) session.getAttribute("uId");
-		String successYn = "";
+		String success = "";
 		
 		if(sessionId != null) {
 			HBookmark userBook = new HBookmark(sessionId, hNo);
-			// hNo uId 일치하는걸 select하고
-			HBookmark hBOne = hService.selectHBook(userBook);
-			if(hBOne == null) {
+			int hBOne = hService.selectHBook(userBook);
+			if(hBOne == 0) {
 				// 없으면 insert
 				int result = hService.insertHBook(userBook);
 				if(result > 0) {
-					successYn = "success";
+					success = "insert";
 				}
 			} else {
 				// 있으면 delete
 				int result = hService.deleteHBook(userBook);
 				if(result > 0) {
-					successYn = "fail";
+					success = "delete";
 				}
 			}
 		} else {
-			
+			success = "fail";
 		}
-		return successYn;
-//		Gson gson = new Gson();
-//		return gson.toJson();
+		return success;
 	}
 	
 	
@@ -180,10 +186,10 @@ public class HospitalController {
 	@ResponseBody
 	@GetMapping("/hospital/moveLocation.pet")
 	public String hospitalPage(@RequestParam(value="latitude", required = false) Double latitude
-							 , @RequestParam(value="longitude", required = false) Double longitude) {
-		Hospital userLocation = null;
-		userLocation = new Hospital(latitude, longitude);
-		
+							 , @RequestParam(value="longitude", required = false) Double longitude
+							 , HttpSession session) {
+		String sessionId = (String) session.getAttribute("uId");
+		Hospital userLocation = new Hospital(latitude, longitude, sessionId);
 		List<Hospital> hList = hService.selectFiveHos(userLocation);
 		Gson gson = new Gson();
 		return gson.toJson(hList); 

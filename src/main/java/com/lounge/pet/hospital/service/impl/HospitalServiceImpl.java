@@ -51,8 +51,8 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public HBookmark selectHBook(HBookmark userBook) {
-		HBookmark hBOne = hStore.selectHBook(session, userBook);
+	public int selectHBook(HBookmark userBook) {
+		int hBOne = hStore.selectHBook(session, userBook);
 		return hBOne;
 	}
 

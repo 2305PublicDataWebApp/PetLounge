@@ -48,7 +48,7 @@ public interface HospitalService {
 	 * @param userBook
 	 * @return
 	 */
-	HBookmark selectHBook(HBookmark userBook);
+	int selectHBook(HBookmark userBook);
 
 	/**
 	 * 기본 주소 기준으로 동물병원 5개 불러오기 Service
