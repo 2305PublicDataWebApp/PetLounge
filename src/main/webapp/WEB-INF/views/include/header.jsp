@@ -26,13 +26,13 @@
                     <a class="nav-link" href="/support/list.pet">펫 라운지 모금함</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/board/notice_list.pet">공지사항</a>
+                    <a class="nav-link" href="/notice/notice_list.pet">공지사항</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/faq/list.pet">FAQ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="javascript:void(0);">자유게시판</a>
+                    <a class="nav-link" href="/board/free_list.pet">자유게시판</a>
                 </li>
             </ul>
             <c:if test="${ sessionScope.uId eq null }">
