@@ -25,18 +25,7 @@
 				<div id="wrap" class="clearfix">
 					<aside class="aside">
 					<div class="logo">
-						<!-- 프로필 사진 등록 전 -->
-						<c:if test="${ user.uFileReName eq null }">
-							<img class="logoImgNo" src="/resources/images/user/cat.png"
-								alt="로고">
-						</c:if>
-
-						<!-- 프로필 사진 -->
-						<c:if test="${ user.uFileReName ne null }">
-							<img class="logoImg"
-								src="../resources/userUploadFiles/${user.uFileReName }"
-								alt="프로필">
-						</c:if>
+						<img class="logoImg" src="${user.uFilePath }">
 					</div>
 					<nav class="nav" style="display: block;">
 							<ul>
@@ -107,13 +96,13 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${user }" var="uOne" varStatus="i">
+<%-- 									<c:forEach items="${user }" var="uOne" varStatus="i"> --%>
 										<tr>
 											<td>user</td>
 											<td>password</td>
-											<c:url var="detailUrl" value="/admin/aInfo.pet">
-												<c:param name="userId" value="${uOne.userId }"></c:param>
-											</c:url>
+<%-- 											<c:url var="detailUrl" value="/admin/aInfo.pet"> --%>
+<%-- 												<c:param name="userId" value="${uOne.userId }"></c:param> --%>
+<%-- 											</c:url> --%>
 											<td><a href="${detailUrl }">이름</a></td>
 											<td>닉네임</td>
 											<td>가입일</td>
@@ -121,9 +110,9 @@
 										<tr>
 											<td>user</td>
 											<td>password</td>
-											<c:url var="detailUrl" value="/admin/aInfo.pet">
-												<c:param name="userId" value="${uOne.userId }"></c:param>
-											</c:url>
+<%-- 											<c:url var="detailUrl" value="/admin/aInfo.pet"> --%>
+<%-- 												<c:param name="userId" value="${uOne.userId }"></c:param> --%>
+<%-- 											</c:url> --%>
 											<td><a href="${detailUrl }">이름</a></td>
 											<td>닉네임</td>
 											<td>가입일</td>
@@ -131,37 +120,37 @@
 										<tr>
 											<td>user</td>
 											<td>password</td>
-											<c:url var="detailUrl" value="/admin/aInfo.pet">
-												<c:param name="userId" value="${uOne.userId }"></c:param>
-											</c:url>
+<%-- 											<c:url var="detailUrl" value="/admin/aInfo.pet"> --%>
+<%-- 												<c:param name="userId" value="${uOne.userId }"></c:param> --%>
+<%-- 											</c:url> --%>
 											<td><a href="${detailUrl }">이름</a></td>
 											<td>닉네임</td>
 											<td>가입일</td>
 										</tr>
-									</c:forEach>
+<%-- 									</c:forEach> --%>
 								</tbody>
 							</table>
 							<div class="paging" style="margin-top: 50px;">
 								<div>
-									<c:if test="${nInfo.nStartNavi != 1}">
-										<c:url var="preUrl" value="/notice/n_list.pet">
-											<c:param name="page" value="${nInfo.nStartNavi -1 }" />
-										</c:url>
-										<a href="${preUrl }">[이전]</a>
-									</c:if>
-									<c:forEach begin="${nInfo.nStartNavi }" end="${nInfo.nEndNavi }"
-										var="n">
-										<c:url var="pageUrl" value="/notice/n_list.pet">
-											<c:param name="page" value="${n }"></c:param>
-										</c:url>
-										<a href="${pageUrl }">1 2 3 4 5</a>&nbsp;
-	                                </c:forEach>
-									<c:if test="${nInfo.nEndNavi != nInfo.nNaviTotalCount }">
-										<c:url var="nextUrl" value="/notice/n_list.pet">
-											<c:param name="page" value="${nInfo.nEndNavi +1 }" />
-										</c:url>
-										<a href="${nextUrl }">[다음]</a>
-									</c:if>
+<%-- 									<c:if test="${nInfo.nStartNavi != 1}"> --%>
+<%-- 										<c:url var="preUrl" value="/notice/n_list.pet"> --%>
+<%-- 											<c:param name="page" value="${nInfo.nStartNavi -1 }" /> --%>
+<%-- 										</c:url> --%>
+<%-- 										<a href="${preUrl }">[이전]</a> --%>
+<%-- 									</c:if> --%>
+<%-- 									<c:forEach begin="${nInfo.nStartNavi }" end="${nInfo.nEndNavi }" --%>
+<%-- 										var="n"> --%>
+<%-- 										<c:url var="pageUrl" value="/notice/n_list.pet"> --%>
+<%-- 											<c:param name="page" value="${n }"></c:param> --%>
+<%-- 										</c:url> --%>
+<%-- 										<a href="${pageUrl }">1 2 3 4 5</a>&nbsp; --%>
+<%-- 	                                </c:forEach> --%>
+<%-- 									<c:if test="${nInfo.nEndNavi != nInfo.nNaviTotalCount }"> --%>
+<%-- 										<c:url var="nextUrl" value="/notice/n_list.pet"> --%>
+<%-- 											<c:param name="page" value="${nInfo.nEndNavi +1 }" /> --%>
+<%-- 										</c:url> --%>
+<%-- 										<a href="${nextUrl }">[다음]</a> --%>
+<%-- 									</c:if> --%>
 								</div>
 							</div>
 						</div>

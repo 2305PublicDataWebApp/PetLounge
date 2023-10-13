@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,18 +25,7 @@
 			<div id="wrap" class="clearfix">
 				<aside class="aside">
 					<div class="logo">
-						<!-- 프로필 사진 등록 전 -->
-						<c:if test="${ user.uFileReName eq null }">
-							<img class="logoImgNo" src="/resources/images/user/cat.png"
-								alt="로고">
-						</c:if>
-
-						<!-- 프로필 사진 -->
-						<c:if test="${ user.uFileReName ne null }">
-							<img class="logoImg"
-								src="../resources/userUploadFiles/${user.uFileReName }"
-								alt="프로필">
-						</c:if>
+						<img class="logoImg" src="${user.uFilePath }">
 					</div>
 					<nav class="nav" style="display: block;">
 						<ul>
@@ -79,7 +69,7 @@
 						</div>
 					</div>
 					<div>
-						<form action="/user/update.pet" method="post">
+						<form action="/user/update.pet" method="post" enctype="multipart/form-data" id="registration-form">
 							<input type="hidden" name="uId" value="${uId}">
 							<article class="find1">
 								<!-- <h2>회원가입</h2> -->
@@ -94,6 +84,7 @@
 
 										<div>
 											<div>
+												<p style="margin-bottom: 69px; margin-top: 8px;">프로필 사진</p>
 												<p style="margin-top: 3px;">아이디</p>
 												<p style="margin-top: 47px;">비밀번호</p>
 												<p style="margin-top: 30px">비밀번호 확인</p>
@@ -105,32 +96,48 @@
 											</div>
 
 											<div style="width: 357.5px;">
-												<input type="text" value="${user.uId }" readonly>
+												<div style=" display: flex; justify-content: center; align-items: flex-end;">
+													<input type="file" class="real-upload" accept="image/*"
+														onchange="setThumbnail(event);" name="uploadFile" multiple
+														style="display: none;" required>
+													<div id="thumbnail" style="width: 100px; height: 100px; border-radius: 50%; border: 1px solid #999; display: flex; align-items: center; justify-content: center;">
+															<img id="image-preview"
+																src="${user.uFilePath }"
+															style="width: 100px; height: 100px; max-width: 100px; max-height: 100px; border-radius: 50%; ">
+													</div>
+													<a id="deleteImg" style="display: flex; align-content: stretch; align-items: center"><img src="/resources/images/user/delete.png" style="width: 25px; height: 25px;"></a>
+												</div>
+												<br> <input type="text" value="${user.uId }" style="margin-top: -10px;" readonly>
 												<button class="중복확인버튼">중복확인</button>
 												<br> <input type="password" name="uPw"
-													placeholder="영문, 숫자 조합 6~12자"><br>
-												<br> <input type="password" name="uPwRe"
-													placeholder="영문, 숫자 조합 6~12자"><br>
+													value="${user.uPw }"><br> <br> <input
+													type="password" name="uPwRe" value="${user.uPw }"><br>
 												<br> <input type="text" value="${user.uName }"
-													name="uName" readonly><br>
-												<br> <input type="text" name="uNickName"
-													placeholder="닉네임을 입력하세요.">
+													name="uName" readonly><br> <br> <input
+													type="text" name="uNickName" value="${user.uNickName }">
 												<button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button>
 												<br> <input type="text" name="uEmailPrefix"
-													id="uEmailPrefix" placeholder="이메일을 입력하세요."
-													oninput="combineEmail()" style="width: 184px;" required>@
+													id="uEmailPrefix"
+													value="${fn:substringBefore(user.uEmail, '@')}"
+													oninput="combineEmail()" style="width: 199px;" required>@
 												<select name="uEmailSuffix" id="uEmailSuffix" size="1"
-													style="border-radius: 20px;" onchange="combineEmail()">
-													<option>hanmail.net</option>
-													<option>naver.com</option>
-													<option>gmail.com</option>
-													<option>hotmail.com</option>
-													<option>nate.com</option>
-												</select> <input type="hidden" name="uEmail" id="uEmail" value=""><br>
+													style="border-radius: 20px;"
+													onchange="combineEmailSuffix()">
+													<option value="hanmail.net"
+														${fn:contains(user.uEmail, 'hanmail.net') ? 'selected' : ''}>hanmail.net</option>
+													<option value="naver.com"
+														${fn:contains(user.uEmail, 'naver.com') ? 'selected' : ''}>naver.com</option>
+													<option value="gmail.com"
+														${fn:contains(user.uEmail, 'gmail.com') ? 'selected' : ''}>gmail.com</option>
+													<option value="hotmail.com"
+														${fn:contains(user.uEmail, 'hotmail.com') ? 'selected' : ''}>hotmail.com</option>
+													<option value="nate.com"
+														${fn:contains(user.uEmail, 'nate.com') ? 'selected' : ''}>nate.com</option>
+												</select> <input type="hidden" name="uEmail" id="uEmail"
+													value="${user.uEmail}"><br>
 												<button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button>
 												<br> <input type="tel" name="uPhone"
-													placeholder="예) 010-1234-1375"><br>
-												<br>
+													value="${user.uPhone }"><br> <br>
 											</div>
 										</div>
 										<div class="join2">
@@ -141,11 +148,11 @@
 												</div>
 
 												<div>
-													<input type="address" id="userZipcode" placeholder="우편번호"
+													<input type="address" id="userZipcode" value="${user.uAddrNo }" name="uAddrNo"
 														required>
 													<button id="addrsearch" onclick="sample4_exeDaumPostcode()">주소검색</button>
 													<br> <input type="address" name="uAddr" id="userAddr"
-														placeholder="도로명주소" required><br>
+														value="${user.uAddr }" required><br>
 													<br>
 												</div>
 											</div>
@@ -231,6 +238,50 @@
 			// 주소 검색 팝업 또는 로직을 실행하도록 추가 코드를 넣으세요
 			// 주소 검색 팝업 또는 로직은 이 코드 블록 내에 들어가야 합니다.
 		});
+		
+		
+		//이메일 @ 뒷부분 select value값 설정
+		function combineEmailSuffix() {
+		    const uEmailPrefix = document.getElementById("uEmailPrefix").value;
+		    const uEmailSuffix = document.getElementById("uEmailSuffix").value;
+		    const combinedEmail = uEmailPrefix + "@" + uEmailSuffix;
+		    document.getElementById("uEmail").value = combinedEmail;
+		}
+		
+		<!-- 이미지 div 선택시 파일 업로드 -->
+        const realUpload = document.querySelector('.real-upload');
+        const upload = document.querySelector('#thumbnail');
+        upload.addEventListener('click', () => realUpload.click());
+        <!-- 이미지 업로드 미리보기 -->
+        function setThumbnail(event){
+            for(const image of event.target.files){
+                const reader = new FileReader();
+                reader.onload = function(event){
+                    const img = document.getElementById("image-preview");
+                    img.src = event.target.result;
+                }
+                reader.readAsDataURL(image);
+            }
+        }
+		
+
+     	// 이미지 삭제 함수
+        document.getElementById("deleteImg").addEventListener("click", function() {
+            if (confirm("이미지를 삭제하시겠습니까?")) {
+                // 이미지 삭제 로직을 추가
+                // 예: 이미지 서버에서 삭제하거나, 이미지 정보를 빈 값으로 업데이트
+                // user.setuFileName("");
+                // user.setuFileReName("");
+                // user.setuFilePath("");
+                // user.setuFileLength(0L);
+                // 이미지 미리보기 업데이트
+                document.getElementById("image-preview").src = "/resources/images/user/upload.png";
+            }
+        });
+     
+     
+		// 페이지가 로드되면 호출하여 우편번호를 설정합니다.
+		//setZipcodeFromAddress();
 	</script>
 </body>
 </html>

@@ -11,6 +11,7 @@ public class User {
 	private String uEmail;
 	private String uPhone;
 	private String uAddr;
+	private String uAddrNo;
 	private String uFileName;
 	private String uFileReName;
 	private String uFilePath;
@@ -65,6 +66,12 @@ public class User {
 	public void setuAddr(String uAddr) {
 		this.uAddr = uAddr;
 	}
+	public String getuAddrNo() {
+		return uAddrNo;
+	}
+	public void setuAddrNo(String uAddrNo) {
+		this.uAddrNo = uAddrNo;
+	}
 	public String getuFileName() {
 		return uFileName;
 	}
@@ -101,13 +108,15 @@ public class User {
 	public void setuStatus(String uStatus) {
 		this.uStatus = uStatus;
 	}
+	
 	@Override
 	public String toString() {
 		return "User [uId=" + uId + ", uPw=" + uPw + ", uPwRe=" + uPwRe + ", uName=" + uName + ", uNickName="
-				+ uNickName + ", uEmail=" + uEmail + ", uPhone=" + uPhone + ", uAddr=" + uAddr + ", uFileName="
-				+ uFileName + ", uFileReName=" + uFileReName + ", uFilePath=" + uFilePath + ", uFileLength="
-				+ uFileLength + ", uRegDate=" + uRegDate + ", uStatus=" + uStatus + "]";
+				+ uNickName + ", uEmail=" + uEmail + ", uPhone=" + uPhone + ", uAddr=" + uAddr + ", uAddrNo=" + uAddrNo
+				+ ", uFileName=" + uFileName + ", uFileReName=" + uFileReName + ", uFilePath=" + uFilePath
+				+ ", uFileLength=" + uFileLength + ", uRegDate=" + uRegDate + ", uStatus=" + uStatus + "]";
 	}
+	
 	
 	
 	

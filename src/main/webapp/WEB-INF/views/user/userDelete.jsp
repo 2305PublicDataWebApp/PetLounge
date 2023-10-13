@@ -25,18 +25,7 @@
 				<div id="wrap" class="clearfix">
 					<aside class="aside">
 					<div class="logo">
-						<!-- 프로필 사진 등록 전 -->
-						<c:if test="${ user.uFileReName eq null }">
-							<img class="logoImgNo" src="/resources/images/user/cat.png"
-								alt="로고">
-						</c:if>
-
-						<!-- 프로필 사진 -->
-						<c:if test="${ user.uFileReName ne null }">
-							<img class="logoImg"
-								src="../resources/userUploadFiles/${user.uFileReName }"
-								alt="프로필">
-						</c:if>
+						<img class="logoImg" src="${user.uFilePath }">
 					</div>
 					<nav class="nav" style="display: block;">
 							<ul>

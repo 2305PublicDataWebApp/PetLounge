@@ -14,6 +14,7 @@
 <!-- 		<result property="uEmail" 			column="U_EMAIL" /> -->
 <!-- 		<result property="uPhone" 			column="U_PHONE" /> -->
 <!-- 		<result property="uAddr" 			column="U_ADDR" /> -->
+<!-- 		<result property="uAddrNo" 			column="U_ADDRNO" /> -->
 <!-- 		<result property="uFileName" 		column="U_FILENAME" /> -->
 <!-- 		<result property="uFileReName" 		column="U_FILERENAME" /> -->
 <!-- 		<result property="uFilePath" 		column="U_FILEPATH" /> -->
@@ -24,7 +25,7 @@
 	
 	<!-- 회원가입 -->
 	<insert id="insertUser">
-		INSERT INTO USER_TBL VALUES(#{ uId }, #{ uPw }, #{ uPwRe }, #{ uName }, #{ uNickName }, #{ uEmail }, #{ uPhone }, #{ uAddr }, #{ uFileName }, #{ uFileReName }, #{ uFilePath }, #{ uFileLength }, DEFAULT, DEFAULT)
+		INSERT INTO USER_TBL VALUES(#{ uId }, #{ uPw }, #{ uPwRe }, #{ uName }, #{ uNickName }, #{ uEmail }, #{ uPhone }, #{ uAddr }, #{ uAddrNo }, #{ uFileName }, #{ uFileReName }, #{ uFilePath }, #{ uFileLength }, DEFAULT, DEFAULT)
 	</insert>
 	
 	<!-- 로그인 -->
@@ -39,12 +40,17 @@
 	
 	<!-- 회원정보수정 -->
 	<update id="updateUser">
-		UPDATE USER_TBL SET U_PW = #{ uPw }, U_PWRE = #{ uPwRe }, U_NAME = #{ uName }, U_NICKNAME = #{ uNickName }, U_EMAIL = #{ uEmail } , U_PHONE = #{ uPhone }, U_ADDR = #{ uAddr } WHERE U_ID = #{ uId } AND U_STATUS = 'Y'
+		UPDATE USER_TBL SET U_PW = #{ uPw }, U_PWRE = #{ uPwRe }, U_NAME = #{ uName }, U_NICKNAME = #{ uNickName }, U_EMAIL = #{ uEmail } , U_PHONE = #{ uPhone }, U_ADDR = #{ uAddr }, U_ADDRNO = #{ uAddrNo } WHERE U_ID = #{ uId } AND U_STATUS = 'Y'
 	</update>
   
   	<!-- 회원 탈퇴 -->
 	<update id="deleteUser">
 		UPDATE USER_TBL SET U_STATUS = 'N' WHERE U_ID = #{ uId }
 	</update>
+	
+	<!-- 프로필 삭제 -->
+<!-- 	<update id="updateUser" parameterType="User"> -->
+<!-- 	    UPDATE USER_TBL SET U_FILENAME = NULL, U_FILERENAME = NULL , U_FILEPATH = NULL , U_FILELENGTH = 0 WHERE U_ID = #{uId} AND U_STATUS = 'Y' -->
+<!-- 	</update> -->
   
   </mapper>

@@ -34,7 +34,17 @@ public class UserController {
 			HttpSession session) {
 		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
 		if (sessionId != null && !sessionId.isEmpty()) {
-			mv.setViewName("user/userCheckPw"); // 비밀번호 확인 페이지로 이동
+			
+			User user = uService.selectOneById(sessionId);
+			if (user != null) {
+				mv.addObject("user", user);
+				mv.setViewName("user/userCheckPw"); // 비밀번호 확인 페이지로 이동
+			} else {
+				mv.addObject("msg", "비밀번호 재확인 페이지 출력 실패");
+				mv.addObject("url", "/home.pet");
+				mv.setViewName("common/errorPage");
+			}	
+			
 		} else {
 			mv.addObject("msg", "로그인 후 이용 가능");
 			mv.addObject("url", "/user/login.pet");
@@ -72,7 +82,15 @@ public class UserController {
 
 		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
 		if (sessionId != null && !sessionId.isEmpty()) {
-			mv.setViewName("user/userDelete");
+			User user = uService.selectOneById(sessionId);
+			if (user != null) {
+				mv.addObject("user", user);
+				mv.setViewName("user/userDelete");
+			} else {
+				mv.addObject("msg", "회원탈퇴 페이지 출력 실패");
+				mv.addObject("url", "/home.pet");
+				mv.setViewName("common/errorPage");
+			}
 		} else {
 			mv.addObject("msg", "로그인 후 이용 가능");
 			mv.addObject("url", "/user/login.pet");
@@ -239,7 +257,9 @@ public class UserController {
 
 	// 회원정보수정 user/update.pet
 	@RequestMapping(value = "/user/update.pet", method = RequestMethod.POST)
-	public ModelAndView userUpdate(ModelAndView mv, @ModelAttribute User user, HttpSession session) {
+	public ModelAndView userUpdate(ModelAndView mv, @ModelAttribute User user,
+			@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile
+			, HttpServletRequest request ,HttpSession session) {
 
 		try {
 			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
@@ -247,7 +267,25 @@ public class UserController {
 			System.out.println(user.getuId());
 			System.out.println(user.toString());
 			if (user.getuId().equals(sessionId) && sessionId != null && sessionId != "") {
-
+				
+				if(uploadFile != null && !uploadFile.isEmpty()) {
+					// 수정
+					// 1. 대체, 2. 삭제 후 등록
+					// 기존 업로드 된 파일 존재 여부 체크 후
+					String fileName = user.getuFileReName();
+					if(fileName != null) {
+						// 있으면 기존 파일 삭제
+						this.deleteFile(fileName, request);
+					}
+					// 없으면 새로 업로드 하려는 파일 저장
+					Map<String, Object> infoMap = this.saveFile(request, uploadFile);
+					// 변수 차이
+					user.setuFileName((String) infoMap.get("fileName"));
+					user.setuFileReName((String) infoMap.get("fileRename"));
+					user.setuFilePath((String) infoMap.get("filePath"));
+					user.setuFileLength((long) infoMap.get("fileLength"));
+				}
+				
 				int result = uService.UpdateUser(user);
 
 				if (result > 0) { // 수정 성공
@@ -296,7 +334,13 @@ public class UserController {
 				user.setuFileReName((String) bMap.get("fileRename"));
 				user.setuFilePath((String) bMap.get("filePath"));
 				user.setuFileLength((long) bMap.get("fileLength"));
-			}
+			} else {
+	            // 이미지가 선택되지 않았을 때 기본 이미지 정보 설정
+	            user.setuFileName("profile.png");
+	            user.setuFileReName("profile.png");
+	            user.setuFilePath("../resources/userUploadFiles/profile.png");
+	            user.setuFileLength(0L); // 이미지 크기를 0으로 설정하거나 필요에 따라 적절한 값으로 설정
+	        }
 
 			int result = uService.insertUser(user);
 			if (result > 0) {
@@ -315,50 +359,211 @@ public class UserController {
 
 	// 나의 게시글 페이지 user/searchBoard.pet
 	@RequestMapping(value = "/user/searchBoard.pet", method = RequestMethod.GET)
-	public ModelAndView userBoardPage(ModelAndView mv) {
-		mv.setViewName("/user/uBoardList");
+	public ModelAndView userBoardPage(ModelAndView mv
+			, HttpSession session) {
+		try {
+			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+			if (sessionId != "" && sessionId != null) {
+				User user = uService.selectOneById(sessionId);
+				if (user != null) {
+					mv.addObject("user", user);
+					mv.setViewName("/user/uBoardList");
+				} else {
+					mv.addObject("msg", "게시글 조회 실패");
+					mv.addObject("url", "/home.pet");
+					mv.setViewName("common/errorPage");
+				}
+			} else {
+				mv.addObject("msg", "로그인 후 이용 바랍니다.");
+				mv.addObject("url", "/user/login.pet");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의바랍니다.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/home.pet");
+			mv.setViewName("common/errorPage");
+		}
 		return mv;
 	}
 
 	// 나의 북마크 페이지 user/searchBoardMark.pet
 	@RequestMapping(value = "/user/searchBoardMark.pet", method = RequestMethod.GET)
-	public ModelAndView userBookMarkPage(ModelAndView mv) {
-		mv.setViewName("/user/uBoardMarkList");
+	public ModelAndView userBookMarkPage(ModelAndView mv
+			, HttpSession session) {
+		try {
+			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+			if (sessionId != "" && sessionId != null) {
+				User user = uService.selectOneById(sessionId);
+				if (user != null) {
+					mv.addObject("user", user);
+					mv.setViewName("/user/uBoardMarkList");
+				} else {
+					mv.addObject("msg", "북마크 조회 실패");
+					mv.addObject("url", "/home.pet");
+					mv.setViewName("common/errorPage");
+				}
+			} else {
+				mv.addObject("msg", "로그인 후 이용 바랍니다.");
+				mv.addObject("url", "/user/login.pet");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의바랍니다.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/home.pet");
+			mv.setViewName("common/errorPage");
+		}
 		return mv;
 	}
 
 	// 나의 자유게시판 댓글 페이지 user/searchBoardReply.pet
 	@RequestMapping(value = "/user/searchBoardReply.pet", method = RequestMethod.GET)
-	public ModelAndView userBoardReplyPage(ModelAndView mv) {
-		mv.setViewName("/user/uBoardReplyList");
+	public ModelAndView userBoardReplyPage(ModelAndView mv
+			, HttpSession session) {
+		try {
+			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+			if (sessionId != "" && sessionId != null) {
+				User user = uService.selectOneById(sessionId);
+				if (user != null) {
+					mv.addObject("user", user);
+					mv.setViewName("/user/uBoardReplyList");
+				} else {
+					mv.addObject("msg", "댓글 조회 실패");
+					mv.addObject("url", "/home.pet");
+					mv.setViewName("common/errorPage");
+				}
+			} else {
+				mv.addObject("msg", "로그인 후 이용 바랍니다.");
+				mv.addObject("url", "/user/login.pet");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의바랍니다.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/home.pet");
+			mv.setViewName("common/errorPage");
+		}
 		return mv;
 	}
 
 	// 나의 즐겨찾는 병원 페이지 user/searchHospital.pet
 	@RequestMapping(value = "/user/searchHospital.pet", method = RequestMethod.GET)
-	public ModelAndView userHospitalPage(ModelAndView mv) {
-		mv.setViewName("/user/uHospitalList");
+	public ModelAndView userHospitalPage(ModelAndView mv
+			, HttpSession session) {
+		try {
+			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+			if (sessionId != "" && sessionId != null) {
+				User user = uService.selectOneById(sessionId);
+				if (user != null) {
+					mv.addObject("user", user);
+					mv.setViewName("/user/uHospitalList");
+				} else {
+					mv.addObject("msg", "병원목록 조회 실패");
+					mv.addObject("url", "/home.pet");
+					mv.setViewName("common/errorPage");
+				}
+			} else {
+				mv.addObject("msg", "로그인 후 이용 바랍니다.");
+				mv.addObject("url", "/user/login.pet");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의바랍니다.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/home.pet");
+			mv.setViewName("common/errorPage");
+		}
 		return mv;
 	}
 
 	// 나의 병원 리뷰 페이지 user/searchHospitalReview.pet
 	@RequestMapping(value = "/user/searchHospitalReview.pet", method = RequestMethod.GET)
-	public ModelAndView userHospitalReviewPage(ModelAndView mv) {
-		mv.setViewName("/user/uHospitalReviewList");
+	public ModelAndView userHospitalReviewPage(ModelAndView mv
+			, HttpSession session) {
+		try {
+			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+			if (sessionId != "" && sessionId != null) {
+				User user = uService.selectOneById(sessionId);
+				if (user != null) {
+					mv.addObject("user", user);
+					mv.setViewName("/user/uHospitalReviewList");
+				} else {
+					mv.addObject("msg", "병원리뷰 조회 실패");
+					mv.addObject("url", "/home.pet");
+					mv.setViewName("common/errorPage");
+				}
+			} else {
+				mv.addObject("msg", "로그인 후 이용 바랍니다.");
+				mv.addObject("url", "/user/login.pet");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의바랍니다.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/home.pet");
+			mv.setViewName("common/errorPage");
+		}
 		return mv;
 	}
 
 	// 나의 후원목록 페이지 user/searchSupport.pet
 	@RequestMapping(value = "/user/searchSupport.pet", method = RequestMethod.GET)
-	public ModelAndView userSupportPage(ModelAndView mv) {
-		mv.setViewName("/user/uSupportList");
+	public ModelAndView userSupportPage(ModelAndView mv
+			, HttpSession session) {
+		try {
+			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+			if (sessionId != "" && sessionId != null) {
+				User user = uService.selectOneById(sessionId);
+				if (user != null) {
+					mv.addObject("user", user);
+					mv.setViewName("/user/uSupportList");
+				} else {
+					mv.addObject("msg", "후원목록 조회 실패");
+					mv.addObject("url", "/home.pet");
+					mv.setViewName("common/errorPage");
+				}
+			} else {
+				mv.addObject("msg", "로그인 후 이용 바랍니다.");
+				mv.addObject("url", "/user/login.pet");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의바랍니다.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/home.pet");
+			mv.setViewName("common/errorPage");
+		}
 		return mv;
 	}
 
 	// 나의 후원댓글 페이지 user/searchSupportReply.pet
 	@RequestMapping(value = "/user/searchSupportReply.pet", method = RequestMethod.GET)
-	public ModelAndView userSupportReplyPage(ModelAndView mv) {
-		mv.setViewName("/user/uSupportReplyList");
+	public ModelAndView userSupportReplyPage(ModelAndView mv
+			, HttpSession session) {
+		try {
+			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+			if (sessionId != "" && sessionId != null) {
+				User user = uService.selectOneById(sessionId);
+				if (user != null) {
+					mv.addObject("user", user);
+					mv.setViewName("/user/uSupportReplyList");
+				} else {
+					mv.addObject("msg", "후원댓글 조회 실패");
+					mv.addObject("url", "/home.pet");
+					mv.setViewName("common/errorPage");
+				}
+			} else {
+				mv.addObject("msg", "로그인 후 이용 바랍니다.");
+				mv.addObject("url", "/user/login.pet");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의바랍니다.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/home.pet");
+			mv.setViewName("common/errorPage");
+		}
 		return mv;
 	}
 
@@ -388,18 +593,29 @@ public class UserController {
 			saveFolder.mkdir();
 		}
 
-		// 파일저장
-		File saveFile = new File(savePath + "\\" + fileRename);
+		//파일저장
+		File saveFile = new File(savePath + "\\" + fileRename + "." + extension);
 		uploadFile.transferTo(saveFile);
 		long fileLength = uploadFile.getSize();
-
-		// 파일정보 리턴
+		
+		//파일정보 리턴
 		fileMap.put("fileName", fileName);
 		fileMap.put("fileRename", fileRename);
-		fileMap.put("filePath", "../resources/userUploadFiles/" + fileRename);
+		fileMap.put("filePath", "../resources/userUploadFiles/" + fileRename + "." + extension);
 		fileMap.put("fileLength", fileLength);
 
 		return fileMap;
 	}
 
+	
+	private void deleteFile(String fileName, HttpServletRequest request) {
+	    String root = request.getSession().getServletContext().getRealPath("resources");
+	    String delFilePath = root + "\\userUploadFiles\\" + fileName;
+	    File file = new File(delFilePath);
+	    
+	    // 파일 이름과 파일 리네임이 모두 "profile.png"이 아닌 경우에만 파일 삭제
+	    if (file.exists() && (!fileName.equals("profile.png"))) {
+	        file.delete();
+	    }
+	}
 }

@@ -26,18 +26,7 @@
 				<div id="wrap" class="clearfix">
 					<aside class="aside">
 					<div class="logo">
-						<!-- 프로필 사진 등록 전 -->
-						<c:if test="${ user.uFileReName eq null }">
-							<img class="logoImgNo" src="/resources/images/user/cat.png"
-								alt="로고">
-						</c:if>
-
-						<!-- 프로필 사진 -->
-						<c:if test="${ user.uFileReName ne null }">
-							<img class="logoImg"
-								src="../resources/userUploadFiles/${user.uFileReName }"
-								alt="프로필">
-						</c:if>
+						<img class="logoImg" src="${user.uFilePath }">
 					</div>
 					<nav class="nav" style="display: block;">
 							<ul>
@@ -101,7 +90,7 @@
 													<!-- <p>비밀번호 확인</p> -->
 													<p>이름</p>
 													<p>닉네임</p>
-													<p>이메일</p>
+													<p style="margin-bottom: 27px;">이메일</p>
 													<p>휴대전화</p>
 	
 												</div>
@@ -124,13 +113,13 @@
 											</div>
 											<div class="join2">
 												<h5></h5>
-												<div>
+												<div style="margin-top: -12px;">
 													<div>
 														<p>주소</p>
 													</div>
 	
 													<div>
-<!-- 														<input type="address" placeholder="우편번호"> -->
+														<input type="address" value="${ user.uAddrNo }" readonly>
 														<!-- <button>주소검색</button><br> -->
 														<input type="address" value="${ user.uAddr }" readonly style="width: 357.5px;"><br>
 														<br>

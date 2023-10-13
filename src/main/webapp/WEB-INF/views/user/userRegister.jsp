@@ -192,14 +192,14 @@ section[id^="content"]:target {
 								</div>
 
 								<div>
-									<div style="display: flex; justify-content: space-between;">
+									<div style="display: flex; justify-content: center; align-items: center;">
 										<input type="file" class="real-upload" accept="image/*"
 											onchange="setThumbnail(event);" name="uploadFile" multiple
 											style="display: none;" required>
-										<div id="thumbnail" style="width: 100px; height: 100px;">
+										<div id="thumbnail" style="border: 1px solid #999; border-radius: 50%;">
 											<img id="image-preview"
 												src="/resources/images/uploadfile.png"
-												style="width: 100px; height: 100px; max-width: 100px; max-height: 100px; border-radius: 20px">
+												style="width: 100px; height: 100px; max-width: 100px; max-height: 100px; border-radius: 50%">
 										</div>
 										<!-- 											<input type="file" name="fileUpload" onchange="readURL(this);" class="form-control" style="width: 26%; padding-top: 35px; border: 1px solid #999;" required>										 -->
 									</div>
@@ -239,7 +239,7 @@ section[id^="content"]:target {
 									</div>
 
 									<div>
-										<input type="address" id="userZipcode" placeholder="우편번호"
+										<input type="address" id="userZipcode" name="uAddrNo" placeholder="우편번호"
 											required>
 										<button id="addrsearch" onclick="sample4_exeDaumPostcode()">주소검색</button>
 										<br> <input type="address" name="uAddr" id="userAddr"
