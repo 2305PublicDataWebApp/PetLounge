@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
@@ -63,73 +64,91 @@
             </div>
             <!-- 후원 목록 -->
             <section id="content">
-                <div class="card-today">
-                    <div class="label-today">Today</div><br>
-                    <strong style="font-size: 20px;">오늘 함께한 기부금</strong>
-                    <div class="hr"></div>
-                    <div class="today-text">
-                        900명이 <br>
-                        4,234,500원을<br>
-                        기부하였습니다.
-                    </div>
-                </div>  
-                <div class="cards" style="border-radius: 20px;">
-                    <img src="/resources/images/cat.jpg" class="card-img"
-                    	onerror="this.src='https://petrounge.s3.ap-northeast-2.amazonaws.com/noimage.png'">
-                    <div class="card-content">
-                        <strong class="card-title">도살장에서 구조된 후, 폐종양을 선고받은 드뷔시</strong>
-                        <div class="card-group">사단법인 동물행동권 카라</div>
-                        <div class="card-bar">
-                            <sapn class="card-bar-collection" style="width: 64%;"></sapn>
-                        </div>
-                        <strong class="card-percent">64%</strong>
-                        <strong class="card-money">
-                            4,187,300
-                            <span class="text">원</span>
-                        </strong>
-                    </div>
+            
+            	<div class="container" data-aos="fade-up">
+	                
+	                <div class="row gy-4 portfolio-container">
+	                	<div class="col-xl-3 col-md-6 portfolio-item filter-books">
+			                <div class="card-today">
+			                    <div class="label-today">Today</div><br>
+			                    <strong style="font-size: 20px;">오늘 함께한 기부금</strong>
+			                    <div class="hr"></div>
+			                    <div class="today-text">
+			                        900명이 <br>
+			                        4,234,500원을<br>
+			                        기부하였습니다.
+			                    </div>
+			                </div>  
+		                </div>  
+		                <c:forEach var="support" items="${ sList }" varStatus="i">
+		                	<div class="col-xl-3 col-md-6 portfolio-item filter-books">
+				                <div class="cards" style="border-radius: 20px;">
+				                	<div>
+					                	<a href="/support/detail.do?sNo=${support.sNo }" class="a-detail">
+		                                         <img src="/resources/images/cat.jpg" class="card-img"
+					                    	onerror="this.src='https://petrounge.s3.ap-northeast-2.amazonaws.com/noimage.png'"></a>
+				                	</div>
+				                    <div class="card-content">
+				                        <strong class="card-title"><a href="/support/detail.do?sNo=${support.sNo }"  class="a-detail" title="More Details">${support.sTitle }</a></strong>
+				                        <div class="card-group">${support.sGroup }</div>
+				                        <div class="card-bar">
+				                            <sapn class="card-bar-collection" id="graph-num" style="width: ${(support.sFundAmount / support.sTargetAmount) * 100}%;"></sapn>
+				                        </div>
+				                        <div>
+					                        <fmt:parseNumber var="percent"
+													value="${(support.sFundAmount / support.sTargetAmount) * 100 }"
+													integerOnly="true" />
+					                        <strong class="card-percent" id="per-num">${percent}%</strong>
+					                        <strong class="card-money">
+					                            ${support.sFundAmount }
+					                            <span class="text">원</span>
+					                        </strong>
+				                        </div>
+				                    </div>
+				                </div>
+			                </div>
+		                </c:forEach>
+	                </div>
                 </div>
-                <div class="cards" style="border-radius: 20px;">
-                    <img src="/resources/images/cat.jpg" class="card-img"
-                    	onerror="this.src='https://petrounge.s3.ap-northeast-2.amazonaws.com/noimage.png'">
-                    <div class="card-content">
-                        <strong class="card-title">도살장에서 구조된 후, 폐종양을 선고받은 드뷔시</strong>
-                        <div class="card-group">사단법인 동물행동권 카라</div>
-                        <div class="card-bar">
-                            <sapn class="card-bar-collection" style="width: 64%;"></sapn>
-                        </div>
-                        <strong class="card-percent">64%</strong>
-                        <strong class="card-money">
-                            4,187,300
-                            <span class="text">원</span>
-                        </strong>
-                    </div>
-                </div>
-                <div class="cards" style="border-radius: 20px;">
-                    <img src="/resources/images/cat.jpg" class="card-img"
-                    	onerror="this.src='https://petrounge.s3.ap-northeast-2.amazonaws.com/noimage.png'">
-                    <div class="card-content">
-                        <strong class="card-title">도살장에서 구조된 후, 폐종양을 선고받은 드뷔시</strong>
-                        <div class="card-group">사단법인 동물행동권 카라</div>
-                        <div class="card-bar">
-                            <sapn class="card-bar-collection" style="width: 64%;"></sapn>
-                        </div>
-                        <strong class="card-percent">64%</strong>
-                        <strong class="card-money">
-                            4,187,300
-                            <span class="text">원</span>
-                        </strong>
-                    </div>
-                </div>
+                
             </section>
             <section id="page-wrap">
-                <p> 1 2 3 4 5 ▶</p>
+                <div class="mt-5 d-flex justify-content-center">
+                        <nav aria-label="Page navigation exampler">
+                            <ul class="pagination">
+	                        	<c:if test="${pInfo.startNavi ne '1' }">
+	                        		<li class="page-item"><a class="page-link" href="/support/list.do?page=${pInfo.startNavi-1 }" class="first">prev</a></li>
+			                    </c:if>
+			                    
+			                    
+			                    <c:forEach begin="${pInfo.startNavi }" end="${pInfo.endNavi }" var="p">
+									<c:url var="pageUrl" value="/support/list.do">
+										<c:param name="page" value="${p }"></c:param>
+									</c:url>
+									<c:choose>
+					                    <c:when test="${p == pInfo.currentPage}">
+					                        <li class="page-item active" ><a href="${pageUrl}" class="page-link" style="background-color: #4365BC">${p}</a></li>
+					                    </c:when>
+					                    <c:otherwise>
+					                        <li class="page-item"><a href="${pageUrl}" class="page-link">${p}</a></li>
+					                    </c:otherwise>
+					                </c:choose>
+								</c:forEach>
+								
+								
+								
+								<c:if test="${pInfo.endNavi ne pInfo.naviTotalCount }">
+									<li class="page-item"><a class="page-link" href="/support/list.do?page=${pInfo.endNavi+1 }" class="last">next</a></li>
+								</c:if>
+                            </ul>
+                        </nav>
+                    </div>
             </section>
         </main>
-		
+
 		<jsp:include page="../include/footer.jsp"></jsp:include>
 		<script>
-            <!-- 정렬 -->
+            <!-- 정렬바 -->
             const label = document.querySelector('.sorting-label');
             const options = document.querySelectorAll('.optionItem');
 

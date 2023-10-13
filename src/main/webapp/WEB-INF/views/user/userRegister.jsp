@@ -173,7 +173,7 @@ section[id^="content"]:target {
 						<button id="다음으로1">다음으로</button>
 					</section>
 
-					<form action="/user/register.do" method="post"
+					<form action="/user/register.pet" method="post"
 						enctype="multipart/form-data" id="registration-form">
 						<section id="content3">
 							<h5 style="margin-bottom: 25px; margin-top: 70px;">필수 입력 정보</h5>
@@ -263,7 +263,7 @@ section[id^="content"]:target {
 								모든 회원가입 절차가 완료되었습니다.<br>로그인 후 다양한 혜택과 서비스를 이용하실 수 있습니다.
 							</p>
 							<button type="button" id="showMain"
-								onclick="location.href='/home.do'" style="border-radius: 20px;">메인으로</button>
+								onclick="location.href='/home.pet'" style="border-radius: 20px;">메인으로</button>
 						</section>
 					</form>
 				</div>
@@ -482,7 +482,7 @@ section[id^="content"]:target {
 
             // AJAX 요청 생성
             const xhr = new XMLHttpRequest();
-            xhr.open("POST", "/user/register.do", true);
+            xhr.open("POST", "/user/register.pet", true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {

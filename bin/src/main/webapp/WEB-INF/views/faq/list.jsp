@@ -12,7 +12,7 @@
         <title>FAQ</title>
     </head>
     <body>
-        <jsp:include page="../include/header.jsp"></jsp:include>
+        <jsp:include page="../include/header.jsp"></jsp:include> <!-- header -->
 
         <main class="main">
             <div class="contanier">

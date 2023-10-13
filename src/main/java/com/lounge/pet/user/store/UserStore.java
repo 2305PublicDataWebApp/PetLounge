@@ -38,4 +38,12 @@ public interface UserStore {
 	 */
 	int updateUser(SqlSession session, User user);
 
+	/**
+	 * 회원탈퇴
+	 * @param session
+	 * @param sessionId
+	 * @return
+	 */
+	int deleteUser(SqlSession session, String sessionId);
+
 }

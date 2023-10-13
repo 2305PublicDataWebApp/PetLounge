@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,8 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../include/importSource.jsp"></jsp:include>
 
-<link rel="stylesheet" href="/resources/css/user/myPage/modify.css">
-<link rel="stylesheet" href="/resources/css/user/myPage/modifyForm.css">
+<link rel="stylesheet" href="/resources/css/user/userUpdate.css">
+<link rel="stylesheet" href="/resources/css/user/userUpdateForm.css">
 <link rel="stylesheet" href="/resources/css/font.css">
 <link rel="stylesheet" href="/resources/css/reset.css">
 <script
@@ -29,25 +30,25 @@
 						<ul>
 							<li><a href="#">회원관리</a>
 								<ul class="subMenu">
-									<li><a href="/userInfo/page.do">회원정보조회</a></li>
-									<li><a href="/checkPw/page.do">회원정보수정</a></li>
-									<li><a href="/delete/page.do">회원탈퇴</a></li>
+									<li><a href="/user/userInfo.do?uId=${uId}">회원정보조회</a></li>
+									<li><a href="/user/checkPw.do">회원정보수정</a></li>
+									<li><a href="/user/delete.do">회원탈퇴</a></li>
 								</ul></li>
 							<li><a href="#">게시글관리</a>
 								<ul class="subMenu">
-									<li><a href="/userSearchBoard/page.do">게시글 조회</a></li>
-									<li><a href="/userSearchBoardReply/page.do">댓글 조회</a></li>
-									<li><a href="/userSearchBoardMark/page.do">북마크</a></li>
+									<li><a href="/user/searchBoard.do">게시글 조회</a></li>
+									<li><a href="/user/searchBoardReply.do">댓글 조회</a></li>
+									<li><a href="/user/searchBoardMark.do">북마크</a></li>
 								</ul></li>
 							<li><a href="#">후원관리</a>
 								<ul class="subMenu">
-									<li><a href="/userSearchSponsor/page.do">후원목록</a></li>
-									<li><a href="/userSearchSponsorReply/page.do">후원댓글</a></li>
+									<li><a href="/user/searchSponsor.do">후원목록</a></li>
+									<li><a href="/user/searchSponsorReply.do">후원댓글</a></li>
 								</ul></li>
 							<li><a href="#">병원관리</a>
 								<ul class="subMenu">
-									<li><a href="/userSearchHospital/page.do">즐겨찾는 병원</a></li>
-									<li><a href="/userSearchHospitalReview/page.do">병원리뷰</a></li>
+									<li><a href="/user/searchHospital.do">즐겨찾는 병원</a></li>
+									<li><a href="/user/searchHospitalReview.do">병원리뷰</a></li>
 								</ul></li>
 						</ul>
 					</nav>
@@ -67,7 +68,8 @@
 						</div>
 					</div>
 					<div>
-						<form action="/userUpdate/page.do" method="get">
+						<form action="/user/update.do" method="post">
+							<input type="hidden" name="uId" value="${uId}">
 							<article class="find1">
 								<!-- <h2>회원가입</h2> -->
 								<p>
@@ -81,36 +83,35 @@
 
 										<div>
 											<div>
-												<p style="margin-top: 5px;">아이디</p>
-												<p style="margin-top: 37px;">비밀번호</p>
-												<p>비밀번호 확인</p>
-												<p>이름</p>
+												<p style="margin-top: 3px;">아이디</p>
+												<p style="margin-top: 47px;">비밀번호</p>
+												<p style="margin-top: 30px">비밀번호 확인</p>
+												<p style="margin-top: 30px; margin-bottom: 30px;">이름</p>
 												<p style="margin-bottom: 23px;">닉네임</p>
-												<p style="margin-top: 44px;">이메일</p>
+												<p style="margin-top: 50px;">이메일</p>
 												<p style="padding-top: 23px;">휴대전화</p>
 
 											</div>
 
 											<div style="width: 357.5px;">
-												<input type="text" placeholder="아이디를 입력하세요.">
-												<button class="중복확인버튼">중복확인</button>
-												<br> <input type="password"
-													placeholder="영문, 숫자 조합 6~12자"><br> <br> <input
-													type="password" placeholder="영문, 숫자 조합 6~12자"><br>
-												<br> <input type="text" placeholder="이름을 입력하세요."><br>
-												<br> <input type="text" placeholder="닉네임을 입력하세요.">
-												<button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button>
-												<br> <input type="email"> @ <select size="1"
-													style="border-radius: 20px;">
+												<input type="text" value="${user.uId }" readonly>
+												<button class="중복확인버튼">중복확인</button><br> 
+												<input type="password" name="uPw" placeholder="영문, 숫자 조합 6~12자"><br><br> 
+												<input type="password" name="uPwRe" placeholder="영문, 숫자 조합 6~12자"><br><br> 
+												<input type="text" value="${user.uName }" name="uName" readonly><br><br> 
+												<input type="text" name="uNickName" placeholder="닉네임을 입력하세요.">
+												<button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button><br> 
+												<input type="text" name="uEmailPrefix" id="uEmailPrefix" placeholder="이메일을 입력하세요." 
+												oninput="combineEmail()" style="width: 184px;" required>@
+												<select name="uEmailSuffix" id="uEmailSuffix" size="1" style="border-radius: 20px;" onchange="combineEmail()">
 													<option>hanmail.net</option>
 													<option>naver.com</option>
 													<option>gmail.com</option>
 													<option>hotmail.com</option>
 													<option>nate.com</option>
-												</select><br>
-												<button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button>
-												<br> <input type="tel" placeholder="예) 010-1234-1375"><br>
-												<br>
+												</select> <input type="hidden" name="uEmail" id="uEmail" value=""><br>
+												<button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button><br> 
+												<input type="tel" name="uPhone"  placeholder="예) 010-1234-1375"><br><br>
 											</div>
 										</div>
 										<div class="join2">
@@ -121,11 +122,9 @@
 												</div>
 
 												<div>
-													<input type="address" placeholder="우편번호">
-													<button>주소검색</button>
-													<br> <input type="address" placeholder="도로명주소"><br>
-													<input type="address" placeholder="상세주소"><br>
-													<br>
+													<input type="address" id="userZipcode" placeholder="우편번호" required>
+													<button id="addrsearch" onclick="sample4_exeDaumPostcode()">주소검색</button><br> 
+													<input type="address" name="uAddr" id="userAddr" placeholder="도로명주소" required><br><br>
 												</div>
 											</div>
 										</div>
@@ -149,6 +148,8 @@
 	</main>
 	<jsp:include page="../include/footer.jsp"></jsp:include>
 
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
 		// 클릭했을 때
 		$(".nav > ul > li > a").click(function(e) {
@@ -162,19 +163,52 @@
 			$(".subMenu").not(subMenu).slideUp();
 		});
 
-		//클릭했을 때
-		// $(".nav > ul > li").click(function (e) {
-		//     e.preventDefault();
-		//     $(".nav > ul > li").removeClass("active");
-		//     $(this).addClass("active");
-		// });
+		//주소 api
+		function sample4_exeDaumPostcode() {
+			new daum.Postcode(
+					{
+						oncomplete : function(data) {
+							document.querySelector("#userZipcode").value = data.zonecode;
+							document.querySelector("#userAddr").value = data.roadAddress;
+						}
+					}).open();
+		}
 
-		//마우스 오버 효과
-		// $(".nav > ul > li > a").hover(function(){
-		//     $(this).next('.subMenu').not(':animated').slideDown();
-		//     }, function(){
-		//     $(this).next('.subMenu').not(':animated').slideUp();
-		// });
+		//이메일 합치기
+		function combineEmail() {
+			// 앞부분과 뒷부분의 값을 가져와서 합칩니다.
+			const uEmailPrefix = document.getElementById("uEmailPrefix").value;
+			const uEmailSuffix = document.getElementById("uEmailSuffix").value;
+			const combinedEmail = uEmailPrefix + "@" + uEmailSuffix;
+
+			// 합친 이메일 주소를 숨겨진 input 요소에 설정합니다.
+			document.getElementById("uEmail").value = combinedEmail;
+		}
+
+		// 주소 API 열기
+		function sample4_execDaumPostcode() {
+			new daum.Postcode(
+					{
+						oncomplete : function(data) {
+							// 선택한 주소 정보를 사용해 필요한 작업을 수행합니다.
+							// 예를 들어, 주소 필드에 주소 정보를 설정하거나 다른 작업을 수행할 수 있습니다.
+
+							// 팝업 창을 닫습니다.
+							document.querySelector('#daumPostcodeFrame').style.display = 'none';
+						}
+					}).open({
+				autoClose : true
+			});
+		}
+
+		// 주소 검색 버튼 클릭 이벤트 처리
+		const 주소검색버튼 = document.getElementById('addrsearch'); // 주소검색버튼의 ID에 실제 ID를 넣어주어야 합니다.
+
+		주소검색버튼.addEventListener('click', function(event) {
+			event.preventDefault(); // 폼 제출 동작을 막음
+			// 주소 검색 팝업 또는 로직을 실행하도록 추가 코드를 넣으세요
+			// 주소 검색 팝업 또는 로직은 이 코드 블록 내에 들어가야 합니다.
+		});
 	</script>
 </body>
 </html>

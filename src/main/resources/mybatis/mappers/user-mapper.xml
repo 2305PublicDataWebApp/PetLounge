@@ -42,5 +42,9 @@
 		UPDATE USER_TBL SET U_PW = #{ uPw }, U_PWRE = #{ uPwRe }, U_NAME = #{ uName }, U_NICKNAME = #{ uNickName }, U_EMAIL = #{ uEmail } , U_PHONE = #{ uPhone }, U_ADDR = #{ uAddr } WHERE U_ID = #{ uId } AND U_STATUS = 'Y'
 	</update>
   
+  	<!-- 회원 탈퇴 -->
+	<update id="deleteUser">
+		UPDATE USER_TBL SET U_STATUS = 'N' WHERE U_ID = #{ uId }
+	</update>
   
   </mapper>

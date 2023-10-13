@@ -5,6 +5,7 @@ body {
     background: #FAFAFA;
 }
 header {
+	line-height: 1.5;
     width: 100%;
     height: 60px;
     background: #ffd370;
@@ -16,7 +17,6 @@ header {
 footer {
     display: flex;
     width: 100%;
-    height: 200px;
     background-color: rgb(24, 21, 21);
 }
 
@@ -254,12 +254,18 @@ label {
     /* border: 1px solid black; */
 }
 
+/* 날씨 아이콘 */
+.tIcon {
+	position: relative;
+	bottom: 15px;
+}
+
 .today-weather-Temperature {
     display: flex;
     justify-content: center;
-    align-items: first baseline;
     width: 100%;
     height: 60%;
+    padding-right: 25px;
     font-size: 1.5em;
     font-weight: bolder;
 }
@@ -328,6 +334,7 @@ label {
 }
 
 .time-weather h2 {
+	font-size: 20px;
     margin : 20px
 }
 
@@ -346,5 +353,6 @@ label {
 }
 
 .date-weather h2 {
+	font-size: 20px;
     margin : 20px
 }

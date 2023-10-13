@@ -40,4 +40,10 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}
 
+	@Override
+	public int deleteUser(String sessionId) {
+		int result = uStore.deleteUser(session, sessionId);
+		return result;
+	}
+
 }
