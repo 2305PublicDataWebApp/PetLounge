@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lounge.pet.hospital.domain.HBookmark;
 import com.lounge.pet.hospital.domain.HReview;
 import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.hospital.service.HospitalService;
@@ -26,8 +27,20 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
+	public int insertHBook(HBookmark userBook) {
+		int result = hStore.insertHBook(session, userBook);
+		return result;
+	}
+
+	@Override
 	public int updateXYtoLatLng(Hospital hosLocation) {
 		int result = hStore.updateXYtoLatLng(session, hosLocation);
+		return result;
+	}
+
+	@Override
+	public int deleteHBook(HBookmark userBook) {
+		int result = hStore.deleteHBook(session, userBook);
 		return result;
 	}
 
@@ -35,6 +48,12 @@ public class HospitalServiceImpl implements HospitalService {
 	public Hospital selectOneByhNo(int hNo) {
 		Hospital hOne = hStore.selectOneByhNo(session, hNo);
 		return hOne;
+	}
+
+	@Override
+	public HBookmark selectHBook(HBookmark userBook) {
+		HBookmark hBOne = hStore.selectHBook(session, userBook);
+		return hBOne;
 	}
 
 	@Override

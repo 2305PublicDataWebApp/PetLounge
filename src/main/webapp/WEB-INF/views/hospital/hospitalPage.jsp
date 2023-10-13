@@ -23,12 +23,23 @@
                 'opsz' 24
             }
 
-            .bookmark-icon-none, .bookmark-icon-fill {
+            .bookmark-icon-none {
                 margin-right: 10px;
                 margin-bottom: 5px;
                 font-size: 24px;
                 font-variation-settings:
                 'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+            }
+
+            .bookmark-icon-fill {
+                margin-right: 10px;
+                margin-bottom: 5px;
+                font-size: 24px;
+                font-variation-settings:
+                'FILL' 1,
                 'wght' 400,
                 'GRAD' 0,
                 'opsz' 24
@@ -108,6 +119,15 @@
         
 		<jsp:include page="../include/footer.jsp"></jsp:include>
 		
+		<script>
+			window.onload = function () {
+			    var searchKeyword = document.getElementById('h-search-keyword').value;
+			    if (searchKeyword.trim() !== '') {
+			        searchHos();
+			    }
+			};
+		</script>
+
 		<!-- 카카오맵 API 지도 스크립트 -->
 		<script>
 			var lat;
@@ -323,7 +343,7 @@
 			        for (var i = 0; i < hList.length; i++) {
 			            var row = document.createElement('tr');
 
-			            // 클릭 이벤트 추가
+			            // 중심 좌표 이동
 			            row.onclick = (function (lat, lng, index) {
 			                return function () {
 			                    changeCenter(lat, lng, index);
@@ -333,11 +353,28 @@
 			            var bookmarkCell = document.createElement('td');
 			            var bookmarkDiv = document.createElement('div');
 			            var bookmarkIcon = document.createElement('span');
+			            // if로 즐겨찾기를 했을 때 클래스명, 아닐 때 클래스명 나눠주기
 			            bookmarkIcon.className = 'material-symbols-outlined bookmark-icon-none';
 			            bookmarkIcon.style.color = '#FFD370';
 			            bookmarkIcon.textContent = 'bookmark';
 			            bookmarkDiv.appendChild(bookmarkIcon);
 			            bookmarkCell.appendChild(bookmarkDiv);
+			            
+			            // 즐겨찾기
+						bookmarkIcon.addEventListener('click', (function (index) {
+						    return function () {
+						        if (this.classList.contains('bookmark-icon-none')) {
+						            this.classList.remove('bookmark-icon-none');
+						            this.classList.add('bookmark-icon-fill');
+						            console.log(hList[index].hNo);
+						        } else {
+						            this.classList.remove('bookmark-icon-fill');
+						            this.classList.add('bookmark-icon-none');
+						        }
+						        var bookmarkHNo = hList[index].hNo;
+						        addToHBookmark(bookmarkHNo);
+						    };
+						})(i));
 
 			            var nameCell = document.createElement('td');
 			            nameCell.textContent = hList[i].hName;
@@ -490,6 +527,24 @@
 			    	 });
 				}
 			}
+			
+			// 즐겨찾기 ajax
+			function addToHBookmark(bookmarkHNo) {
+		        $.ajax({
+		            url: '/hospital/addToHBookmark.pet',
+		            type: 'POST',
+		            data: {
+		                hNo: bookmarkHNo
+		            },
+		            success: function (successYn) {
+		            	
+		            },
+		            error: function (error) {
+		                alert("로그인이 필요한 서비스입니다.");
+		            }
+		        });
+		    }
+			
 		</script>
 		<!-- 동물병원 검색 (input search) -->
 		<script>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.lounge.pet.hospital.domain.HBookmark;
 import com.lounge.pet.hospital.domain.HReview;
 import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.hospital.store.HospitalStore;
@@ -19,8 +20,20 @@ public class HospitalStoreLogic implements HospitalStore {
 	}
 
 	@Override
+	public int insertHBook(SqlSession session, HBookmark userBook) {
+		int result = session.insert("HosMapper.insertHBook", userBook);
+		return result;
+	}
+
+	@Override
 	public int updateXYtoLatLng(SqlSession session, Hospital hosLocation) {
 		int result = session.update("HosMapper.updateXYtoLatLng", hosLocation);
+		return result;
+	}
+
+	@Override
+	public int deleteHBook(SqlSession session, HBookmark userBook) {
+		int result = session.delete("HosMapper.deleteHBook", userBook);
 		return result;
 	}
 
@@ -46,6 +59,12 @@ public class HospitalStoreLogic implements HospitalStore {
 	public List<Hospital> selectAllList(SqlSession session) {
 		List<Hospital> hList = session.selectList("HosMapper.selectAllList");
 		return hList;
+	}
+
+	@Override
+	public HBookmark selectHBook(SqlSession session, HBookmark userBook) {
+		HBookmark hBOne = session.selectOne("HosMapper.selectHBook", userBook);
+		return hBOne;
 	}
 
 }
