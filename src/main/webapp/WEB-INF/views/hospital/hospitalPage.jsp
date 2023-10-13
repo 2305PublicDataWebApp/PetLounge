@@ -13,7 +13,7 @@
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9674da3ceea3cb3a1acdb7044a416e8&libraries=services,clusterer"></script>
         <title>동물병원 안내</title>
         <style>
-            .bookmark-icon-fill, .call-icon, .location-icon, .home-icon, .search-icon {
+            .call-icon, .location-icon, .home-icon, .search-icon {
                 margin-right: 10px;
                 font-size: 20px;
                 font-variation-settings:
@@ -23,9 +23,10 @@
                 'opsz' 24
             }
 
-            .bookmark-icon-none {
+            .bookmark-icon-none, .bookmark-icon-fill {
                 margin-right: 10px;
-                font-size: 20px;
+                margin-bottom: 5px;
+                font-size: 24px;
                 font-variation-settings:
                 'FILL' 0,
                 'wght' 400,
@@ -48,19 +49,17 @@
             <!-- 지도 -->
             <section id="map-section">
                 <!-- 검색창 -->
-                <form action="/hospital/search.do" method="post" id="search-hospital-form">
-                    <div id="search-div">
-                    	<c:if test="${ hSearchKeyword ne null }">
-	                        <input type="search" value="${ hSearchKeyword }" name="hSearchKeyword" id="h-search-keyword" class="search-input" placeholder="찾고자 하는 주소 또는 동물 병원의 이름을 입력하세요">                     	
-                    	</c:if>
-                    	<c:if test="${ hSearchKeyword eq null }">
-	                        <input type="search" name="hSearchKeyword" id="h-search-keyword" class="search-input" placeholder="찾고자 하는 주소 또는 동물 병원의 이름을 입력하세요">                     	
-                    	</c:if>
-                        <span class="material-symbols-outlined search-icon" onclick="searchHospital();" style="font-size: 3em; color: #FFD370; cursor: pointer; margin-left: 10px;">
-                            search
-                        </span>
-                    </div>
-                </form>
+				<div id="search-div">
+					<c:if test="${ hSearchKeyword ne null }">
+						<input type="search" value="${ hSearchKeyword }" name="hSearchKeyword" id="h-search-keyword" class="search-input" placeholder="찾고자 하는 주소 또는 동물 병원의 이름을 입력하세요">                     	
+					</c:if>
+					<c:if test="${ hSearchKeyword eq null }">
+						<input type="search" name="hSearchKeyword" id="h-search-keyword" class="search-input" placeholder="찾고자 하는 주소 또는 동물 병원의 이름을 입력하세요">                     	
+					</c:if>
+					<span class="material-symbols-outlined search-icon" onclick="searchHos();" style="font-size: 3em; color: #FFD370; cursor: pointer; margin-left: 10px;">
+				        search
+				    </span>
+				</div>
                 <div id="map-div">
                     <!-- 기본 주소로 돌아가기 -->
                     <div>
@@ -90,70 +89,6 @@
             </section>
 
        		<!-- 동물병원 리스트 -->
-<!-- 			<section id="hospital-list-section"> -->
-<!-- 				<table> -->
-<%-- 					<colgroup> --%>
-<%-- 						<col style="width: 5%;"> --%>
-<%-- 						<col style="width: 23%;"> --%>
-<%-- 						<col style="width: 22%;"> --%>
-<%-- 						<col style="width: 50%;"> --%>
-<%-- 					</colgroup> --%>
-<!-- 					<thead> -->
-<!-- 						<th colspan="4">내 주변 동물병원</th> -->
-<!-- 					</thead> -->
-<!-- 					<tbody> -->
-<!-- 						검색 결과 없음 -->
-<%-- 						<c:if test="${ empty hList }"> --%>
-<!-- 							<tr> -->
-<!-- 								<td colspan="4"> -->
-<!-- 									검색 결과 없음 -->
-<!-- 								</td> -->
-<!-- 							</tr> -->
-<%-- 						</c:if> --%>
-<%-- 						<c:if test="${ !empty hList }"> --%>
-<!-- 							기본 주소 리스트 -->
-<%-- 							<c:forEach var="hosList" items="${ hList }" end="5" varStatus="status"> --%>
-<%-- 								<tr onclick="changeCenter(${ hosList.hLat }, ${ hosList.hLng }, ${ status.index });"> --%>
-<!-- 									<td class=""> -->
-<!-- 										<span class="material-symbols-outlined bookmark-icon-fill" style="color: #FFD370;">
-<!-- 			                                    bookmark -->
-<!-- 			                                </span> -->  
-<!-- 		                                <span class="material-symbols-outlined bookmark-icon-none" -->
-<!-- 										style="color: #FFD370;"> bookmark </span> -->
-<!-- 									</td> -->
-<!-- 									<td class=""> -->
-<!-- 										동물병원 이름  -->
-<%-- 										${ hosList.hName } --%>
-<!-- 									</td> -->
-<!-- 									<td class=""> -->
-<!-- 										<div> -->
-<!-- 											<span class="material-symbols-outlined call-icon" -->
-<!-- 												style="color: #56b983;"> call </span> -->
-<!-- 											전화번호 -->
-<%-- 											<c:if test="${ hosList.hPhone eq null }"> --%>
-<!-- 												- -->
-<%-- 											</c:if> --%>
-<%-- 											<c:if test="${ hosList.hPhone ne null }"> --%>
-<%-- 												${ hosList.hPhone } --%>
-<%-- 											</c:if> --%>
-<!-- 										</div> -->
-<!-- 									</td> -->
-<!-- 									<td class=""> -->
-<!-- 										<div> -->
-<!-- 											<span class="material-symbols-outlined location-icon" -->
-<!-- 												style="color: #e54242;"> location_on </span> -->
-<!-- 											주소 -->
-<%-- 											${ hosList.hRoadAddr } --%>
-<!-- 										</div> -->
-<!-- 									</td> -->
-<!-- 								</tr> -->
-<%-- 							</c:forEach> --%>
-<%-- 						</c:if> --%>
-<!-- 					</tbody> -->
-<!-- 				</table> -->
-<!-- 			</section> -->
-
-
 			<section id="hospital-list-section">
 			    <table>
 			        <colgroup>
@@ -169,19 +104,24 @@
 			        </tbody>
 			    </table>
 			</section>
-
         </main>
         
 		<jsp:include page="../include/footer.jsp"></jsp:include>
 		
 		<!-- 카카오맵 API 지도 스크립트 -->
 		<script>
+			var lat;
+			var lng;
+			var positions = [];
+			var markers = [];
+			var marker;
+			var overlays = [];
 			var overlay;
 			
 			if(${sessionScope.uId eq null}) {
 				// ************************* 비회원 기본 주소 *****************************			
-				var lat = 37.5679212;
-				var lng = 126.9830358;
+				lat = 37.5679212;
+				lng = 126.9830358;
 				createMap(lat, lng);
 			} else {
 				// ************************* 회원가입 시 받은 주소로 기본 주소 *****************************
@@ -194,17 +134,12 @@
 				
 				    // 정상적으로 검색이 완료됐으면 
 				     if (status === kakao.maps.services.Status.OK) {
-				    	var lat = result[0].y;
-				    	var lng = result[0].x;
+				    	lat = result[0].y;
+				    	lng = result[0].x;
 				    	 
 				        createMap(lat, lng);
-				
-// 				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-// 				        map.setCenter(coords);
 				    } 
 				});  
-				
 			}			
 			
 			// 지도를 생성하는 함수
@@ -221,58 +156,56 @@
 			
 			// 리스트를 불러오는 ajax
 			function findList(map, lat, lng) {
-				var positions = [];
-		    	 $.ajax ({
-		    		 url: "/hospital/findList.do",
-		    		 data: {
-		    			latitude: lat,
-			            longitude: lng
-		    		 },
-		    		 type: "GET",
-		    		 dataType: "json",
-		    		 success: function(hList) {
-		    			console.log(hList);
-//		    			// 마커를 표시할 위치와 name 객체 배열입니다 		    			
-						for(let i = 0; i < hList.length; i++){
-							var position = {
-								no: hList[i].hNo,
-								name: hList[i].hName,
-								roadAddr: hList[i].hRoadAddr,
-								phone: hList[i].hPhone,
-								latlng: new kakao.maps.LatLng(hList[i].hLat, hList[i].hLng)
-							};
-							positions.push(position);
-						}
-						console.log(positions);
-						makeMarkerAndOverlay(map, positions); // 마커 표시
-		    		 },
-		    		 error: function(data){
-		    			 
-		    		 }
-		    	 });
+				$.ajax ({
+					 url: "/hospital/findList.pet",
+					 data: {
+						latitude: lat,
+				        longitude: lng
+					 },
+					 type: "GET",
+					 dataType: "json",
+					 success: function(hList) {
+						showListFunc(hList);
+						
+						var hospitalListTitle = document.querySelector('th[colspan="4"]');
+						hospitalListTitle.innerHTML = '내 주변 동물병원';
+					 },
+					 error: function(data){
+						 console.error('리스트 호출 오류:', error);
+					 }
+				 });
+			}
+			
+			// 리스트 출력 함수
+			function showListFunc(hList) {
+				positions = [];
+				for(let i = 0; i < hList.length; i++){
+					var position = {
+						no: hList[i].hNo,
+						name: hList[i].hName,
+						roadAddr: hList[i].hRoadAddr,
+						phone: hList[i].hPhone,
+						latlng: new kakao.maps.LatLng(hList[i].hLat, hList[i].hLng)
+					};
+					positions.push(position);
+				}
+				makeMarkerAndOverlay(map, positions); // 마커 표시
+				loadHospitalList(hList); // 지도에 리스트 표시
 			}
 			
 			// 마커와 커스텀 오버레이 생성
 			function makeMarkerAndOverlay(map, positions) {
-//     			// 마커를 표시할 위치와 name 객체 배열입니다 
-// 			    var positions = [
-// 			        <c:forEach items="${ hList }" var="hos" varStatus="loop">
-// 			            {
-// 			            	no: '${ hos.hNo }',
-// 			            	name: '${ hos.hName }',
-// 			            	roadAddr: '${ hos.hRoadAddr }',
-// 			            	phone: '${ hos.hPhone }',
-// 					        latlng: new kakao.maps.LatLng('${ hos.hLat }', '${ hos.hLng }')
-// 			            }<c:if test="${!loop.last}">,</c:if>
-// 			        </c:forEach>
-// 				];
-				
-				var markers = [];
-				var overlays = [];
-				
+	   			// 마커와 커스텀 오버레이 초기화
+				for (var i = 0; i < markers.length; i++) {
+	                markers[i].setMap(null);
+	                overlays[i].setMap(null);
+	            }
+	   			markers = [];
+	   			overlays = [];
+			            
+			    // 새로운 마커 생성
 				for (var i = 0; i < positions.length; i ++) {			    
-				    // 마커를 생성합니다
-				    var marker = new kakao.maps.Marker({
+				    marker = new kakao.maps.Marker({
 				        map: map, // 마커를 표시할 지도
 				        title : positions[i].name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 				        position: positions[i].latlng // 마커를 표시할 위치
@@ -300,11 +233,6 @@
 					closeBtn.className = 'close';
 					closeBtn.title = '닫기';
 					
-					// 닫기 버튼 클릭 이벤트 핸들러
-// 					closeBtn.addEventListener('click', function () {
-// 					    overlay.setMap(null);
-// 					});
-					
 					titleDiv.appendChild(closeBtn);
 					infoDiv.appendChild(titleDiv);
 					
@@ -327,11 +255,11 @@
 					var telLink = document.createElement('a');
 					telLink.href = 'tel:' + positions[i].phone;
 					telLink.className = 'h-tel';
-					telLink.appendChild(document.createTextNode(positions[i].phone));
+					telLink.appendChild(document.createTextNode(positions[i].phone ? positions[i].phone : '번호정보없음'));
 					
 					// 상세보기 링크
 					var detailLink = document.createElement('a');
-					detailLink.href = '/hospital/detail.do?hNo=' + positions[i].no;
+					detailLink.href = '/hospital/detail.pet?hNo=' + positions[i].no;
 					detailLink.className = 'h-detail';
 					detailLink.appendChild(document.createTextNode('상세보기'));
 					
@@ -345,7 +273,7 @@
 					            
 					// 마커 위에 커스텀오버레이를 표시합니다
 					// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
-					var overlay = new kakao.maps.CustomOverlay({
+					overlay = new kakao.maps.CustomOverlay({
 					    content: content,
 					    map: null,      
 // 					    map: map,      
@@ -378,32 +306,100 @@
 			            });
 				    })(marker, overlay);
 				}
-				
+			}
+			
+			function loadHospitalList(hList) {
+			    var hospitalListBody = document.getElementById('hospital-list-body');
+			    hospitalListBody.innerHTML = '';
+
+			    if (hList.length === 0) {
+			        var noResultRow = document.createElement('tr');
+			        var noResultCell = document.createElement('td');
+			        noResultCell.colSpan = 4;
+			        noResultCell.textContent = '검색 결과 없음';
+			        noResultRow.appendChild(noResultCell);
+			        hospitalListBody.appendChild(noResultRow);
+			    } else {
+			        for (var i = 0; i < hList.length; i++) {
+			            var row = document.createElement('tr');
+
+			            // 클릭 이벤트 추가
+			            row.onclick = (function (lat, lng, index) {
+			                return function () {
+			                    changeCenter(lat, lng, index);
+			                };
+			            })(hList[i].hLat, hList[i].hLng, i);
+
+			            var bookmarkCell = document.createElement('td');
+			            var bookmarkDiv = document.createElement('div');
+			            var bookmarkIcon = document.createElement('span');
+			            bookmarkIcon.className = 'material-symbols-outlined bookmark-icon-none';
+			            bookmarkIcon.style.color = '#FFD370';
+			            bookmarkIcon.textContent = 'bookmark';
+			            bookmarkDiv.appendChild(bookmarkIcon);
+			            bookmarkCell.appendChild(bookmarkDiv);
+
+			            var nameCell = document.createElement('td');
+			            nameCell.textContent = hList[i].hName;
+
+			            var phoneCell = document.createElement('td');
+			            var phoneDiv = document.createElement('div');
+			            var phoneIcon = document.createElement('span');
+			            phoneIcon.className = 'material-symbols-outlined call-icon';
+			            phoneIcon.style.color = '#56b983';
+			            phoneIcon.textContent = 'call';
+			            var phoneText = document.createTextNode(hList[i].hPhone ? hList[i].hPhone : '번호정보없음');
+			            phoneDiv.appendChild(phoneIcon);
+			            phoneDiv.appendChild(phoneText);
+			            phoneCell.appendChild(phoneDiv);
+
+			            var addressCell = document.createElement('td');
+			            var addressDiv = document.createElement('div');
+			            var addressIcon = document.createElement('span');
+			            addressIcon.className = 'material-symbols-outlined location-icon';
+			            addressIcon.style.color = '#e54242';
+			            addressIcon.textContent = 'location_on';
+			            var addressText = document.createTextNode(hList[i].hRoadAddr);
+			            addressDiv.appendChild(addressIcon);
+			            addressDiv.appendChild(addressText);
+			            addressCell.appendChild(addressDiv);
+
+			            row.appendChild(bookmarkCell);
+			            row.appendChild(nameCell);
+			            row.appendChild(phoneCell);
+			            row.appendChild(addressCell);
+
+			            hospitalListBody.appendChild(row);
+			        }
+			    }
 			}
 			
 			// 지도가 이동, 확대, 축소로 인해 중심좌표가 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록
 			// 이동이 끝났을 때의 좌표를 가지고 넘어옴 (idle)
 			// 실시간 변화값은 center_changed 사용함
 			kakao.maps.event.addListener(map, 'idle', function() {
+			    // 지도의 중심좌표를 얻어옵니다
+			    var latlng = map.getCenter();
+			    var searchKeyword = document.getElementById('h-search-keyword').value.trim(); // 검색
 			
-			    // 지도의 중심좌표를 얻어옵니다 
-			    var latlng = map.getCenter(); 
+			    if (searchKeyword === '') { // 검색하지 않았을 때만 동작
+			        $.ajax({
+			            url: '/hospital/moveLocation.pet',
+			            type: 'GET',
+			            data: {
+			                latitude: latlng.getLat(), // 업데이트된 위도 값
+			                longitude: latlng.getLng() // 업데이트된 경도 값
+			            },
+			            success: function(data) {
+			                findList(map, latlng.getLat(), latlng.getLng());
+			            },
+			            error: function(error) {
 			
-			    $.ajax({
-			        url: '/hospital/moveLocation.do', 
-			        type: 'GET',
-			        data: {
-			            latitude: latlng.getLat(), // 업데이트된 위도 값
-			            longitude: latlng.getLng() // 업데이트된 경도 값
-			        },
-			        success: function(data) {
-			        },
-			        error: function(error) {
-			        	
-			        }
-			    });
+			            }
+			        });
+			    }
 			});
-			
+
 			// 지도타입 컨트롤의 지도 또는 스카이뷰 버튼을 클릭하면 호출되어 지도타입을 바꾸는 함수
 			function setMapType(maptype) { 
 			    var roadmapControl = document.getElementById('btnRoadmap');
@@ -431,13 +427,18 @@
 			
 			// 지도 중심좌표 부드럽게 이동시키기
 			function defaultLatLng() {
-			    var moveLatLng = new kakao.maps.LatLng(37.5679212, 126.9830358); // KH 종로
+			    var moveLatLng = new kakao.maps.LatLng(lat, lng);
 			    map.panTo(moveLatLng);            
+			    findList(map, lat, lng);
 			}        
 			
 			// 리스트 클릭 시 중심좌표 부드럽게 이동
 			function changeCenter(lat, lng, count) {
 			    var moveLatLon = new kakao.maps.LatLng(lat, lng);
+                for(var i = 0; i < overlays.length; i++){
+				    overlays[i].setMap(null); 
+                }
+                overlays[count].setMap(map); // 클릭한 리스트의 오버레이만 표시
 			    map.panTo(moveLatLon);
 			}
 			
@@ -449,27 +450,54 @@
 				    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
 				    navigator.geolocation.getCurrentPosition(function(position) {
 				        
-				        var lat = position.coords.latitude, // 위도
-				            lon = position.coords.longitude; // 경도
-						map.panTo(new kakao.maps.LatLng(lat, lon));
-				            
+				        latitude = position.coords.latitude, // 위도
+				        longitude = position.coords.longitude; // 경도
+				        	
+						map.panTo(new kakao.maps.LatLng(latitude, longitude));
+						findList(map, latitude, longitude);
 				      });
 				    
 				} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-				    
-// 				    var locPosition = new kakao.maps.LatLng(37.5679212, 126.9830358),    // ============================ 로그인 시 기본 주소 설정 필요 ========================
 				    alert('현위치를 가져올 수 없습니다...');
-				    map.panTo(new kakao.maps.LatLng(37.5679212, 126.9830358)); // ============================ 로그인 시 기본 주소 설정 필요 ========================
+				    map.panTo(new kakao.maps.LatLng(lat, lng)); 
 				}
 				        
 			}
+			
+			// 동물병원 검색 ajax
+			function searchHos() {
+				var searchKeyword = document.getElementById('h-search-keyword').value;
+				
+				if (searchKeyword.trim() !== '') {
+			    	$.ajax ({
+			    		 url: "/hospital/search.pet",
+			    		 data: {
+			    			latitude: lat,
+				            longitude: lng,
+				            hSearchKeyword: searchKeyword
+			    		 },
+			    		 type: "GET",
+			    		 dataType: "json",
+			    		 success: function(hList) {
+			    			showListFunc(hList);
+							
+							var hospitalListTitle = document.querySelector('th[colspan="4"]');
+							hospitalListTitle.innerHTML = '<span style="color: #FFD370;">' + searchKeyword + '</span> 검색 결과';
+			    		 },
+			    		 error: function(data){
+			    			 console.error('검색 오류:', error);
+			    		 }
+			    	 });
+				}
+			}
 		</script>
-		<!-- 동물병원 검색 -->
+		<!-- 동물병원 검색 (input search) -->
 		<script>
-            function searchHospital() {
-                var form = document.getElementById('search-hospital-form');
-                form.submit();
-            }
+			document.getElementById('h-search-keyword').addEventListener('keypress', function (event) {
+			    if (event.key === 'Enter') {
+			        searchHos();
+			    }
+			});
         </script>
     </body>
 </html>

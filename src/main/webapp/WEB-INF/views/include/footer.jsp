@@ -33,8 +33,8 @@
                 <div class="">
                     <h6 class="footer-heading text-uppercase text-white">Help</h6>
                     <ul class="list-unstyled footer-link mt-4">
-                        <li><a href="/user/register.do">Register</a></li>
-                        <li><a href="/user/login.do">Login</a></li>
+                        <li><a href="/user/register.pet">Register</a></li>
+                        <li><a href="/user/login.pet">Login</a></li>
                     </ul>
                 </div>
             </div>

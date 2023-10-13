@@ -51,7 +51,7 @@
                             call
                         </span>
 						<c:if test="${ hOne.hPhone eq null }">
-							-
+							번호정보없음
 						</c:if>
 						<c:if test="${ hOne.hPhone ne null }">
 							${ hOne.hPhone }
@@ -100,7 +100,7 @@
                 </div>
                 <!-- 등록 -->
                 <div id="review-create-div">
-                    <form action="/hReview/insert.do" method="post">
+                    <form action="/hReview/insert.pet" method="post">
                     	<input type="hidden" name="hNo" value="${ hOne.hNo }">
                         <textarea name="hRContent" id="review-create-content" placeholder="후기 내용을 작성해주세요" required></textarea>
                         <input type="submit" value="등록" id="review-create-btn">
@@ -243,7 +243,7 @@
 			var telLink = document.createElement('a');
 			telLink.href = 'tel:' + '${ hOne.hPhone }';
 			telLink.className = 'h-tel';
-			telLink.appendChild(document.createTextNode('${ hOne.hPhone }'));
+			telLink.appendChild(document.createTextNode('${ hOne.hPhone }' ? '${ hOne.hPhone }' : '번호정보없음'));
 			
 			subInfoDiv.appendChild(telLink);
 			descDiv.appendChild(subInfoDiv);

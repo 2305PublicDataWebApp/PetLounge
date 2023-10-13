@@ -34,34 +34,19 @@ public class HospitalController {
 	
 	// 동물병원 안내 페이지
 	@ResponseBody
-	@GetMapping("/hospital/page.do")
+	@GetMapping("/hospital/page.pet")
 	public ModelAndView hospitalPage(HttpSession session
 									, ModelAndView mv) {
 		try {
 			String sessionId = (String) session.getAttribute("uId");
-//			String sessionId = "user01";
-			Hospital userLocation = null;
-			User user = null;
 			
-			if(sessionId == null) {
-				userLocation = new Hospital(37.5679212, 126.9830358); // 기본 주소 (종로)
-				List<Hospital> hList = hService.selectFiveHos(userLocation);
-				mv.addObject("hList", hList);
-			} else {
-				// ======== 여기에 sessionId로 user select하는 쿼리
-				user = uService.selectOneById(sessionId);
-				
-				// ======== 여기에 회원 주소 위도 경도로 변환하는 쿼리
-//				userLocation = new Hospital(37.5555739, 126.953635); // 회원 기본 주소
-//				userLocation = new Hospital(37.5679212, 126.9830358); // 기본 주소 (종로)
+			if(sessionId != null) {
+				User user = uService.selectOneById(sessionId);
 				mv.addObject("user", user);
 			}
 			
-			
-			
 			//  EPSG:2097 좌표를 보정하여(EPSG:5174) 위경도 좌표로 변환 (1회 업데이트 완료 후 주석처리)
-			// updateTransform();
-			
+//			 updateTransform();
 			
 			mv.setViewName("/hospital/hospitalPage");
 		} catch (Exception e) {
@@ -70,21 +55,19 @@ public class HospitalController {
 		return mv;
 	}
 	
-	// 동물병원 리스트 가져오기 (로그인 시)
+	// 동물병원 리스트 가져오기
 	@ResponseBody
-	@GetMapping("/hospital/findList.do")
+	@GetMapping("/hospital/findList.pet")
 	public String hosFindList(@RequestParam("latitude") Double latitude
 			 				, @RequestParam("longitude") Double longitude) {
 		Hospital userLocation = new Hospital(latitude, longitude);
-		System.out.println(userLocation);
 		List<Hospital> hList = hService.selectFiveHos(userLocation);
-		System.out.println(hList);
 		Gson gson = new Gson();
 		return gson.toJson(hList);
 	}
 	
 	// 동물병원 안내 상세 페이지
-	@GetMapping("/hospital/detail.do")
+	@GetMapping("/hospital/detail.pet")
 	public ModelAndView hospitalDetailPage(int hNo, ModelAndView mv) {
 		Hospital hOne = hService.selectOneByhNo(hNo);
 		
@@ -92,57 +75,40 @@ public class HospitalController {
 		.setViewName("/hospital/hospitalDetail");
 		return mv;
 	}
-		
+			
 	// 동물병원 검색 기능
-	@PostMapping("/hospital/search.do")
-	public ModelAndView hospitalSearch(@ModelAttribute Hospital hospital
-									, @RequestParam("hSearchKeyword") String hSearchKeyword
-									, HttpSession session
-									, ModelAndView mv) {
+	@ResponseBody
+	@GetMapping("/hospital/search.pet")
+	public String hospitalSearch(@RequestParam("latitude") Double latitude
+								, @RequestParam("longitude") Double longitude
+								, @RequestParam("hSearchKeyword") String hSearchKeyword) {
 		
-		try {
-			String sessionId = (String) session.getAttribute("uId");
-//			String sessionId = "user01";
-			Hospital userSearchLocation = null;
-			
-			if(sessionId == null) {
-				userSearchLocation = new Hospital(37.5679212, 126.9830358, hSearchKeyword); // 기본 주소 (종로)
-			} else {
-				// ======== 여기에 sessionId로 user select하는 쿼리
-				// ======== 여기에 회원 주소 위도 경도로 변환하는 쿼리
-				userSearchLocation = new Hospital(37.5555739, 126.953635, hSearchKeyword); // 회원 기본 주소
-			}
-			
-			List<Hospital> hList = hService.selectFiveByKeyword(userSearchLocation);
-			mv.addObject("hSearchKeyword", hSearchKeyword).addObject("hList", hList)
-			.setViewName("/hospital/hospitalPage");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return mv;
+		Hospital userSearchLocation = new Hospital(latitude, longitude, hSearchKeyword);
+		List<Hospital> hList = hService.selectFiveByKeyword(userSearchLocation);
+		Gson gson = new Gson();
+		return gson.toJson(hList);
 	}
 	
 	// 동물병원 리뷰 작성 기능 
-	@PostMapping("/hReview/insert.do")
+	@PostMapping("/hReview/insert.pet")
 	public ModelAndView hospitalReviewInsert(@ModelAttribute HReview hReview
 									, HttpSession session
 									, ModelAndView mv) {
 		
 		try {
 			String sessionId = (String) session.getAttribute("uId");
-//			String sessionId = "user01";
 			
-			if(!sessionId.equals("")) {
+			if(sessionId != null) {
 				hReview.setuId(sessionId);
 				int result = hService.insertHosReview(hReview);
 				if(result > 0) {
-					mv.setViewName("redirect:/hospital/detail.do?hNo=" + hReview.gethNo());
+					mv.setViewName("redirect:/hospital/detail.pet?hNo=" + hReview.gethNo());
 				} else {
 					
 				}
 			} else {
 				mv.addObject("msg", "로그인이 필요한 서비스입니다.");
-				mv.addObject("url", "/user/login.do");
+				mv.addObject("url", "/user/login.pet");
 				mv.setViewName("common/message");
 			}
 		} catch (Exception e) {
@@ -153,7 +119,7 @@ public class HospitalController {
 	
 	// 좌표 이동
 	@ResponseBody
-	@GetMapping("/hospital/moveLocation.do")
+	@GetMapping("/hospital/moveLocation.pet")
 	public String hospitalPage(@RequestParam(value="latitude", required = false) Double latitude
 							 , @RequestParam(value="longitude", required = false) Double longitude) {
 		Hospital userLocation = null;
@@ -161,7 +127,6 @@ public class HospitalController {
 		
 		List<Hospital> hList = hService.selectFiveHos(userLocation);
 		Gson gson = new Gson();
-			System.out.println( gson.toJson(hList));
 		return gson.toJson(hList); 
 	}
 	

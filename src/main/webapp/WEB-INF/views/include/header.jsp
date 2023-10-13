@@ -4,7 +4,7 @@
 
 <header>
     <nav class="navbar navbar-expand-custom navbar-mainbg">
-        <a class="navbar-brand navbar-logo" href="/home.do">
+        <a class="navbar-brand navbar-logo" href="/home.pet">
             <div id="nav-logo-div">
                 <img src="/resources/images/pet-white.png" alt="로고" width="25px" height="25px" id="logo-img">
                 <span id="nav-pet-lounge">펫 라운지</span>
@@ -17,19 +17,19 @@
             <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
             <ul class="navbar-nav">
                 <li class="nav-item" id="hospitalLink">
-                    <a class="nav-link" href="/hospital/page.do">동물병원 안내</a>
+                    <a class="nav-link" href="/hospital/page.pet">동물병원 안내</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/weather/weather.do">산책 날씨 예보</a>
+                    <a class="nav-link" href="/weather/weather.pet">산책 날씨 예보</a>
                 </li>
                 <li class="nav-item" id="supportLink">
                     <a class="nav-link" href="/support/list.pet">펫 라운지 모금함</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/board/notice_list.do">공지사항</a>
+                    <a class="nav-link" href="/board/notice_list.pet">공지사항</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/faq/list.do">FAQ</a>
+                    <a class="nav-link" href="/faq/list.pet">FAQ</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="javascript:void(0);">자유게시판</a>
@@ -38,20 +38,20 @@
             <c:if test="${ sessionScope.uId eq null }">
 	            <ul class="navbar-nav ml-auto">
 	                <li class="nav-item">
-	                    <a class="nav-link" href="/user/login.do">로그인</a>
+	                    <a class="nav-link" href="/user/login.pet">로그인</a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link" href="/user/register.do">회원가입</a>
+	                    <a class="nav-link" href="/user/register.pet">회원가입</a>
 	                </li>
 	            </ul>            
             </c:if>
             <c:if test="${ sessionScope.uId ne null }">
 	            <ul class="navbar-nav ml-auto">
 	                <li class="nav-item">
-	                    <a class="nav-link" href="/user/logout.do;">로그아웃</a>
+	                    <a class="nav-link" href="/user/logout.pet;">로그아웃</a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link" href="/user/userInfo.do">마이페이지</a>
+	                    <a class="nav-link" href="/user/userInfo.pet">마이페이지</a>
 	                </li>
 	            </ul>            
             </c:if>
@@ -154,17 +154,17 @@
     var currentPath = window.location.pathname;
 
     // 조건 확인 후 메뉴 업데이트
-    if (currentPath === '/hospital/detail.do' || currentPath === '/hospital/search.do') {
-        // '/hospital/detail.do' 경로에 해당하는 경우
+    if (currentPath === '/hospital/detail.pet' || currentPath === '/hospital/search.pet') {
+        // '/hospital/detail.pet' 경로에 해당하는 경우
         document.getElementById('hospitalLink').classList.add('active');
     } else {
         // 다른 경우
         document.getElementById('hospitalLink').classList.remove('active');
     }
     
-    if (currentPath === '/support/list.do' || currentPath === '/support/detail.do' 
-    		|| currentPath === '/support/insert.do' || currentPath === '/support/update.do' 
-    		|| currentPath === '/support/payment.do' || currentPath === '/support/complete.do') {
+    if (currentPath === '/support/list.pet' || currentPath === '/support/detail.pet' 
+    		|| currentPath === '/support/insert.pet' || currentPath === '/support/update.pet' 
+    		|| currentPath === '/support/payment.pet' || currentPath === '/support/complete.pet') {
         document.getElementById('supportLink').classList.add('active');
     } else {
         // 다른 경우
