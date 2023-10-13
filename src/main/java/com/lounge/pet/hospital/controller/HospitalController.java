@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.lounge.pet.hospital.domain.HBookmark;
 import com.lounge.pet.hospital.domain.HReview;
 import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.hospital.service.HospitalService;
@@ -35,7 +36,8 @@ public class HospitalController {
 	// 동물병원 안내 페이지
 	@ResponseBody
 	@GetMapping("/hospital/page.pet")
-	public ModelAndView hospitalPage(HttpSession session
+	public ModelAndView hospitalPage(@RequestParam(value="hSearchKeyword", required = false) String hSearchKeyword
+									, HttpSession session
 									, ModelAndView mv) {
 		try {
 			String sessionId = (String) session.getAttribute("uId");
@@ -43,6 +45,10 @@ public class HospitalController {
 			if(sessionId != null) {
 				User user = uService.selectOneById(sessionId);
 				mv.addObject("user", user);
+			}
+			
+			if(hSearchKeyword != null) {
+				mv.addObject("hSearchKeyword", hSearchKeyword);
 			}
 			
 			//  EPSG:2097 좌표를 보정하여(EPSG:5174) 위경도 좌표로 변환 (1회 업데이트 완료 후 주석처리)
@@ -54,6 +60,26 @@ public class HospitalController {
 		}
 		return mv;
 	}
+	
+	// 메인페이지에서 검색했을 때, 동물병원 안내 페이지에 검색 결과 반영
+//	@PostMapping("/hospital/page.pet")
+//	public ModelAndView hospitalPageFromMain(@RequestParam("hSearchKeyword") String hSearchKeyword
+//											, HttpSession session
+//											, ModelAndView mv) {
+//		try {
+//			String sessionId = (String) session.getAttribute("uId");
+//			
+//			if(sessionId != null) {
+//				User user = uService.selectOneById(sessionId);
+//				mv.addObject("user", user);
+//			}
+//			mv.addObject("hSearchKeyword", hSearchKeyword);
+//			mv.setViewName("/hospital/hospitalPage");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return mv;
+//	}
 	
 	// 동물병원 리스트 가져오기
 	@ResponseBody
@@ -88,6 +114,39 @@ public class HospitalController {
 		Gson gson = new Gson();
 		return gson.toJson(hList);
 	}
+	
+	// 동물병원 즐겨찾기 기능
+	@ResponseBody
+	@GetMapping("/hospital/addToHBookmark.pet")
+	public String addToFavorites(int hNo, HttpSession session) {
+		String sessionId = (String) session.getAttribute("uId");
+		String successYn = "";
+		
+		if(sessionId != null) {
+			HBookmark userBook = new HBookmark(sessionId, hNo);
+			// hNo uId 일치하는걸 select하고
+			HBookmark hBOne = hService.selectHBook(userBook);
+			if(hBOne == null) {
+				// 없으면 insert
+				int result = hService.insertHBook(userBook);
+				if(result > 0) {
+					successYn = "success";
+				}
+			} else {
+				// 있으면 delete
+				int result = hService.deleteHBook(userBook);
+				if(result > 0) {
+					successYn = "fail";
+				}
+			}
+		} else {
+			
+		}
+		return successYn;
+//		Gson gson = new Gson();
+//		return gson.toJson();
+	}
+	
 	
 	// 동물병원 리뷰 작성 기능 
 	@PostMapping("/hReview/insert.pet")

@@ -10,6 +10,11 @@
 		VALUES(H_SEQ_NO.NEXTVAL, #{ hNo }, #{ uId }, #{ hRContent }, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	
+	<insert id="insertHBook">
+		INSERT INTO H_BOOKMARK_TBL
+		VALUES(#{ uId }, #{ hNo })
+	</insert>
+	
 	<update id="updateHosReview">
 		UPDATE H_REVIEW_TBL 
 		   SET H_R_CONTENT = #{ hRContent }, H_R_UPDATE = DEFAULT 
@@ -28,10 +33,23 @@
 		 WHERE H_NO = #{ hNo }
 	</update>
 	
+	<delete id="deleteHBook">
+		DELETE FORM H_BOOKMARK_TBL
+		 WHERE U_ID = ${ uId }
+		   AND H_NO = ${ hNo }
+	</delete>
+	
 	<select id="selectOneByhNo" resultType="Hospital">
 		SELECT * 
 		  FROM HOSPITAL_TBL
 		 WHERE H_NO = #{ hNo }  
+	</select>
+	
+	<select id="selectHBook" resultType="HBookmark">
+		SELECT *
+		  FROM H_BOOKMARK_TBL
+ 		 WHERE U_ID = ${ uId }
+		   AND H_NO = ${ hNo }
 	</select>
 	
 	<select id="selectFiveHos" resultType="Hospital">
