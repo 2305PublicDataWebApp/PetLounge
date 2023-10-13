@@ -23,32 +23,43 @@
 		<section style="padding-top: 120px;">
 			<div id="wrap" class="clearfix">
 				<aside class="aside">
-					<h1 class="logo">
-						<a href="#">프로필 사진</a>
-					</h1>
+					<div class="logo">
+						<!-- 프로필 사진 등록 전 -->
+						<c:if test="${ user.uFileReName eq null }">
+							<img class="logoImgNo" src="/resources/images/user/cat.png"
+								alt="로고">
+						</c:if>
+
+						<!-- 프로필 사진 -->
+						<c:if test="${ user.uFileReName ne null }">
+							<img class="logoImg"
+								src="../resources/userUploadFiles/${user.uFileReName }"
+								alt="프로필">
+						</c:if>
+					</div>
 					<nav class="nav" style="display: block;">
 						<ul>
 							<li><a href="#">회원관리</a>
 								<ul class="subMenu">
-									<li><a href="/user/userInfo.do?uId=${uId}">회원정보조회</a></li>
-									<li><a href="/user/checkPw.do">회원정보수정</a></li>
-									<li><a href="/user/delete.do">회원탈퇴</a></li>
+									<li><a href="/user/userInfo.pet">회원정보조회</a></li>
+									<li><a href="/user/checkPw.pet">회원정보수정</a></li>
+									<li><a href="/user/delete.pet">회원탈퇴</a></li>
 								</ul></li>
 							<li><a href="#">게시글관리</a>
 								<ul class="subMenu">
-									<li><a href="/user/searchBoard.do">게시글 조회</a></li>
-									<li><a href="/user/searchBoardReply.do">댓글 조회</a></li>
-									<li><a href="/user/searchBoardMark.do">북마크</a></li>
+									<li><a href="/user/searchBoard.pet">게시글 조회</a></li>
+									<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
+									<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 								</ul></li>
 							<li><a href="#">후원관리</a>
 								<ul class="subMenu">
-									<li><a href="/user/searchSponsor.do">후원목록</a></li>
-									<li><a href="/user/searchSponsorReply.do">후원댓글</a></li>
+									<li><a href="/user/searchSupport.pet">후원목록</a></li>
+									<li><a href="/user/searchSupportReply.pet">후원댓글</a></li>
 								</ul></li>
 							<li><a href="#">병원관리</a>
 								<ul class="subMenu">
-									<li><a href="/user/searchHospital.do">즐겨찾는 병원</a></li>
-									<li><a href="/user/searchHospitalReview.do">병원리뷰</a></li>
+									<li><a href="/user/searchHospital.pet">즐겨찾는 병원</a></li>
+									<li><a href="/user/searchHospitalReview.pet">병원리뷰</a></li>
 								</ul></li>
 						</ul>
 					</nav>
@@ -68,7 +79,7 @@
 						</div>
 					</div>
 					<div>
-						<form action="/user/update.do" method="post">
+						<form action="/user/update.pet" method="post">
 							<input type="hidden" name="uId" value="${uId}">
 							<article class="find1">
 								<!-- <h2>회원가입</h2> -->
@@ -95,23 +106,31 @@
 
 											<div style="width: 357.5px;">
 												<input type="text" value="${user.uId }" readonly>
-												<button class="중복확인버튼">중복확인</button><br> 
-												<input type="password" name="uPw" placeholder="영문, 숫자 조합 6~12자"><br><br> 
-												<input type="password" name="uPwRe" placeholder="영문, 숫자 조합 6~12자"><br><br> 
-												<input type="text" value="${user.uName }" name="uName" readonly><br><br> 
-												<input type="text" name="uNickName" placeholder="닉네임을 입력하세요.">
-												<button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button><br> 
-												<input type="text" name="uEmailPrefix" id="uEmailPrefix" placeholder="이메일을 입력하세요." 
-												oninput="combineEmail()" style="width: 184px;" required>@
-												<select name="uEmailSuffix" id="uEmailSuffix" size="1" style="border-radius: 20px;" onchange="combineEmail()">
+												<button class="중복확인버튼">중복확인</button>
+												<br> <input type="password" name="uPw"
+													placeholder="영문, 숫자 조합 6~12자"><br>
+												<br> <input type="password" name="uPwRe"
+													placeholder="영문, 숫자 조합 6~12자"><br>
+												<br> <input type="text" value="${user.uName }"
+													name="uName" readonly><br>
+												<br> <input type="text" name="uNickName"
+													placeholder="닉네임을 입력하세요.">
+												<button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button>
+												<br> <input type="text" name="uEmailPrefix"
+													id="uEmailPrefix" placeholder="이메일을 입력하세요."
+													oninput="combineEmail()" style="width: 184px;" required>@
+												<select name="uEmailSuffix" id="uEmailSuffix" size="1"
+													style="border-radius: 20px;" onchange="combineEmail()">
 													<option>hanmail.net</option>
 													<option>naver.com</option>
 													<option>gmail.com</option>
 													<option>hotmail.com</option>
 													<option>nate.com</option>
 												</select> <input type="hidden" name="uEmail" id="uEmail" value=""><br>
-												<button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button><br> 
-												<input type="tel" name="uPhone"  placeholder="예) 010-1234-1375"><br><br>
+												<button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button>
+												<br> <input type="tel" name="uPhone"
+													placeholder="예) 010-1234-1375"><br>
+												<br>
 											</div>
 										</div>
 										<div class="join2">
@@ -122,9 +141,12 @@
 												</div>
 
 												<div>
-													<input type="address" id="userZipcode" placeholder="우편번호" required>
-													<button id="addrsearch" onclick="sample4_exeDaumPostcode()">주소검색</button><br> 
-													<input type="address" name="uAddr" id="userAddr" placeholder="도로명주소" required><br><br>
+													<input type="address" id="userZipcode" placeholder="우편번호"
+														required>
+													<button id="addrsearch" onclick="sample4_exeDaumPostcode()">주소검색</button>
+													<br> <input type="address" name="uAddr" id="userAddr"
+														placeholder="도로명주소" required><br>
+													<br>
 												</div>
 											</div>
 										</div>

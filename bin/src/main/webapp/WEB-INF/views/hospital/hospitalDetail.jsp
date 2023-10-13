@@ -8,12 +8,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <jsp:include page="../include/importSource.jsp"></jsp:include>
         <link rel="stylesheet" href="/resources/css/hospital/hospitalDetail.css">
-                <link rel="stylesheet" href="/resources/css/hospital/hosMap.css">        
+        <link rel="stylesheet" href="/resources/css/hospital/hosMap.css">        
         <!-- 카카오맵 API services와 clusterer 라이브러리 불러오기 -->
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9674da3ceea3cb3a1acdb7044a416e8&libraries=services,clusterer"></script>
         <title>${ hOne.hName } 상세 안내</title>
         <style>
-            .star-icon-fill, .call-icon, .location-icon, .home-icon, .search-icon {
+            .bookmark-icon-fill, .call-icon, .location-icon, .home-icon, .search-icon {
                 margin-right: 10px;
                 font-size: 20px;
                 font-variation-settings:
@@ -23,7 +23,7 @@
                 'opsz' 24
             }
 
-            .star-icon-none {
+            .bookmark-icon-none {
                 font-variation-settings:
                 'FILL' 0,
                 'wght' 400,
@@ -31,7 +31,7 @@
                 'opsz' 24
             }
 
-            .star-icon-fill, .star-icon-none {
+            .bookmark-icon-fill, .bookmark-icon-none {
                 font-size: 3em;
                 cursor: pointer;
             }
@@ -71,11 +71,11 @@
                 <div id="map-div">
                     <!-- 지도 -->
                     <div>
-                        <!-- <span class="material-symbols-outlined star-icon-fill" style="color: #FFD370;">
-                                    star
+                        <!-- <span class="material-symbols-outlined bookmark-icon-fill" style="color: #FFD370;">
+                                    bookmark
                         </span> -->
-                        <span class="material-symbols-outlined star-icon-none" style="color: #FFD370;">
-                            star
+                        <span class="material-symbols-outlined bookmark-icon-none" style="color: #FFD370;">
+                            bookmark
                         </span>
                     </div>
                     <div id="map" style="position:relative;overflow:hidden;">
@@ -100,8 +100,9 @@
                 </div>
                 <!-- 등록 -->
                 <div id="review-create-div">
-                    <form action="" method="">
-                        <textarea name="" id="review-create-content" placeholder="후기 내용을 작성해주세요"></textarea>
+                    <form action="/hReview/insert.do" method="post">
+                    	<input type="hidden" name="hNo" value="${ hOne.hNo }">
+                        <textarea name="hRContent" id="review-create-content" placeholder="후기 내용을 작성해주세요" required></textarea>
                         <input type="submit" value="등록" id="review-create-btn">
                     </form>
                 </div>
@@ -197,27 +198,58 @@
 		    
 		    var nameToShow = '${ hOne.hName }'.length > 14 ? '${ hOne.hName }'.substring(0, 13) + '...' : '${ hOne.hName }'; // 이름이 13자가 넘어가면 ... 처리
 		    
-			// 커스텀 오버레이 컨텐츠
-			var content = '<div class="wrap">' + 
-			            '    <div class="info">' + 
-			            '        <div class="title">' + 
-			            				nameToShow + 
-			            '            <div class="close" onclick="closeOverlay();" title="닫기"></div>' + 
-			            '        </div>' + 
-			            '        <div class="body">' + 
-			            '            <div class="desc">' + 
-			            '                <div class="ellipsis">' +
-			            					'${ hOne.hRoadAddr }' + 
-			            '				 </div>' + 
-			            '                <div class="sub-info">' + 
-			            '					<a href="tel:' + '${ hOne.hPhone }' + '" class="h-tel">' +
-			            						'${ hOne.hPhone }' + 
-			            '					</a>' + 
-			            '				</div>' +
-			            '            </div>' + 
-			            '        </div>' + 
-			            '    </div>' +    
-			            '</div>';
+	        // 커스텀 오버레이 컨텐츠를 DOM 방식으로 생성
+			var content = document.createElement('div');
+			content.className = 'wrap';
+			
+			var infoDiv = document.createElement('div');
+			infoDiv.className = 'info';
+			
+			var titleDiv = document.createElement('div');
+			titleDiv.className = 'title';
+			
+			// 이름 요소
+			var nameElement = document.createTextNode(nameToShow);
+			titleDiv.appendChild(nameElement);
+			
+			var closeBtn = document.createElement('div');
+			closeBtn.className = 'close';
+			closeBtn.title = '닫기';
+			
+			//닫기 버튼 클릭 이벤트 핸들러
+			closeBtn.addEventListener('click', function () {
+			    overlay.setMap(null);
+			});
+		
+			titleDiv.appendChild(closeBtn);
+			infoDiv.appendChild(titleDiv);
+			
+			var bodyDiv = document.createElement('div');
+			bodyDiv.className = 'body';
+			
+			var descDiv = document.createElement('div');
+			descDiv.className = 'desc';
+			
+			// 도로 주소 요소
+			var roadAddrElement = document.createElement('div');
+			roadAddrElement.className = 'ellipsis';
+			roadAddrElement.appendChild(document.createTextNode('${ hOne.hRoadAddr }'));
+			descDiv.appendChild(roadAddrElement);
+			
+			var subInfoDiv = document.createElement('div');
+			subInfoDiv.className = 'sub-info';
+			
+			// 전화번호 링크
+			var telLink = document.createElement('a');
+			telLink.href = 'tel:' + '${ hOne.hPhone }';
+			telLink.className = 'h-tel';
+			telLink.appendChild(document.createTextNode('${ hOne.hPhone }'));
+			
+			subInfoDiv.appendChild(telLink);
+			descDiv.appendChild(subInfoDiv);
+			bodyDiv.appendChild(descDiv);
+			infoDiv.appendChild(bodyDiv);
+			content.appendChild(infoDiv);
 			            
 			// 마커 위에 커스텀오버레이를 표시합니다
 			// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
@@ -234,40 +266,6 @@
 				} else { // 닫혀있으면 열어라
 					overlay.setMap(map);					
 				}
-			});
-			
-			// 커스텀 오버레이를 닫기 위해 호출되는 함수
-			function closeOverlay() {
-				overlay.setMap(null);  
-			}	
-			
-			
-			// 지도가 이동, 확대, 축소로 인해 중심좌표가 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록
-			kakao.maps.event.addListener(map, 'center_changed', function() {
-			
-			    // 지도의  레벨을 얻어옵니다
-			    var level = map.getLevel();
-			
-			    // 지도의 중심좌표를 얻어옵니다 
-			    var latlng = map.getCenter(); 
-			
-			    $.ajax({
-			        url: '/hospital/page.do', 
-			        type: 'POST',
-			        data: {
-			        	level: level, // 업데이트된 레벨 값
-			            latitude: latlng.getLat(), // 업데이트된 위도 값
-			            longitude: latlng.getLng() // 업데이트된 경도 값
-			        },
-			        success: function(response) {
-			            // 성공적으로 응답을 받은 경우 처리할 내용을 추가
-			            console.log('Coordinates updated successfully.');
-			        },
-			        error: function(error) {
-			            // 오류가 발생한 경우 처리할 내용을 추가
-			            console.error('Error updating coordinates: ' + error);
-			        }
-			    });
 			});
 			
 			// 지도타입 컨트롤의 지도 또는 스카이뷰 버튼을 클릭하면 호출되어 지도타입을 바꾸는 함수
@@ -294,12 +292,6 @@
 			function zoomOut() {
 			    map.setLevel(map.getLevel() + 1);
 			}
-			
-			// 지도 중심좌표 부드럽게 이동시키기
-			function defaultLatLng() {
-			    var moveLatLng = new kakao.maps.LatLng(37.5679212, 126.9830358); // KH 종로
-			    map.panTo(moveLatLng);            
-			}        
 		</script>
     </body>
 </html>

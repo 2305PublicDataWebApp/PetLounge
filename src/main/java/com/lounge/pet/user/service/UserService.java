@@ -32,4 +32,11 @@ public interface UserService {
 	 */
 	int UpdateUser(User user);
 
+	/**
+	 * 회원탈퇴
+	 * @param sessionId
+	 * @return
+	 */
+	int deleteUser(String sessionId);
+
 }

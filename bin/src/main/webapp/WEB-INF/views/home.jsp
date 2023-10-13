@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -37,7 +38,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/weather/weather.do">
                                 산책 날씨 예보
                             </a>
                         </li>
@@ -51,7 +52,8 @@
                                 휴게실
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">공지사항</a></li>
+                                <li><a href="/board/notice_list.do">공지사항</a></li>
+                                <li><a href="/faq/list.do">FAQ</a></li>
                                 <li><a href="#">자유게시판</a></li>
                             </ul>
                         </li>
@@ -61,32 +63,32 @@
                 <!-- 회원관리 -->
                 <div class="menu-footer">
                     <nav class="footer-nav">
-                    	<c:if test="${ sessionScope.userId eq null }">
+                    	<c:if test="${ sessionScope.uId eq null }">
 	                        <ul>
 	                            <li>
-	                                <a href="/userLogin/page.do">
+	                                <a href="/user/login.do">
 	                                    <i class="fa fa-sign-in user-icon"></i>
 	                                    login
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="/userRegister/page.do">
+	                                <a href="/user/register.do">
 	                                    <i class="fa fa-solid fa-plus user-icon"></i>
 	                                    register
 	                                </a>
 	                            </li>
 	                        </ul>
                         </c:if>
-                    	<c:if test="${ sessionScope.userId ne null }">
+                    	<c:if test="${ sessionScope.uId ne null }">
 	                        <ul>
 	                            <li>
-	                                <a href="#">
+	                                <a href="/user/logout.do">
 	                                    <i class="fa fa-sign-out user-icon"></i>
 	                                    logout
 	                                </a>
 	                            </li>
 	                            <li>
-	                                <a href="/userInfo/page.do">
+	                                <a href="/user/userInfo.do">
 	                                    <i class="fa fa-regular fa-user user-icon"></i>
 	                                    my page
 	                                </a>
@@ -129,9 +131,9 @@
                         <h1 class="title">동물병원 안내</h1>
                         <p class="info">펫 라운지를 통해 주변 동물병원을 간편하게 찾아보세요<br>반려동물의 건강은 행복의 첫걸음입니다</p>
                     </div>
-                    <form action="/views/home.html" method="get" id="search-hospital-form">
+                    <form action="/hospital/search.do" method="post" id="search-hospital-form">
                         <div>
-                            <input type="search" name="" id="" class="search-input" placeholder="찾고자 하는 주소 또는 동물 병원의 이름을 입력하세요"> 
+                            <input type="search" name="hSearchKeyword" id="h-search-keyword" class="search-input" placeholder="찾고자 하는 주소 또는 동물 병원의 이름을 입력하세요"> 
                             <span class="material-symbols-outlined search-icon" onclick="searchHospital();" style="font-size: 3.5em; color: #FFD370; cursor: pointer; margin-left: 10px;">
                                 search
                             </span>
@@ -147,7 +149,7 @@
                     <h1 class="title">산책 날씨 예보</h1>
                     <p class="info">펫 라운지는 반려동물과 함께 안전하고 즐거운 산책을 즐기는 데 도움을 드립니다</p>
                     <div>
-                        <button class="link-btn">오늘의 날씨 확인하기</button>
+                        <button class="link-btn" onclick="location.href='/weather/weather.do'">오늘의 날씨 확인하기</button>
                     </div>
                 </div>
             </section>
@@ -184,6 +186,37 @@
                                 <a href="#">Learn more</a>
                             </div>
                         </div>
+                        
+<!--                         <div class="item"> -->
+<%-- 	                        <c:forEach var="support" items="${ sList }" varStatus="i" end="3"> --%>
+<!-- 			                	<div class="col-xl-3 col-md-6 portfolio-item filter-books"> -->
+<!-- 					                <div class="cards" style="border-radius: 20px;"> -->
+<!-- 					                	<div> -->
+<%-- 						                	<a href="/support/detail.do?sNo=${support.sNo }" > --%>
+<!-- 			                                         <img src="/resources/images/cat.jpg" class="card-img" -->
+<!-- 						                    	onerror="this.src='https://petrounge.s3.ap-northeast-2.amazonaws.com/noimage.png'"></a> -->
+<!-- 					                	</div> -->
+<!-- 					                    <div class="card-content"> -->
+<%-- 					                        <strong class="card-title"><a href="/support/detail.do?sNo=${support.sNo }" title="More Details">${support.sTitle }</a></strong> --%>
+<%-- 					                        <div class="card-group">${support.sGroup }</div> --%>
+<!-- 					                        <div class="card-bar"> -->
+<%-- 					                            <span class="card-bar-collection" id="graph-num" style="width: ${(support.sFundAmount / support.sTargetAmount) * 100}%;"></span> --%>
+<!-- 					                        </div> -->
+<!-- 					                        <div> -->
+<%-- 						                        <fmt:parseNumber var="percent" --%>
+<%-- 														value="${(support.sFundAmount / support.sTargetAmount) * 100 }" --%>
+<%-- 														integerOnly="true" /> --%>
+<%-- 						                        <strong class="card-percent" id="per-num">${percent}%</strong> --%>
+<!-- 						                        <strong class="card-money"> -->
+<%-- 						                            ${support.sFundAmount } --%>
+<!-- 						                            <span class="text">원</span> -->
+<!-- 						                        </strong> -->
+<!-- 					                        </div> -->
+<!-- 					                    </div> -->
+<!-- 					                </div> -->
+<!-- 				                </div> -->
+<%-- 			                </c:forEach> --%>
+<!--                         </div> -->
                     </div>
                     <div>
                         <button class="link-btn" onclick="location.href='/support/list.do'">더 많은 후원 보기</button>

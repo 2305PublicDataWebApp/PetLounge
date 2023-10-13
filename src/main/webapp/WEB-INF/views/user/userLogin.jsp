@@ -25,7 +25,7 @@
 					<h1 class="login_h1">Login</h1>
 					<hr>
 					<br>
-					<form action="/user/login.do" method="post">
+					<form action="/user/login.pet" method="post">
 						<input type="text" name="uId" placeholder="Username"
 							required="required" /> <input type="password" name="uPw"
 							placeholder="Password" required="required" />
@@ -41,11 +41,11 @@
 		<jsp:include page="../include/footer.jsp"></jsp:include>
 		<script>
 		function showIdPwFindPage() {
-			location.href="/user/idpwFind.do"
+			location.href="/user/idpwFind.pet"
 		}
 		
 		function showRegisterPage() {
-			location.href="/user/register.do"
+			location.href="/user/register.pet"
 		}
 		
 		</script>

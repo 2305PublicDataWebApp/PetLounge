@@ -1,7 +1,3 @@
-body {
-    background-color: #fafafa;
-}
-
 main {
     width: 90%;
     height: auto;
@@ -55,6 +51,8 @@ main {
             #map-div > div:first-child {
                 width: 65%; 
                 text-align: left;
+                display: flex;
+                align-items: center;
             } 
 
                 .home-icon {
@@ -96,12 +94,13 @@ main {
                 }
 
 
-            #map-div > div:nth-child(2) {
+            #map {
                 width: 65%; 
                 height: 380px; 
                 background-color: lightgray;
                 margin: 10px;
             } 
+            
 
     #hospital-list-section {
         display: flex;
@@ -126,14 +125,14 @@ main {
                 cursor: pointer;
             }
 
-                tr:not(thead > tr:first-child):hover td {
-                    font-size: 1.1em;
-                    transition: font-size 0.3s ease;
-                }
+/*                 tr:not(thead > tr:first-child):hover td { */
+/*                     font-size: 1.1em; */
+/*                     transition: font-size 0.3s ease; */
+/*                 } */
 
-                tr:not(thead > tr:first-child) td {
-                    transition: font-size 0.3s ease;
-                }
+/*                 tr:not(thead > tr:first-child) td { */
+/*                     transition: font-size 0.3s ease; */
+/*                 } */
 
             th, td {
                 padding: 20px 10px;
@@ -142,7 +141,8 @@ main {
 
             td > div {
                 display: flex;
-                align-items: flex-end;
+                --align-items: flex-end;
+                align-items: center;
             }
 
                 .arrow-icon {

@@ -229,11 +229,14 @@ body {
     border: 1px solid #ccc;
     border-radius: 20px;
     margin : 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .cards img {
     border-radius: 20px 20px 0px 0px;
     width : 100%;
-    height: 50%;
+    height: 100%;
 }
 .cards .card-content {
     padding: 20px;
@@ -275,3 +278,14 @@ body {
     margin-top: 13px;
     float: right;
 }
+
+
+.a-detail , .a-detail:hover, .a-detail:link, .a-detail:active, .a-detail:visited { 
+	text-decoration: none; 
+	color : black;
+}
+
+
+
+
+

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -22,32 +23,43 @@
 			<section style="padding-top: 120px;">
 				<div id="wrap" class="clearfix">
 					<aside class="aside">
-						<h1 class="logo">
-							<a href="#">프로필 사진</a>
-						</h1>
+						<div class="logo">
+						<!-- 프로필 사진 등록 전 -->
+						<c:if test="${ user.uFileReName eq null }">
+							<img class="logoImgNo" src="/resources/images/user/cat.png"
+								alt="로고">
+						</c:if>
+
+						<!-- 프로필 사진 -->
+						<c:if test="${ user.uFileReName ne null }">
+							<img class="logoImg"
+								src="../resources/userUploadFiles/${user.uFileReName }"
+								alt="프로필">
+						</c:if>
+					</div>
 						<nav class="nav" style="display: block;">
 							<ul>
 								<li><a href="#">회원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/userInfo.do">회원정보조회</a></li>
-										<li><a href="/user/checkPw.do">회원정보수정</a></li>
-										<li><a href="/user/delete.do">회원탈퇴</a></li>
+										<li><a href="/user/userInfo.pet">회원정보조회</a></li>
+										<li><a href="/user/checkPw.pet">회원정보수정</a></li>
+										<li><a href="/user/delete.pet">회원탈퇴</a></li>
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchBoard.do">게시글 조회</a></li>
-										<li><a href="/user/searchBoardReply.do">댓글 조회</a></li>
-										<li><a href="/user/searchBoardMark.do">북마크</a></li>
+										<li><a href="/user/searchBoard.pet">게시글 조회</a></li>
+										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
+										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
 								<li><a href="#">후원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchSponsor.do">후원목록</a></li>
-										<li><a href="/user/searchSponsorReply.do">후원댓글</a></li>
+										<li><a href="/user/searchSupport.pet">후원목록</a></li>
+										<li><a href="/user/searchSupportReply.pet">후원댓글</a></li>
 									</ul></li>
 								<li><a href="#">병원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchHospital.do">즐겨찾는 병원</a></li>
-										<li><a href="/user/searchHospitalReview.do">병원리뷰</a></li>
+										<li><a href="/user/searchHospital.pet">즐겨찾는 병원</a></li>
+										<li><a href="/user/searchHospitalReview.pet">병원리뷰</a></li>
 									</ul></li>
 							</ul>
 						</nav>
@@ -67,7 +79,7 @@
 							</div>
 						</div>
 						<div>
-							<form action="/user/checkPw.do" method="post">
+							<form action="/user/checkPw.pet" method="post">
 								<article class="find1">
 									<p>
 										펫 라운지 회원정보수정<br>회원님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인해주세요.

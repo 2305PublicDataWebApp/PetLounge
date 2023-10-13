@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -23,32 +24,43 @@
 			<section style="padding-top: 120px;">
 				<div id="wrap" class="clearfix">
 					<aside class="aside">
-						<h1 class="logo">
-							<a href="#">프로필 사진</a>
-						</h1>
-						<nav class="nav" style="display: block;">
+					<div class="logo">
+						<!-- 프로필 사진 등록 전 -->
+						<c:if test="${ user.uFileReName eq null }">
+							<img class="logoImgNo" src="/resources/images/user/cat.png"
+								alt="로고">
+						</c:if>
+
+						<!-- 프로필 사진 -->
+						<c:if test="${ user.uFileReName ne null }">
+							<img class="logoImg"
+								src="../resources/userUploadFiles/${user.uFileReName }"
+								alt="프로필">
+						</c:if>
+					</div>
+					<nav class="nav" style="display: block;">
 							<ul>
 								<li><a href="#">회원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/userInfo.do?uId=${uId}">회원정보조회</a></li>
-										<li><a href="/user/checkPw.do">회원정보수정</a></li>
-										<li><a href="/user/delete.do">회원탈퇴</a></li>
+										<li><a href="/user/userInfo.pet">회원정보조회</a></li>
+										<li><a href="/user/checkPw.pet">회원정보수정</a></li>
+										<li><a href="/user/delete.pet">회원탈퇴</a></li>
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchBoard.do">게시글 조회</a></li>
-										<li><a href="/user/searchBoardReply.do">댓글 조회</a></li>
-										<li><a href="/user/searchBoardMark.do">북마크</a></li>
+										<li><a href="/user/searchBoard.pet">게시글 조회</a></li>
+										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
+										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
 								<li><a href="#">후원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchSponsor.do">후원목록</a></li>
-										<li><a href="/user/searchSponsorReply.do">후원댓글</a></li>
+										<li><a href="/user/searchSupport.pet">후원목록</a></li>
+										<li><a href="/user/searchSupportReply.pet">후원댓글</a></li>
 									</ul></li>
 								<li><a href="#">병원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchHospital.do">즐겨찾는 병원</a></li>
-										<li><a href="/user/searchHospitalReview.do">병원리뷰</a></li>
+										<li><a href="/user/searchHospital.pet">즐겨찾는 병원</a></li>
+										<li><a href="/user/searchHospitalReview.pet">병원리뷰</a></li>
 									</ul></li>
 							</ul>
 						</nav>
@@ -69,7 +81,7 @@
 						</div>
 						<div style="margin: 30px 60px 30px 60px;">
 							<div id="boardTable" class="board-list">
-								<form action="/user/searchHospitalReview.do" method="get">
+								<form action="/user/searchHospitalReview.pet" method="get">
 									<div class="filter input-group mb-3">
 										<select name="searchCondition" style="border-radius: 20px; padding-top: 2px;">
 											<option value="all">전체</option>
@@ -78,7 +90,7 @@
 											<option value="nickname">닉네임</option>
 										</select> <input class="form-control" type="text" name="searchKeyword"
 											placeholder="검색"
-											style="width: 75%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 0; border-color: #FFD370; padding-top: 10px; padding-top: 3px;" />
+											style="width: 75%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 0; border-color: #FFD370; padding-top: 10px;" />
 										<input type="submit" value="검색"
 											style="background-color: #ffd370; color: white; border-color: #ffd370; width: 10%; height: 28px; border-radius: 20px; margin-left: 0;">
 									</div>
@@ -99,7 +111,7 @@
 										<tr>
 											<td>user</td>
 											<td>password</td>
-											<c:url var="detailUrl" value="/admin/aInfo.do">
+											<c:url var="detailUrl" value="/admin/aInfo.pet">
 												<c:param name="userId" value="${uOne.userId }"></c:param>
 											</c:url>
 											<td><a href="${detailUrl }">이름</a></td>
@@ -109,7 +121,7 @@
 										<tr>
 											<td>user</td>
 											<td>password</td>
-											<c:url var="detailUrl" value="/admin/aInfo.do">
+											<c:url var="detailUrl" value="/admin/aInfo.pet">
 												<c:param name="userId" value="${uOne.userId }"></c:param>
 											</c:url>
 											<td><a href="${detailUrl }">이름</a></td>
@@ -119,7 +131,7 @@
 										<tr>
 											<td>user</td>
 											<td>password</td>
-											<c:url var="detailUrl" value="/admin/aInfo.do">
+											<c:url var="detailUrl" value="/admin/aInfo.pet">
 												<c:param name="userId" value="${uOne.userId }"></c:param>
 											</c:url>
 											<td><a href="${detailUrl }">이름</a></td>
@@ -132,20 +144,20 @@
 							<div class="paging" style="margin-top: 50px;">
 								<div>
 									<c:if test="${nInfo.nStartNavi != 1}">
-										<c:url var="preUrl" value="/notice/n_list.do">
+										<c:url var="preUrl" value="/notice/n_list.pet">
 											<c:param name="page" value="${nInfo.nStartNavi -1 }" />
 										</c:url>
 										<a href="${preUrl }">[이전]</a>
 									</c:if>
 									<c:forEach begin="${nInfo.nStartNavi }" end="${nInfo.nEndNavi }"
 										var="n">
-										<c:url var="pageUrl" value="/notice/n_list.do">
+										<c:url var="pageUrl" value="/notice/n_list.pet">
 											<c:param name="page" value="${n }"></c:param>
 										</c:url>
 										<a href="${pageUrl }">1 2 3 4 5</a>&nbsp;
 	                                </c:forEach>
 									<c:if test="${nInfo.nEndNavi != nInfo.nNaviTotalCount }">
-										<c:url var="nextUrl" value="/notice/n_list.do">
+										<c:url var="nextUrl" value="/notice/n_list.pet">
 											<c:param name="page" value="${nInfo.nEndNavi +1 }" />
 										</c:url>
 										<a href="${nextUrl }">[다음]</a>

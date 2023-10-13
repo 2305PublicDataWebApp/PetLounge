@@ -33,4 +33,10 @@ public class UserStoreLogic implements UserStore{
 		return result;
 	}
 
+	@Override
+	public int deleteUser(SqlSession session, String sessionId) {
+		int result = session.update("UserMapper.deleteUser", sessionId);
+		return result;
+	}
+
 }

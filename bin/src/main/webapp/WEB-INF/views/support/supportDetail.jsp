@@ -21,11 +21,11 @@
             <section id="content">
                 <div id="content-left">
                     <div class="content-left-top">
-                        <h3 style="margin-right:50px; color: #FFD370;">카테고리</h3>
-                        <h3>제목</h3> 
+                        <span style="margin-right:20px; width: 95px;"><h3 class="h3" style="color: #FFD370;">[ ${support.sCategory } ]</h3></span>
+                        <span><h3 class="h3">${support.sTitle }</h3></span>
                     </div>
                     <div class="s-content">
-                        내용
+                        ${support.sContent }
                     </div>
                     <!-- 댓글, 후원 내역 리스트 -->
                     <section id="support-action-section">
@@ -43,132 +43,25 @@
                         <div id="reply-tabpanel" style="display: block;">
                             <!-- 등록 -->
                             <div id="reply-create-div">
-                                <form action="" method="">
-                                    <textarea name="" id="reply-create-content" placeholder="응원의 댓글을 남겨주세요."></textarea>
-                                    <input type="submit" value="등록" id="reply-create-btn">
-                                </form>
+	                            <textarea name="sRContent" id="reply-create-content" placeholder="응원의 댓글을 남겨주세요."></textarea>
+	                            <input type="submit" value="등록" id="reply-create-btn">
                             </div>
                             <!-- 댓글 리스트 -->
                             <div id="reply-list-div">
-                                <table>
+                                <table id="replyTable">
                                     <colgroup>
                                         <col style="width: 5%;">
                                         <col style="width: 80%;">
                                         <col style="width: 15%;">
-                                    </colgroup>
-                                    <tr class="tr">
-                                        <td class="td">
-                                            <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;"></div>
-                                        </td>
-                                        <td class="td">
-                                            <div class="user-info-div">
-                                                <span class="user-nickname">
-                                                    동숲주민
-                                                </span>
-                                                <span class="reply-create-date">
-                                                    2023.10.03 19:42
-                                                </span>
-                                            </div>
-                                            <div class="reply-content">
-                                                댓글 내용
-                                            </div>
-                                        </td>
-                                        <td class="td">
-                                            <a href="" class="reply-modify-btn" data-bs-toggle="modal" data-bs-target="#modifyModal">수정</a>
-                                            <a href="" class="reply-delete-btn">삭제</a>
-                                        </td>
-                                    </tr>
+      	                              </colgroup>
                                     <tr>
-                                        <td class="td">
-                                            <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;"></div>
-                                        </td>
-                                        <td class="td">
-                                            <div class="user-info-div">
-                                                <span class="user-nickname">
-                                                    동숲주민
-                                                </span>
-                                                <span class="reply-create-date">
-                                                    2023.10.03 19:42
-                                                </span>
-                                            </div>
-                                            <div class="reply-content">
-                                                댓글 내용
-                                            </div>
-                                        </td>
-                                        <td class="td">
-                                            <a href="" class="reply-modify-btn" data-bs-toggle="modal" data-bs-target="#modifyModal">수정</a>
-                                            <a href="" class="reply-delete-btn">삭제</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="td">
-                                            <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;"></div>
-                                        </td>
-                                        <td class="td">
-                                            <div class="user-info-div">
-                                                <span class="user-nickname">
-                                                    동숲주민
-                                                </span>
-                                                <span class="reply-create-date">
-                                                    2023.10.03 19:42
-                                                </span>
-                                            </div>
-                                            <div class="reply-content">
-                                                댓글 내용
-                                            </div>
-                                        </td>
-                                        <td class="td">
-                                            <a href="" class="reply-modify-btn" data-bs-toggle="modal" data-bs-target="#modifyModal">수정</a>
-                                            <a href="" class="reply-delete-btn">삭제</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="td">
-                                            <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;"></div>
-                                        </td>
-                                        <td class="td">
-                                            <div class="user-info-div">
-                                                <span class="user-nickname">
-                                                    동숲주민
-                                                </span>
-                                                <span class="reply-create-date">
-                                                    2023.10.03 19:42
-                                                </span>
-                                            </div>
-                                            <div class="reply-content">
-                                                댓글 내용
-                                            </div>
-                                        </td>
-                                        <td class="td">
-                                            <a href="" class="reply-modify-btn" data-bs-toggle="modal" data-bs-target="#modifyModal">수정</a>
-                                            <a href="" class="reply-delete-btn">삭제</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="td">
-                                            <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;"></div>
-                                        </td>
-                                        <td class="td">
-                                            <div class="user-info-div">
-                                                <span class="user-nickname">
-                                                    동숲주민
-                                                </span>
-                                                <span class="reply-create-date">
-                                                    2023.10.03 19:42
-                                                </span>
-                                            </div>
-                                            <div class="reply-content">
-                                                댓글 내용
-                                            </div>
-                                        </td>
-                                        <td class="td">
-                                            <a href="" class="reply-modify-btn" data-bs-toggle="modal" data-bs-target="#modifyModal">수정</a>
-                                            <a href="" class="reply-delete-btn">삭제</a>
-                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                 </table>
                                 <div id="page-navigation">
-                                    << <span style="color:#FFD370;">1</span> 2 3 4 5 >>
+                                    < <span style="color:#FFD370;">1</span> 2 3 4 5 >>
                                 </div>
                             </div>
                         </div>
@@ -338,44 +231,170 @@
                     <div class="section-status">
                         <div class="graph-status">
                             <span class="per">
-                                <strong class="num">64</strong>%
+                                <strong class="num" id="per-num">64</strong>%
                             </span>
                         </div>
                         <div class="graph-bar">
-                            <span style="width:64%;"></span>
+                            <span class="graph-num" id="graph-num" style="width:64%;"></span>
                         </div>
                         <div class="term-area">
-                            <p>2023.08.02 ~ 2023.10.29</p>
+                            <p>${support.sStart } ~ ${support.sEnd }</p>
                         </div>
                         <div>
-                            <span class="d-day">D-25</span>
+                            <span id="d-day" class="d-day">D-25</span>
                         </div>
                         <div class="num-area">
-                            <p class="fund-amount"><span>4,187,300</span>원</p>
-                            <p class="target-amount"><span>6,500,000</span>원 목표</p>
+                            <p class="fund-amount"><span  id="s-fund-amount">0</span>원</p>
+                            <p class="target-amount"><span id="s-target-amount">0</span>원 목표</p>
                         </div>
                     </div>
                     <!-- 후원 버튼 -->
                     <div class="section-btn">
-                        <button class="support-btn">후원 함께 하기</button>
+                        <button class="support-btn"  onClick="location.href='/support/payment.do?sNo='+${support.sNo }">후원 함께 하기</button>
                     </div>
                     <div class="section-group">
                         <p>모금단체<br>
-                        <strong class="s-group">사단법인 동물행동권카라</strong></p>
+                        <strong class="s-group">${support.sGroup }</strong></p>
                     </div>
                 </div>
             </section>
             <section id="button" style="margin-bottom: 100px;">
                 <div><button class="btn-cancel" onClick="location.href='/support/list.do'">목록으로</button></div>
                 <div class="admin-btn">
-                    <button class="btn-update" onClick="location.href='/support/update.do?sNo'+${support.sNo }">수정하기</button>
+                    <button class="btn-update" onClick="location.href='/support/update.do?sNo='+${support.sNo }">수정하기</button>
                     <button class="btn-delete" onclick="checkDelete();">삭제하기</button>
                 </div>
+                
             </section>
         </main>
 		
 		<jsp:include page="../include/footer.jsp"></jsp:include>
 		<script>
+			// 댓글 등록 
+			$("#reply-create-btn").on("click", function() {
+				const sRContent = $("#reply-create-content").val();
+				const sNo = ${support.sNo };
+				$.ajax({
+					url : "/sReply/insert.do",
+					data : { sRContent : sRContent, sNo : sNo },
+					type : "POST",
+					success : function(result) {
+						if(result == "success") {
+							alert("댓글 등록 성공");
+							getReplyList();
+							$("#reply-create-content").val("");
+						} else {
+							alert("댓글 등록 실패");
+						}
+					},
+					error : function() {
+						alert("Ajax 오류! 관리자에게 문의하세요.");
+					}
+				});
+			});
+			// 댓글 수정 
+			
+			// 댓글 삭제 
+			const deleteReply = (sRNo) => {
+				$.ajax({
+					url : "/sReply/delete.do",
+					data : { sRNo : sRNo },
+					type : "GET",
+					success : function(data) {
+						if(data == "success") {
+							alert("댓글 삭제 성공!");
+							getReplyList();
+						} else {
+							alert("댓글 삭제 실패!");
+						}
+					},
+					error : function() {
+						alert("Ajax 오류! 관리자에게 문의하세요.");
+					}
+				});
+			}
+			// 날짜 포맷팅 
+			const getFormattedDate = (dateString) => {
+			    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'};
+			    const formattedDate = new Date(dateString).toLocaleDateString('ko-KR', options);
+			    return formattedDate;
+			};
+			// 댓글 리스트를 불러오는 ajax Function 
+			const getReplyList = () => {
+				let sessionId = "${sessionScope.uId}";
+				const sNo = ${support.sNo };
+				$.ajax({
+					url : "/sReply/list.do",
+					data : { sNo : sNo}, 
+					type : "GET",
+					success : function(result) {
+						const tableBody = $("#replyTable tbody");
+						tableBody.html('');
+						let tr;
+						let left;
+						let center;
+						let right;
+						if(result.length > 0) {
+							for(let i in result) {
+								tr = $("<tr>"); // <tr></tr>
+								left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;'></div>"); // <td>khuser01</td>
+								center = $("<td class='td'>").html(
+										"<div class='user-info-div'><span class='user-nickname'>"+result[i].sRWriter+"</span><span class='reply-create-date'>"+getFormattedDate(result[i].sRCreate)+"</span></div><div class='reply-content'>"+result[i].sRContent+"</div>"); // <td>댓글내용</td>
+								if(sessionId === result[i].uId) {
+									right = $("<td class='td'>").html(
+											"<a href='' class='reply-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal'>수정</a><a href='javascript:void(0)' class='reply-delete-btn' onclick='deleteReply("+result[i].sRNo+");'>삭제</a>"); 
+								} else {
+									right = $("<td class='td'>").html("");
+								}
+				
+								tr.append(left);
+								tr.append(center);
+								tr.append(right); // <tr><td></td><td></td>...</tr>
+								tableBody.append(tr); // <tbody><tr><td></td><td></td>...</tr></tbody> -> 눈에 보이게 됨
+								console.log(result[i].uId);
+							}
+						} else {
+							tr = $("<tr class='td'><td class='td'colspan='3'style='width:725px;'><div width='100%'>등록된 댓글이 없습니다.</div></td></tr>");
+							tableBody.append(tr);
+						}
+					},
+					error : function() {
+						alert("Ajax 오류! 관리자에게 문의하세요.");
+					}
+				});
+			}
+			$(function(){
+				getReplyList();
+				// setInterval(getReplyList, 1000); // 1초 단위로 getReplyList가 호출되어 댓글 실시간 조회
+			})
+			<!-- 디데이 구하기 -->
+			const sStart = new Date('${support.sStart}');
+		    const sEnd = new Date('${support.sEnd}');
+		    const timeDiff = sEnd - sStart;
+		    const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+		    document.getElementById('d-day').innerText = "D-" + daysDiff;
+			<!-- 목표 금액 불러온 숫자 사이에 , 넣어주기  -->
+	        let sTargetAmount = (${support.sTargetAmount }).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	        $(document).ready(function() {
+	            $('#s-target-amount').text(sTargetAmount);
+	        });
+			<!-- 후원 금액 불러온 숫자 사이에 , 넣어주기  -->
+	        let sFundAmount = (${support.sFundAmount }).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	        $(document).ready(function() {
+	            $('#s-fund-amount').text(sFundAmount);
+	        });
+	        <!-- 퍼센트 계산 -->
+	        const targetAmount = parseFloat(${support.sTargetAmount });
+	        const fundAmount = parseFloat(${support.sFundAmount });
+	        const percentage = Math.round((fundAmount / targetAmount) * 100);
+	        // 숫자 띄워주기 
+	        $(document).ready(function() {
+	            $('#per-num').text(percentage);
+	        });
+	        // 퍼센트바 보여주기 
+	        $(document).ready(function() {
+	            $('#graph-num').css('width', percentage + '%');
+	        });
             <!-- 댓글, 후원내역 이동 -->
             document.addEventListener("DOMContentLoaded", function () {
                 // 모든 탭을 숨기고 초기 탭을 표시

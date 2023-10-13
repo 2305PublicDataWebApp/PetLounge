@@ -34,7 +34,7 @@ table {
 	box-sizing: content-box !important;
 }
 
-.aside { -
+.aside { 
 	-border: 1px solid #000;
 	float: left;
 	width: 200px;
@@ -51,7 +51,16 @@ table {
 	border-radius: 20px;
     font-size: 1em; 	
 }
-
+.aside .logo .logoImg {
+	width: 100%;
+    height: 99%;
+    border-radius: 20px;
+}
+.aside .logo .logoImgNo {
+	width: 50%;
+    height: 49%;
+    border-radius: 20px;
+}
 .aside .nav {
 	border: 1px solid #ffd370;
 	margin: 5px;

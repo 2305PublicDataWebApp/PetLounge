@@ -5,17 +5,16 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>산책 날씨 예보</title>
-        <script src="http://code.jquery.com/jquery-1.7.min.js"></script>
+        <jsp:include page="../include/importSource.jsp"></jsp:include>
         <link rel="stylesheet" href="/resources/css/weather/weather.css">
         <link rel="stylesheet" href="/resources/css/reset.css">
         <link rel="stylesheet" href="/resources/css/font.css">
+        <title>산책 날씨 예보</title>
+        <script src="http://code.jquery.com/jquery-1.7.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     </head>
     <body>
-        <header>
-            
-        </header>
-        
+        <jsp:include page="../include/header.jsp"></jsp:include>
 
         <main class="main">
             <div class="contanier">
@@ -35,12 +34,12 @@
                         </div>
                             <ul class="region-list">
                                 <li>
-                                    <button class="button-item active">
+                                    <button id="seoul" class="button-item active">
                                         서울
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item">
+                                    <button id="sejong" class="button-item">
                                         세종
                                     </button>
                                 </li>
@@ -144,7 +143,7 @@
                         </div>
                         <!-- 기온 -->
                         <div class="today-weather-Temperature">
-                            <img src=""> <span class="tTemp"></span>℃
+                            <div class="tIcon"></div> <span class="tTemp"></span>℃
                         </div>
                         <div class="img-area">
                             <img class="dog-img" src="/resources/images/weather/dog.png">
@@ -153,17 +152,17 @@
 
                     <div class="today-rigth">
                         <!-- 강수 확률 -->
-                        <div class="today-precipitation">
-                            강수 확률 5%
+                        <div class="today-info">
+                            강수 확률<span></span>
                         </div>
                         <!-- 최고 기온 -->
                         <div class="">
-                            최고 기온
+                            최고 기온<span></span>
                             <span class="tHightemp"></span>℃
                         </div>
                         <!-- 최저 기온 -->
                         <div>
-                            최저 기온
+                            최저 기온<span></span>
                             <span class="tLowtemp"></span>℃
                         </div>
                     </div>
@@ -172,7 +171,6 @@
                 <!-- 시간별 기온 -->
                 <div class="time-weather">
                     <h2>시간별 기온</h2>
-                    
                 </div>
 
                 <!-- 일별 기온 -->
@@ -182,10 +180,7 @@
             </div>
         </main>
 
-
-        <footer>
-            
-        </footer>
+        <jsp:include page="../include/footer.jsp"></jsp:include>
 
         <script>
             // 지역 선택
@@ -211,27 +206,56 @@
                 });
             });
 
-            // 현재 날씨 정보 (서울)
-        // 서울 현재 온도
-        $.getJSON ('https://api.openweathermap.org/data/2.5/weather?id=1835848&appid=a5d1dc2dfcf28e0c9a351c9a21ef186f&units=metric', function(data){
-            var $minTemp = data.main.temp_min;         // 최저 온도
-            var $roundedLTemp = Math.round($minTemp);  // 최저 온도(반올림)
-            var $maxTemp = data.main.temp_max;         // 최고 온도
-            var $roundedHTemp = Math.round($maxTemp);  // 최고 온도(반올림)
-            var $temp = data.main.temp;                // 현재 온도
-            var $roundedTemp = Math.round($temp);      // 현재 온도(반올림)
-            var $now = new Date($.now());              // 오늘 날짜
-            var $date = $now.getFullYear() + '년 ' + ($now.getMonth() + 1) +'월 ' + $now.getDate() +'일 ' +$now.getHours() + '시 ' + $now.getMinutes() + '분';           // 오늘 날짜s
-            var $wIcon = data.weather[0].icon;         // 날씨 아이콘
-
-            $('.tLowtemp').append($roundedLTemp);
-            $('.tHightemp').append($roundedHTemp);
-            $('.tTemp').append($roundedTemp);
-            $('.tDate').prepend($date);
-            $('.tIcon').append('<img src="https://openweathermap.org/img/wn/' + $wIcon + '.png" />')
-        });
-
-
+			// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 기상청 api ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ //
+			// 오늘 날짜
+	        let date = new Date();
+	        let year = date.getFullYear();          // 2023
+	        let month = "0" + (date.getMonth() +1);
+	        let month2 = month.substr(-2);          // 월
+	        let day = "0" + date.getDate();
+	        let day2 = day.substr(-2);              // 일
+	        let initDate = year + month2 + day2;    // 오늘 날짜
+// 	        console.log(initDate);
+	
+	        // 현재 시간
+	        const now = new Date();
+	        const hours = String(now.getHours()).padStart(2, '0');
+	        const minutes = String(now.getMinutes()).padStart(2, '0');
+	     	// base_time이 정시 이후일 경우 40분에 api 시간이 제공되기 때문에 
+	     	// 정시 이후부터 40분 이전까지의 시간의 날씨를 제공하기 위해 시간에 오차를 줌
+	        const formattedTime = (hours + minutes)-50;  
+	        console.log(formattedTime); 
+	
+	        // parameter, serviceKey
+	        let apiUrl1 = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst";
+            const serviceKey = "4pYTUL0IAyNldYcuL1CFGcJpGrgPllaY%2BkD8xcBEHAbaLSA8xraNMsfHFO%2BXhGJmos%2FBszyn6LH7HoSBORAAhQ%3D%3D";
+            const pageNo = "1";
+            const numOfRows = "1000";
+            const dataType = "JSON";
+            let base_date = initDate;
+            let base_time = formattedTime;
+            let nx = "60";
+            let ny = "127";
+            apiUrl1 += "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
+          	console.log(apiUrl1);  
+            // ************************************************ 초단기 실황(현재 온도) ************************************************//
+            $.getJSON (apiUrl1, function(data){
+	            const $now = new Date($.now());
+            	const $date = $now.getFullYear() + '년 ' + ($now.getMonth() + 1) +'월 ' + $now.getDate() +'일 ' +$now.getHours() + '시 ' + $now.getMinutes() + '분';
+				
+	            const temp = data.response.body.items.item[3].obsrValue;
+	            $('.tDate').prepend($date); // 오늘 날짜
+	            $('.tTemp').append(temp);   // 현재 온도
+	        });
+            
+         // ************************************************ 단기 예보(강수량, 최고/최저 기온, ) ************************************************//
+         	let apiUrl2 = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
+         	apiUrl2 += "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
+         	console.log(apiUrl2);
+			$.getJSON (apiUrl2, function(data){
+				const probRain = data.response.body.items.item[7].fcstValue;
+				console.log(probRain);
+			});
         </script>
     </body>
 </html>
