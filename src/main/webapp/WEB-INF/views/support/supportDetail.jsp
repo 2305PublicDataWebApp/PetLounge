@@ -8,6 +8,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<jsp:include page="../include/importSource.jsp"></jsp:include>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" />
 		<link rel="stylesheet" href="/resources/css/support/supportDetail.css">
 		<title>펫 라운지 모금함 : 상세</title>
 	</head>
@@ -62,7 +63,7 @@
                                     </tr>
                                 </table>
                                 <div id="page-navigation">
-                                    < <span style="color:#FFD370;">1</span> 2 3 4 5 >>
+                                    <ul id="pagination" class="pagination pagination-sm"></ul>
                                 </div>
                             </div>
                         </div>
@@ -102,97 +103,12 @@
                                         <td class="td">
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="td">
-                                            <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;"></div>
-                                        </td>
-                                        <td class="td">
-                                            <div class="user-info-div">
-                                                <span class="support-history-date">
-                                                    2023.10.03 
-                                                </span>
-                                            </div>
-                                            <div class="reply-content">
-                                                <span class="user-nickname">
-                                                    동숲주민
-                                                </span>
-                                                <span class="support-amount">
-                                                    <span style="color:#FFD370;">200,000</span>원 참여 
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="td">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="td">
-                                            <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;"></div>
-                                        </td>
-                                        <td class="td">
-                                            <div class="user-info-div">
-                                                <span class="support-history-date">
-                                                    2023.10.03
-                                                </span>
-                                            </div>
-                                            <div class="reply-content">
-                                                <span class="user-nickname">
-                                                    동숲주민
-                                                </span>
-                                                <span class="support-amount">
-                                                    <span style="color:#FFD370;">200,000</span>원 참여 
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="td">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="td">
-                                            <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;"></div>
-                                        </td>
-                                        <td class="td">
-                                            <div class="user-info-div">
-                                                <span class="support-history-date">
-                                                    2023.10.03 
-                                                </span>
-                                            </div>
-                                            <div class="reply-content">
-                                                <span class="user-nickname">
-                                                    동숲주민
-                                                </span>
-                                                <span class="support-amount">
-                                                    <span style="color:#FFD370;">200,000</span>원 참여 
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="td">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="td">
-                                            <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;"></div>
-                                        </td>
-                                        <td class="td">
-                                            <div class="user-info-div">
-                                                <span class="support-history-date">
-                                                    2023.10.03 
-                                                </span>
-                                            </div>
-                                            <div class="reply-content">
-                                                <span class="user-nickname">
-                                                    동숲주민
-                                                </span>
-                                                <span class="support-amount">
-                                                    <span style="color:#FFD370;">200,000</span>원 참여 
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="td">
-                                        </td>
-                                    </tr>
                                 </table>
                                 <div id="page-navigation">
-                                    << <span style="color:#FFD370;">1</span> 2 3 4 5 >>
+                                    <ul id="pagination" class="pagination pagination-sm">
+	                                    <li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>
+	                                    <li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>
+									</ul>
                                 </div>
                             </div>
                         </div>
@@ -293,6 +209,7 @@
 					}
 				});
 			});
+			
 			// 댓글 수정창 보이기 
 			const openModifyView = (sRNo, sRWriter, sRContent) => {
 				console.log(sRNo + sRWriter + sRContent);
@@ -333,6 +250,7 @@
 					deleteReply(sRNo);
 				}
 			}
+			
 			// 댓글 삭제 
 			const deleteReply = (sRNo) => {
 				$.ajax({
@@ -351,46 +269,64 @@
 					}
 				});
 			}
-			// 날짜 포맷팅 
+			
+			
+			<!-- 페이징 처리된 댓글 조회 -->
+			// 댓글 페이징 
+			let currentPage = 1; // 현재 페이지 
+			let recordCountPerPage = 10; // 페이지당 댓글 수 
+			let naviCountPerPage = 5; // 한 그룹당 페이지 수
+			let totalPages = 0; // 총 페이지 수
+			
+			// 날짜 포맷팅 (댓글 작성일에 사용)
 			const getFormattedDate = (dateString) => {
 			    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'};
 			    const formattedDate = new Date(dateString).toLocaleDateString('ko-KR', options);
 			    return formattedDate;
 			};
+			
 			// 댓글 리스트를 불러오는 ajax Function 
 			const getReplyList = () => {
 				let sessionId = "${sessionScope.uId}";
 				const sNo = ${support.sNo };
 				$.ajax({
 					url : "/sReply/list.pet",
-					data : { sNo : sNo}, 
+					data : { sNo : sNo, currentPage: currentPage, recordCountPerPage: recordCountPerPage }, // 현재 페이지와 페이지당 댓글 수 전달
 					type : "GET",
-					success : function(result) {
+					success : function(resultMap) {
 						const tableBody = $("#replyTable tbody");
 						tableBody.html('');
 						let tr;
 						let left;
 						let center;
 						let right;
-						if(result.length > 0) {
-							for(let i in result) {
+						
+						const sRList = resultMap.sRList; // 댓글 리스트 
+				        totalPages = resultMap.totalPages; // 총 페이지 수
+						
+						if(sRList.length > 0) {
+							for(let i in sRList) {
 								tr = $("<tr>"); // <tr></tr>
-								left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;'></div>"); // <td>khuser01</td>
+								left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;'></div>"); 
 								center = $("<td class='td'>").html(
-										"<div class='user-info-div'><span class='user-nickname'>"+result[i].sRWriter+"</span><span class='reply-create-date'>"+getFormattedDate(result[i].sRCreate)+"</span></div><div class='reply-content'>"+result[i].sRContent+"</div>"); // <td>댓글내용</td>
-								if(sessionId === result[i].uId) {
+										"<div class='user-info-div'><span class='user-nickname'>"+sRList[i].sRWriter+"</span><span class='reply-create-date'>"
+										+ ""+getFormattedDate(sRList[i].sRCreate)+"</span></div><div class='reply-content'>"+sRList[i].sRContent+"</div>"); 
+								if(sessionId === sRList[i].uId) {
 									right = $("<td class='td'>").html(
-// 											"<a href='' class='reply-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal'>수정</a>"
-											"<a href='javascript:void(0)' class='reply-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal' onclick='openModifyView("+result[i].sRNo+",\""+result[i].sRWriter+"\",\""+result[i].sRContent+"\");'>수정</a>"
-											+ "<a href='javascript:void(0)' class='reply-delete-btn' onclick='checkDeleteReply("+result[i].sRNo+");'>삭제</a>"); 
+											"<a href='javascript:void(0)' class='reply-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal' "
+											+ "onclick='openModifyView("+sRList[i].sRNo+",\""+sRList[i].sRWriter+"\",\""+sRList[i].sRContent+"\");'>수정</a>"
+											+ "<a href='javascript:void(0)' class='reply-delete-btn' onclick='checkDeleteReply("+sRList[i].sRNo+");'>삭제</a>"); 
 								} else {
 									right = $("<td class='td'>").html("");
 								}
 				
 								tr.append(left);
 								tr.append(center);
-								tr.append(right); // <tr><td></td><td></td>...</tr>
-								tableBody.append(tr); // <tbody><tr><td></td><td></td>...</tr></tbody> -> 눈에 보이게 됨
+								tr.append(right); 
+								tableBody.append(tr); 
+								
+								// 결과를 받은 후에 페이징을 업데이트
+					            createPagination(resultMap.totalPages);
 							}
 						} else {
 							tr = $("<tr class='td'><td class='td'colspan='3'style='width:725px;'><div width='100%'>등록된 댓글이 없습니다.</div></td></tr>");
@@ -402,6 +338,81 @@
 					}
 				});
 			}
+			
+			// 페이지 만들기 
+			const createPagination = (totalPages) => {
+			    const paginationUl = $("#pagination");
+			    paginationUl.empty(); // 이전의 페이징 링크를 지움
+			    
+			    const naviCountPerPage = 5; // 한 그룹당 페이지 수
+			    const numGroups = Math.ceil(totalPages / naviCountPerPage); // 총 그룹 수
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage); // 현재 페이지가 속한 그룹
+
+			    let startPage = (currentGroup - 1) * naviCountPerPage + 1;
+			    let endPage = Math.min(currentGroup * naviCountPerPage, totalPages);
+			    
+			 	// "이전" 버튼 추가
+			    if (currentGroup > 1) {
+			        const prevLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>');
+			        prevLi.click(() => {
+			            goToPreviousGroup();
+			        });
+			        paginationUl.append(prevLi);
+			    }
+			 	// 페이지 링크 추가
+			    for (let i = startPage; i <= endPage; i++) {
+			        const li = $('<li class="page-item" data-page="${i}"><a class="page-link" href="javascript:void(0)">'+i+'</a></li>');
+			        
+			     	// 현재 페이지에 해당하는 경우 클래스 추가
+			        if (i === currentPage) {
+			            li.addClass('active');
+			        }
+			     
+			        li.click(() => {
+			            changePage(i);
+			        });
+			        paginationUl.append(li);
+			    }
+				// "다음" 버튼 추가
+			    if (currentGroup < numGroups) {
+			        const nextLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>');
+			        nextLi.click(() => {
+			            goToNextGroup();
+			        });
+			        paginationUl.append(nextLi);
+			    }
+			}
+			
+			// 페이지 변경 시 호출되는 함수
+			const changePage = (newPage) => {
+			    currentPage = newPage;
+			    getReplyList(currentPage);
+			}
+			
+			// 그룹 변경 시 호출되는 함수
+			const changeGroup = (newGroup) => {
+			    currentPage = (newGroup - 1) * naviCountPerPage + 1;
+			    getReplyList(currentPage);
+			}
+
+			// 이전 그룹으로 이동할 때 호출 
+			const goToPreviousGroup = () => {
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup > 1) {
+			        const lastPageOfPreviousGroup = (currentGroup - 1) * naviCountPerPage;
+			        changePage(lastPageOfPreviousGroup);
+			    }
+			}
+
+			// 다음 그룹으로 이동할 때 호출
+			const goToNextGroup = () => {
+			    const numGroups = Math.ceil(totalPages / naviCountPerPage);
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup < numGroups) {
+			        changeGroup(currentGroup + 1);
+			    }
+			}
+			
 			$(function(){
 				getReplyList();
 				// setInterval(getReplyList, 1000); // 1초 단위로 getReplyList가 호출되어 댓글 실시간 조회

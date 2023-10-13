@@ -63,7 +63,7 @@ public interface SupportStore {
 	 * @param pInfo
 	 * @return List
 	 */
-	List<Support> selectSupportList(SqlSession sqlSession, PageInfo pInfo);
+	List<Support> selectSupportList(SqlSession sqlSession);
 
 	/**
 	 * 후원댓글 등록 Store

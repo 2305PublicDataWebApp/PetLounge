@@ -58,8 +58,8 @@ public class SupportServiceImpl implements SupportService{
 	}
 
 	@Override
-	public List<Support> selectSupportList(PageInfo pInfo) {
-		List<Support> sList = sStore.selectSupportList(sqlSession, pInfo);
+	public List<Support> selectSupportList() {
+		List<Support> sList = sStore.selectSupportList(sqlSession);
 		return sList;
 	}
 
