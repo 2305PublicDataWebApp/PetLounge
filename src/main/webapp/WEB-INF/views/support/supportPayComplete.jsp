@@ -8,7 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<jsp:include page="../include/importSource.jsp"></jsp:include>
 		<link rel="stylesheet" href="/resources/css/support/supportPayComplete.css">
-		<title>Pet Lounge</title>
+		<title>후원 완료</title>
 	</head>
 	<body>
 		<jsp:include page="../include/header.jsp"></jsp:include>
@@ -37,7 +37,7 @@
                 <h3>따뜻한 손길에 감사드립니다.</h3>
             </section>
             <section id="button" style="margin-bottom: 100px;">
-                <button class="btn-list" onClick="location.href='/support/list.do'">목록으로</button>
+                <button class="btn-list" onClick="location.href='/support/list.pet'">목록으로</button>
             </section>
         </main>
 		

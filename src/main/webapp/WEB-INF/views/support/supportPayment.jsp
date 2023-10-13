@@ -12,7 +12,7 @@
     	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
         <!-- iamport.payment.js -->
     	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-		<title>Pet Lounge</title>
+		<title>후원 함께 하기</title>
 	</head>
 	<body>
 		<jsp:include page="../include/header.jsp"></jsp:include>
@@ -56,7 +56,7 @@
                     <ul>
                         <li>
                             <label class="li-label"><b>후원자 이름</b></label>
-                            <span id="s-h-name">불러온 닉네임</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+                            <span id="s-h-name">${user.uNickName }</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
                             <input type="radio" name="sHType" id="nickname" value="nickname">
                             <label for="nickname">닉네임</label>&nbsp;&nbsp;&nbsp;&nbsp;
                             <input type="radio" name="sHType" id="anonymous" value="anonymous">
@@ -64,9 +64,9 @@
                         </li>
                         <li>
                             <label class="li-label"><b>후원자 연락처</b></label>
-                            <span id="u-phone">010-1234-5678</span>
-                            <input type="hidden" name="uEmail" id="u-email" value="kh@kh.com">
-                            <input type="hidden" name="uName" id="u-name" value="김이름">
+                            <span id="u-phone">${user.uPhone }</span>
+                            <input type="hidden" name="uEmail" id="u-email" value="${user.uEmail }">
+                            <input type="hidden" name="uName" id="u-name" value="${user.uName }">
                         </li>
                     </ul>
                 </div>
@@ -205,7 +205,7 @@
             </section> 
             <section id="button" style="margin-bottom: 100px;">
                 <button class="btn-payment" onclick="requestPay()">후원 결제</button>
-                <button class="btn-cancel" onClick="location.href='/support/detail.do?sNo='+${support.sNo }">돌아가기</button>
+                <button class="btn-cancel" onClick="location.href='/support/detail.pet?sNo='+${support.sNo }">돌아가기</button>
             </section>
         </main>
 		
@@ -248,7 +248,7 @@
 			    console.log(selectedValue);
 			    // span 요소에 값을 설정
 			    if (selectedValue === 'nickname') {
-			        $('#s-h-name').text('불러온닉네임');
+			        $('#s-h-name').text('${user.uNickName }');
 			        console.log($('#s-h-name').text());
 			    } else if (selectedValue === 'anonymous') {
 			        $('#s-h-name').text('숨은천사');

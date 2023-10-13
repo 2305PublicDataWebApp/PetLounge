@@ -20,7 +20,7 @@
         src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/summernote/lang/summernote-ko-KR.js"></script>
         
-		<title>Pet Lounge</title>
+		<title>펫 라운지 모금함 : 수정</title>
 	</head>
 	<body>
 		<jsp:include page="../include/header.jsp"></jsp:include>
@@ -30,7 +30,7 @@
                 <h1>후원 수정</h1>
                 <div id="line"></div>
 			</section>
-			<form action="/support/update.do" method="post"
+			<form action="/support/update.pet" method="post"
 				enctype="multipart/form-data" id="updateForm">
 				<input type="hidden" name="sNo" value="${support.sNo }">
 	            <section id="content">
@@ -92,7 +92,7 @@
 	            </section>
 	            <section id="button" style="margin-bottom: 100px;">
 	                <button class="btn-update" type="submit">수정하기</button>
-	                <button class="btn-cancel" onClick="location.href='/support/detail.do?sNo=${support.sNo }'">돌아가기</button>
+	                <button class="btn-cancel" onClick="location.href='/support/detail.pet?sNo=${support.sNo }'">돌아가기</button>
 	            </section>
             </form>
         </main>

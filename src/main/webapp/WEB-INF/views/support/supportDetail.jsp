@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 	<head>
@@ -8,7 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<jsp:include page="../include/importSource.jsp"></jsp:include>
 		<link rel="stylesheet" href="/resources/css/support/supportDetail.css">
-		<title>Pet Lounge</title>
+		<title>펫 라운지 모금함 : 상세</title>
 	</head>
 	<body>
 		<jsp:include page="../include/header.jsp"></jsp:include>
@@ -208,13 +209,14 @@
                                     <div class="modal-body">
                                         <div class="modify-user-info-div">
                                             <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%; margin-right: 20px;"></div>
-                                            <span class="user-nickname">
+                                            <span class="user-nickname modify-user-nickname">
                                                 동숲주민
                                             </span>
                                         </div>
                                         <div id="reply-modify-div">
                                             <form action="" method="">
-                                                <textarea name="" class="reply-modify-content" placeholder="댓글 내용을 수정해주세요"></textarea>
+                                            	<input type="hidden" value="" name="sRNo" class="s-r-no">
+                                                <textarea name="sRContent" class="reply-modify-content" placeholder="댓글 내용을 수정해주세요"></textarea>
                                             </form>
                                         </div>
                                     </div>
@@ -250,7 +252,7 @@
                     </div>
                     <!-- 후원 버튼 -->
                     <div class="section-btn">
-                        <button class="support-btn"  onClick="location.href='/support/payment.do?sNo='+${support.sNo }">후원 함께 하기</button>
+                        <button class="support-btn"  onClick="location.href='/support/payment.pet?sNo='+${support.sNo }">후원 함께 하기</button>
                     </div>
                     <div class="section-group">
                         <p>모금단체<br>
@@ -259,9 +261,9 @@
                 </div>
             </section>
             <section id="button" style="margin-bottom: 100px;">
-                <div><button class="btn-cancel" onClick="location.href='/support/list.do'">목록으로</button></div>
+                <div><button class="btn-cancel" onClick="location.href='/support/list.pet'">목록으로</button></div>
                 <div class="admin-btn">
-                    <button class="btn-update" onClick="location.href='/support/update.do?sNo='+${support.sNo }">수정하기</button>
+                    <button class="btn-update" onClick="location.href='/support/update.pet?sNo='+${support.sNo }">수정하기</button>
                     <button class="btn-delete" onclick="checkDelete();">삭제하기</button>
                 </div>
                 
@@ -275,12 +277,11 @@
 				const sRContent = $("#reply-create-content").val();
 				const sNo = ${support.sNo };
 				$.ajax({
-					url : "/sReply/insert.do",
+					url : "/sReply/insert.pet",
 					data : { sRContent : sRContent, sNo : sNo },
 					type : "POST",
 					success : function(result) {
 						if(result == "success") {
-							alert("댓글 등록 성공");
 							getReplyList();
 							$("#reply-create-content").val("");
 						} else {
@@ -292,17 +293,54 @@
 					}
 				});
 			});
-			// 댓글 수정 
+			// 댓글 수정창 보이기 
+			const openModifyView = (sRNo, sRWriter, sRContent) => {
+				console.log(sRNo + sRWriter + sRContent);
+				document.querySelector('.s-r-no').value = sRNo;
+				document.querySelector('.modify-user-nickname').innerText = sRWriter;
+				document.querySelector('.reply-modify-content').value = sRContent;
+				let modifyButton = document.querySelector('.modal-modify-btn');
+				modifyButton.addEventListener('click', function() {
+					modifyReply();
+				});	
+			}
 			
+			// 댓글 수정 
+			const modifyReply = () => {
+				let sRNo = document.querySelector('.s-r-no').value;
+				let sRContent = document.querySelector('.reply-modify-content').value;
+				$.ajax({
+					url : "/sReply/update.pet",
+					data : { sRNo : sRNo, sRContent : sRContent},
+					type : "POST",
+					success : function(data) {
+						if(data == "success") {
+							document.querySelector('[data-bs-dismiss="modal"]').click(); // 모달 닫는 버튼이 클릭되어서 닫히게 함 
+							getReplyList(); // 댓글 목록 새로고침 
+						} else {
+							alert("댓글 수정 실패!");
+						}
+					},
+					error : function() {
+						alert("Ajax 오류! 관리자에게 문의하세요.");
+					}
+				});
+			}
+			
+			// 댓글 삭제 체크 
+			function checkDeleteReply(sRNo) {
+				if (confirm("삭제하시겠습니까?")) {
+					deleteReply(sRNo);
+				}
+			}
 			// 댓글 삭제 
 			const deleteReply = (sRNo) => {
 				$.ajax({
-					url : "/sReply/delete.do",
+					url : "/sReply/delete.pet",
 					data : { sRNo : sRNo },
 					type : "GET",
 					success : function(data) {
 						if(data == "success") {
-							alert("댓글 삭제 성공!");
 							getReplyList();
 						} else {
 							alert("댓글 삭제 실패!");
@@ -324,7 +362,7 @@
 				let sessionId = "${sessionScope.uId}";
 				const sNo = ${support.sNo };
 				$.ajax({
-					url : "/sReply/list.do",
+					url : "/sReply/list.pet",
 					data : { sNo : sNo}, 
 					type : "GET",
 					success : function(result) {
@@ -342,7 +380,9 @@
 										"<div class='user-info-div'><span class='user-nickname'>"+result[i].sRWriter+"</span><span class='reply-create-date'>"+getFormattedDate(result[i].sRCreate)+"</span></div><div class='reply-content'>"+result[i].sRContent+"</div>"); // <td>댓글내용</td>
 								if(sessionId === result[i].uId) {
 									right = $("<td class='td'>").html(
-											"<a href='' class='reply-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal'>수정</a><a href='javascript:void(0)' class='reply-delete-btn' onclick='deleteReply("+result[i].sRNo+");'>삭제</a>"); 
+// 											"<a href='' class='reply-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal'>수정</a>"
+											"<a href='javascript:void(0)' class='reply-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal' onclick='openModifyView("+result[i].sRNo+",\""+result[i].sRWriter+"\",\""+result[i].sRContent+"\");'>수정</a>"
+											+ "<a href='javascript:void(0)' class='reply-delete-btn' onclick='checkDeleteReply("+result[i].sRNo+");'>삭제</a>"); 
 								} else {
 									right = $("<td class='td'>").html("");
 								}
@@ -351,7 +391,6 @@
 								tr.append(center);
 								tr.append(right); // <tr><td></td><td></td>...</tr>
 								tableBody.append(tr); // <tbody><tr><td></td><td></td>...</tr></tbody> -> 눈에 보이게 됨
-								console.log(result[i].uId);
 							}
 						} else {
 							tr = $("<tr class='td'><td class='td'colspan='3'style='width:725px;'><div width='100%'>등록된 댓글이 없습니다.</div></td></tr>");
@@ -429,7 +468,7 @@
 			function checkDelete() {
 				const sNo = '${support.sNo}';
 				if (confirm("삭제하시겠습니까?")) {
-					location.href = "/support/delete.do?sNo=" + sNo;
+					location.href = "/support/delete.pet?sNo=" + sNo;
 				}
 			}
         </script>

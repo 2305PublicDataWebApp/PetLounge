@@ -95,5 +95,13 @@ public interface SupportStore {
 	 */
 	int deleteReply(SqlSession sqlSession, int sRNo);
 
+	/**
+	 * 후원댓글 수정 Store
+	 * @param sqlSession
+	 * @param sReply
+	 * @return int
+	 */
+	int updateReply(SqlSession sqlSession, SupportReply sReply);
+
 
 }
