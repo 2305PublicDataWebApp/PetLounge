@@ -277,25 +277,26 @@ label {
     text-align: center;
     background-color: rgba(255, 255, 255, 0.5);	
     border-radius: 15px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    --box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .today-info {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-
-#pro-rain {
 	height: 33%;
 }
 
-#temp-max {
-	height: 33%;
+.pro-rain {
+	padding-left: 10px;
 }
 
-#temp-min {
-	height: 33%;
+.temp-max {
+	padding-left: 10px;
+}
+
+.temp-min {
+	margin-left: 10px;
 }
 
 .today-precipitation {
