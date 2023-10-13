@@ -54,7 +54,7 @@ public interface SupportService {
 	 * @param pInfo
 	 * @return List
 	 */
-	List<Support> selectSupportList(PageInfo pInfo);
+	List<Support> selectSupportList();
 
 	/**
 	 * 후원댓글 등록 Service

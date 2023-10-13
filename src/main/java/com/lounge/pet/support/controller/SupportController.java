@@ -3,6 +3,7 @@ package com.lounge.pet.support.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,25 +52,51 @@ public class SupportController {
 
 	// 후원 목록 페이지
 	@RequestMapping(value="/support/list.pet", method = RequestMethod.GET)
-	public ModelAndView supportListPage(ModelAndView mv
-			, @RequestParam(value = "page", required=false, defaultValue = "1") Integer currentPage) {
-		try {
-			Integer totalCount = sService.getListCount();
-			PageInfo pInfo = this.getPageInfo(currentPage, totalCount);
-			List<Support> sList = sService.selectSupportList(pInfo);
-			if(!sList.isEmpty()) {
-				mv.addObject("pInfo", pInfo).addObject("sList", sList).setViewName("/support/supportList");
-			} else {
-				mv.addObject("msg", "게시글 목록 조회가 완료되지 않았습니다.");
-				mv.addObject("url", "/index.jsp");
-				mv.setViewName("common/message");
-			}
-		} catch (Exception e) {
-			mv.addObject("msg", "관리자에게 문의하세요.");
-			mv.addObject("url", "/index.jsp");
-			mv.setViewName("common/message");
-		}
+	public ModelAndView supportListPage(ModelAndView mv) {
+		mv.setViewName("/support/supportList");
 		return mv;
+	}
+	
+	// 게시글 목록 조회 
+	@ResponseBody
+	@RequestMapping(value = "/support/sList.pet"
+					, produces = "application/json; charset=utf-8"
+					, method = RequestMethod.GET)
+	public String showSupportList(Integer currentPage, Integer recordCountPerPage) {
+		// currentPage와 recordCountPerPage를 이용하여 페이징 처리
+		// 페이징을 적용하여 댓글 데이터를 가져오도록 구현 
+	    int start = (currentPage - 1) * recordCountPerPage;
+	    int end = start + recordCountPerPage;
+	    
+        
+	    // 전체 후원글 리스트 불러옴 
+	    List<Support> sList = sService.selectSupportList();
+	    
+	    // 범위 체크를 통해 부분 리스트 추출
+	    if (start < sList.size()) {
+	        end = Math.min(end, sList.size());
+	     // 범위에 해당하는 부분 리스트를 추출하여 sList에 대입
+	        sList  = sList.subList(start, end);
+	    } else {
+	    	sList  = Collections.emptyList();
+	    }
+		
+		// 전체 페이지 수 계산 (후원글의 총 갯수를 페이지당 글 갯수로 나눠서 계산) 
+	    int totalRecords = sService.getListCount(); // 후원글의 총 갯수 
+	    int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 전체 페이지 수 
+
+	    
+	    System.out.println("currentPage: " + currentPage + ", recordCountPerPage: " + recordCountPerPage);
+	    System.out.println("sList size: " + sList.size() + ", totalRecords: " + totalRecords + ", totalPages: " + totalPages);
+	    
+	    
+	    // 후원글 리스트와 전체 페이지 수를 Map에 담아서 보냄 
+	    Map<String, Object> resultMap = new HashMap<>();
+	    resultMap.put("sList", sList);
+	    resultMap.put("totalPages", totalPages);
+	    
+		Gson gson = new Gson();
+		return gson.toJson(resultMap);
 	}
 	
 	// 후원 상세 페이지
@@ -328,16 +355,41 @@ public class SupportController {
 	@RequestMapping(value = "/sReply/list.pet"
 					, produces = "application/json; charset=utf-8"
 					, method = RequestMethod.GET)
-	public String showReplyList(Integer sNo) {
-		List<SupportReply> sRList = sService.selectSReplyList(sNo);
+	public String showReplyList(Integer sNo, Integer currentPage, Integer recordCountPerPage) {
+		// currentPage와 recordCountPerPage를 이용하여 페이징 처리
+		// 페이징을 적용하여 댓글 데이터를 가져오도록 구현 
+	    int start = (currentPage - 1) * recordCountPerPage;
+	    int end = start + recordCountPerPage;
+	    
+	    // 글번호 sNo의 전체 댓글 리스트 불러옴 
+	    List<SupportReply> sRList = sService.selectSReplyList(sNo);
+	    
+	    // 범위 체크를 통해 부분 리스트 추출
+	    if (start < sRList.size()) {
+	        end = Math.min(end, sRList.size());
+	     // 범위에 해당하는 부분 리스트를 추출하여 sRList에 대입
+	        sRList  = sRList.subList(start, end);
+	    } else {
+	    	sRList  = Collections.emptyList();
+	    }
+	    
+	    // 댓글 정보에 작성자 닉네임 담아줌 
 		for (SupportReply sReply : sRList) {
 	        User user = uService.selectOneById(sReply.getuId()); 
-	        System.out.println(sReply.getuId());
 	        sReply.setsRWriter(user.getuNickName());
-	        System.out.println(user.getuNickName());
 	    }
+		
+		// 전체 페이지 수 계산 (댓글의 총 갯수를 페이지당 댓글 갯수로 나눠서 계산) 
+	    int totalRecords = sService.getReplyListCount(sNo); // 댓글의 총 갯수 
+	    int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 전체 페이지 수 
+	    
+	    // 댓글 리스트와 전체 페이지 수를 Map에 담아서 보냄 
+	    Map<String, Object> resultMap = new HashMap<>();
+	    resultMap.put("sRList", sRList);
+	    resultMap.put("totalPages", totalPages);
+	    
 		Gson gson = new Gson();
-		return gson.toJson(sRList);
+		return gson.toJson(resultMap);
 	}
 	
 		

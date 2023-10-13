@@ -6,34 +6,41 @@
 
 	
 	<insert id="insertSupport">
-		INSERT INTO SUPPORT_TBL VALUES(S_SEQ_NO.NEXTVAL, #{sCategory}, #{sTitle}, #{sContent}, #{sGroup}, DEFAULT, DEFAULT, 
+		INSERT INTO SUPPORT_TBL 
+		VALUES(S_SEQ_NO.NEXTVAL, #{sCategory}, #{sTitle}, #{sContent}, #{sGroup}, DEFAULT, DEFAULT, 
 		#{sStart}, #{sEnd}, #{sTargetAmount}, DEFAULT, DEFAULT, DEFAULT, #{sImageUrl})
 	</insert>
 	
 	<update id="updateSupport">
-		UPDATE SUPPORT_TBL SET S_CATEGORY = #{sCategory}, S_TITLE = #{sTitle}, S_CONTENT = #{sContent}, S_GROUP = #{sGroup}, 
+		UPDATE SUPPORT_TBL 
+		SET S_CATEGORY = #{sCategory}, S_TITLE = #{sTitle}, S_CONTENT = #{sContent}, S_GROUP = #{sGroup}, 
 		S_UPDATE = DEFAULT, S_START = #{sStart}, S_END = #{sEnd}, S_TARGET_AMOUNT = #{sTargetAmount}, S_IMAGE_URL = #{sImageUrl} 
 		WHERE S_NO = #{sNo} 
 	</update>
 	
 	<update id="endSupport">
-		UPDATE SUPPORT_TBL SET S_UPDATE = DEFAULT, S_STATUS = 'E' WHERE S_NO = #{sNo} 
+		UPDATE SUPPORT_TBL 
+		SET S_UPDATE = DEFAULT, S_STATUS = 'E' WHERE S_NO = #{sNo} 
 	</update>
 	
 	<update id="deleteSupport">
-		UPDATE SUPPORT_TBL SET S_UPDATE = DEFAULT, S_STATUS = 'N' WHERE S_NO = #{sNo}
+		UPDATE SUPPORT_TBL 
+		SET S_UPDATE = DEFAULT, S_STATUS = 'N' WHERE S_NO = #{sNo}
 	</update>
 	
 	
 	<select id="selectSupportByNo" resultType="Support">
-		SELECT * FROM SUPPORT_TBL WHERE S_NO = #{sNo}
+		SELECT * FROM SUPPORT_TBL 
+		WHERE S_NO = #{sNo}
 	</select>
 	
 	<select id="getTotalCount" resultType="_int">
-		SELECT COUNT(*) FROM SUPPORT_TBL WHERE S_STATUS = 'Y'
+		SELECT COUNT(*) FROM SUPPORT_TBL 
+		WHERE S_STATUS = 'Y'
 	</select>
 	<select id="selectSupportList" resultType="Support">
-		SELECT * FROM SUPPORT_TBL WHERE S_STATUS = 'Y' ORDER BY S_NO DESC
+		SELECT * FROM SUPPORT_TBL 
+		WHERE S_STATUS = 'Y' ORDER BY S_NO DESC
 	</select>
 	
 	

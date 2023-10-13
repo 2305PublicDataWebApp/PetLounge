@@ -51,11 +51,8 @@ public class SupportStoreLogic implements SupportStore{
 	}
 
 	@Override
-	public List<Support> selectSupportList(SqlSession sqlSession, PageInfo pInfo) {
-		int limit = pInfo.getRecordCountPerPage();
-		int offset = (pInfo.getCurrentPage()-1)*limit;
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		List<Support> sList = sqlSession.selectList("SupportMapper.selectSupportList", null, rowBounds);
+	public List<Support> selectSupportList(SqlSession sqlSession) {
+		List<Support> sList = sqlSession.selectList("SupportMapper.selectSupportList");
 		return sList;
 	}
 
