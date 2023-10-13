@@ -2,11 +2,9 @@ package com.lounge.pet.support.store.logic;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.lounge.pet.support.domain.PageInfo;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.support.store.SupportStore;

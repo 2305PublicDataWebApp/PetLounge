@@ -26,7 +26,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.lounge.pet.support.domain.PageInfo;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.support.service.SupportService;
@@ -422,22 +421,5 @@ public class SupportController {
 		
 		return jsonObject;
 	}
-	
-	// 후원글 페이징 
-	private PageInfo getPageInfo(Integer currentPage, Integer totalCount) {
-		int recordCountPerPage = 11;
-		int naviCountPerPage = 5;
-		int naviTotalCount = (int)Math.ceil((double)totalCount / recordCountPerPage);
-		int startNavi = ((int)((double)currentPage/naviCountPerPage+0.9)-1)*naviCountPerPage+1;
-		int endNavi = startNavi + naviCountPerPage - 1;
-		if(endNavi > naviTotalCount) {
-			endNavi = naviTotalCount;
-		}
-		PageInfo pInfo = new PageInfo(currentPage, totalCount, naviTotalCount, recordCountPerPage, naviCountPerPage, startNavi, endNavi);
-		return pInfo;
-	}
-	
-	
-	
-	
+		
 }
