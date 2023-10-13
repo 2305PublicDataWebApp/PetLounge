@@ -157,11 +157,11 @@
                         </div>
                         <!-- 최고 기온 -->
                         <div id="temp-max" class="today-info">
-                            최고 기온<span class="temp-max"></span>℃
+                            최고 기온 <span class="temp-max"></span>℃
                         </div>
                         <!-- 최저 기온 -->
                         <div id="temp-min" class="today-info">
-                            최저 기온<span></span>
+                            최저 기온 <span></span>
                             <span class="temp-min"></span>℃
                         </div>
                     </div>
@@ -236,13 +236,14 @@
             
             // ************************************************ 초단기 실황(현재 온도) ************************************************//
             // !!!!!!!!!! 이거 시간 어떻게 계산해야할 지 강사님께 여쭤보기
-            let base_time = formattedTime-60;	// 시간
+            let base_time = "0"+(formattedTime-60);	// 시간
+            base_time = base_time.slice(-4);
             console.log(base_time);
             
-            const apiUrlLive = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-          	console.log(apiUrlLive);  
+            let url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
+          	console.log(url);  
           	
-            $.getJSON (apiUrlLive, function(data){
+            $.getJSON (url, function(data){
 	            const $now = new Date($.now());
             	const $date = $now.getFullYear() + '년 ' + ($now.getMonth() + 1) +'월 ' + $now.getDate() +'일 ' +$now.getHours() + '시 ' + $now.getMinutes() + '분';
 	            const temp = data.response.body.items.item[3].obsrValue;
@@ -285,10 +286,10 @@
          	
          	// api url
          	apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
-         	const apiUrlShort = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-         	console.log(apiUrlShort);
+         	url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
+         	console.log(url);
          	
-			$.getJSON (apiUrlShort, function(data){
+			$.getJSON (url, function(data){
 				const probRain = data.response.body.items.item[7].fcstValue;
 // 				const tempMax = data.response.body.items.item[].fcstValue;
 				
@@ -298,9 +299,11 @@
 			
 			// ************************************************ 단기 예보(최고/최저 기온) ************************************************//
 			base_time = "0200";
+			url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
 			console.log(base_time);
-			$.getJSON (apiUrlShort, function(data){
-				const tempMax = data.response.body.items.item[55].fcstValue;
+			console.log(url);
+			$.getJSON (url, function(data){
+				const tempMax = data.response.body.items.item[158].fcstValue;
 				const tempMin = data.response.body.items.item[48].fcstValue;
 				
 				$('.temp-max').append(tempMax); // 최고 기온
