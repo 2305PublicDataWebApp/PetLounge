@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class WeatherController {
 
 	// 산책 날씨 예보 페이지로 이동
-	@GetMapping("/weather.do")
+	@GetMapping("/weather.pet")
 	public ModelAndView showFaqView(ModelAndView mv) {
 		mv.setViewName("weather/weather");
 		return mv;

@@ -10,14 +10,14 @@ import org.springframework.web.servlet.ModelAndView;
 public class FaqController {
 	
 	// faq 목록 페이지로 이동
-	@GetMapping("/list.do")
+	@GetMapping("/list.pet")
 	public ModelAndView showFaqView(ModelAndView mv) {
 		mv.setViewName("faq/list");
 		return mv;
 	}
 	
 	// faq 등록 페이지로 이동
-	@GetMapping("/insert.do")
+	@GetMapping("/insert.pet")
 	public ModelAndView showFaqInsert(ModelAndView mv) {
 		mv.setViewName("faq/insert");
 		return mv;
