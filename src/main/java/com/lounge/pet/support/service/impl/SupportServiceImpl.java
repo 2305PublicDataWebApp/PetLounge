@@ -87,4 +87,10 @@ public class SupportServiceImpl implements SupportService{
 		return result;
 	}
 
+	@Override
+	public int updateReply(SupportReply sReply) {
+		int result = sStore.updateReply(sqlSession, sReply);
+		return result;
+	}
+
 }

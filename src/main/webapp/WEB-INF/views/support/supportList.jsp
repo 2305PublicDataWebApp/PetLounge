@@ -9,7 +9,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<jsp:include page="../include/importSource.jsp"></jsp:include>
 		<link rel="stylesheet" href="/resources/css/support/supportList.css">
-		<title>Pet Lounge</title>
+		<title>펫 라운지 모금함</title>
 	</head>
 	<body>
 		<jsp:include page="../include/header.jsp"></jsp:include>
@@ -47,7 +47,7 @@
                     </div>
                 </a>
                 <!-- 글쓰기 버튼 (관리자만 보임)-->
-                <button class="btn-create" onClick="location.href='/support/insert.do'">후원 등록</button>
+                <button class="btn-create" onClick="location.href='/support/insert.pet'">후원 등록</button>
             </section>
             <!-- 정렬 -->
             <div class="sorting-wrap">
@@ -84,15 +84,24 @@
 		                	<div class="col-xl-3 col-md-6 portfolio-item filter-books">
 				                <div class="cards" style="border-radius: 20px;">
 				                	<div>
-					                	<a href="/support/detail.do?sNo=${support.sNo }" class="a-detail">
+					                	<a href="/support/detail.pet?sNo=${support.sNo }" class="a-detail">
 		                                         <img src="/resources/images/cat.jpg" class="card-img"
 					                    	onerror="this.src='https://petrounge.s3.ap-northeast-2.amazonaws.com/noimage.png'"></a>
 				                	</div>
 				                    <div class="card-content">
-				                        <strong class="card-title"><a href="/support/detail.do?sNo=${support.sNo }"  class="a-detail" title="More Details">${support.sTitle }</a></strong>
+				                        <strong class="card-title">
+				                        	<a href="/support/detail.pet?sNo=${support.sNo }" class="a-detail s-title" title="More Details">
+				                        		<script>
+				                        			<!-- 후원 제목 두줄 이상 넘어가면 ... 처리 -->
+						                            var title = "${support.sTitle}";
+						                            var truncatedTitle = title.length > 27 ? title.substring(0, 26) + '...' : title;
+						                            document.write(truncatedTitle);
+						                        </script>
+			                        		</a>
+			                        	</strong>
 				                        <div class="card-group">${support.sGroup }</div>
 				                        <div class="card-bar">
-				                            <sapn class="card-bar-collection" id="graph-num" style="width: ${(support.sFundAmount / support.sTargetAmount) * 100}%;"></sapn>
+				                            <span class="card-bar-collection" id="graph-num" style="width: ${(support.sFundAmount / support.sTargetAmount) * 100}%;"></span>
 				                        </div>
 				                        <div>
 					                        <fmt:parseNumber var="percent"
@@ -100,7 +109,8 @@
 													integerOnly="true" />
 					                        <strong class="card-percent" id="per-num">${percent}%</strong>
 					                        <strong class="card-money">
-					                            ${support.sFundAmount }
+					                            <!-- 여기 , 처리 해줘야함  -->
+					                            <fmt:formatNumber type="number" maxFractionDigits="3" value="${support.sFundAmount }" />
 					                            <span class="text">원</span>
 					                        </strong>
 				                        </div>
@@ -117,12 +127,12 @@
                         <nav aria-label="Page navigation exampler">
                             <ul class="pagination">
 	                        	<c:if test="${pInfo.startNavi ne '1' }">
-	                        		<li class="page-item"><a class="page-link" href="/support/list.do?page=${pInfo.startNavi-1 }" class="first">prev</a></li>
+	                        		<li class="page-item"><a class="page-link" href="/support/list.pet?page=${pInfo.startNavi-1 }" class="first">prev</a></li>
 			                    </c:if>
 			                    
 			                    
 			                    <c:forEach begin="${pInfo.startNavi }" end="${pInfo.endNavi }" var="p">
-									<c:url var="pageUrl" value="/support/list.do">
+									<c:url var="pageUrl" value="/support/list.pet">
 										<c:param name="page" value="${p }"></c:param>
 									</c:url>
 									<c:choose>
@@ -138,7 +148,7 @@
 								
 								
 								<c:if test="${pInfo.endNavi ne pInfo.naviTotalCount }">
-									<li class="page-item"><a class="page-link" href="/support/list.do?page=${pInfo.endNavi+1 }" class="last">next</a></li>
+									<li class="page-item"><a class="page-link" href="/support/list.pet?page=${pInfo.endNavi+1 }" class="last">next</a></li>
 								</c:if>
                             </ul>
                         </nav>

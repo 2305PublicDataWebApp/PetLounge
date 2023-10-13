@@ -20,7 +20,7 @@
         src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/summernote/lang/summernote-ko-KR.js"></script>
         
-		<title>Pet Lounge</title>
+		<title>펫 라운지 모금함 : 등록</title>
 	</head>
 	<body>
 		<jsp:include page="../include/header.jsp"></jsp:include>
@@ -30,7 +30,7 @@
                 <h1>후원 등록</h1>
                 <div id="line"></div>
 			</section>
-           	<form action="/support/insert.do" method="post"
+           	<form action="/support/insert.pet" method="post"
 				enctype="multipart/form-data" id="insertForm">
 	            <section id="content">
 	                <div id="content-top">
@@ -91,7 +91,7 @@
 	            </section>
 	            <section id="button" style="margin-bottom: 100px;">
 	                <button class="btn-create" type="submit">등록하기</button>
-	                <button class="btn-list" onClick="location.href='/support/list.do'">목록으로</button>
+	                <button class="btn-list" onClick="location.href='/support/list.pet'">목록으로</button>
 	            </section>
             </form>
         </main>

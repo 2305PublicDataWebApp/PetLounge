@@ -83,4 +83,11 @@ public interface SupportService {
 	 */
 	int deleteReply(int sRNo);
 
+	/**
+	 * 후원댓글 수정 Service
+	 * @param sReply
+	 * @return int
+	 */
+	int updateReply(SupportReply sReply);
+
 }

@@ -42,8 +42,15 @@ public class SupportController {
 	@Autowired
 	private UserService uService;
 
+	// 후원 등록 페이지
+	@RequestMapping(value="/support/insert.pet", method = RequestMethod.GET)
+	public ModelAndView supportInsertPage(ModelAndView mv) {
+		mv.setViewName("/support/supportInsert");
+		return mv;
+	}
+
 	// 후원 목록 페이지
-	@RequestMapping(value="/support/list.do", method = RequestMethod.GET)
+	@RequestMapping(value="/support/list.pet", method = RequestMethod.GET)
 	public ModelAndView supportListPage(ModelAndView mv
 			, @RequestParam(value = "page", required=false, defaultValue = "1") Integer currentPage) {
 		try {
@@ -66,7 +73,7 @@ public class SupportController {
 	}
 	
 	// 후원 상세 페이지
-	@RequestMapping(value="/support/detail.do", method = RequestMethod.GET)
+	@RequestMapping(value="/support/detail.pet", method = RequestMethod.GET)
 	public ModelAndView supportDetailPage(ModelAndView mv
 			, @RequestParam("sNo") int sNo) {
 		try { 
@@ -76,27 +83,20 @@ public class SupportController {
 				mv.setViewName("/support/supportDetail");
 			} else {
 				mv.addObject("msg", "데이터 조회가 완료되지 않았습니다.");
-				mv.addObject("url", "/support/list.do");
-				mv.setViewName("common/errorPage");
+				mv.addObject("url", "/support/list.pet");
+				mv.setViewName("common/message");
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", "관리자에게 문의하세요.");
 			mv.addObject("error", e.getMessage());
-			mv.addObject("url", "/support/list.do");
+			mv.addObject("url", "/support/list.pet");
 			mv.setViewName("common/errorPage");
 		}
 		return mv;
 	}
 	
-	// 후원 등록 페이지
-	@RequestMapping(value="/support/insert.do", method = RequestMethod.GET)
-	public ModelAndView supportInsertPage(ModelAndView mv) {
-		mv.setViewName("/support/supportInsert");
-		return mv;
-	}
-	
 	// 후원 수정 페이지
-	@RequestMapping(value="/support/update.do", method = RequestMethod.GET)
+	@RequestMapping(value="/support/update.pet", method = RequestMethod.GET)
 	public ModelAndView supportUpdatePage(ModelAndView mv
 			, @RequestParam("sNo") int sNo) {
 		try {
@@ -106,36 +106,46 @@ public class SupportController {
 				mv.setViewName("/support/supportUpdate");
 			} else {
 				mv.addObject("msg", "데이터 조회가 완료되지 않았습니다.");
-				mv.addObject("url", "/support/list.do");
-				mv.setViewName("common/errorPage");
+				mv.addObject("url", "/support/list.pet");
+				mv.setViewName("common/message");
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", "관리자에게 문의하세요.");
 			mv.addObject("error", e.getMessage());
-			mv.addObject("url", "/support/list.do");
+			mv.addObject("url", "/support/list.pet");
 			mv.setViewName("common/errorPage");
 		}
 		return mv;
 	}
 	
 	// 후원 결제 페이지
-	@RequestMapping(value="/support/payment.do", method = RequestMethod.GET)
+	@RequestMapping(value="/support/payment.pet", method = RequestMethod.GET)
 	public ModelAndView supportPaymentPage(ModelAndView mv
-			, @RequestParam("sNo") int sNo) {
+			, @RequestParam("sNo") int sNo
+			, HttpSession session) {
 		try {
-			Support support = sService.selectSupportByNo(sNo);
-			if(support != null) {
-				mv.addObject("support", support);
-				mv.setViewName("/support/supportPayment");
+			String uId = (String)session.getAttribute("uId");
+			if(uId != null && uId != "") {
+				User user = uService.selectOneById(uId);
+				Support support = sService.selectSupportByNo(sNo);
+				if(support != null && user != null) {
+					mv.addObject("user", user);
+					mv.addObject("support", support);
+					mv.setViewName("/support/supportPayment");
+				} else {
+					mv.addObject("msg", "데이터 조회가 완료되지 않았습니다.");
+					mv.addObject("url", "/support/detail.pet?sNo="+sNo);
+					mv.setViewName("common/message");
+				}				
 			} else {
-				mv.addObject("msg", "데이터 조회가 완료되지 않았습니다.");
-				mv.addObject("url", "/support/detail.do?sNo="+sNo);
-				mv.setViewName("common/errorPage");
+				mv.addObject("msg", "후원은 로그인한 회원만 가능합니다.");
+				mv.addObject("url", "/support/detail.pet?sNo="+sNo);
+				mv.setViewName("common/message");
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", "관리자에게 문의하세요.");
 			mv.addObject("error", e.getMessage());
-			mv.addObject("url", "/support/detail.do?sNo="+sNo);
+			mv.addObject("url", "/support/detail.pet?sNo="+sNo);
 			mv.setViewName("common/errorPage");
 		}
 		return mv;
@@ -143,14 +153,14 @@ public class SupportController {
 	}
 	
 	// 후원 결제완료 페이지
-	@RequestMapping(value="/support/complete.do", method = RequestMethod.GET)
+	@RequestMapping(value="/support/complete.pet", method = RequestMethod.GET)
 	public ModelAndView supportPayCompletePage(ModelAndView mv) {
 		mv.setViewName("/support/supportPayComplete");
 		return mv;
 	}
 	
 	// 후원 등록 
-	@RequestMapping(value = "/support/insert.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/support/insert.pet", method = RequestMethod.POST)
 	public ModelAndView insertSupport(ModelAndView mv
 			, @ModelAttribute Support support
 			, @RequestParam(value="uploadFile", required = false) MultipartFile uploadFile) {
@@ -169,24 +179,24 @@ public class SupportController {
 			int result = sService.insertSupport(support);
 			if(result > 0) {
 				mv.addObject("msg", "게시글이 등록되었습니다.");
-				mv.addObject("url", "/support/list.do");
+				mv.addObject("url", "/support/list.pet");
 				mv.setViewName("common/message");
 			} else {
 				mv.addObject("msg", "게시글 등록이 완료되지 않았습니다.");
-				mv.addObject("url", "/support/insert.do");
-				mv.setViewName("common/errorPage");
+				mv.addObject("url", "/support/insert.pet");
+				mv.setViewName("common/message");
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", "관리자에게 문의하세요.");
 			mv.addObject("error", e.getMessage());
-			mv.addObject("url", "/support/insert.do");
+			mv.addObject("url", "/support/insert.pet");
 			mv.setViewName("common/errorPage");
 		}
 		return mv;
 	}
 	
 	// 후원 수정 
-	@RequestMapping(value="/support/update.do", method = RequestMethod.POST)
+	@RequestMapping(value="/support/update.pet", method = RequestMethod.POST)
 	public ModelAndView updateSupport(ModelAndView mv
 			,@ModelAttribute Support support
 			, @RequestParam(value="uploadFile", required = false) MultipartFile uploadFile
@@ -210,28 +220,28 @@ public class SupportController {
 			int result = sService.updateSupport(support);
 			if(result > 0) {
 				mv.addObject("msg", "게시글이 수정되었습니다.");
-				mv.addObject("url", "/support/detail.do?sNo="+support.getsNo());
+				mv.addObject("url", "/support/detail.pet?sNo="+support.getsNo());
 				mv.setViewName("common/message");
 			} else {
 				mv.addObject("msg", "게시글 수정이 완료되지 않았습니다.");
-				mv.addObject("url", "/support/update.do?sNo="+support.getsNo());
+				mv.addObject("url", "/support/update.pet?sNo="+support.getsNo());
 				mv.setViewName("common/message");
 			} 
 		} catch (Exception e) {
 			mv.addObject("msg", "관리자에게 문의하세요.");
 			mv.addObject("error", e.getMessage());
-			mv.addObject("url", "/support/update.do?sNo="+support.getsNo());
+			mv.addObject("url", "/support/update.pet?sNo="+support.getsNo());
 			mv.setViewName("common/errorPage");
 			
 //			mv.addObject("msg", "관리자에게 문의하세요.");
-//			mv.addObject("url", "/support/update.do?sNo="+support.getsNo());
+//			mv.addObject("url", "/support/update.pet?sNo="+support.getsNo());
 //			mv.setViewName("common/message");
 		}
 		return mv;
 	}
 	
 	// 후원 삭제 
-	@RequestMapping(value="/support/delete.do", method = RequestMethod.GET)
+	@RequestMapping(value="/support/delete.pet", method = RequestMethod.GET)
 	public ModelAndView deleteSupport(ModelAndView mv
 			, @RequestParam("sNo") int sNo) {
 		try {
@@ -241,18 +251,18 @@ public class SupportController {
 				int result = sService.deleteSupport(sNo);
 				if(result > 0) {
 					mv.addObject("msg", "게시글이 삭제되었습니다.");
-					mv.addObject("url", "/support/list.do");
+					mv.addObject("url", "/support/list.pet");
 					mv.setViewName("common/message");
 				} else {
 					mv.addObject("msg", "후원 내역이 있어 삭제할 수 없습니다.");
-					mv.addObject("url", "/support/list.do");
+					mv.addObject("url", "/support/list.pet");
 					mv.setViewName("common/message");
 				}
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", "관리자에게 문의하세요.");
 			mv.addObject("error", e.getMessage());
-			mv.addObject("url", "/support/detail.do?sNo="+sNo);
+			mv.addObject("url", "/support/detail.pet?sNo="+sNo);
 			mv.setViewName("common/errorPage");
 		}
 		return mv;
@@ -260,7 +270,7 @@ public class SupportController {
 	
 	// 댓글 등록 
 	@ResponseBody
-	@RequestMapping(value="/sReply/insert.do", method=RequestMethod.POST)
+	@RequestMapping(value="/sReply/insert.pet", method=RequestMethod.POST)
 	public String insertReply(ModelAndView mv
 			, @ModelAttribute SupportReply sReply
 			, HttpSession session) {
@@ -278,10 +288,26 @@ public class SupportController {
 	}
 	
 	// 댓글 수정 
+	@ResponseBody
+	@RequestMapping(value="/sReply/update.pet", method=RequestMethod.POST)
+	public String updateReply(
+			@ModelAttribute SupportReply sReply
+			, HttpSession session) {
+		String uId = (String)session.getAttribute("uId");
+		int result = 0;
+		if(uId != null && !uId.equals("")) {
+			result = sService.updateReply(sReply);
+		}
+		if(result > 0) {
+			return "success";
+		} else {
+			return "fail";			
+		}
+	}
 	
 	// 댓글 삭제 
 	@ResponseBody
-	@RequestMapping(value="/sReply/delete.do", method=RequestMethod.GET)
+	@RequestMapping(value="/sReply/delete.pet", method=RequestMethod.GET)
 	public String deleteReply(
 			@RequestParam("sRNo") Integer sRNo
 			, HttpSession session) {
@@ -299,14 +325,16 @@ public class SupportController {
 	
 	// 댓글 목록 조회 
 	@ResponseBody
-	@RequestMapping(value = "/sReply/list.do"
+	@RequestMapping(value = "/sReply/list.pet"
 					, produces = "application/json; charset=utf-8"
 					, method = RequestMethod.GET)
 	public String showReplyList(Integer sNo) {
 		List<SupportReply> sRList = sService.selectSReplyList(sNo);
 		for (SupportReply sReply : sRList) {
 	        User user = uService.selectOneById(sReply.getuId()); 
+	        System.out.println(sReply.getuId());
 	        sReply.setsRWriter(user.getuNickName());
+	        System.out.println(user.getuNickName());
 	    }
 		Gson gson = new Gson();
 		return gson.toJson(sRList);
