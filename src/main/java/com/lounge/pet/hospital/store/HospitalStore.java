@@ -27,6 +27,14 @@ public interface HospitalStore {
 	int insertHBook(SqlSession session, HBookmark userBook);
 
 	/**
+	 * 동물병원 후기 수정 Store
+	 * @param session
+	 * @param hReview
+	 * @return
+	 */
+	int updateHosReview(SqlSession session, HReview hReview);
+
+	/**
 	 * EPSG:2097 좌표를 위경도 좌표로 변환 Store
 	 * @param session
 	 * @param hosLocation
@@ -43,6 +51,14 @@ public interface HospitalStore {
 	int deleteHBook(SqlSession session, HBookmark userBook);
 
 	/**
+	 * 동물병원 후기 삭제 Store
+	 * @param session
+	 * @param hReview
+	 * @return
+	 */
+	int deleteHosReview(SqlSession session, HReview hReview);
+
+	/**
 	 * 번호로 동물병원 조회 Store
 	 * @param session
 	 * @param hNo
@@ -57,6 +73,14 @@ public interface HospitalStore {
 	 * @return
 	 */
 	int selectHBook(SqlSession session, HBookmark userBook);
+
+	/**
+	 * 동물병원 후기 리스트 Store
+	 * @param session
+	 * @param hNo
+	 * @return
+	 */
+	List<HReview> selectHReviewList(SqlSession session, int hNo);
 
 	/**
 	 * 기본 주소 기준으로 동물병원 5개 불러오기 Store
@@ -80,5 +104,13 @@ public interface HospitalStore {
 	 * @return
 	 */
 	List<Hospital> selectAllList(SqlSession session);
+
+	/**
+	 * 특정 동물병원에 대한 후기 총 개수 Store
+	 * @param session
+	 * @param hNo
+	 * @return
+	 */
+	int getHReviewTotalCount(SqlSession session, int hNo);
 
 }

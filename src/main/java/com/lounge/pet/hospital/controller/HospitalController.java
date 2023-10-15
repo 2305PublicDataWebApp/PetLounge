@@ -1,6 +1,9 @@
 package com.lounge.pet.hospital.controller;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -83,7 +86,7 @@ public class HospitalController {
 	
 	// 동물병원 리스트 가져오기
 	@ResponseBody
-	@GetMapping("/hospital/findList.pet")
+	@GetMapping("/hospital/getHospitalList.pet")
 	public String hosFindList(@RequestParam("latitude") Double latitude
 			 				, @RequestParam("longitude") Double longitude
 			 				, HttpSession session) {
@@ -127,9 +130,9 @@ public class HospitalController {
 	// 동물병원 즐겨찾기 기능
 	@ResponseBody
 	@PostMapping("/hospital/addToHBookmark.pet")
-	public String addToFavorites(int hNo, HttpSession session) {
+	public String addToFavorites(int hNo
+								, HttpSession session) {
 		String sessionId = (String) session.getAttribute("uId");
-		String success = "";
 		
 		if(sessionId != null) {
 			HBookmark userBook = new HBookmark(sessionId, hNo);
@@ -138,48 +141,130 @@ public class HospitalController {
 				// 없으면 insert
 				int result = hService.insertHBook(userBook);
 				if(result > 0) {
-					success = "insert";
+					return "insert";
+				} else {
+					return "fail";
 				}
 			} else {
 				// 있으면 delete
 				int result = hService.deleteHBook(userBook);
 				if(result > 0) {
-					success = "delete";
+					return "delete";
+				} else {
+					return "fail";
 				}
 			}
 		} else {
-			success = "fail";
+			return "loginFail";
 		}
-		return success;
 	}
 	
-	
-	// 동물병원 리뷰 작성 기능 
-	@PostMapping("/hReview/insert.pet")
-	public ModelAndView hospitalReviewInsert(@ModelAttribute HReview hReview
-									, HttpSession session
-									, ModelAndView mv) {
+	// 동물병원 후기 목록 조회 
+	@ResponseBody
+	@GetMapping("/hReview/list.pet")
+	public String getReviewList(int hNo
+								, int currentPage
+								, int recordCountPerPage) {
+		// 페이징을 적용하여 후기 데이터를 가져오도록 구현 
+	    int start = (currentPage - 1) * recordCountPerPage;
+	    int end = start + recordCountPerPage;
+	    
+	    List<HReview> hRList = hService.selectHReviewList(hNo);
+	    
+	    // 범위 체크를 통해 부분 리스트 추출
+	    if (start < hRList.size()) {
+	        end = Math.min(end, hRList.size());
+	        hRList  = hRList.subList(start, end);
+	    } else {
+	    	hRList  = Collections.emptyList();
+	    }
+	    
+	    // 후기 정보에 작성자 닉네임 담아줌 
+		for (HReview hReview : hRList) {
+	        User user = uService.selectOneById(hReview.getuId()); 
+	        hReview.sethRNickName(user.getuNickName());
+	        hReview.sethRProfileImg(user.getuFilePath());
+	    }
 		
-		try {
-			String sessionId = (String) session.getAttribute("uId");
-			
-			if(sessionId != null) {
-				hReview.setuId(sessionId);
-				int result = hService.insertHosReview(hReview);
-				if(result > 0) {
-					mv.setViewName("redirect:/hospital/detail.pet?hNo=" + hReview.gethNo());
-				} else {
-					
-				}
-			} else {
-				mv.addObject("msg", "로그인이 필요한 서비스입니다.");
-				mv.addObject("url", "/user/login.pet");
-				mv.setViewName("common/message");
+		// 전체 페이지 수 계산 (후기의 총 갯수를 페이지당 후기 갯수로 나눠서 계산) 
+	    int totalRecords = hService.getHReviewTotalCount(hNo); // 후기의 총 갯수 
+	    int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 전체 페이지 수 
+	    
+	    // 후기 리스트와 전체 페이지 수를 Map에 담아서 보냄 
+	    Map<String, Object> resultMap = new HashMap<>();
+	    resultMap.put("hRList", hRList);
+	    resultMap.put("totalPages", totalPages);
+	    
+		Gson gson = new Gson();
+		return gson.toJson(resultMap);
+	}
+	
+	// 동물병원 후기 작성 기능 
+	@ResponseBody
+	@PostMapping("/hReview/insert.pet")
+	public String hospitalReviewInsert(@ModelAttribute HReview hReview
+								 	, HttpSession session) {
+		String sessionId = (String) session.getAttribute("uId");
+
+		if(sessionId != null) {
+			if(hReview.gethRContent() == "") {
+				return "empty";
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+						
+			hReview.setuId(sessionId);
+			int result = hService.insertHosReview(hReview);
+			if(result > 0) {
+				return "success";
+			} else {
+				return "fail";
+			}
+		} else {
+			return "loginFail";
 		}
-		return mv;
+	}
+	
+	// 동물병원 후기 수정 기능 
+	@ResponseBody
+	@PostMapping("/hReview/update.pet")
+	public String hospitalReviewUpdate(@ModelAttribute HReview hReview
+									, HttpSession session) {
+		String sessionId = (String) session.getAttribute("uId");
+		
+		if(sessionId != null) {
+			if(hReview.gethRContent() == "") {
+				return "empty";
+			}
+			
+			hReview.setuId(sessionId);
+			int result = hService.updateHosReview(hReview);
+			if(result > 0) {
+				return "success";
+			} else {
+				return "fail";
+			}
+		} else {
+			return "loginFail";
+		}
+	}
+	
+	// 동물병원 후기 삭제 기능 
+	@ResponseBody
+	@PostMapping("/hReview/delete.pet")
+	public String hospitalReviewDelete(@ModelAttribute HReview hReview
+									 , HttpSession session) {
+		String sessionId = (String) session.getAttribute("uId");
+		
+		if(sessionId != null) {
+			hReview.setuId(sessionId);
+			int result = hService.deleteHosReview(hReview);
+			if(result > 0) {
+				return "success";
+			} else {
+				return "fail";
+			}
+		} else {
+			return "loginFail";
+		}
 	}
 	
 	// 좌표 이동

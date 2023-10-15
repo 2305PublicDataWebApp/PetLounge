@@ -9,6 +9,7 @@
         <jsp:include page="../include/importSource.jsp"></jsp:include>
         <link rel="stylesheet" href="/resources/css/hospital/hospitalDetail.css">
         <link rel="stylesheet" href="/resources/css/hospital/hosMap.css">        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" />
         <!-- 카카오맵 API services와 clusterer 라이브러리 불러오기 -->
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9674da3ceea3cb3a1acdb7044a416e8&libraries=services,clusterer"></script>
         <title>${ hOne.hName } 상세 안내</title>
@@ -105,55 +106,33 @@
                 </div>
             </section>
 
-            <!-- 리뷰 리스트 -->
+            <!-- 후기 리스트 -->
             <section id="hospital-review-section">
                 <div id="review-title">
                     <h3 id="review-title-text">다른 사용자들에게 <span style="color: #FFD370;">도움</span>이 될 <span style="color: #FFD370;">후기</span>를 공유해 주세요</h3>
                 </div>
                 <!-- 등록 -->
                 <div id="review-create-div">
-                    <form action="/hReview/insert.pet" method="post">
-                    	<input type="hidden" name="hNo" value="${ hOne.hNo }">
-                        <textarea name="hRContent" id="review-create-content" placeholder="후기 내용을 작성해주세요" required></textarea>
-                        <input type="submit" value="등록" id="review-create-btn">
-                    </form>
+                    <input type="text" name="hRContent" id="review-create-content" placeholder="후기 내용을 작성해주세요" required>
+                    <button id="review-create-btn" onclick="hohReviewInsert(${ hOne.hNo });">등록</button>
                 </div>
                 <!-- 리스트 -->
                 <div id="review-list-div">
-                    <table>
-                        <colgroup>
-                            <col style="width: 5%;">
-                            <col style="width: 80%;">
-                            <col style="width: 15%;">
-                        </colgroup>
-                        <c:forEach begin="1" end="5">
-	                        <tr>
-	                            <td>
-	                                <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;"></div>
-	                            </td>
-	                            <td>
-	                                <div class="user-info-div">
-	                                    <span class="user-nickname">
-	                                        동숲주민
-	                                    </span>
-	                                    <span class="review-create-date">
-	                                        2023.10.03 19:42
-	                                    </span>
-	                                </div>
-	                                <div class="review-content">
-	                                    리뷰 내용
-	                                </div>
-	                            </td>
-	                            <td>
-	                                <a href="" class="review-modify-btn" data-bs-toggle="modal" data-bs-target="#modifyModal">수정</a>
-	                                <a href="" class="review-delete-btn">삭제</a>
-	                            </td>
-	                        </tr>
-                        </c:forEach>
-                    </table>
-                    <div id="page-navigation">
-                        << <span style="color:#FFD370;">1</span> 2 3 4 5 >>
-                    </div>
+                    <table id="review-table">
+						<colgroup>
+							<col style="width: 5%;">
+							<col style="width: 80%;">
+							<col style="width: 15%;">
+						</colgroup>
+					    <tr>
+					        <td></td>
+					        <td></td>
+					        <td></td>
+					    </tr>
+					</table>
+						<div id="page-navigation">
+						    <ul id="pagination" class="pagination pagination-sm"></ul>
+						</div>
                 </div>
             </section>
         
@@ -168,14 +147,13 @@
                             <div class="modal-body">
                                 <div class="modify-user-info-div">
                                     <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%; margin-right: 20px;"></div>
-                                    <span class="user-nickname">
+                                    <span class="user-nickname modify-user-nickname">
                                         동숲주민
                                     </span>
                                 </div>
                                 <div id="review-modify-div">
-                                    <form action="" method="">
-                                        <textarea name="" class="review-modify-content" placeholder="후기 내용을 수정해 주세요"></textarea>
-                                    </form>
+                                   	<input type="hidden" name="hRNo" class="h-r-no">
+                                    <input type="text" name="hRContent" class="review-modify-content" placeholder="후기 내용을 수정해 주세요">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -316,22 +294,287 @@
 		            data: {
 		                hNo: bookmarkHNo
 		            },
-		            success: function (success) {
-		                if (success == "insert") {
+		            success: function (data) {
+		                if (data == "insert") {
 		                    bookmark.classList.remove('bookmark-icon-none');
 		                    bookmark.classList.add('bookmark-icon-fill');
-		                } else if (success == "delete") {
+		                } else if (data == "delete") {
 		                    bookmark.classList.remove('bookmark-icon-fill');
 		                    bookmark.classList.add('bookmark-icon-none');
-		                } else if (success == "fail") {
+		                } else if (data == "loginFail") {
 		                    alert("로그인이 필요한 서비스입니다.");
-		                }
+		                } 
 		            },
-		            error: function (error) {
-		                alert("즐겨찾기 오류");
+		            error: function () {
+		            	alert("동물병원 즐겨찾기 오류. 관리자에게 문의 바랍니다.");
 		            }
 		        });
 		    }
+		</script>
+		<!-- 후기 -->
+		<script>
+			// 후기 등록 
+			function hohReviewInsert(hNo) {
+				const hRContent = $("#review-create-content").val();
+				$.ajax({
+					url : '/hReview/insert.pet',
+					type : 'POST',
+					data : { 
+						hNo : hNo,
+						hRContent : hRContent 
+					},
+					success : function(data) {
+						if(data == "success") {
+							$("#review-create-content").val("");
+							getReviewList();
+						} else if(data == "loginFail") {
+							alert("로그인이 필요한 서비스입니다."); 
+						} else if (data == "empty") {
+		                	alert("후기 내용은 비워둘 수 없습니다.");
+		                } else {
+							alert("동물병원 후기 등록 실패");
+						}
+					},
+					error : function() {
+						alert("동물병원 후기 작성 오류. 관리자에게 문의 바랍니다.");
+					}
+				});
+			}
+			
+			// 후기 수정창 보이기 
+			function openModifyView(hRNo, hRNickName, hRContent) {
+				document.querySelector('.h-r-no').value = hRNo;
+				document.querySelector('.modify-user-nickname').innerText = hRNickName;
+				document.querySelector('.review-modify-content').value = hRContent;
+				let modifyButton = document.querySelector('.modal-modify-btn');
+				modifyButton.addEventListener('click', function() {
+					modifyReview();
+				});	
+			}
+			
+			// 후기 수정 
+			function modifyReview() {
+				let hRNo = document.querySelector('.h-r-no').value;
+				let hRContent = document.querySelector('.review-modify-content').value;
+				$.ajax({
+					url : '/hReview/update.pet',
+					type : 'POST',
+					data : { 
+						hRNo : hRNo,
+						hRContent : hRContent 
+					},
+					success : function(data) {
+						if(data == "success") {
+							document.querySelector('[data-bs-dismiss="modal"]').click(); // 모달 닫는 버튼이 클릭되어서 닫히게 함 
+							getReviewList(); // 후기 목록 새로고침 
+						} else if(data == "loginFail") {
+							alert("로그인이 필요한 서비스입니다."); 
+						} else if (data == "empty") {
+		                	alert("후기 내용은 비워둘 수 없습니다.");
+		                } else {
+							alert("동물병원 후기 수정 실패");
+						}
+					},
+					error : function() {
+						alert("동물병원 후기 수정 오류. 관리자에게 문의 바랍니다.");
+					}
+				});
+			}
+			
+			// 후기 삭제 체크 
+			function checkDeleteReview(hRNo) {
+				if (confirm("후기를 삭제하시겠습니까?")) {
+					deleteReview(hRNo);
+				}
+			}
+			
+			// 후기 삭제 
+			function deleteReview(hRNo) {
+				$.ajax({
+					url : '/hReview/delete.pet',
+					type : 'POST',
+					data : { 
+						hRNo : hRNo 
+					},
+					success : function(data) {
+						if(data == "success") {
+							getReviewList();
+						} else {
+							alert("동물병원 후기 삭제 실패");
+						}
+					},
+					error : function() {
+						alert("동물병원 후기 삭제 오류. 관리자에게 문의 바랍니다.");
+					}
+				});
+			}
+			
+			<!-- 페이징 처리된 후기 조회 -->
+			// 후기 페이징 
+			let currentPage = 1; // 현재 페이지 
+			let recordCountPerPage = 5; // 페이지당 후기 수 
+			let naviCountPerPage = 5; // 한 그룹당 페이지 수
+			let totalPages = 0; // 총 페이지 수
+			
+			// 날짜 포맷팅 (후기 작성일에 사용)
+			function getFormattedDate(dateString) {
+			    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'};
+			    const formattedDate = new Date(dateString).toLocaleDateString('ko-KR', options);
+			    return formattedDate;
+			};
+			
+			// 후기 리스트를 불러오는 ajax Function 
+			function getReviewList() {
+				let sessionId = '${ sessionScope.uId }';
+				const hNo = '${ hOne.hNo }';
+				$.ajax({
+					url : "/hReview/list.pet",
+					type : "GET",
+					dataType: "json",
+					data : { 
+						hNo : hNo, 
+						currentPage: currentPage, 
+						recordCountPerPage: recordCountPerPage 
+					}, // 현재 페이지와 페이지당 후기 수 전달
+					success : function(data) {
+						const tableBody = $("#review-table tbody");
+						tableBody.html('');
+						let tr;
+						let left;
+						let center;
+						let right;
+						
+						const hRList = data.hRList; // 후기 리스트 
+				        totalPages = data.totalPages; // 총 페이지 수
+						
+						if(hRList.length > 0) {
+							for(let i in hRList) {
+								tr = $("<tr>"); // <tr></tr>
+								if(hRList[i].hRProfileImg == null){ // ********************** 프로필 이미지 추후 수정 필요 ******************
+									left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;'></div>"); 
+								} else {
+									left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-img: url(" + hRProfileImg + "); border-radius: 100%;'></div>");
+								}
+// 								center = $("<td class='td'>").html(
+// 										"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
+// 										+ ""+getFormattedDate(hRList[i].hRCreate)+"</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>"); 
+								if(hRList[i].hRCreate === hRList[i].hRUpdate) {
+									center = $("<td class='td'>").html(
+											"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
+											+ ""+getFormattedDate(hRList[i].hRCreate)+"</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>"); 
+								} else {
+									center = $("<td class='td'>").html(
+											"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
+											+ ""+getFormattedDate(hRList[i].hRCreate)+"</span><span class='review-create-date'>&nbsp;&nbsp;(" 
+											+ getFormattedDate(hRList[i].hRUpdate) + " 수정됨)</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>");
+								}
+										
+								if(sessionId === hRList[i].uId || sessionId === 'admin') {
+									right = $("<td class='td'>").html(
+											"<a href='javascript:void(0)' class='review-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal' "
+											+ "onclick='openModifyView("+hRList[i].hRNo+",\""+hRList[i].hRNickName+"\",\""+hRList[i].hRContent+"\");'>수정</a>"
+											+ "<a href='javascript:void(0)' class='review-delete-btn' onclick='checkDeleteReview("+hRList[i].hRNo+");'>삭제</a>"); 
+								} else {
+									right = $("<td class='td'>").html("");
+								}
+								
+								tr.append(left);
+								tr.append(center);
+								tr.append(right); 
+								tableBody.append(tr); 
+								
+								// 결과를 받은 후에 페이징을 업데이트
+					            createPagination(data.totalPages);
+							}
+						} else {
+							tr = $("<tr class='td'><td class='td'colspan='3'><div style='color: lightgray;'>등록된 후기가 없습니다.</div></td></tr>");
+							tableBody.append(tr);
+						}
+					},
+					error : function() {
+						alert("동물병원 후기 리스트 호출 오류. 관리자에게 문의 바랍니다.");
+					}
+				});
+			}
+			
+			// 페이지 만들기 
+			const createPagination = (totalPages) => {
+			    const paginationUl = $("#pagination");
+			    paginationUl.empty(); // 이전의 페이징 링크를 지움
+			    
+			    const naviCountPerPage = 5; // 한 그룹당 페이지 수
+			    const numGroups = Math.ceil(totalPages / naviCountPerPage); // 총 그룹 수
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage); // 현재 페이지가 속한 그룹
+	
+			    let startPage = (currentGroup - 1) * naviCountPerPage + 1;
+			    let endPage = Math.min(currentGroup * naviCountPerPage, totalPages);
+			    
+			 	// "이전" 버튼 추가
+			    if (currentGroup > 1) {
+			        const prevLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>');
+			        prevLi.click(() => {
+			            goToPreviousGroup();
+			        });
+			        paginationUl.append(prevLi);
+			    }
+			 	// 페이지 링크 추가
+			    for (let i = startPage; i <= endPage; i++) {
+			        const li = $('<li class="page-item" data-page="${i}"><a class="page-link" href="javascript:void(0)">'+i+'</a></li>');
+			        
+			     	// 현재 페이지에 해당하는 경우 클래스 추가
+			        if (i === currentPage) {
+			            li.addClass('active');
+			        }
+			     
+			        li.click(() => {
+			            changePage(i);
+			        });
+			        paginationUl.append(li);
+			    }
+				// "다음" 버튼 추가
+			    if (currentGroup < numGroups) {
+			        const nextLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>');
+			        nextLi.click(() => {
+			            goToNextGroup();
+			        });
+			        paginationUl.append(nextLi);
+			    }
+			}
+			
+			// 페이지 변경 시 호출되는 함수
+			const changePage = (newPage) => {
+			    currentPage = newPage;
+			    getReviewList(currentPage);
+			}
+			
+			// 그룹 변경 시 호출되는 함수
+			const changeGroup = (newGroup) => {
+			    currentPage = (newGroup - 1) * naviCountPerPage + 1;
+			    getReviewList(currentPage);
+			}
+	
+			// 이전 그룹으로 이동할 때 호출 
+			const goToPreviousGroup = () => {
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup > 1) {
+			        const lastPageOfPreviousGroup = (currentGroup - 1) * naviCountPerPage;
+			        changePage(lastPageOfPreviousGroup);
+			    }
+			}
+	
+			// 다음 그룹으로 이동할 때 호출
+			const goToNextGroup = () => {
+			    const numGroups = Math.ceil(totalPages / naviCountPerPage);
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup < numGroups) {
+			        changeGroup(currentGroup + 1);
+			    }
+			}
+			
+			$(function(){
+				getReviewList();
+				// setInterval(getReviewList, 1000); // 1초 단위로 getReviewList가 호출되어 후기 실시간 조회
+			})
 		</script>
     </body>
 </html>

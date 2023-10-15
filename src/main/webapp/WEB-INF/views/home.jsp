@@ -87,12 +87,22 @@
 	                                    logout
 	                                </a>
 	                            </li>
-	                            <li>
-	                                <a href="/user/userInfo.pet">
-	                                    <i class="fa fa-regular fa-user user-icon"></i>
-	                                    my page
-	                                </a>
-	                            </li>
+   	                            <c:if test="${ sessionScope.uId eq 'admin' }">
+	                            	<li>
+		                                <a href="/admin/main_board.pet">
+		                                    <i class="fa fa-regular fa-user user-icon"></i>
+		                                    admin page
+		                                </a>
+		                            </li>
+	                            </c:if>
+	                            <c:if test="${ sessionScope.uId ne 'admin' }">
+		                            <li>
+		                                <a href="/user/userInfo.pet">
+		                                    <i class="fa fa-regular fa-user user-icon"></i>
+		                                    my page
+		                                </a>
+		                            </li>
+	                            </c:if>
 	                        </ul>
                         </c:if>
                     </nav>

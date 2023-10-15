@@ -26,6 +26,12 @@ public class HospitalStoreLogic implements HospitalStore {
 	}
 
 	@Override
+	public int updateHosReview(SqlSession session, HReview hReview) {
+		int result = session.update("HosMapper.updateHosReview", hReview);
+		return result;
+	}
+
+	@Override
 	public int updateXYtoLatLng(SqlSession session, Hospital hosLocation) {
 		int result = session.update("HosMapper.updateXYtoLatLng", hosLocation);
 		return result;
@@ -34,6 +40,12 @@ public class HospitalStoreLogic implements HospitalStore {
 	@Override
 	public int deleteHBook(SqlSession session, HBookmark userBook) {
 		int result = session.delete("HosMapper.deleteHBook", userBook);
+		return result;
+	}
+
+	@Override
+	public int deleteHosReview(SqlSession session, HReview hReview) {
+		int result = session.update("HosMapper.deleteHosReview", hReview);
 		return result;
 	}
 
@@ -47,6 +59,12 @@ public class HospitalStoreLogic implements HospitalStore {
 	public int selectHBook(SqlSession session, HBookmark userBook) {
 		int hBOne = session.selectOne("HosMapper.selectHBook", userBook);
 		return hBOne;
+	}
+
+	@Override
+	public List<HReview> selectHReviewList(SqlSession session, int hNo) {
+		List<HReview> hRList = session.selectList("HosMapper.selectHReviewList", hNo);
+		return hRList;
 	}
 
 	@Override
@@ -65,6 +83,12 @@ public class HospitalStoreLogic implements HospitalStore {
 	public List<Hospital> selectAllList(SqlSession session) {
 		List<Hospital> hList = session.selectList("HosMapper.selectAllList");
 		return hList;
+	}
+
+	@Override
+	public int getHReviewTotalCount(SqlSession session, int hNo) {
+		int count = session.selectOne("HosMapper.getHReviewTotalCount", hNo);
+		return count;
 	}
 
 }

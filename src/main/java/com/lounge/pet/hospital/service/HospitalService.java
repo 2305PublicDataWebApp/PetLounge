@@ -9,7 +9,7 @@ import com.lounge.pet.hospital.domain.Hospital;
 public interface HospitalService {
 
 	/**
-	 * 동물병원 리뷰 등록 Service
+	 * 동물병원 후기 등록 Service
 	 * @param hReview
 	 * @return
 	 */
@@ -21,6 +21,13 @@ public interface HospitalService {
 	 * @return
 	 */
 	int insertHBook(HBookmark userBook);
+
+	/**
+	 * 동물병원 후기 수정 Service
+	 * @param hReview
+	 * @return
+	 */
+	int updateHosReview(HReview hReview);
 
 	/**
 	 * EPSG:2097 좌표를 위경도 좌표로 변환 Service
@@ -37,6 +44,13 @@ public interface HospitalService {
 	int deleteHBook(HBookmark userBook);
 
 	/**
+	 * 동물병원 후기 삭제 Service
+	 * @param hReview
+	 * @return
+	 */
+	int deleteHosReview(HReview hReview);
+
+	/**
 	 * 번호로 동물병원 조회 Service
 	 * @param hNo
 	 * @return
@@ -49,6 +63,13 @@ public interface HospitalService {
 	 * @return
 	 */
 	int selectHBook(HBookmark userBook);
+
+	/**
+	 * 동물병원 후기 리스트 Service
+	 * @param hNo
+	 * @return
+	 */
+	List<HReview> selectHReviewList(int hNo);
 
 	/**
 	 * 기본 주소 기준으로 동물병원 5개 불러오기 Service
@@ -69,5 +90,12 @@ public interface HospitalService {
 	 * @return
 	 */
 	List<Hospital> selectAllList();
+
+	/**
+	 * 특정 동물병원에 대한 후기 총 개수 Service 
+	 * @param hNo
+	 * @return
+	 */
+	int getHReviewTotalCount(int hNo);
 
 }

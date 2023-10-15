@@ -73,7 +73,7 @@ main {
                 font-weight: bold;
             }
 
-            #review-create-div > form {
+            #review-create-div {
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -87,6 +87,7 @@ main {
                     border-radius: 10px;
                     padding: 15px 20px;
                     font-size: 1em;
+                    vertical-align: top;
                 }
 
                 #review-create-btn {
@@ -105,53 +106,59 @@ main {
             margin-top: 50px;
             margin-bottom: 150px;
         }
+        
+        	#review-table {
+        		width: 100%;
+        	}
             
-            td {
-                vertical-align: top;
-                padding: 20px 10px;
-                border-top: 1px solid #ddd;
-                border-bottom: 1px solid #ddd;
-            }
-
-            tr > td:nth-child(3) {
-                text-align: right;
-            }
-
-                .user-info-div {
-                    text-align: left;
-                    display: flex;
-                    align-items: flex-end;
-                    margin: 3px 10px 8px 10px;
-                }
-
-                    .user-nickname {
-                        font-weight: bold;
-                        margin-right: 10px;
-                    }
-
-                    .review-create-date {
-                        color: lightgray;
-                        font-size: 0.9em;
-                    }
-
-                .review-content {
-                    text-align: left;
-                    margin: auto 10px;
-                }
-
-                .review-modify-btn, .review-delete-btn {
-                    color: lightgray;
-                    font-size: 0.9em;
-                    text-decoration: none;
-                    margin-right: 5px;
-                }
-
-                .review-modify-btn:hover, .review-delete-btn:hover {
-                    color: #FFD370;
-                }
+	            td {
+	                vertical-align: top;
+	                padding: 20px 10px;
+	                border-top: 1px solid #ddd;
+	                border-bottom: 1px solid #ddd;
+	            }
+	
+	            tr > td:nth-child(3) {
+	                text-align: right;
+	            }
+	
+	                .user-info-div {
+	                    text-align: left;
+	                    display: flex;
+	                    align-items: flex-end;
+	                    margin: 3px 10px 8px 10px;
+	                }
+	
+	                    .user-nickname {
+	                        font-weight: bold;
+	                        margin-right: 10px;
+	                    }
+	
+	                    .review-create-date {
+	                        color: lightgray;
+	                        font-size: 0.9em;
+	                    }
+	
+	                .review-content {
+	                    text-align: left;
+	                    margin: auto 10px;
+	                }
+	
+	                .review-modify-btn, .review-delete-btn {
+	                    color: lightgray;
+	                    font-size: 0.9em;
+	                    text-decoration: none;
+	                    margin-right: 5px;
+	                }
+	
+	                .review-modify-btn:hover, .review-delete-btn:hover {
+	                    color: #FFD370;
+	                }
         
         #page-navigation {
             margin-top: 50px;
+            display: flex;
+    		justify-content: center;
         }
 
         /* 수정 모달창 */
@@ -205,3 +212,25 @@ main {
                         color: white;
                         border-radius: 8px;
                     }
+                    
+		/* 페이징 */
+		.page-link {
+		  color: #000; 
+		  background-color: #fafafa;
+		  border: 1px solid #fafafa; 
+		}
+		
+		.page-item.active .page-link {
+		 z-index: 1;
+		 color: #fff;
+		 font-weight:bold;
+		 background-color: #FFD370;
+		 border-color: #fafafa;
+		 
+		}
+		
+		.page-link:focus, .page-link:hover {
+		  color: #000;
+		  background-color: #ececec; 
+		  border-color: #fafafa;
+		}

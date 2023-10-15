@@ -21,6 +21,7 @@
 		 WHERE H_R_NO = #{ hRNo }
 	</update>
 	
+	<!-- Y, N을 UPDATE 하는 것으로 DELETE 기능을 대신함 -->
 	<update id="deleteHosReview">
 		UPDATE H_REVIEW_TBL 
 		   SET H_R_UPDATE = DEFAULT, H_R_STATUS = 'N' 
@@ -50,6 +51,14 @@
 		  FROM H_BOOKMARK_TBL
  		 WHERE U_ID = #{ uId }
 		   AND H_NO = #{ hNo }
+	</select>
+	
+	<select id="selectHReviewList" resultType="HReview">
+		SELECT * 
+	      FROM H_REVIEW_TBL 
+		 WHERE H_NO = #{ hNo }
+		   AND H_R_STATUS = 'Y' 
+		 ORDER BY H_R_NO DESC
 	</select>
 	
 	<select id="selectFiveHos" resultType="Hospital">
@@ -108,5 +117,12 @@
 	<select id="selectAllList" resultType="Hospital">
 		SELECT *
 		  FROM HOSPITAL_TBL
+	</select>
+	
+	<select id="getHReviewTotalCount" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM H_REVIEW_TBL 
+		 WHERE H_NO = #{ hNo } 
+		   AND H_R_STATUS = 'Y'
 	</select>
 </mapper>

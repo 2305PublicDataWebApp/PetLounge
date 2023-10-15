@@ -152,13 +152,14 @@
 				const userAddr = '${ user.uAddr }'; // 회원의 주소
 				geocoder.addressSearch(userAddr, function(result, status) {
 				
-				    // 정상적으로 검색이 완료됐으면 
-				     if (status === kakao.maps.services.Status.OK) {
+				     if (status === kakao.maps.services.Status.OK) { // 정상적으로 검색이 완료됐으면 
 				    	lat = result[0].y;
 				    	lng = result[0].x;
-				    	 
-				        createMap(lat, lng);
-				    } 
+				    } else { // 정상적으로 검색이 완료되지 않았으면 비회원 기본주소와 동일
+				    	lat = 37.5679212;
+						lng = 126.9830358;
+				    }
+			        createMap(lat, lng);
 				});  
 			}			
 			
@@ -171,27 +172,27 @@
 				};
 		
 				map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-				findList(map, lat, lng);
+				getHospitalList(map, lat, lng);
 			}
 			
 			// 리스트를 불러오는 ajax
-			function findList(map, lat, lng) {
+			function getHospitalList(map, lat, lng) {
 				$.ajax ({
-					 url: "/hospital/findList.pet",
+					 url: "/hospital/getHospitalList.pet",
+					 type: "GET",
+					 dataType: "json",
 					 data: {
 						latitude: lat,
 				        longitude: lng
 					 },
-					 type: "GET",
-					 dataType: "json",
-					 success: function(hList) {
-						showListFunc(hList);
+					 success: function(data) {
+						showListFunc(data);
 						
 						var hospitalListTitle = document.querySelector('th[colspan="4"]');
 						hospitalListTitle.innerHTML = '내 주변 동물병원';
 					 },
-					 error: function(data){
-						 console.error('리스트 호출 오류:', error);
+					 error: function(){
+						 alert("동물병원 리스트 호출 오류. 관리자에게 문의 바랍니다.");
 					 }
 				 });
 			}
@@ -209,8 +210,17 @@
 					};
 					positions.push(position);
 				}
-				makeMarkerAndOverlay(map, positions); // 마커 표시
-				loadHospitalList(hList); // 지도에 리스트 표시
+				
+				if(hList.length > 0) {
+					makeMarkerAndOverlay(map, positions); // 마커 표시
+				} else { // 검색결과가 없을 때, 마커 표시 안함
+					for (var i = 0; i < markers.length; i++) {
+		                markers[i].setMap(null);
+		                overlays[i].setMap(null);
+		            }
+				}
+				
+				loadHospitalList(hList); // 리스트 표시
 			}
 			
 			// 마커와 커스텀 오버레이 생성
@@ -336,7 +346,9 @@
 			        var noResultRow = document.createElement('tr');
 			        var noResultCell = document.createElement('td');
 			        noResultCell.colSpan = 4;
-			        noResultCell.textContent = '검색 결과 없음';
+			        noResultCell.style.color = 'lightgray';
+			        noResultCell.style.textAlign = 'center';
+			        noResultCell.textContent = '검색 결과가 없습니다';
 			        noResultRow.appendChild(noResultCell);
 			        hospitalListBody.appendChild(noResultRow);
 			    } else {
@@ -424,10 +436,10 @@
 			                longitude: latlng.getLng() // 업데이트된 경도 값
 			            },
 			            success: function(data) {
-			                findList(map, latlng.getLat(), latlng.getLng());
+			                getHospitalList(map, latlng.getLat(), latlng.getLng());
 			            },
-			            error: function(error) {
-							alert("지도 이동 이벤트 오류");
+			            error: function() {
+							alert("지도 이동 이벤트 오류. 관리자에게 문의 바랍니다.");
 			            }
 			        });
 			    }
@@ -462,7 +474,7 @@
 			function defaultLatLng() {
 			    var moveLatLng = new kakao.maps.LatLng(lat, lng);
 			    map.panTo(moveLatLng);            
-			    findList(map, lat, lng);
+			    getHospitalList(map, lat, lng);
 			    document.getElementById('h-search-keyword').value = '';
 			}        
 			
@@ -488,7 +500,7 @@
 				        longitude = position.coords.longitude; // 경도
 				        	
 						map.panTo(new kakao.maps.LatLng(latitude, longitude));
-						findList(map, latitude, longitude);
+						getHospitalList(map, latitude, longitude);
 				      });
 				    
 				} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
@@ -506,21 +518,21 @@
 				if (searchKeyword.trim() !== '') {
 			    	$.ajax ({
 			    		 url: "/hospital/search.pet",
+			    		 type: "GET",
+			    		 dataType: "json",
 			    		 data: {
 			    			latitude: lat,
 				            longitude: lng,
 				            hSearchKeyword: searchKeyword
 			    		 },
-			    		 type: "GET",
-			    		 dataType: "json",
-			    		 success: function(hList) {
-			    			showListFunc(hList);
-							
+			    		 success: function(data) {
+			    			showListFunc(data);
+			    			
 							var hospitalListTitle = document.querySelector('th[colspan="4"]');
 							hospitalListTitle.innerHTML = '<span style="color: #FFD370;">' + searchKeyword + '</span> 검색 결과';
 			    		 },
-			    		 error: function(data){
-			    			 console.error('검색 오류:', error);
+			    		 error: function(){
+			    			 alert("동물병원 검색 오류. 관리자에게 문의 바랍니다.");
 			    		 }
 			    	 });
 				}
@@ -534,21 +546,21 @@
 		            data: {
 		                hNo: bookmarkHNo
 		            },
-		            success: function (success) {
-		            	if(success == "insert"){
+		            success: function (data) {
+		            	if(data == "insert"){
 // 		            		alert("북마크 등록 성공");
 		            		bookmark.classList.remove('bookmark-icon-none');
 		                    bookmark.classList.add('bookmark-icon-fill');
-		            	} else if(success == "delete") {
+		            	} else if(data == "delete") {
 // 		            		alert("북마크 등록 삭제");
 		            		bookmark.classList.remove('bookmark-icon-fill');
 		                    bookmark.classList.add('bookmark-icon-none');
-		            	} else if(success == "fail") {
+		            	} else if(data == "loginFail") {
 			                alert("로그인이 필요한 서비스입니다.");
-		            	}
+		            	} 
 		            },
-		            error: function (error) {
-		            	alert("즐겨찾기 오류");
+		            error: function () {
+		            	alert("동물병원 즐겨찾기 오류. 관리자에게 문의 바랍니다.");
 		            }
 		        });
 		    }
