@@ -5,12 +5,70 @@
   
 <mapper namespace="NoticeMapper">
 
-	<select id="selectListCount" resultType="_int">
+	<select id="getListCount2" resultType="_int">
 		SELECT COUNT(*) FROM NOTICE_TBL
 	</select>
 	
 	<select id="selectNoticeList" resultType="Notice">
-		SELECT * FROM NOTICE_TBL ORDER BY N_NO ASC
+		SELECT * FROM NOTICE_TBL WHERE N_STATUS = 'Y' ORDER BY N_NO DESC 
+	</select>
+	
+	<select id="selectOneNoticeNo" resultType="Notice">
+  		SELECT * FROM NOTICE_TBL WHERE N_NO = #{nNo }
+  	</select>
+
+  	<update id="updateViewCount">
+  		UPDATE NOTICE_TBL SET N_VIEWCOUNT = #{nViewCount } +1 WHERE N_NO = #{nNo }
+  	</update>
+  	
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*) FROM NOTICE_TBL WHERE N_STATUS = 'Y'
 	</select>
 
+	<select id="searchByKeyword" resultType="Notice">
+		SELECT * FROM NOTICE_TBL
+		<if test="searchCondition == 'all'"> 
+			WHERE N_TITLE LIKE '%'||#{searchKeyword }||'%' AND N_STATUS = 'Y'
+		</if>
+		<if test="searchCondition == 'no'">
+			WHERE N_NO = #{searchKeyword}
+		</if> 
+		<if test="searchCondition == 'title'">
+			WHERE N_TITLE LIKE '%'||#{searchKeyword}||'%' AND N_STATUS = 'Y'
+		</if> 
+		<if test="searchCondition == 'date'">
+			WHERE TO_CHAR(N_CREATE, 'YYYY.MM.DD') LIKE '%' || #{searchKeyword} || '%'
+		</if>  
+	</select>
+	
+	<insert id="submitNoticeForm">
+		INSERT INTO NOTICE_TBL 
+		VALUES(N_SEQ_NO.NEXTVAL, #{nTitle}, #{nContent}, DEFAULT, DEFAULT, 
+		#{nFileName}, #{nFileRename}, #{nFilePath}, #{nFileLength}, DEFAULT, DEFAULT)
+	</insert>	
+	
+	<update id="noticeDelete">
+		UPDATE NOTICE_TBL 
+		SET N_UPDATE = DEFAULT, N_STATUS = 'N' WHERE N_NO = #{nNo}
+	</update>
+	
+	<update id="updateNotice">
+		UPDATE NOTICE_TBL 
+		SET
+			N_TITLE = #{nTitle}, 
+			N_CONTENT = #{nContent}, 
+			N_UPDATE = DEFAULT,
+			N_STATUS = #{nStatus} 
+		WHERE N_NO = #{nNo} 
+	</update>
+
+<!-- 	<update id="updateNotice"> -->
+<!-- 		UPDATE NOTICE_TBL  -->
+<!-- 		SET N_TITLE = #{nTitle}, N_CONTENT = #{nContent}, N_CREATE = #{nCreate},  -->
+<!-- 		N_UPDATE = DEFAULT, N_FILENAME = #{nFileName}, N_FILERENAME = #{nFileRename}, -->
+<!-- 		N_FILEPATH = #{nFilePath}, N_FILELENGTH = #{nFileLength}, N_STATUS = #{nStatus},  -->
+<!-- 		N_VIEWCOUNT = #{nViewCount} WHERE N_NO = #{nNo}  -->
+<!-- 	</update> -->
+	
+	
 </mapper>

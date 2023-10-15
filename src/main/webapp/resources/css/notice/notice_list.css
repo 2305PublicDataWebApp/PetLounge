@@ -128,6 +128,15 @@ ul {
     padding: 3px;
     font-size: 15px;
 }
+
+.search-select {
+    flex: 1;
+    border: 2px solid #ffd370;
+    padding: 3px;
+    font-size: 15px;
+    color: #ffd370;
+}
+    
 .search-button {
     background-color: #ffffff;
     border: 2px solid;
@@ -152,17 +161,64 @@ hr {
     border-width: 0;
     border-style: solid;
     border-color: rgba(145, 158, 171, 0.24);
-    border-bottom-width: thin;
         }
 
-.pagination li a {
+/* .pagination li a { */
+/*     line-height: 1.85714; */
+/*     font-size: 0.875rem; */
+/*     font-family: Pretendard, sans-serif; */
+/* } */
+/* .pagination li.Mui-selected { */
+/*     font-weight: 700; */
+/* } */
+
+.pagination a {
+    line-height: 1.85714;
+    font-size: 0.995rem;
+    font-family: Pretendard, sans-serif;
+    margin-right: 8px;
+    text-decoration: none;
+}
+.pagination a.page {
+    margin-top: 5px;
+    text-decoration: none;
+}
+.pagination a.page.current {
+    line-height: 1.85714;
+    font-size: 0.995rem;
+    font-family: Pretendard, sans-serif;
+    font-weight: 700;
+}
+
+.pagination a.next {
+    background-color: #ffffff;
+    border: 2px solid #ffd370;
+    color: #ffd370;
+    padding: 3px;
+    font-size: 12px;
+    border-radius: 5px;		
+}
+.pagination a.prev {
+    background-color: #ffffff;
+    border: 2px solid #ffd370;
+    color: #ffd370;
+    padding: 3px;
+    font-size: 12px;
+    border-radius: 5px;		
+}
+
+.pagination a.prev, .pagination a.next {
     line-height: 1.85714;
     font-size: 0.875rem;
     font-family: Pretendard, sans-serif;
+    text-decortaion: none;
 }
-.pagination li.Mui-selected {
-    font-weight: 700;
+.pagination a.prev.current, .pagination a.next.current {
+  background-color: #007bff; /* 선택된 '[이전]' 및 '[다음]' 배경색 */
+  color: #fff; /* 선택된 '[이전]' 및 '[다음]' 텍스트 색상 */
+  font-weight: 700;
 }
+
 
 .sub {
     position: relative;
@@ -175,7 +231,7 @@ hr {
 }
 .submit {
     background-color: #ffd370;
-    border: 2px solid;
+    border: 2px solid #ffd370;
     color: #ffffff;
     padding: 5px 5px;
     font-size: 13px;
@@ -207,7 +263,9 @@ th, td {
     text-align: center;
 }
 .right1 {
-    color: #505D68;            
+    color: #505D68;
+    font-style: normal;
+    letter-spacing: -0.02em;            
 }
 .right2 {
     font-family: Pretendard;
