@@ -84,45 +84,52 @@
 
 										<div>
 											<div>
-												<p style="margin-bottom: 69px; margin-top: 8px;">프로필 사진</p>
+												<p style="margin-bottom: 91px; margin-top: 8px;"></p>
 												<p style="margin-top: 3px;">아이디</p>
-												<p style="margin-top: 47px;">비밀번호</p>
+												<p style="margin-top: 30px;">비밀번호</p>
 												<p style="margin-top: 30px">비밀번호 확인</p>
-												<p style="margin-top: 30px; margin-bottom: 30px;">이름</p>
+												<p style="margin-top: 30px; margin-bottom: 34px;">이름</p>
 												<p style="margin-bottom: 23px;">닉네임</p>
-												<p style="margin-top: 50px;">이메일</p>
-												<p style="padding-top: 23px;">휴대전화</p>
-
+												<p style="margin-top: 30px;">이메일</p>
+												<p style="margin-top: 32px;">인증번호 확인</p>
+												<p style="padding-top: 13px;">휴대전화</p>
+												<p style="padding-top: 16px;">주소</p>
 											</div>
 
 											<div style="width: 357.5px;">
 												<div style=" display: flex; justify-content: center; align-items: flex-end;">
+													<input type="hidden" name="uFileName" value="${user.uFileName}">
+													<input type="hidden" name="uFileReName" value="${user.uFileReName}">
+													<input type="hidden" name="uFilePath" value="${user.uFilePath}">
+													<input type="hidden" name="uFileLengthStr" value="${user.uFileLength}">
 													<input type="file" class="real-upload" accept="image/*"
-														onchange="setThumbnail(event);" name="uploadFile" multiple
-														style="display: none;" required>
+														onchange="setThumbnail(event);" name="uploadFile" style="display: none;">
 													<div id="thumbnail" style="width: 100px; height: 100px; border-radius: 50%; border: 1px solid #999; display: flex; align-items: center; justify-content: center;">
 															<img id="image-preview"
 																src="${user.uFilePath }"
-															style="width: 100px; height: 100px; max-width: 100px; max-height: 100px; border-radius: 50%; ">
+															style="width: 100%; height: 100%; max-width: 100px; max-height: 100px; border-radius: 50%; CURSOR: POINTER; ">
 													</div>
 													<a id="deleteImg" style="display: flex; align-content: stretch; align-items: center"><img src="/resources/images/user/delete.png" style="width: 25px; height: 25px;"></a>
-												</div>
-												<br> <input type="text" value="${user.uId }" style="margin-top: -10px;" readonly>
-												<button class="중복확인버튼">중복확인</button>
-												<br> <input type="password" name="uPw"
-													value="${user.uPw }"><br> <br> <input
-													type="password" name="uPwRe" value="${user.uPw }"><br>
-												<br> <input type="text" value="${user.uName }"
-													name="uName" readonly><br> <br> <input
-													type="text" name="uNickName" value="${user.uNickName }">
-												<button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button>
-												<br> <input type="text" name="uEmailPrefix"
-													id="uEmailPrefix"
-													value="${fn:substringBefore(user.uEmail, '@')}"
+												</div><br> 
+												
+												
+												<input type="text" id="uId" value="${user.uId }" style="margin-top: -10px;" readonly><br> 
+													<span id="duplResult" style="font-size: 0.7em; width: 100%;"></span><br>
+												
+												<input type="password" name="uPw" id="uPw" value="${user.uPw }"><br> 
+													<span id="duplPwResult" style="font-size: 0.7em; width: 100%;"></span><br>
+												
+												<input type="password" name="uPwRe" id="uPwRe" value="${user.uPw }"><br> 
+													<span id="duplPwReResult" style="font-size: 0.7em; width: 100%;"></span><br>
+											
+												<input type="text" value="${user.uName }" name="uName" readonly><br><br> 
+												
+												<input type="text" id="uNickName" name="uNickName" value="${user.uNickName }"><br> 
+													<span id="duplNickResult" style="font-size: 0.7em; width: 100%;"></span><br>
+												
+												<input type="text" name="uEmailPrefix" id="uEmailPrefix" value="${fn:substringBefore(user.uEmail, '@')}"
 													oninput="combineEmail()" style="width: 199px;" required>@
-												<select name="uEmailSuffix" id="uEmailSuffix" size="1"
-													style="border-radius: 20px;"
-													onchange="combineEmailSuffix()">
+												<select name="uEmailSuffix" id="uEmailSuffix" size="1" style="border-radius: 20px;" onchange="combineEmailSuffix()">
 													<option value="hanmail.net"
 														${fn:contains(user.uEmail, 'hanmail.net') ? 'selected' : ''}>hanmail.net</option>
 													<option value="naver.com"
@@ -133,35 +140,46 @@
 														${fn:contains(user.uEmail, 'hotmail.com') ? 'selected' : ''}>hotmail.com</option>
 													<option value="nate.com"
 														${fn:contains(user.uEmail, 'nate.com') ? 'selected' : ''}>nate.com</option>
-												</select> <input type="hidden" name="uEmail" id="uEmail"
-													value="${user.uEmail}"><br>
-												<button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button>
-												<br> <input type="tel" name="uPhone"
-													value="${user.uPhone }"><br> <br>
+												</select> 
+												<input type="hidden" name="uEmail" id="uEmail" value="${user.uEmail}">
+												<button class="중복확인버튼" style="width: 60px; height: 8px; margin-left: 291px;">메일인증</button>
+												
+												<input type="text" placeholder="인증번호를 입력하세요" style="width: 58.4%;;" required>
+												<button type="button" id="mailCheck">확인</button><br><br>
+												
+												<input type="tel" name="uPhone"  id="uPhone" value="${user.uPhone }"><br> 
+													<span id="duplPhoneResult" style="font-size: 0.7em; width: 100%;"></span><br>
+												
+												<div>
+												<input type="address" id="userZipcode" value="${user.uAddrNo }" name="uAddrNo" style="width: 58.4%;;" required>
+												<button type="button" id="addrsearch" onclick="sample4_exeDaumPostcode()">주소검색</button>
+												</div>
+												<input type="address" name="uAddr" id="userAddr" value="${user.uAddr }" required><br><br>
 											</div>
 										</div>
-										<div class="join2">
-											<h5></h5>
-											<div style="margin-top: 7px;">
-												<div>
-													<p>주소</p>
-												</div>
+										
+<!-- 										<div class="join2"> -->
+<!-- 											<h5></h5> -->
+<!-- 											<div style="margin-top: 7px;"> -->
+<!-- 												<div> -->
+<!-- 													<p>주소</p> -->
+<!-- 												</div> -->
 
-												<div>
-													<input type="address" id="userZipcode" value="${user.uAddrNo }" name="uAddrNo"
-														required>
-													<button id="addrsearch" onclick="sample4_exeDaumPostcode()">주소검색</button>
-													<br> <input type="address" name="uAddr" id="userAddr"
-														value="${user.uAddr }" required><br>
-													<br>
-												</div>
-											</div>
-										</div>
+<!-- 												<div> -->
+<%-- 													<input type="address" id="userZipcode" value="${user.uAddrNo }" name="uAddrNo" --%>
+<!-- 														required> -->
+<!-- 													<button id="addrsearch" onclick="sample4_exeDaumPostcode()">주소검색</button> -->
+<!-- 													<br> <input type="address" name="uAddr" id="userAddr" -->
+<%-- 														value="${user.uAddr }" required><br> --%>
+<!-- 													<br> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
 
 
 
 
-										<button id="가입하기2">수정하기</button>
+										<button id="join2" style="cursor: pointer !important;">수정하기</button>
 									</section>
 
 								</div>
@@ -280,8 +298,140 @@
         });
      
      
-		// 페이지가 로드되면 호출하여 우편번호를 설정합니다.
-		//setZipcodeFromAddress();
+        
+        
+      //닉네임 중복확인 및 유효성 검사
+        $(document).ready(function() {
+            $("#uNickName").on("change", function() {
+                var uNickName = $("#uNickName").val();
+
+                $.ajax({
+                    url: "/user/checkNick.pet",
+                    type: "POST",
+                    data: {
+                        "uNickName": uNickName
+                    },
+                    success: function(data) {
+                        var result = JSON.parse(data);
+
+                        if (result[0] === "Valid" && result[1] === "Unique") {
+                            $("#duplNickResult").removeClass("error").addClass("success").css("color", "green");;
+                            $("#duplNickResult").text("사용 가능한 닉네임입니다.");
+                        } else if (result[0] === "Valid" && result[1] === "NotUnique") {
+                            $("#duplNickResult").removeClass("success").addClass("error");
+                            $("#duplNickResult").text("중복된 닉네임입니다.");
+                        } else if (result[0] === "Invalid" && result[1] === "Unique") {
+                            $("#duplNickResult").removeClass("success").addClass("error");
+                            $("#duplNickResult").text("닉네임은 한글 문자 5자 이하 또는 영문자 5자 이하여야 합니다.");
+                        }  else {
+                            $("#duplNickResult").text("ajax 오류 관리자 문의 바람");
+                        }
+                    },
+                    error: function() {
+                        alert("ajax 오류, 큰일");
+                    }
+                });
+            });
+        });
+        
+        
+        
+        //비밀번호 유효성 검사
+        $(document).ready(function() {
+            $("#uPw").on("change", function() {
+                var uPw = $("#uPw").val();
+
+                $.ajax({
+                    url: "/user/checkPwVal.pet",
+                    type: "POST",
+                    data: {
+                        "uPw": uPw
+                    },
+                    success: function(data) {
+
+                        if (data === "Valid") {
+                            $("#duplPwResult").removeClass("error").addClass("success").css("color", "green");;
+                            $("#duplPwResult").text("사용 가능한 비밀번호입니다.");
+                        } else if (data === "Invalid") {
+                            $("#duplPwResult").removeClass("success").addClass("error");
+                            $("#duplPwResult").text("비밀번호는 영문과 숫자 조합이어야 하며, 1~10자여야 합니다.");
+                        }   else {
+                            $("#duplPwResult").text("ajax 오류 관리자 문의 바람");
+                        }
+                    },
+                    error: function() {
+                        alert("ajax 오류, 큰일");
+                    }
+                });
+            });
+        });
+        
+        
+      //비밀번호 일치 확인
+        $(document).ready(function() {
+            $("#uPwRe").on("change", function() {
+                var uPwRe = $("#uPwRe").val();
+                var uPw = $("#uPw").val();
+
+                $.ajax({
+                    url: "/user/checkRePw.pet",
+                    type: "POST",
+                    data: {
+                        "uPwRe": uPwRe,
+                        "uPw": uPw
+                    },
+                    success: function(data) {
+
+                        if (data === "success") {
+                            $("#duplPwReResult").removeClass("error").addClass("success").css("color", "green");;
+                            $("#duplPwReResult").text("비밀번호 일치");
+                        } else if (data === "error") {
+                            $("#duplPwReResult").removeClass("success").addClass("error");
+                            $("#duplPwReResult").text("비밀번호가 일치하지 않습니다.");
+                        }   else {
+                            $("#duplPwReResult").text("ajax 오류 관리자 문의 바람");
+                        }
+                    },
+                    error: function() {
+                        alert("ajax 오류, 큰일");
+                    }
+                });
+            });
+        });
+  
+      
+      
+        // 전화번호 유효성 검사
+        $(document).ready(function() {
+            $("#uPhone").on("change", function() {
+                var uPhone = $("#uPhone").val();
+
+                $.ajax({
+                    url: "/user/checkPhone.pet",
+                    type: "POST",
+                    data: {
+                        "uPhone": uPhone
+                    },
+                    success: function(data) {
+
+                        if (data === "Valid") {
+                            $("#duplPhoneResult").removeClass("error").addClass("success").css("color", "green");;
+                            $("#duplPhoneResult").text("사용 가능한 전화번호입니다.");
+                        } else if (data === "Invalid") {
+                            $("#duplPhoneResult").removeClass("success").addClass("error");
+                            $("#duplPhoneResult").text("전화번호는 숫자 11자리여야 합니다.");
+                        }   else {
+                            $("#duplPhoneResult").text("ajax 오류 관리자 문의 바람");
+                        }
+                    },
+                    error: function() {
+                        alert("ajax 오류, 큰일");
+                    }
+                });
+            });
+        });
+        
+            
 	</script>
 </body>
 </html>

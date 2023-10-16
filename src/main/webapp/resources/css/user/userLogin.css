@@ -50,7 +50,7 @@
 	border-radius: 20px;
 }
 
-.btn:hover {
+--.btn:hover {
 	color: #FFD370;
 	text-decoration: none;
 	background-color: #e6e6e6;
@@ -187,20 +187,20 @@ input {
 	outline: none;
 	padding: 10px;
 	font-size: 13px;
-	color: #fff;
+	--color: #fff;
 	/* text-shadow: 1px 1px 1px rgba(0,0,0,0.3); */
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	border-radius: 20px;
 	/* box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2); */
-	-webkit-transition: box-shadow .5s ease;
-	-moz-transition: box-shadow .5s ease;
-	-o-transition: box-shadow .5s ease;
-	-ms-transition: box-shadow .5s ease;
-	transition: box-shadow .5s ease;
+	---webkit-transition: box-shadow .5s ease;
+	---moz-transition: box-shadow .5s ease;
+	---o-transition: box-shadow .5s ease;
+	---ms-transition: box-shadow .5s ease;
+	--transition: box-shadow .5s ease;
 }
 
 input:focus {
-	box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.4), 0 1px 1px
+	--box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.4), 0 1px 1px
 		rgba(255, 255, 255, 0.2);
 }
 
@@ -237,4 +237,17 @@ header {
 
 .contact-info {
 	margin-bottom: 1.5rem;
+}
+#loginBtn:hover {
+  cursor: pointer;
+  background: white !important;
+  color: #FFD370 !important;
+  border: 2px solid #FFD370 !important;
+}
+#btn_3 {
+	line-height: initial;
+    /* padding-bottom: 10px; */
+    padding-top: 4.5px;
+    padding-bottom: 1.5px;
+    font-size: 0.9638em;
 }

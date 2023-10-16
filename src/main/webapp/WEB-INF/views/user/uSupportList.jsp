@@ -96,38 +96,15 @@
 									</tr>
 								</thead>
 								<tbody>
-<%-- 									<c:forEach items="${user }" var="uOne" varStatus="i"> --%>
+									<c:forEach items="${sList }" var="sList" varStatus="i">
 										<tr>
-											<td>user</td>
-											<td>password</td>
-<%-- 											<c:url var="detailUrl" value="/admin/aInfo.pet"> --%>
-<%-- 												<c:param name="userId" value="${uOne.userId }"></c:param> --%>
-<%-- 											</c:url> --%>
-											<td><a href="${detailUrl }">이름</a></td>
-											<td>닉네임</td>
-											<td>가입일</td>
+											<td>${i.count }</td>
+											<td>${sList.sTitle }</td>
+											<td>${sList.sHAmount }</td>
+											<td>${sList.sHPaydate }</td>
+											<td>${sList.sHPaytype }</td>
 										</tr>
-										<tr>
-											<td>user</td>
-											<td>password</td>
-<%-- 											<c:url var="detailUrl" value="/admin/aInfo.pet"> --%>
-<%-- 												<c:param name="userId" value="${uOne.userId }"></c:param> --%>
-<%-- 											</c:url> --%>
-											<td><a href="${detailUrl }">이름</a></td>
-											<td>닉네임</td>
-											<td>가입일</td>
-										</tr>
-										<tr>
-											<td>user</td>
-											<td>password</td>
-<%-- 											<c:url var="detailUrl" value="/admin/aInfo.pet"> --%>
-<%-- 												<c:param name="userId" value="${uOne.userId }"></c:param> --%>
-<%-- 											</c:url> --%>
-											<td><a href="${detailUrl }">이름</a></td>
-											<td>닉네임</td>
-											<td>가입일</td>
-										</tr>
-<%-- 									</c:forEach> --%>
+									</c:forEach>
 								</tbody>
 							</table>
 							<div class="paging" style="margin-top: 50px;">

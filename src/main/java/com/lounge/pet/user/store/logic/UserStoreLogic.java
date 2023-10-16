@@ -1,9 +1,14 @@
 package com.lounge.pet.user.store.logic;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.lounge.pet.board.domain.Board;
+import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.user.domain.User;
+
 import com.lounge.pet.user.store.UserStore;
 
 @Repository
@@ -38,5 +43,21 @@ public class UserStoreLogic implements UserStore{
 		int result = session.update("UserMapper.deleteUser", sessionId);
 		return result;
 	}
+
+	@Override
+	public User userCheckId(SqlSession session, String uId) {
+		User uOne = session.selectOne("UserMapper.userCheckId", uId);
+		return uOne;
+	}
+
+	@Override
+	public User userCheckNick(SqlSession session, String uNickName) {
+		User uOne = session.selectOne("UserMapper.userCheckNick", uNickName);
+		return uOne;
+	}
+
+	
+
+
 
 }

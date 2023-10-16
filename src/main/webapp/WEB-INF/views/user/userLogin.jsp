@@ -29,10 +29,10 @@
 						<input type="text" name="uId" placeholder="Username"
 							required="required" /> <input type="password" name="uPw"
 							placeholder="Password" required="required" />
-						<button type="submit" class="btn btn-primary btn-block btn-large">로그인</button>
+						<button type="submit" id="loginBtn" class="btn btn-primary btn-block btn-large">로그인</button>
 						<div>
 							<button type="button" class="btn_2" onclick="showIdPwFindPage()" style="line-height: initial;">아이디 / 비밀번호 찾기</button>
-							<button type="button" class="btn_3" onclick="showRegisterPage()" style="line-height: initial;">회원가입</button>
+							<button type="button" class="btn_3" id="btn_3" onclick="showRegisterPage()" style="line-height: initial;">회원가입</button>
 						</div>
 					</form>
 				</div>

@@ -228,13 +228,15 @@ button:hover {
   text-decoration: underline;
   box-sizing: border-box;
   border-radius: 20px;
+  CURSOR: POINTER;
 }
 
 #content3 button:hover{
-  background:white;
-  color: #ffd370;
-  border-color: #ffd370;
-  border-radius: 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    background: white;
+    color: #FFD370;
+    border: 2px solid #FFD370;
 }
 
 #content3>:nth-child(2)>:nth-child(1)>:nth-child(2) {
