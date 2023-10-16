@@ -14,8 +14,8 @@
 		<result property="sHType"	 column="S_H_TYPE"/>
 	</resultMap>
 	
-	<insert id="insertSHistory">
-		INSERT INTO S_HISTORY_TBL VALUES(S_SEQ_NO.NEXTVAL, #{sNo}, #{uId}, #{sHName}, #{sHAmount}, DEFAULT, #{sHPayType}, #{sHType}) 
+	<insert id="insertHistory">
+		INSERT INTO S_HISTORY_TBL VALUES(S_SEQ_NO.NEXTVAL, #{sNo}, #{uId}, #{sHName}, #{sHAmount}, DEFAULT, #{sHPaytype}, #{sHType}) 
 	</insert>
 	
 	
@@ -25,6 +25,9 @@
 	</select>
 	<select id="selectSHistoryList" resultMap="SHistoryResultMap">
 		SELECT * FROM S_HISTORY_TBL WHERE S_NO = #{sNo} ORDER BY S_H_NO DESC
+	</select>
+	<select id="getCountSHistory" resultType="_int">
+		SELECT COUNT(*) FROM S_HISTORY_TBL WHERE U_ID = #{uId} AND S_NO = #{sNo}
 	</select>
 	
 

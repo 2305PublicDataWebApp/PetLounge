@@ -1,12 +1,14 @@
 package com.lounge.pet.support.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lounge.pet.support.domain.Support;
+import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.support.service.SupportService;
 import com.lounge.pet.support.store.SupportStore;
@@ -51,18 +53,6 @@ public class SupportServiceImpl implements SupportService{
 	}
 
 	@Override
-	public int getListCount() {
-		int result = sStore.getListCount(sqlSession);
-		return result;
-	}
-
-	@Override
-	public List<Support> selectSupportList() {
-		List<Support> sList = sStore.selectSupportList(sqlSession);
-		return sList;
-	}
-
-	@Override
 	public int insertReply(SupportReply sReply) {
 		int result = sStore.insertReply(sqlSession, sReply);
 		return result;
@@ -89,6 +79,36 @@ public class SupportServiceImpl implements SupportService{
 	@Override
 	public int updateReply(SupportReply sReply) {
 		int result = sStore.updateReply(sqlSession, sReply);
+		return result;
+	}
+
+	@Override
+	public List<Support> selectSupportList(Map<String, String> sMap) {
+		List<Support> searchList = sStore.selectSupportList(sqlSession, sMap);
+		return searchList;
+	}
+	
+	@Override
+	public int getSearchCount(Map<String, String> sMap) {
+		int result = sStore.getSearchCount(sqlSession, sMap);
+		return result;
+	}
+
+	@Override
+	public int insertHistory(SupportHistory sHistory) {
+		int result = sStore.insertHistory(sqlSession, sHistory);
+		return result;
+	}
+
+	@Override
+	public int updateSupportFund(Support sOne) {
+		int result = sStore.updateSupportFund(sqlSession, sOne);
+		return result;
+	}
+
+	@Override
+	public int getCountSHistory(SupportHistory sHistory) {
+		int result = sStore.getCountSHistory(sqlSession, sHistory);
 		return result;
 	}
 

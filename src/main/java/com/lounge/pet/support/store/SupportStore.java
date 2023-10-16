@@ -1,10 +1,12 @@
 package com.lounge.pet.support.store;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.lounge.pet.support.domain.Support;
+import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
 
 public interface SupportStore {
@@ -50,21 +52,6 @@ public interface SupportStore {
 	int deleteSupport(SqlSession sqlSession, int sNo);
 
 	/**
-	 * 후원글 전체 갯수 조회 Store
-	 * @param sqlSession
-	 * @return int
-	 */
-	int getListCount(SqlSession sqlSession);
-
-	/**
-	 * 후원글 전체 조회 Store
-	 * @param sqlSession
-	 * @param pInfo
-	 * @return List
-	 */
-	List<Support> selectSupportList(SqlSession sqlSession);
-
-	/**
 	 * 후원댓글 등록 Store
 	 * @param sqlSession
 	 * @param sReply
@@ -101,6 +88,46 @@ public interface SupportStore {
 	 * @return int
 	 */
 	int updateReply(SqlSession sqlSession, SupportReply sReply);
+
+	/**
+	 * 후원글 카테고리별 조회 Store
+	 * @param sqlSession
+	 * @param keyword
+	 * @return List
+	 */
+	List<Support> selectSupportList(SqlSession sqlSession, Map<String, String> sMap);
+
+	/**
+	 * 후원글 전체 갯수 조회 Store
+	 * @param sqlSession
+	 * @param keyword
+	 * @return int
+	 */
+	int getSearchCount(SqlSession sqlSession, Map<String, String> sMap);
+
+	/**
+	 * 후원 내역 등록 Store
+	 * @param sqlSession
+	 * @param sHistory
+	 * @return int
+	 */
+	int insertHistory(SqlSession sqlSession, SupportHistory sHistory);
+
+	/**
+	 * 후원 금액, 인원 추가 Service 
+	 * @param sqlSession
+	 * @param sOne
+	 * @return int
+	 */
+	int updateSupportFund(SqlSession sqlSession, Support sOne);
+
+	/**
+	 * 후원 내역 확인 Store
+	 * @param sqlSession
+	 * @param sHistory
+	 * @return int
+	 */
+	int getCountSHistory(SqlSession sqlSession, SupportHistory sHistory);
 
 
 }

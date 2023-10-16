@@ -36,16 +36,16 @@
                             <input type="text" name="sHAmountinput" id="s-h-amount-input" 
                             onKeyup="this.value=this.value.replace(/[^-0-9]/g,'');" maxlength="15">
                             원&nbsp;&nbsp;&nbsp;
-                            <input type="hidden" name="sHAmount" id="s-h-amount">
-                            <input type="button" value="+1만원" onclick="addAmount(10000)"> 
-                            <input type="button" value="+5만원" onclick="addAmount(50000)"> 
-                            <input type="button" value="+10만원" onclick="addAmount(100000)"> 
+                            <input type="hidden" name="sHAmount" id="s-h-amount" value="0">
+                            <input type="button" value="+1만원" onclick="addAmount(10000)">
+                            <input type="button" value="+5만원" onclick="addAmount(50000)">
+                            <input type="button" value="+10만원" onclick="addAmount(100000)">
                         </li>
                         <li>
                             <label class="li-label"><b>결제 방법</b></label>
-                            <input type="radio" name="sHPaytype" id="kakaopay">
+                            <input type="radio" name="sHPaytype" id="kakaopay" value="kakaopay">
                             <label for="kakaopay">카카오페이</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="sHPaytype" id="creditcard">
+                            <input type="radio" name="sHPaytype" id="creditcard" value="creditcard">
                             <label for="creditcard">신용카드</label>
                         </li>
                     </ul>
@@ -204,7 +204,7 @@
                 </div>
             </section> 
             <section id="button" style="margin-bottom: 100px;">
-                <button class="btn-payment" onclick="requestPay()">후원 결제</button>
+                <button class="btn-payment" onclick="checkPay()">후원 결제</button>
                 <button class="btn-cancel" onClick="location.href='/support/detail.pet?sNo='+${support.sNo }">돌아가기</button>
             </section>
         </main>
@@ -228,6 +228,7 @@
 		        // 계산된 값을 숨은 필드에도 설정 
 		        $('#s-h-amount').val(newAmount);
 			}
+			
             <!-- 숫자만 사용 가능, 콤마 -->
             document.getElementById("s-h-amount-input").addEventListener("keyup", function (e) {
                 $(this).val($(this).val().replace(/\,/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
@@ -238,6 +239,8 @@
              	// hidden으로 숨겨둔 input에 넣어서 DB로 보낼 수 있게 함 
                 document.getElementById("s-h-amount").value = numericValue;
             });
+            <!-- 결제 기본값 -->
+            $('input[name="sHPaytype"][value="kakaopay"]').prop('checked', true).change();
 			<!-- 후원자 이름 선택 -->
 			// 페이지 로드 시 초기값 설정 (예: 기본값인 'nickname'으로 설정)
 			$('input[name="sHType"][value="nickname"]').prop('checked', true).change();
@@ -245,14 +248,13 @@
 			$('input[name="sHType"]').change(function() {
 			    // 선택된 라디오 버튼의 값 가져오기
 			    var selectedValue = $('input[name="sHType"]:checked').val();
-			    console.log(selectedValue);
 			    // span 요소에 값을 설정
 			    if (selectedValue === 'nickname') {
 			        $('#s-h-name').text('${user.uNickName }');
-			        console.log($('#s-h-name').text());
+// 			        console.log($('#s-h-name').text());
 			    } else if (selectedValue === 'anonymous') {
 			        $('#s-h-name').text('숨은천사');
-			        console.log($('#s-h-name').text());
+// 			        console.log($('#s-h-name').text());
 			    }
 			});
 	
@@ -267,10 +269,38 @@
             var milliseconds = today.getMilliseconds();
             var makeMerchantUid = hours +  minutes + seconds + milliseconds;
             
+            const sNo = ${support.sNo };
+            const uId = '${user.uId }';
+            const sHName = '${user.uNickName }';
+            let sHAmount = 0;
+            let sHType = 'N';
+            if($('#s-h-name').text == '숨은천사') {
+            	sHType = 'A';
+            } 
             
+            <!-- 결제 -->
+            // 결제 처리 
+            function checkPay() {
+				if($('#s-h-amount').val() < 1000) {					
+					// 금액 확인 
+					alert('후원 최소 금액은 1,000원 입니다.');
+				} else if(!$('#agree-term').is(':checked')) {
+					// 필수동의 확인 
+					alert('동의 해주세요');
+				} else {
+	            	// 어떤 라디오 버튼이 선택되었는지 확인
+				    if ($('#kakaopay').is(':checked')) {
+				    	resuestKakaopay();
+				    } else if ($('#creditcard').is(':checked')) {
+				    	requestPay();
+				    } 
+				}
+			}
+            
+	        // 신용카드 결제
             function requestPay() {
                 IMP.request_pay({
-                    pg : 'html5_inicis.INIBillTst', // 이니시스 
+                    pg : 'kcp', // kcp
                     pay_method : 'card',
                     merchant_uid: "PET-"+makeMerchantUid, // 주문 번호 
                     name : $('#s-title').text(), // 상품명 (후원 제목으로 넘김)
@@ -281,18 +311,65 @@
                 }, function (rsp) { // callback
                 	//rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
                     if (rsp.success) {
+                    	sHAmount = parseInt($('#s-h-amount').val(), 10);
+                       	$.ajax({
+                       		url : '/support/payment.pet',
+                       		data : { sNo : sNo, uId : uId, sHName : sHName, sHAmount : sHAmount, sHPaytype : 'creditcard', sHType : sHType }, 
+                       		type : 'post',
+                       		success : function(result) {
+                       			sessionStorage.setItem("sHAmount", sHAmount);
+                    			sessionStorage.setItem("sHPaytype", "creditcard");
+                       			const url = '/support/complete.pet';
+                       			location.href = url;
+                       		}, 
+                       		error : function() {
+                       			alert("Ajax 오류! 관리자에게 문의하세요.");
+                       		} 
+                       	})
+                    	
                         console.log(rsp);
-                        var msg = '결제가 완료되었습니다.';
-    			        msg += '고유ID : ' + rsp.imp_uid;
-    			        msg += '상점 거래ID : ' + rsp.merchant_uid;
-    			        msg += '결제 금액 : ' + rsp.paid_amount;
-    			        msg += '카드 승인번호 : ' + rsp.apply_num;
-    			        result ='0';
                     } else {
                         console.log(rsp);
-                        var msg = '결제에 실패하였습니다.';
-    			        msg += '에러내용 : ' + rsp.error_msg;
-    			        result ='1';
+                    }
+                });
+            }
+            
+            // 카카오페이 결제
+            function resuestKakaopay() {
+            	IMP.request_pay({
+                    pg : 'kakaopay.TC0ONETIME', // 카카오페이
+                    merchant_uid: "PET-"+makeMerchantUid, // 주문 번호 
+                    name : $('#s-title').text(), // 상품명 (후원 제목으로 넘김)
+                    amount : parseInt($('#s-h-amount').val(), 10),	 // 금액, 숫자 타입 
+                    buyer_email : $('#u-email').val(), // 구매자 이메일 
+                    buyer_name : $('#u-name').val(), // 구매자 이름 
+                    buyer_tel : $('#u-phone').text() // 구매자 연락처 
+                }, function (rsp) { // callback
+                	//rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+                    if (rsp.success) {
+                        console.log("1:" + rsp);
+                        console.log('sNo:' + sNo);
+                        console.log('uId:' + uId);
+                        console.log('sHName:' + sHName);
+                        console.log('sHType:' + sHType);
+                        sHAmount = parseInt($('#s-h-amount').val(), 10);
+                        console.log('sHAmount:' + sHAmount);
+                    	$.ajax({
+                    		url : '/support/payment.pet',
+                    		data : { sNo : sNo, uId : uId, sHName : sHName, sHAmount : sHAmount, sHPaytype : 'kakaopay', sHType : sHType }, 
+                    		type : 'post',
+                    		success : function(result) {
+                    			sessionStorage.setItem("sHAmount", sHAmount);
+                    			sessionStorage.setItem("sHPaytype", "kakaopay");
+                    			const url = '/support/complete.pet';
+                    			location.href = url;
+                    		}, 
+                    		error : function() {
+                    			alert("Ajax 오류! 관리자에게 문의하세요.");
+                    		} 
+                    	});
+                    } else {
+                        console.log("2:" + rsp);
                     }
                 });
             }

@@ -23,7 +23,14 @@
             <section id="content">
                 <div id="content-left">
                     <div class="content-left-top">
-                        <span style="margin-right:20px; width: 95px;"><h3 class="h3" style="color: #FFD370;">[ ${support.sCategory } ]</h3></span>
+                        <span style="margin-right:20px; width: 95px;">
+                        	<h3 class="h3" style="color: #FFD370;">
+                        		<c:if test="${support.sCategory == 'residence' }">[ 주거 ]</c:if>
+                        		<c:if test="${support.sCategory == 'living' }">[ 생계 ]</c:if>
+                        		<c:if test="${support.sCategory == 'health' }">[ 건강 ]</c:if>
+                        		<c:if test="${support.sCategory == 'improvement' }">[ 개선 ]</c:if>
+                        	</h3>
+                       	</span>
                         <span><h3 class="h3">${support.sTitle }</h3></span>
                     </div>
                     <div class="s-content">
@@ -44,10 +51,12 @@
                         <!-- 댓글탭 -->
                         <div id="reply-tabpanel" style="display: block;">
                             <!-- 등록 -->
+                            <c:if test="${sHistoryCount != 0 }">
                             <div id="reply-create-div">
 	                            <textarea name="sRContent" id="reply-create-content" placeholder="응원의 댓글을 남겨주세요."></textarea>
 	                            <input type="submit" value="등록" id="reply-create-btn">
                             </div>
+                            </c:if>
                             <!-- 댓글 리스트 -->
                             <div id="reply-list-div">
                                 <table id="replyTable">
@@ -329,7 +338,7 @@
 					            createPagination(resultMap.totalPages);
 							}
 						} else {
-							tr = $("<tr class='td'><td class='td'colspan='3'style='width:725px;'><div width='100%'>등록된 댓글이 없습니다.</div></td></tr>");
+							tr = $("<tr class='td'><td class='td'colspan='3'style='width:725px;'><div width='100%' style='color: lightgray;'>등록된 댓글이 없습니다.</div></td></tr>");
 							tableBody.append(tr);
 						}
 					},

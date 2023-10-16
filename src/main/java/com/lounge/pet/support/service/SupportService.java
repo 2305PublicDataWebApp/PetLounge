@@ -1,8 +1,10 @@
 package com.lounge.pet.support.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.lounge.pet.support.domain.Support;
+import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
 
 public interface SupportService {
@@ -43,19 +45,6 @@ public interface SupportService {
 	int deleteSupport(int sNo);
 
 	/**
-	 * 후원글 전체 갯수 조회 Service
-	 * @return int
-	 */
-	int getListCount();
-
-	/**
-	 * 후원글 전체 조회 Service
-	 * @param pInfo
-	 * @return List
-	 */
-	List<Support> selectSupportList();
-
-	/**
 	 * 후원댓글 등록 Service
 	 * @param sReply
 	 * @return int
@@ -88,5 +77,42 @@ public interface SupportService {
 	 * @return int
 	 */
 	int updateReply(SupportReply sReply);
+
+	/**
+	 * 후원글 카테고리별 조회 Service
+	 * @param keyword
+	 * @return List 
+	 */
+	List<Support> selectSupportList(Map<String, String> sMap);
+
+	/**
+	 * 후원글 검색 갯수 조회 Service
+	 * @param keyword
+	 * @return
+	 */
+	int getSearchCount(Map<String, String> sMap);
+
+	/**
+	 * 후원 내역 등록 Service
+	 * @param sHistory
+	 * @return int
+	 */
+	int insertHistory(SupportHistory sHistory);
+
+	/**
+	 * 후원 금액, 인원 추가 Service 
+	 * @param sOne
+	 * @return int 
+	 */
+	int updateSupportFund(Support sOne);
+
+	/** 
+	 * 후원 내역 확인 Service
+	 * @param sHistory
+	 * @return int
+	 */
+	int getCountSHistory(SupportHistory sHistory);
+
+	
 
 }

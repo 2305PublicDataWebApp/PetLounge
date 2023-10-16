@@ -25,11 +25,11 @@
                     <ul>
                         <li>
                             <label class="li-label"><b>후원 금액</b></label>
-                            <p>100,000원</p>
+                            <p id="s-h-amount"></p>
                         </li>
                         <li>
                             <label class="li-label"><b>결제 방법</b></label>
-                            <p>카카오페이</p>
+                            <p id="s-h-paytype"></p>
                         </li>
                     </ul>
                 </div>
@@ -43,7 +43,24 @@
 		
 		<jsp:include page="../include/footer.jsp"></jsp:include>
 		<script>
-            <!-- 준비 -->
+            <!-- 정보 받아오기 -->
+            const sHAmount = sessionStorage.getItem("sHAmount");
+            const sHPaytype = sessionStorage.getItem("sHPaytype");
+            <!-- 천단위 끊기 -->
+            function addCommasToNumber(number) {
+                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+         	// sHAmount에 천 단위 콤마 추가
+            const formattedAmount = addCommasToNumber(sHAmount);
+            console.log(sHAmount);
+            console.log(sHPaytype);
+            $('#s-h-amount').html(formattedAmount+' 원');
+            if(sHPaytype == 'creditcard') {
+	            $('#s-h-paytype').html('신용카드');
+            } else {
+            	$('#s-h-paytype').html('카카오페이');
+            }
+            
         </script>
 	</body>
 </html>

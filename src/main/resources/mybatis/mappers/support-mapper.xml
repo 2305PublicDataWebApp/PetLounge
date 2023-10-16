@@ -34,16 +34,62 @@
 		WHERE S_NO = #{sNo}
 	</select>
 	
-	<select id="getTotalCount" resultType="_int">
+
+	<select id="getSearchCount" resultType="_int">
 		SELECT COUNT(*) FROM SUPPORT_TBL 
-		WHERE S_STATUS = 'Y'
+		<if test="category != 'all'">
+		WHERE S_STATUS = 'Y' AND S_CATEGORY = #{category}
+		</if>
+		<if test="category == 'all'">
+		WHERE S_STATUS = 'Y' 
+		</if>
 	</select>
+	
 	<select id="selectSupportList" resultType="Support">
 		SELECT * FROM SUPPORT_TBL 
-		WHERE S_STATUS = 'Y' ORDER BY S_NO DESC
+		<if test="category != 'all'">
+		WHERE S_STATUS = 'Y' AND S_CATEGORY = #{category}
+			<if test="sort == 'latest'">
+				ORDER BY S_NO DESC
+			</if>
+			<if test="sort == 'mostFunded'">
+				ORDER BY S_FUND_AMOUNT DESC
+			</if>
+			<if test="sort == 'leastFunded'">
+				ORDER BY S_FUND_AMOUNT
+			</if>
+			<if test="sort == 'highestFunded'">
+				ORDER BY (S_FUND_AMOUNT/S_TARGET_AMOUNT) DESC
+			</if>
+			<if test="sort == 'endingSoonest'">
+				ORDER BY (S_END - SYSDATE)
+			</if>
+		</if>
+		<if test="category == 'all'">
+		WHERE S_STATUS = 'Y' 
+			<if test="sort == 'latest'">
+				ORDER BY S_NO DESC
+			</if>
+			<if test="sort == 'mostFunded'">
+				ORDER BY S_FUND_AMOUNT DESC
+			</if>
+			<if test="sort == 'leastFunded'">
+				ORDER BY S_FUND_AMOUNT
+			</if>
+			<if test="sort == 'highestFunded'">
+				ORDER BY (S_FUND_AMOUNT/S_TARGET_AMOUNT) DESC
+			</if>
+			<if test="sort == 'endingSoonest'">
+				ORDER BY (S_END - SYSDATE)
+			</if>
+		</if>
 	</select>
 	
-	
+	<update id="updateSupportFund">
+		UPDATE SUPPORT_TBL 
+		SET S_FUND_AMOUNT = S_FUND_AMOUNT + #{sFundAmount}, S_COUNT = S_COUNT + 1
+		WHERE S_NO = #{sNo} 
+	</update>
 	
 	
 	

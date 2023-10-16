@@ -62,10 +62,10 @@
 	                        <div class="input">
 	                            <select name="sCategory" id="s-category" class="no-border">
 	                                <option value="none" style="color:#ccc;" selected disabled>카테고리를 선택해주세요.</option>
-	                                <option value="주거" <c:if test="${support.sCategory == '주거' }">selected</c:if>>주거</option>
-	                                <option value="생계" <c:if test="${support.sCategory == '생계' }">selected</c:if>>생계</option>
-	                                <option value="건강" <c:if test="${support.sCategory == '건강' }">selected</c:if>>건강</option>
-	                                <option value="개선" <c:if test="${support.sCategory == '개선' }">selected</c:if>>개선</option>
+	                                <option value="주거" <c:if test="${support.sCategory == 'residence' }">selected</c:if>>주거</option>
+	                                <option value="생계" <c:if test="${support.sCategory == 'living' }">selected</c:if>>생계</option>
+	                                <option value="건강" <c:if test="${support.sCategory == 'health' }">selected</c:if>>건강</option>
+	                                <option value="개선" <c:if test="${support.sCategory == 'improvement' }">selected</c:if>>개선</option>
 	                            </select> 
 	                        </div>
 	                        <div class="input">

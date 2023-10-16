@@ -1,11 +1,13 @@
 package com.lounge.pet.support.store.logic;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.lounge.pet.support.domain.Support;
+import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.support.store.SupportStore;
 
@@ -43,18 +45,6 @@ public class SupportStoreLogic implements SupportStore{
 	}
 
 	@Override
-	public int getListCount(SqlSession sqlSession) {
-		int result = sqlSession.selectOne("SupportMapper.getTotalCount");
-		return result;
-	}
-
-	@Override
-	public List<Support> selectSupportList(SqlSession sqlSession) {
-		List<Support> sList = sqlSession.selectList("SupportMapper.selectSupportList");
-		return sList;
-	}
-
-	@Override
 	public int insertReply(SqlSession sqlSession, SupportReply sReply) {
 		int result = sqlSession.insert("SReplyMapper.insertReply", sReply);
 		return result;
@@ -81,6 +71,36 @@ public class SupportStoreLogic implements SupportStore{
 	@Override
 	public int updateReply(SqlSession sqlSession, SupportReply sReply) {
 		int result = sqlSession.delete("SReplyMapper.updateReply", sReply);
+		return result;
+	}
+
+	@Override
+	public List<Support> selectSupportList(SqlSession sqlSession, Map<String, String> sMap) {
+		List<Support> searchList = sqlSession.selectList("SupportMapper.selectSupportList", sMap);
+		return searchList;
+	}
+
+	@Override
+	public int getSearchCount(SqlSession sqlSession, Map<String, String> sMap) {
+		int result = sqlSession.selectOne("SupportMapper.getSearchCount", sMap);
+		return result;
+	}
+
+	@Override
+	public int insertHistory(SqlSession sqlSession, SupportHistory sHistory) {
+		int result = sqlSession.insert("SHistoryMapper.insertHistory", sHistory);
+		return result;
+	}
+
+	@Override
+	public int updateSupportFund(SqlSession sqlSession, Support sOne) {
+		int result = sqlSession.update("SupportMapper.updateSupportFund", sOne);
+		return result;
+	}
+
+	@Override
+	public int getCountSHistory(SqlSession sqlSession, SupportHistory sHistory) {
+		int result = sqlSession.selectOne("SHistoryMapper.getCountSHistory", sHistory);
 		return result;
 	}
 

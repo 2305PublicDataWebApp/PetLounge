@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.lounge.pet.support.domain.Support;
+import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.support.service.SupportService;
 import com.lounge.pet.user.domain.User;
@@ -56,55 +57,78 @@ public class SupportController {
 		return mv;
 	}
 	
-	// 게시글 목록 조회 
+	
+	// 게시글 목록 조회( 카테고리, 정렬 ) 
 	@ResponseBody
 	@RequestMapping(value = "/support/sList.pet"
-					, produces = "application/json; charset=utf-8"
-					, method = RequestMethod.GET)
-	public String showSupportList(Integer currentPage, Integer recordCountPerPage) {
+	, produces = "application/json; charset=utf-8"
+	, method = RequestMethod.GET)
+	public String showSupportList(Integer currentPage, Integer recordCountPerPage, String category, String sort) {
+		
+		System.out.println(currentPage + ", dlskjf:" + recordCountPerPage  + ", sort :" + sort);
+		if (category == null || category.isEmpty()) {
+			category = "all"; // 기본값으로 전체 카테고리 설정
+		}
+		if(sort == null || sort.isEmpty()) { // 기본값으로 최신순 정렬 설정
+			sort = "latest";
+		}
+		
 		// currentPage와 recordCountPerPage를 이용하여 페이징 처리
 		// 페이징을 적용하여 댓글 데이터를 가져오도록 구현 
-	    int start = (currentPage - 1) * recordCountPerPage;
-	    int end = start + recordCountPerPage;
-	    
-        
-	    // 전체 후원글 리스트 불러옴 
-	    List<Support> sList = sService.selectSupportList();
-	    
-	    // 범위 체크를 통해 부분 리스트 추출
-	    if (start < sList.size()) {
-	        end = Math.min(end, sList.size());
-	     // 범위에 해당하는 부분 리스트를 추출하여 sList에 대입
-	        sList  = sList.subList(start, end);
-	    } else {
-	    	sList  = Collections.emptyList();
-	    }
+		int start = (currentPage - 1) * recordCountPerPage;
+		int end = start + recordCountPerPage;
+		System.out.println(category + sort);
+		
+		Map<String, String> sMap = new HashMap();
+		sMap.put("category", category);
+		sMap.put("sort", sort);
+		
+		// 카테고리별 후원글 리스트 불러옴 
+		List<Support> searchList = sService.selectSupportList(sMap);
+		
+		// 범위 체크를 통해 부분 리스트 추출
+		if (start < searchList.size()) {
+			end = Math.min(end, searchList.size());
+			// 범위에 해당하는 부분 리스트를 추출하여 sList에 대입
+			searchList  = searchList.subList(start, end);
+		} else {
+			searchList  = Collections.emptyList();
+		}
 		
 		// 전체 페이지 수 계산 (후원글의 총 갯수를 페이지당 글 갯수로 나눠서 계산) 
-	    int totalRecords = sService.getListCount(); // 후원글의 총 갯수 
-	    int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 전체 페이지 수 
-
-	    
-	    System.out.println("currentPage: " + currentPage + ", recordCountPerPage: " + recordCountPerPage);
-	    System.out.println("sList size: " + sList.size() + ", totalRecords: " + totalRecords + ", totalPages: " + totalPages);
-	    
-	    
-	    // 후원글 리스트와 전체 페이지 수를 Map에 담아서 보냄 
-	    Map<String, Object> resultMap = new HashMap<>();
-	    resultMap.put("sList", sList);
-	    resultMap.put("totalPages", totalPages);
-	    
+		int totalSearchRecords = sService.getSearchCount(sMap); // 카테고리별 후원글의 총 갯수 
+		int totalSearchPages = (int) Math.ceil((double) totalSearchRecords / recordCountPerPage); // 전체 페이지 수 
+		
+		
+		System.out.println("currentPage: " + currentPage + ", recordCountPerPage: " + recordCountPerPage);
+		System.out.println("searchList size: " + searchList.size() + ", totalSearchRecords: " + totalSearchRecords + ", totalSearchPages: " + totalSearchPages);
+		
+		
+		// 후원글 리스트와 전체 페이지 수를 Map에 담아서 보냄 
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("searchList", searchList);
+		resultMap.put("totalSearchPages", totalSearchPages);
+		
 		Gson gson = new Gson();
 		return gson.toJson(resultMap);
 	}
 	
+	
 	// 후원 상세 페이지
 	@RequestMapping(value="/support/detail.pet", method = RequestMethod.GET)
 	public ModelAndView supportDetailPage(ModelAndView mv
-			, @RequestParam("sNo") int sNo) {
+			, @RequestParam("sNo") int sNo
+			, HttpSession session) {
 		try { 
 			Support support = sService.selectSupportByNo(sNo);
+			// session의 id와 sNo를 넘겨서 후원 내역을 불러오고 존재하면 상세 페이지로 넘겨서 댓글 등록창 보이도록 하기 
+			String uId = (String)session.getAttribute("uId");
+			SupportHistory sHistory = new SupportHistory();
+			sHistory.setuId(uId);
+			sHistory.setsNo(sNo);
+			int sHistoryCount = sService.getCountSHistory(sHistory);
 			if(support != null) {
+				mv.addObject("sHistoryCount", sHistoryCount);
 				mv.addObject("support", support);
 				mv.setViewName("/support/supportDetail");
 			} else {
@@ -120,6 +144,8 @@ public class SupportController {
 		}
 		return mv;
 	}
+	
+	
 	
 	// 후원 수정 페이지
 	@RequestMapping(value="/support/update.pet", method = RequestMethod.GET)
@@ -164,7 +190,7 @@ public class SupportController {
 					mv.setViewName("common/message");
 				}				
 			} else {
-				mv.addObject("msg", "후원은 로그인한 회원만 가능합니다.");
+				mv.addObject("msg", "로그인이 필요한 서비스입니다.");
 				mv.addObject("url", "/support/detail.pet?sNo="+sNo);
 				mv.setViewName("common/message");
 			}
@@ -176,6 +202,30 @@ public class SupportController {
 		}
 		return mv;
 		
+	}
+	
+	
+	
+	// 후원 결제하고 내역 전송 
+	@ResponseBody
+	@RequestMapping(value = "/support/payment.pet", method = RequestMethod.POST)
+	public String insertSupportHistory(ModelAndView mv
+				, @ModelAttribute SupportHistory sHistory) {
+		int result1 = sService.insertHistory(sHistory);
+		if(result1 > 0) {
+			Support sOne = new Support();
+			sOne.setsNo(sHistory.getsNo());
+			sOne.setsFundAmount(sHistory.getsHAmount());
+			System.out.println("글번호 : " + sOne.getsNo() + ", 금액 : " + sOne.getsFundAmount());
+			int result2 = sService.updateSupportFund(sOne);
+			if(result2 > 0) {
+				return "success";
+			} else {
+				return "fail";
+			}
+		} else {
+			return "fail";
+		}
 	}
 	
 	// 후원 결제완료 페이지
