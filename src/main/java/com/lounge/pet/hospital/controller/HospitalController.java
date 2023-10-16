@@ -64,25 +64,25 @@ public class HospitalController {
 		return mv;
 	}
 	
-	// 메인페이지에서 검색했을 때, 동물병원 안내 페이지에 검색 결과 반영
-//	@PostMapping("/hospital/page.pet")
-//	public ModelAndView hospitalPageFromMain(@RequestParam("hSearchKeyword") String hSearchKeyword
-//											, HttpSession session
-//											, ModelAndView mv) {
-//		try {
-//			String sessionId = (String) session.getAttribute("uId");
-//			
-//			if(sessionId != null) {
-//				User user = uService.selectOneById(sessionId);
-//				mv.addObject("user", user);
-//			}
-//			mv.addObject("hSearchKeyword", hSearchKeyword);
-//			mv.setViewName("/hospital/hospitalPage");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return mv;
-//	}
+//	 메인페이지에서 검색했을 때, 동물병원 안내 페이지에 검색 결과 반영
+	@GetMapping("/hospital/searchFromMain.pet")
+	public ModelAndView hospitalPageFromMain(@RequestParam("hSearchKeyword") String hSearchKeyword
+											, HttpSession session
+											, ModelAndView mv) {
+		try {
+			String sessionId = (String) session.getAttribute("uId");
+			
+			if(sessionId != null) {
+				User user = uService.selectOneById(sessionId);
+				mv.addObject("user", user);
+			}
+			mv.addObject("hSearchKeyword", hSearchKeyword);
+			mv.setViewName("/hospital/hospitalPage");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mv;
+	}
 	
 	// 동물병원 리스트 가져오기
 	@ResponseBody
