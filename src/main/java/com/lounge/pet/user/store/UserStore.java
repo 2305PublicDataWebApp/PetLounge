@@ -1,8 +1,13 @@
 package com.lounge.pet.user.store;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
+import com.lounge.pet.board.domain.Board;
+import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.user.domain.User;
+
 
 public interface UserStore {
 
@@ -45,5 +50,24 @@ public interface UserStore {
 	 * @return
 	 */
 	int deleteUser(SqlSession session, String sessionId);
+
+	/**
+	 * 아이디 중복체크
+	 * @param session
+	 * @param uId
+	 * @return
+	 */
+	User userCheckId(SqlSession session, String uId);
+
+	/**
+	 * 닉네임 중복체크
+	 * @param session
+	 * @param uNickName
+	 * @return
+	 */
+	User userCheckNick(SqlSession session, String uNickName);
+
+	
+
 
 }

@@ -1,6 +1,11 @@
 package com.lounge.pet.user.service;
 
+import java.util.List;
+
+import com.lounge.pet.board.domain.Board;
+import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.user.domain.User;
+
 
 public interface UserService {
 
@@ -39,4 +44,21 @@ public interface UserService {
 	 */
 	int deleteUser(String sessionId);
 
+	/**
+	 * 아이디 중복체크
+	 * @param uId
+	 * @return
+	 */
+	User userCheckId(String uId);
+
+	/**
+	 * 닉네임 중복체크
+	 * @param uNickName
+	 * @return
+	 */
+	User userCheckNick(String uNickName);
+
+	
+
+	
 }
