@@ -103,7 +103,7 @@
 									<option value="all">전체</option>
 									<option value="no">글번호</option>
 									<option value="title">제목</option>
-									<option value="date">작성일</option>
+<!-- 									<option value="date">작성일</option> -->
 								</select>
 		                    <input type="text" name="searchKeyword" id="search" class="search-input" style="margin-right : 5px;">
 		                    <input type="submit" class="search-button" value="검색">
@@ -124,7 +124,7 @@
 									<option value="all" <c:if test="${searchCondition == 'all' 		}"	>selected</c:if>>전체</option>
 									<option value="no" <c:if test="${searchCondition == 'no' 		}"	>selected</c:if>>글번호</option>
 									<option value="title" <c:if test="${searchCondition == 'title' 		}"	>selected</c:if>>제목</option>
-									<option value="date" <c:if test="${searchCondition == 'date' 		}"	>selected</c:if>>작성일</option>
+<%-- 									<option value="date" <c:if test="${searchCondition == 'date' 		}"	>selected</c:if>>작성일</option> --%>
 								</select>
 		                    <input type="text" name="searchKeyword" id="search" class="search-input" style="margin-right : 5px;">
 		                    <input type="submit" class="search-button" value="검색">

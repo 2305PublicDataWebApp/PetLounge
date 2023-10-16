@@ -81,7 +81,7 @@ public class NoticeController {
 	 */
 	@RequestMapping(value="/notice_list.pet", method=RequestMethod.GET)
 	public ModelAndView showNoticeList(ModelAndView mv
-			, @RequestParam(value="page", required=false, defaultValue="1") Integer currentPage) {
+			, @RequestParam(value="page", required=false, defaultValue="1") int currentPage) {
 		try {
 			int totalCount = nService.getListCount2();
 			PageInfo pInfo = this.getPageInfo(currentPage, totalCount);
@@ -166,7 +166,7 @@ public class NoticeController {
 		}
 		
 		return mv;
-	}	
+	}		
 	
 	
 	/**
@@ -209,7 +209,12 @@ public class NoticeController {
 		return mv;
 	}
 	
-	
+	/**
+	 * 공지 수정 표시
+	 * @param mv
+	 * @param nNo
+	 * @return
+	 */
 	@RequestMapping(value="/notice_update.pet", method = RequestMethod.GET)
 	public ModelAndView updateNoticePage(ModelAndView mv
 //			, @RequestParam("nNo") int nNo) {
@@ -227,7 +232,15 @@ public class NoticeController {
 		return mv;
 	}
 	
-	
+	/**
+	 * 공지글 수정 
+	 * @param mv
+	 * @param notice
+	 * @param uploadFile
+	 * @param session
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value="/notice_update.pet", method = RequestMethod.POST)
 	public ModelAndView updateNotice(ModelAndView mv
 			,@ModelAttribute Notice notice

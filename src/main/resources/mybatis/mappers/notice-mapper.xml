@@ -28,7 +28,10 @@
 	<select id="searchByKeyword" resultType="Notice">
 		SELECT * FROM NOTICE_TBL
 		<if test="searchCondition == 'all'"> 
-			WHERE N_TITLE LIKE '%'||#{searchKeyword }||'%' AND N_STATUS = 'Y'
+			WHERE 
+				(N_TITLE LIKE '%'||#{searchKeyword }||'%' AND N_STATUS = 'Y')
+				OR
+				(N_NO = #{searchKeyword})
 		</if>
 		<if test="searchCondition == 'no'">
 			WHERE N_NO = #{searchKeyword}
@@ -36,9 +39,9 @@
 		<if test="searchCondition == 'title'">
 			WHERE N_TITLE LIKE '%'||#{searchKeyword}||'%' AND N_STATUS = 'Y'
 		</if> 
-		<if test="searchCondition == 'date'">
-			WHERE TO_CHAR(N_CREATE, 'YYYY.MM.DD') LIKE '%' || #{searchKeyword} || '%'
-		</if>  
+<!-- 		<if test="searchCondition == 'date'"> -->
+<!-- 			WHERE TO_CHAR(N_CREATE, 'YYYY.MM.DD') LIKE '%' || #{searchKeyword} || '%' -->
+<!-- 		</if>   -->
 	</select>
 	
 	<insert id="submitNoticeForm">
