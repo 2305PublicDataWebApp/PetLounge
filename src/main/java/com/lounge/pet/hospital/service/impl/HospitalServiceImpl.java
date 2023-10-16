@@ -33,6 +33,12 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
+	public int updateHosReview(HReview hReview) {
+		int result = hStore.updateHosReview(session, hReview);
+		return result;
+	}
+
+	@Override
 	public int updateXYtoLatLng(Hospital hosLocation) {
 		int result = hStore.updateXYtoLatLng(session, hosLocation);
 		return result;
@@ -45,15 +51,27 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
+	public int deleteHosReview(HReview hReview) {
+		int result = hStore.deleteHosReview(session, hReview);
+		return result;
+	}
+
+	@Override
 	public Hospital selectOneByhNo(int hNo) {
 		Hospital hOne = hStore.selectOneByhNo(session, hNo);
 		return hOne;
 	}
 
 	@Override
-	public HBookmark selectHBook(HBookmark userBook) {
-		HBookmark hBOne = hStore.selectHBook(session, userBook);
+	public int selectHBook(HBookmark userBook) {
+		int hBOne = hStore.selectHBook(session, userBook);
 		return hBOne;
+	}
+
+	@Override
+	public List<HReview> selectHReviewList(int hNo) {
+		List<HReview> hRList = hStore.selectHReviewList(session, hNo);
+		return hRList;
 	}
 
 	@Override
@@ -72,6 +90,12 @@ public class HospitalServiceImpl implements HospitalService {
 	public List<Hospital> selectAllList() {
 		List<Hospital> hList = hStore.selectAllList(session);
 		return hList;
+	}
+
+	@Override
+	public int getHReviewTotalCount(int hNo) {
+		int count = hStore.getHReviewTotalCount(session, hNo);
+		return count;
 	}
 
 }

@@ -1,15 +1,17 @@
 package com.lounge.pet.hospital.domain;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class HReview {
 	private int hRNo;
 	private int hNo;
 	private String uId;
 	private String hRContent;
-	private Date hRCreate;
-	private Date hRUpdate;
+	private Timestamp hRCreate;
+	private Timestamp hRUpdate;
 	private String hRStatus;
+	private String hRNickName;
+	private String hRProfileImg;
 	
 	public int gethRNo() {
 		return hRNo;
@@ -35,16 +37,16 @@ public class HReview {
 	public void sethRContent(String hRContent) {
 		this.hRContent = hRContent;
 	}
-	public Date gethRCreate() {
+	public Timestamp gethRCreate() {
 		return hRCreate;
 	}
-	public void sethRCreate(Date hRCreate) {
+	public void sethRCreate(Timestamp hRCreate) {
 		this.hRCreate = hRCreate;
 	}
-	public Date gethRUpdate() {
+	public Timestamp gethRUpdate() {
 		return hRUpdate;
 	}
-	public void sethRUpdate(Date hRUpdate) {
+	public void sethRUpdate(Timestamp hRUpdate) {
 		this.hRUpdate = hRUpdate;
 	}
 	public String gethRStatus() {
@@ -52,6 +54,18 @@ public class HReview {
 	}
 	public void sethRStatus(String hRStatus) {
 		this.hRStatus = hRStatus;
+	}
+	public String gethRNickName() {
+		return hRNickName;
+	}
+	public void sethRNickName(String hRNickName) {
+		this.hRNickName = hRNickName;
+	}
+	public String gethRProfileImg() {
+		return hRProfileImg;
+	}
+	public void sethRProfileImg(String hRProfileImg) {
+		this.hRProfileImg = hRProfileImg;
 	}
 	
 	@Override

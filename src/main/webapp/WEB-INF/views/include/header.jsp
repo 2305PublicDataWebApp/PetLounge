@@ -48,11 +48,18 @@
             <c:if test="${ sessionScope.uId ne null }">
 	            <ul class="navbar-nav ml-auto">
 	                <li class="nav-item">
-	                    <a class="nav-link" href="/user/logout.pet;">로그아웃</a>
+	                    <a class="nav-link" href="/user/logout.pet">로그아웃</a>
 	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link" href="/user/userInfo.pet">마이페이지</a>
-	                </li>
+	                <c:if test="${ sessionScope.uId eq 'admin' }">
+		                <li class="nav-item">
+		                    <a class="nav-link" href="/admin/main_board.pet">관리자페이지</a>
+		                </li>
+	                </c:if>
+	                <c:if test="${ sessionScope.uId ne 'admin' }">
+		                <li class="nav-item">
+		                    <a class="nav-link" href="/user/userInfo.pet">마이페이지</a>
+		                </li>
+	                </c:if>
 	            </ul>            
             </c:if>
         </div>
@@ -167,7 +174,6 @@
     		|| currentPath === '/support/payment.pet' || currentPath === '/support/complete.pet') {
         document.getElementById('supportLink').classList.add('active');
     } else {
-        // 다른 경우
         document.getElementById('supportLink').classList.remove('active');
     }
     

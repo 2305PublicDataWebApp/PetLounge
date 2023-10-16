@@ -21,6 +21,7 @@
 		 WHERE H_R_NO = #{ hRNo }
 	</update>
 	
+	<!-- Y, N을 UPDATE 하는 것으로 DELETE 기능을 대신함 -->
 	<update id="deleteHosReview">
 		UPDATE H_REVIEW_TBL 
 		   SET H_R_UPDATE = DEFAULT, H_R_STATUS = 'N' 
@@ -34,9 +35,9 @@
 	</update>
 	
 	<delete id="deleteHBook">
-		DELETE FORM H_BOOKMARK_TBL
-		 WHERE U_ID = ${ uId }
-		   AND H_NO = ${ hNo }
+		DELETE FROM H_BOOKMARK_TBL
+		 WHERE U_ID = #{ uId }
+		   AND H_NO = #{ hNo }
 	</delete>
 	
 	<select id="selectOneByhNo" resultType="Hospital">
@@ -45,11 +46,19 @@
 		 WHERE H_NO = #{ hNo }  
 	</select>
 	
-	<select id="selectHBook" resultType="HBookmark">
-		SELECT *
+	<select id="selectHBook" resultType="_int">
+		SELECT COUNT(*)
 		  FROM H_BOOKMARK_TBL
- 		 WHERE U_ID = ${ uId }
-		   AND H_NO = ${ hNo }
+ 		 WHERE U_ID = #{ uId }
+		   AND H_NO = #{ hNo }
+	</select>
+	
+	<select id="selectHReviewList" resultType="HReview">
+		SELECT * 
+	      FROM H_REVIEW_TBL 
+		 WHERE H_NO = #{ hNo }
+		   AND H_R_STATUS = 'Y' 
+		 ORDER BY H_R_NO DESC
 	</select>
 	
 	<select id="selectFiveHos" resultType="Hospital">
@@ -57,14 +66,18 @@
 			SELECT *
 			FROM (
 			    SELECT
-			        HOSPITAL_TBL.*
+			        H.*
 			        , (6371.0 * ACOS(  
 			          COS( ( #{ hLat } / 57.29577951308232087679815481410517033235 ) ) * COS( ( H_LAT / 57.29577951308232087679815481410517033235 ) )
 			          * COS( ( H_LNG / 57.29577951308232087679815481410517033235 ) - ( #{ hLng } / 57.29577951308232087679815481410517033235 ) )
 			          +
 			          SIN( ( #{ hLat } / 57.29577951308232087679815481410517033235 ) ) * SIN( ( H_LAT / 57.29577951308232087679815481410517033235 ) )        
 			         )) AS distance
-			    FROM HOSPITAL_TBL
+			         , (SELECT HB.H_NO 
+			              FROM H_BOOKMARK_TBL HB
+			             WHERE HB.U_ID = #{ uId }
+			               AND H.H_NO = HB.H_NO) AS hBookmark
+			    FROM HOSPITAL_TBL H
 			    WHERE H_STATUS = '정상'
 			    AND H_X IS NOT NULL
 			    ORDER BY distance
@@ -78,14 +91,18 @@
 			SELECT *
 			FROM (
 			    SELECT
-			        HOSPITAL_TBL.*
+			        H.*
 			        , (6371.0 * ACOS(  
 			          COS( ( #{ hLat } / 57.29577951308232087679815481410517033235 ) ) * COS( ( H_LAT / 57.29577951308232087679815481410517033235 ) )
 			          * COS( ( H_LNG / 57.29577951308232087679815481410517033235 ) - ( #{ hLng } / 57.29577951308232087679815481410517033235 ) )
 			          +
 			          SIN( ( #{ hLat } / 57.29577951308232087679815481410517033235 ) ) * SIN( ( H_LAT / 57.29577951308232087679815481410517033235 ) )        
 			         )) AS distance
-			    FROM HOSPITAL_TBL
+			         , (SELECT HB.H_NO 
+			              FROM H_BOOKMARK_TBL HB
+			             WHERE HB.U_ID = #{ uId }
+			               AND H.H_NO = HB.H_NO) AS hBookmark
+			    FROM HOSPITAL_TBL H
 			    WHERE H_STATUS = '정상'
 			    AND H_X IS NOT NULL
 			    AND ( H_NAME LIKE '%' || #{ hSearchKeyword } || '%' 
@@ -100,5 +117,12 @@
 	<select id="selectAllList" resultType="Hospital">
 		SELECT *
 		  FROM HOSPITAL_TBL
+	</select>
+	
+	<select id="getHReviewTotalCount" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM H_REVIEW_TBL 
+		 WHERE H_NO = #{ hNo } 
+		   AND H_R_STATUS = 'Y'
 	</select>
 </mapper>
