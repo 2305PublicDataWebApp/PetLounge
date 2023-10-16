@@ -177,12 +177,6 @@ label {
     align-items: center;
 }
 
-.free-img {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-}
-
 .tmi-text {
     background: #FAFAFA;
     color : black;
@@ -192,6 +186,25 @@ label {
     padding: 15px;
     border-radius: 6px;
     margin-right: 20px;
+}
+
+#tmi {
+	position: relative;
+	left: 60px;
+	height: 30px;
+	width: 400px;
+	border: none;
+	background-color: #FAFAFA;
+}
+
+#tmi-area {
+	
+}
+
+.free-img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
 }
 
 .free-board {
@@ -339,12 +352,13 @@ label {
 
 /* ********** 시간별 기온 ********** */
 .time-weather {
-    display: flex;
+    display: grid;
+    grid-template-rows: auto 1fr;
     margin: 80px 100px 0 100px;
+	overflow: auto;
     width: 855px;
-    height: 150px;
+    height: 180px;
     margin-left: 130px;
-    /* border : 2px solid #ccc; */
     border-radius: 6px;
     background-color: #ffffff;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
@@ -355,15 +369,39 @@ label {
     margin : 20px
 }
 
+.time-temp {
+	display: flex;
+    width: 100%;
+    padding-left: 20px;
+	margin: 0 auto;
+}
+
+.time-temp ul {
+	display: flex;
+}
+
+.time-temp li {
+	 margin-right: 10px;
+}
+
+.time {
+	width: 50px;
+	padding-bottom: 15px;
+	font-size: 15px;
+}
+
+.time-icon {
+	padding-bottom: 25px;
+}
 
 /* ********** 일별 기온 ********** */
 .date-weather {
-    display: flex;
+    display: grid;
+    grid-template-rows: auto 1fr;
     margin: 80px 100px 0 100px;
     width: 855px;
-    height: 150px;
+    height: 180px;
     margin-left: 130px;
-    /* border : 2px solid #ccc; */
     border-radius: 6px;
     background-color: #ffffff;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
@@ -371,5 +409,119 @@ label {
 
 .date-weather h2 {
 	font-size: 20px;
-    margin : 20px
+    margin : 20px 20px 8px 20px;
+}
+
+.date-temp {
+	display: flex;
+    width: 100%;
+/*     height: 90%; */
+    padding-left: 20px;
+	margin: 0 auto;
+}
+
+.date-temp ul {
+	display: flex;
+}
+
+.date-temp li {
+	 margin-right: 10px;
+	 height: 90%;
+}
+
+.day-temp {
+	width: 265px;
+	height: 70%;
+	border: 1px solid black;
+	border-radius: 15px;
+	padding: 5px;
+	padding-top: 10px;
+	font-size: 15px;
+}
+
+#today {
+	display: block;
+	margin-bottom: 20px;
+}
+
+#today-rain {
+	display: inline-block;
+	margin-bottom: 20px;
+	color: blue;
+}
+
+#today-temp-min {
+	display: inline-block;
+	color: skyblue;
+}
+
+#today-temp-max {
+	display: inline-block;
+	color: red;
+}
+
+#tomorrow {
+	display: block;
+	margin-bottom: 20px;
+}
+
+#tomorrow-rain {
+	display: inline-block;
+	margin-bottom: 20px;
+	color: blue;
+}
+
+#tomorrow-temp-min {
+	display: inline-block;
+	color: skyblue;
+}
+
+#tomorrow-temp-max {
+	display: inline-block;
+	color: red;
+}
+
+#aft-tomorrow {
+	display: block;
+	margin-bottom: 20px;
+}
+
+#aft-tomorrow-rain {
+	display: inline-block;
+	margin-bottom: 20px;
+	color: blue;
+}
+
+#aft-tomorrow-temp-min {
+	display: inline-block;
+	color: skyblue;
+}
+
+#aft-tomorrow-temp-max {
+	display: inline-block;
+	color: red;
+}
+
+.day-dog1 {
+	position: relative;
+	left: 170px;
+	bottom: 115px;
+	width: 80px;
+	height:80px;
+}
+
+.day-dog2 {
+	position: relative;
+	left: 170px;
+	bottom: 110px;
+	width: 90px;
+	height:70px;
+}
+
+.day-dog3 {
+	position: relative;
+	left: 170px;
+	bottom: 110px;
+	width: 90px;
+	height:70px;
 }
