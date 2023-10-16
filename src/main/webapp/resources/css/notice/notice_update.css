@@ -124,6 +124,19 @@ ul {
     letter-spacing: -0.02em;   
 }
 
+.backtolist2 {
+    background-color: #ffffff;
+    color: #ffd370;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: Pretendard;
+    letter-spacing: -0.02em; 
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
 .edit {
     background-color: #ffd370;
     border: 2px solid #ffd370;

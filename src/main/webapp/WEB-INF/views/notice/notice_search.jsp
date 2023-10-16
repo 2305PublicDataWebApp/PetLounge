@@ -24,6 +24,7 @@
 
         <div class="square-container">
             <div id="notice">
+                <ul>
                     <table>
                         <colgroup>
                             <col width="10%">
@@ -47,7 +48,7 @@
                         		<tr>
                         			<td class="right2">
                         				${notice.nNo }
-                        			</td>
+                       				</td>
                         			<c:url var="detailUrl" value="/notice/notice_detail.pet">
                         				<c:param name="nNo" value="${notice.nNo }" />
                         			</c:url>
@@ -64,6 +65,7 @@
                        		</c:forEach>
                         </tbody>
                     </table>
+                </ul>
             </div>
       	        <div class="pagination">
 	                <c:if test="${pInfo.startNavi != 1 }">
@@ -108,7 +110,7 @@
 	                    </form>
 	                </div>
 	                <div class="sub">
-	                    <button class="submit" onclick="showSubmitForm()">글쓰기</button>
+	                    <button class="submit">글쓰기</button>
 	                </div>
 	            </div>
 			</c:if>
@@ -119,10 +121,10 @@
 	                <div class="sub">
   	                    <form action="/notice/notice_search.pet" method="get">
       	                        <select name="searchCondition" id="selec" class="search-select">
-									<option value="all">전체</option>
-									<option value="no">글번호</option>
-									<option value="title">제목</option>
-									<option value="date">작성일</option>
+									<option value="all" <c:if test="${searchCondition == 'all' 		}"	>selected</c:if>>전체</option>
+									<option value="no" <c:if test="${searchCondition == 'no' 		}"	>selected</c:if>>글번호</option>
+									<option value="title" <c:if test="${searchCondition == 'title' 		}"	>selected</c:if>>제목</option>
+									<option value="date" <c:if test="${searchCondition == 'date' 		}"	>selected</c:if>>작성일</option>
 								</select>
 		                    <input type="text" name="searchKeyword" id="search" class="search-input" style="margin-right : 5px;">
 		                    <input type="submit" class="search-button" value="검색">
@@ -135,11 +137,6 @@
       	<footer>
 		<jsp:include page="../include/footer.jsp"></jsp:include>
 		</footer>
-		<script>
-			function showSubmitForm(){
-				location.href="/notice/notice_submit.pet"
-			}
-		</script>
     </body>
     </html>
     

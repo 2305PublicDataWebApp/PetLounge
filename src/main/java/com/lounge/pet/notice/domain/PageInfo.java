@@ -1,7 +1,7 @@
 package com.lounge.pet.notice.domain;
 
 // 페이징 처리 관련 vo
-public class PageInfo2 {
+public class PageInfo {
 
 	private int currentPage;	// 현재 페이지 번호
 	private int recordCountPerPage;		// 각(한) 페이지에 표시할 항목 수
@@ -11,11 +11,11 @@ public class PageInfo2 {
 	private int totalCount;		// 전체 항목 수
 	private int naviTotalCount;		// 전체 페이지 네비게이션의 수
 	
-	public PageInfo2() {
+	public PageInfo() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public PageInfo2(int currentPage, int recordCountPerPage, int naviCountPerPage, int startNavi, int endNavi,
+	public PageInfo(int currentPage, int recordCountPerPage, int naviCountPerPage, int startNavi, int endNavi,
 			int totalCount, int naviTotalCount) {
 		super();
 		this.currentPage = currentPage;

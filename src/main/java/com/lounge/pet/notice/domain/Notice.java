@@ -16,6 +16,38 @@ public class Notice {
 	private String nStatus;
 	private String nViewCount;
 	
+	
+	
+	public Notice() {
+	}
+	
+	public Notice(int nNo, String nTitle, String nContent, Date nCreate, Date nUpdate, String nFileName,
+			String nFileRename, String nFilePath, int nFileLength, String nStatus, String nViewCount) {
+		super();
+		this.nNo = nNo;
+		this.nTitle = nTitle;
+		this.nContent = nContent;
+		this.nCreate = nCreate;
+		this.nUpdate = nUpdate;
+		this.nFileName = nFileName;
+		this.nFileRename = nFileRename;
+		this.nFilePath = nFilePath;
+		this.nFileLength = nFileLength;
+		this.nStatus = nStatus;
+		this.nViewCount = nViewCount;
+	}
+
+	
+	
+	public Notice(int nNo, String nTitle, String nContent, Date nUpdate, String nStatus) {
+		super();
+		this.nNo = nNo;
+		this.nTitle = nTitle;
+		this.nContent = nContent;
+		this.nUpdate = nUpdate;
+		this.nStatus = nStatus;
+	}
+
 	public int getnNo() {
 		return nNo;
 	}
