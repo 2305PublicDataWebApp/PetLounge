@@ -344,6 +344,7 @@
 
 			    if (hList.length === 0) {
 			        var noResultRow = document.createElement('tr');
+			        noResultRow.className = 'search-list-none';
 			        var noResultCell = document.createElement('td');
 			        noResultCell.colSpan = 4;
 			        noResultCell.style.color = 'lightgray';

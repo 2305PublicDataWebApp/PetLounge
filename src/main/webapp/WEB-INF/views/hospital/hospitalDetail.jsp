@@ -465,8 +465,7 @@
 								} else {
 									center = $("<td class='td'>").html(
 											"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
-											+ ""+getFormattedDate(hRList[i].hRCreate)+"</span><span class='review-create-date'>&nbsp;&nbsp;(" 
-											+ getFormattedDate(hRList[i].hRUpdate) + " 수정됨)</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>");
+											+ ""+getFormattedDate(hRList[i].hRUpdate)+"&nbsp;(수정됨)</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>");
 								}
 										
 								if(sessionId === hRList[i].uId || sessionId === 'admin') {
