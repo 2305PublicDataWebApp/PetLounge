@@ -55,7 +55,8 @@
 		</script>
 		<script>
 		    function backToNoticeList() {
-		        history.back();
+// 		    	location.href = "/notice/notice_list.pet?page="+${pInfo.currentPage };
+		    	location.href = "/notice/notice_list.pet";
 		    }		
 		</script>
     </body>

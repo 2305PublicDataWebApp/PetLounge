@@ -57,8 +57,7 @@
 		SET
 			N_TITLE = #{nTitle}, 
 			N_CONTENT = #{nContent}, 
-			N_UPDATE = DEFAULT,
-			N_STATUS = #{nStatus} 
+			N_UPDATE = DEFAULT
 		WHERE N_NO = #{nNo} 
 	</update>
 

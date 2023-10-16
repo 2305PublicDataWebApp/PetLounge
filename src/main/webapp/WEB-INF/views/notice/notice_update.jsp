@@ -20,6 +20,7 @@
             <div id="line"></div>
         </section>
         <form action="/notice/notice_update.pet" method="post" enctype="multipart/form-data" id="updateForm">
+        <input type="hidden" name="nNo" value="${notice.nNo }">
         <div class="square-container">
             <div id="notice">
                 <ul>
@@ -50,7 +51,7 @@
 		</footer>
 		<script>
 		    function backToNoticeList() {
-		        history.back();
+		        location.href = "/notice/notice_detail.pet?nNo="+${notice.nNo };
 		    }		
 		</script>
     </body>
