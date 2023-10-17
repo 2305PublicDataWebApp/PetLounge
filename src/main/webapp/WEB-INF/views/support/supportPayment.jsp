@@ -239,24 +239,6 @@
              	// hidden으로 숨겨둔 input에 넣어서 DB로 보낼 수 있게 함 
                 document.getElementById("s-h-amount").value = numericValue;
             });
-            <!-- 결제 기본값 -->
-            $('input[name="sHPaytype"][value="kakaopay"]').prop('checked', true).change();
-			<!-- 후원자 이름 선택 -->
-			// 페이지 로드 시 초기값 설정 (예: 기본값인 'nickname'으로 설정)
-			$('input[name="sHType"][value="nickname"]').prop('checked', true).change();
-				// 라디오 버튼 변경 감지
-			$('input[name="sHType"]').change(function() {
-			    // 선택된 라디오 버튼의 값 가져오기
-			    var selectedValue = $('input[name="sHType"]:checked').val();
-			    // span 요소에 값을 설정
-			    if (selectedValue === 'nickname') {
-			        $('#s-h-name').text('${user.uNickName }');
-// 			        console.log($('#s-h-name').text());
-			    } else if (selectedValue === 'anonymous') {
-			        $('#s-h-name').text('숨은천사');
-// 			        console.log($('#s-h-name').text());
-			    }
-			});
 	
             <!-- 결제 -->
             var IMP = window.IMP; 
@@ -274,9 +256,26 @@
             const sHName = '${user.uNickName }';
             let sHAmount = 0;
             let sHType = 'N';
-            if($('#s-h-name').text == '숨은천사') {
-            	sHType = 'A';
-            } 
+            
+            <!-- 결제 기본값 -->
+            $('input[name="sHPaytype"][value="kakaopay"]').prop('checked', true).change();
+            
+			<!-- 후원자 이름 선택 -->
+			// 페이지 로드 시 초기값 설정 (예: 기본값인 'nickname'으로 설정)
+			$('input[name="sHType"][value="nickname"]').prop('checked', true).change();
+				// 라디오 버튼 변경 감지
+			$('input[name="sHType"]').change(function() {
+			    // 선택된 라디오 버튼의 값 가져오기
+			    var selectedValue = $('input[name="sHType"]:checked').val();
+			    // span 요소에 값을 설정
+			    if (selectedValue === 'nickname') {
+			        $('#s-h-name').text('${user.uNickName }');
+			        sHType = 'N';
+			    } else if (selectedValue === 'anonymous') {
+			        $('#s-h-name').text('숨은천사');
+			        sHType = 'A';
+			    }
+			});
             
             <!-- 결제 -->
             // 결제 처리 
@@ -327,9 +326,8 @@
                        		} 
                        	})
                     	
-                        console.log(rsp);
                     } else {
-                        console.log(rsp);
+                    	console.log("결제 실패");
                     }
                 });
             }
@@ -369,7 +367,7 @@
                     		} 
                     	});
                     } else {
-                        console.log("2:" + rsp);
+                        console.log("결제 실패");
                     }
                 });
             }

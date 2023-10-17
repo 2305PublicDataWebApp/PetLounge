@@ -58,13 +58,13 @@ public class SupportController {
 	}
 	
 	
-	// 게시글 목록 조회( 카테고리, 정렬 ) 
+	// 게시글 목록 조회( 카테고리, 정렬, today ) 
 	@ResponseBody
 	@RequestMapping(value = "/support/sList.pet"
 	, produces = "application/json; charset=utf-8"
 	, method = RequestMethod.GET)
-	public String showSupportList(Integer currentPage, Integer recordCountPerPage, String category, String sort) {
-		
+	public String showSupportList(Integer currentPage, String category, String sort) {
+		Integer recordCountPerPage =  11;
 		System.out.println(currentPage + ", dlskjf:" + recordCountPerPage  + ", sort :" + sort);
 		if (category == null || category.isEmpty()) {
 			category = "all"; // 기본값으로 전체 카테고리 설정
@@ -99,15 +99,19 @@ public class SupportController {
 		int totalSearchRecords = sService.getSearchCount(sMap); // 카테고리별 후원글의 총 갯수 
 		int totalSearchPages = (int) Math.ceil((double) totalSearchRecords / recordCountPerPage); // 전체 페이지 수 
 		
-		
 		System.out.println("currentPage: " + currentPage + ", recordCountPerPage: " + recordCountPerPage);
 		System.out.println("searchList size: " + searchList.size() + ", totalSearchRecords: " + totalSearchRecords + ", totalSearchPages: " + totalSearchPages);
-		
-		
+
+		// 오늘 후원 받아오기 
+		SupportHistory sHistory = sService.selectTodaySupport();
+		int todayCount = sHistory.getTodayCount();
+		int todayAmount = sHistory.getTodayAmount();
 		// 후원글 리스트와 전체 페이지 수를 Map에 담아서 보냄 
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("searchList", searchList);
 		resultMap.put("totalSearchPages", totalSearchPages);
+		resultMap.put("todayCount", todayCount);
+		resultMap.put("todayAmount", todayAmount);
 		
 		Gson gson = new Gson();
 		return gson.toJson(resultMap);
@@ -126,8 +130,10 @@ public class SupportController {
 			SupportHistory sHistory = new SupportHistory();
 			sHistory.setuId(uId);
 			sHistory.setsNo(sNo);
-			int sHistoryCount = sService.getCountSHistory(sHistory);
+			int sHistoryCount = sService.getCountSHistory(sHistory); // 후원 여부 uId, sNo로 조회 
+			int totalHistoryCount = sService.getHistoryListCount(sNo); // 후원 내역 갯수 sNo로 조회 
 			if(support != null) {
+				mv.addObject("totalHistoryCount", totalHistoryCount);
 				mv.addObject("sHistoryCount", sHistoryCount);
 				mv.addObject("support", support);
 				mv.setViewName("/support/supportDetail");
@@ -235,7 +241,7 @@ public class SupportController {
 		return mv;
 	}
 	
-	// 후원 등록 
+	// 후원글 등록 
 	@RequestMapping(value = "/support/insert.pet", method = RequestMethod.POST)
 	public ModelAndView insertSupport(ModelAndView mv
 			, @ModelAttribute Support support
@@ -271,7 +277,7 @@ public class SupportController {
 		return mv;
 	}
 	
-	// 후원 수정 
+	// 후원글 수정 
 	@RequestMapping(value="/support/update.pet", method = RequestMethod.POST)
 	public ModelAndView updateSupport(ModelAndView mv
 			,@ModelAttribute Support support
@@ -316,7 +322,7 @@ public class SupportController {
 		return mv;
 	}
 	
-	// 후원 삭제 
+	// 후원글 삭제 
 	@RequestMapping(value="/support/delete.pet", method = RequestMethod.GET)
 	public ModelAndView deleteSupport(ModelAndView mv
 			, @RequestParam("sNo") int sNo) {
@@ -404,7 +410,8 @@ public class SupportController {
 	@RequestMapping(value = "/sReply/list.pet"
 					, produces = "application/json; charset=utf-8"
 					, method = RequestMethod.GET)
-	public String showReplyList(Integer sNo, Integer currentPage, Integer recordCountPerPage) {
+	public String showReplyList(Integer sNo, Integer currentPage) {
+		int recordCountPerPage = 5; // 페이지당 댓글 수 
 		// currentPage와 recordCountPerPage를 이용하여 페이징 처리
 		// 페이징을 적용하여 댓글 데이터를 가져오도록 구현 
 	    int start = (currentPage - 1) * recordCountPerPage;
@@ -437,6 +444,51 @@ public class SupportController {
 	    resultMap.put("sRList", sRList);
 	    resultMap.put("totalPages", totalPages);
 	    
+		Gson gson = new Gson();
+		return gson.toJson(resultMap);
+	}
+	
+	
+	// 후원 내역 목록 조회 
+	@ResponseBody
+	@RequestMapping(value = "/sHistory/list.pet"
+	, produces = "application/json; charset=utf-8"
+	, method = RequestMethod.GET)
+	public String showHistoryList(Integer sNo, Integer currentPage) {
+		int recordCountPerPage = 5; // 페이지당 후원내역 수 
+		// currentPage와 recordCountPerPage를 이용하여 페이징 처리
+		// 페이징을 적용하여 후원 내역 데이터를 가져오도록 구현 
+		int start = (currentPage - 1) * recordCountPerPage;
+		int end = start + recordCountPerPage;
+		
+		// 글번호 sNo의 전체 후원 내역 리스트 불러옴 
+		List<SupportHistory> sHList = sService.selectSHistoryList(sNo);
+		
+		// 범위 체크를 통해 부분 리스트 추출
+		if (start < sHList.size()) {
+			end = Math.min(end, sHList.size());
+			// 범위에 해당하는 부분 리스트를 추출하여 sHList에 대입
+			sHList  = sHList.subList(start, end);
+		} else {
+			sHList  = Collections.emptyList();
+		}
+		
+		// 후원자 타입 확인해서 익명 선택시 이름 숨은천사로 넣어줌 
+		for (SupportHistory sHistory : sHList) {
+			if(sHistory.getsHType() == "A") {
+				sHistory.setsHName("숨은천사");
+			}
+		}
+		
+		// 전체 페이지 수 계산 (후원내역의 총 갯수를 페이지당 후원내역 갯수로 나눠서 계산) 
+		int totalRecords = sService.getHistoryListCount(sNo); // 후원내역의 총 갯수 
+		int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 후원내역 페이지 수 
+		
+		// 후원내역 리스트와 전체 페이지 수를 Map에 담아서 보냄 
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("sHList", sHList);
+		resultMap.put("totalPages", totalPages);
+		
 		Gson gson = new Gson();
 		return gson.toJson(resultMap);
 	}

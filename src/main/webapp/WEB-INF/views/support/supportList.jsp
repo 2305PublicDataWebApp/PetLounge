@@ -106,22 +106,25 @@
 					type : "GET",
 					success : function(resultMap) {
 						const portfolio = $("#portfolio");
-						
 						portfolio.html('');
+						console.log(resultMap);
+						const todayCount = resultMap.todayCount.toLocaleString(); // 오늘 후원 내역 갯수 
+						const todayAmount = resultMap.todayAmount.toLocaleString(); // 오늘 후원 금액 
+						const sList = resultMap.searchList; // 후원글 리스트 
+				        totalPages = resultMap.totalSearchPages; // 총 페이지 수
+						
 						const cardToday = $("<div class='col-xl-3 col-md-6 portfolio-item'>")
 											.html("<div class='card-today'><div class='label-today'>Today</div><br>"
 											+"<strong style='font-size: 20px;'>오늘 함께한 기부금</strong>"
 											+"<div class='hr'></div>"
-											+"<div class='today-text'>900명이 <br>4,234,500원을<br>기부하였습니다.</div></div>");;
+											+"<div class='today-text'><strong>"+todayCount+"명</strong>이 <br><strong>"+todayAmount+"원</strong>을<br>기부하였습니다.</div></div>");;
 						portfolio.append(cardToday); 
 
 						let supportList;
 						
-						const sList = resultMap.searchList; // 후원글 리스트 
-				        totalPages = resultMap.totalSearchPages; // 총 페이지 수
 						if(sList.length > 0) {
 							for(let i in sList) {
-								const percent = Math.floor((sList[i].sFundAmount / sList[i].sTargetAmount) * 100);
+								const percent = Math.round((sList[i].sFundAmount / sList[i].sTargetAmount) * 100);
 								// 후원 제목 두줄 이상 넘어가면 ... 처리
 								const title = sList[i].sTitle;
 								const truncatedTitle = title.length > 27 ? title.substring(0, 26) + '...' : title;
@@ -152,38 +155,8 @@
 				});
 			}
 			
-			$(document).ready(function() {
-				const initialSearch = getCurrentSearch();
-			    currentPage = initialSearch.page;
-			    getSupportList(currentPage);
-			    
-			    isPageReloaded();
-			});
 			// 초기 상태를 히스토리에 추가
-			history.pushState({ page: 1, category: 'all', sort : 'latest' }, null, "/support/sList.pet?page=1&category=all&sort=latest");
-			
-			function isPageReloaded() {
-			    // 이전에 저장된 타임스탬프 가져오기
-			    const previousTimestamp = sessionStorage.getItem('pageReloadTimestamp');
-
-			    // 현재 시간의 타임스탬프 생성
-			    const currentTimestamp = new Date().getTime();
-
-			    // 이전 타임스탬프가 있고, 현재 타임스탬프와 이전 타임스탬프가 차이가 매우 작다면 페이지가 리로드된 것으로 간주
-			    if (previousTimestamp && (currentTimestamp - previousTimestamp) < 1000) {
-			        // 페이지가 리로드되었을 경우 다른 URL로 이동
-			        window.location.href = 'https://example.com/another-page';
-			        return true;
-			    }
-
-			    // 페이지가 리로드되지 않았음을 나타내는 타임스탬프 저장
-			    sessionStorage.setItem('pageReloadTimestamp', currentTimestamp);
-
-			    return false;
-			}
-
-			// 페이지가 리로드되었는지 확인
-			
+			history.pushState({ page: 1, category: 'all', sort : 'latest' }, null, "/support/sList.pet?currentPage=1&category=all&sort=latest");
 			
 			// 페이지 만들기 
 			const createPagination = (totalPages) => {
@@ -234,7 +207,7 @@
 			    const currentPage = page;
 				// 새로운 상태를 히스토리에 추가	
 				console.log('New Page:', currentPage, 'category:', category, 'sort' + sort);
-				history.pushState({ page: currentPage, category: category, sort : sort }, null, "/support/sList.pet?page=" + currentPage + "&category=" + category + "&sort=" + sort);	
+				history.pushState({ page: currentPage, category: category, sort : sort }, null, "/support/sList.pet?currentPage=" + currentPage + "&category=" + category + "&sort=" + sort);	
 				console.log(getCurrentSearch());
 			 	// Ajax로 페이지의 내용을 가져와서 화면에 반영
 			    getSupportList(currentPage);
@@ -266,7 +239,7 @@
 			    const sort = getCurrentSearch().sort;
 			    currentPage = 1; 
  				// 새로운 상태를 히스토리에 추가	
-			    history.pushState({ page: currentPage, category: selectedCategory, sort:sort }, null, "/support/sList.pet?page="+currentPage+"&category=" + selectedCategory +"&sort="+sort);
+			    history.pushState({ page: currentPage, category: selectedCategory, sort:sort }, null, "/support/sList.pet?currentPage="+currentPage+"&category=" + selectedCategory +"&sort="+sort);
 			    getSupportList(currentPage);
 			});
 			
@@ -331,7 +304,7 @@
 			
 			// 새로고침 시 특정 URL로 이동
 			window.addEventListener('beforeunload', function() {
-			  window.location.href = 'http://127.0.0.1:5959/support/list.pet';
+			  window.location.href = '/support/list.pet';
 			});
 			
             <!-- 정렬바 -->
@@ -347,7 +320,7 @@
             const category = getCurrentSearch().category;
 		    currentPage = 1; 
 			// 새로운 상태를 히스토리에 추가	
-		    history.pushState({ page: currentPage, category: category, sort : sort }, null, "/support/sList.pet?page="+currentPage+"&category=" + category+"&sort="+sort);
+		    history.pushState({ page: currentPage, category: category, sort : sort }, null, "/support/sList.pet?currentPage="+currentPage+"&category=" + category+"&sort="+sort);
 		    getSupportList(currentPage);
             }
             // 옵션 클릭시 클릭한 옵션을 넘김

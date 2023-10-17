@@ -53,13 +53,13 @@
                             <!-- 등록 -->
                             <c:if test="${sHistoryCount != 0 }">
                             <div id="reply-create-div">
-	                            <textarea name="sRContent" id="reply-create-content" placeholder="응원의 댓글을 남겨주세요."></textarea>
+	                            <input type="text" name="sRContent" id="reply-create-content" placeholder="응원의 댓글을 남겨주세요."></input>
 	                            <input type="submit" value="등록" id="reply-create-btn">
                             </div>
                             </c:if>
                             <!-- 댓글 리스트 -->
                             <div id="reply-list-div">
-                                <table id="replyTable">
+                                <table id="reply-table">
                                     <colgroup>
                                         <col style="width: 5%;">
                                         <col style="width: 80%;">
@@ -71,8 +71,8 @@
                                         <td></td>
                                     </tr>
                                 </table>
-                                <div id="page-navigation">
-                                    <ul id="pagination" class="pagination pagination-sm"></ul>
+                                <div class="page-navigation">
+                                    <ul id="reply-pagination" class="pagination pagination-sm"></ul>
                                 </div>
                             </div>
                         </div>
@@ -80,11 +80,14 @@
                         <div id="history-tabpanel" style="display: none;">
                             <!-- 총 후원건 -->
                             <div id="history-div">
-                                <p style="margin-top: 10px;">총 1,909건이 기부되었습니다.</p>
+                                <p style="margin-top: 10px;">총 <span id="history-total"></span>건이 기부되었습니다.</p>
+                                <script type="text/javascript">
+                                
+                                </script>
                             </div>
                             <!-- 후원 내역 -->
-                            <div id="reply-list-div">
-                                <table>
+                            <div id="history-list-div">
+                                <table id="history-table">
                                     <colgroup>
                                         <col style="width: 5%;">
                                         <col style="width: 80%;">
@@ -113,10 +116,8 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <div id="page-navigation">
-                                    <ul id="pagination" class="pagination pagination-sm">
-	                                    <li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>
-	                                    <li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>
+                                <div class="page-navigation">
+                                    <ul id="history-pagination" class="pagination pagination-sm">
 									</ul>
                                 </div>
                             </div>
@@ -139,14 +140,12 @@
                                             </span>
                                         </div>
                                         <div id="reply-modify-div">
-                                            <form action="" method="">
-                                            	<input type="hidden" value="" name="sRNo" class="s-r-no">
-                                                <textarea name="sRContent" class="reply-modify-content" placeholder="댓글 내용을 수정해주세요"></textarea>
-                                            </form>
+                                        	<input type="hidden" value="" name="sRNo" class="s-r-no">
+                                        	<input type="text" name="sRContent" class="reply-modify-content" placeholder="댓글 내용을 수정해주세요"></input>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn modal-modify-btn">수정</button>
+                                        <button type="button" class="btn modal-modify-btn" onClick="modifyReply()">수정</button>
                                     </div>
                                 </div>
                             </div>
@@ -171,7 +170,7 @@
                             <span id="d-day" class="d-day">D-25</span>
                         </div>
                         <div class="num-area">
-                            <p class="fund-amount"><span  id="s-fund-amount">0</span>원</p>
+                            <p class="fund-amount"><span id="s-fund-amount">0</span>원</p>
                             <p class="target-amount"><span id="s-target-amount">0</span>원 목표</p>
                         </div>
                     </div>
@@ -201,56 +200,60 @@
 			$("#reply-create-btn").on("click", function() {
 				const sRContent = $("#reply-create-content").val();
 				const sNo = ${support.sNo };
-				$.ajax({
-					url : "/sReply/insert.pet",
-					data : { sRContent : sRContent, sNo : sNo },
-					type : "POST",
-					success : function(result) {
-						if(result == "success") {
-							getReplyList();
-							$("#reply-create-content").val("");
-						} else {
-							alert("댓글 등록 실패");
+				if(!sRContent) {
+					alert("댓글 내용을 입력해주세요.");
+				} else {
+					$.ajax({
+						url : "/sReply/insert.pet",
+						data : { sRContent : sRContent, sNo : sNo },
+						type : "POST",
+						success : function(result) {
+							if(result == "success") {
+								getReplyList();
+								$("#reply-create-content").val("");
+							} else {
+								alert("댓글 등록 실패");
+							}
+						},
+						error : function() {
+							alert("Ajax 오류! 관리자에게 문의하세요.");
 						}
-					},
-					error : function() {
-						alert("Ajax 오류! 관리자에게 문의하세요.");
-					}
-				});
+					});
+				}
 			});
 			
 			// 댓글 수정창 보이기 
 			const openModifyView = (sRNo, sRWriter, sRContent) => {
-				console.log(sRNo + sRWriter + sRContent);
 				document.querySelector('.s-r-no').value = sRNo;
 				document.querySelector('.modify-user-nickname').innerText = sRWriter;
 				document.querySelector('.reply-modify-content').value = sRContent;
 				let modifyButton = document.querySelector('.modal-modify-btn');
-				modifyButton.addEventListener('click', function() {
-					modifyReply();
-				});	
 			}
 			
 			// 댓글 수정 
 			const modifyReply = () => {
 				let sRNo = document.querySelector('.s-r-no').value;
 				let sRContent = document.querySelector('.reply-modify-content').value;
-				$.ajax({
-					url : "/sReply/update.pet",
-					data : { sRNo : sRNo, sRContent : sRContent},
-					type : "POST",
-					success : function(data) {
-						if(data == "success") {
-							document.querySelector('[data-bs-dismiss="modal"]').click(); // 모달 닫는 버튼이 클릭되어서 닫히게 함 
-							getReplyList(); // 댓글 목록 새로고침 
-						} else {
-							alert("댓글 수정 실패!");
+				if(!sRContent) {
+					alert("댓글 내용을 입력해주세요.");
+				} else {
+					$.ajax({
+						url : "/sReply/update.pet",
+						data : { sRNo : sRNo, sRContent : sRContent},
+						type : "POST",
+						success : function(data) {
+							if(data == "success") {
+								document.querySelector('[data-bs-dismiss="modal"]').click(); // 모달 닫는 버튼이 클릭되어서 닫히게 함 
+								getReplyList(); // 댓글 목록 새로고침 
+							} else {
+								alert("댓글 수정 실패!");
+							}
+						},
+						error : function() {
+							alert("Ajax 오류! 관리자에게 문의하세요.");
 						}
-					},
-					error : function() {
-						alert("Ajax 오류! 관리자에게 문의하세요.");
-					}
-				});
+					});
+				}
 			}
 			
 			// 댓글 삭제 체크 
@@ -280,19 +283,76 @@
 			}
 			
 			
-			<!-- 페이징 처리된 댓글 조회 -->
-			// 댓글 페이징 
+			<!-- 페이징 처리된 댓글, 후원내역 조회 -->
+			// 페이징 
 			let currentPage = 1; // 현재 페이지 
-			let recordCountPerPage = 10; // 페이지당 댓글 수 
 			let naviCountPerPage = 5; // 한 그룹당 페이지 수
-			let totalPages = 0; // 총 페이지 수
+			let totalReplyPages = 0; // 총 댓글 페이지 수
+			let totalHistoryPages = 0; // 총 후원내역 페이지 수
 			
-			// 날짜 포맷팅 (댓글 작성일에 사용)
-			const getFormattedDate = (dateString) => {
+			// 날짜 포맷팅
+			const getFormattedTimestamp = (dateString) => {
 			    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'};
 			    const formattedDate = new Date(dateString).toLocaleDateString('ko-KR', options);
 			    return formattedDate;
 			};
+			
+			// 후원 내역 갯수에 , 붙이기 
+			const formattedCount = (${totalHistoryCount }).toLocaleString();
+			$("#history-total").text(formattedCount);
+			
+			// 후원 내역 리스트를 불러오는 ajax Function 
+			const getHistoryList = () => {
+				const sNo = ${support.sNo };
+				$.ajax({
+					url : "/sHistory/list.pet",
+					data : { sNo : sNo, currentPage: currentPage }, // 현재 페이지와 페이지당 댓글 수 전달
+					type : "GET",
+					success : function(resultMap) {
+						const tableBody = $("#history-table tbody");
+						tableBody.html('');
+						let tr;
+						let left;
+						let center;
+						let right;
+						
+						const sHList = resultMap.sHList; // 댓글 리스트 
+						totalHistoryPages = resultMap.totalPages; // 총 페이지 수
+				        
+						if(sHList.length > 0) {
+							for(let i in sHList) {
+								let sHName = sHList[i].sHName;
+								if(sHList[i].sHType == 'A') {
+									sHName = '숨은천사';
+								}
+								
+								tr = $("<tr>"); // <tr></tr>
+								left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;'></div>"); 
+								center = $("<td class='td'>").html(
+										"<div class='user-info-div'><span class='support-history-date'>"+getFormattedTimestamp(sHList[i].sHPaydate)+"</span></div>"
+										+ "<div class='history-content'><span class='user-nickname'>"+sHName+"</span>"
+										+ "<span class='support-amount'><span style='color:#FFD370;'>"+(sHList[i].sHAmount).toLocaleString()+"</span>원 참여</span></div>"); 
+								right = $("<td class='td'>").html("");
+				
+								tr.append(left);
+								tr.append(center);
+								tr.append(right); 
+								tableBody.append(tr); 
+								
+								// 결과를 받은 후에 페이징을 업데이트
+					            createHistoryPagination(totalHistoryPages);
+							}
+						} else {
+							tr = $("<tr class='td'><td class='td'colspan='3'style='width:725px;'><div width='100%' style='color: lightgray;'>후원 내역이 없습니다.</div></td></tr>");
+							tableBody.append(tr);
+						}
+					},
+					error : function() {
+						alert("Ajax 오류! 관리자에게 문의하세요.");
+					}
+				});
+			}
+			
 			
 			// 댓글 리스트를 불러오는 ajax Function 
 			const getReplyList = () => {
@@ -300,10 +360,10 @@
 				const sNo = ${support.sNo };
 				$.ajax({
 					url : "/sReply/list.pet",
-					data : { sNo : sNo, currentPage: currentPage, recordCountPerPage: recordCountPerPage }, // 현재 페이지와 페이지당 댓글 수 전달
+					data : { sNo : sNo, currentPage: currentPage }, // 현재 페이지와 페이지당 댓글 수 전달
 					type : "GET",
 					success : function(resultMap) {
-						const tableBody = $("#replyTable tbody");
+						const tableBody = $("#reply-table tbody");
 						tableBody.html('');
 						let tr;
 						let left;
@@ -311,15 +371,21 @@
 						let right;
 						
 						const sRList = resultMap.sRList; // 댓글 리스트 
-				        totalPages = resultMap.totalPages; // 총 페이지 수
+						totalReplyPages = resultMap.totalPages; // 총 페이지 수
 						
 						if(sRList.length > 0) {
 							for(let i in sRList) {
+
+								let sRDate = getFormattedTimestamp(sRList[i].sRCreate);
+								if(sRList[i].sRCreate != sRList[i].sRUpdate) {
+									sRDate = getFormattedTimestamp(sRList[i].sRUpdate) + '&nbsp;&nbsp;(수정됨)';
+								}
+								
 								tr = $("<tr>"); // <tr></tr>
 								left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;'></div>"); 
 								center = $("<td class='td'>").html(
 										"<div class='user-info-div'><span class='user-nickname'>"+sRList[i].sRWriter+"</span><span class='reply-create-date'>"
-										+ ""+getFormattedDate(sRList[i].sRCreate)+"</span></div><div class='reply-content'>"+sRList[i].sRContent+"</div>"); 
+										+ ""+sRDate+"</span></div><div class='reply-content'>"+sRList[i].sRContent+"</div>"); 
 								if(sessionId === sRList[i].uId) {
 									right = $("<td class='td'>").html(
 											"<a href='javascript:void(0)' class='reply-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal' "
@@ -335,7 +401,7 @@
 								tableBody.append(tr); 
 								
 								// 결과를 받은 후에 페이징을 업데이트
-					            createPagination(resultMap.totalPages);
+					            createReplyPagination(totalReplyPages);
 							}
 						} else {
 							tr = $("<tr class='td'><td class='td'colspan='3'style='width:725px;'><div width='100%' style='color: lightgray;'>등록된 댓글이 없습니다.</div></td></tr>");
@@ -348,17 +414,17 @@
 				});
 			}
 			
-			// 페이지 만들기 
-			const createPagination = (totalPages) => {
-			    const paginationUl = $("#pagination");
-			    paginationUl.empty(); // 이전의 페이징 링크를 지움
+			// 댓글 페이지 만들기 
+			const createReplyPagination = (totalReplyPages) => {
+			    const replyPaginationUl = $("#reply-pagination");
+			    replyPaginationUl.empty(); // 이전의 페이징 링크를 지움
 			    
 			    const naviCountPerPage = 5; // 한 그룹당 페이지 수
-			    const numGroups = Math.ceil(totalPages / naviCountPerPage); // 총 그룹 수
+			    const numGroups = Math.ceil(totalReplyPages / naviCountPerPage); // 총 그룹 수
 			    const currentGroup = Math.ceil(currentPage / naviCountPerPage); // 현재 페이지가 속한 그룹
 
 			    let startPage = (currentGroup - 1) * naviCountPerPage + 1;
-			    let endPage = Math.min(currentGroup * naviCountPerPage, totalPages);
+			    let endPage = Math.min(currentGroup * naviCountPerPage, totalReplyPages);
 			    
 			 	// "이전" 버튼 추가
 			    if (currentGroup > 1) {
@@ -366,7 +432,7 @@
 			        prevLi.click(() => {
 			            goToPreviousGroup();
 			        });
-			        paginationUl.append(prevLi);
+			        replyPaginationUl.append(prevLi);
 			    }
 			 	// 페이지 링크 추가
 			    for (let i = startPage; i <= endPage; i++) {
@@ -378,54 +444,138 @@
 			        }
 			     
 			        li.click(() => {
-			            changePage(i);
+			        	changeReplyPage(i);
 			        });
-			        paginationUl.append(li);
+			        replyPaginationUl.append(li);
 			    }
+			 	
 				// "다음" 버튼 추가
 			    if (currentGroup < numGroups) {
 			        const nextLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>');
 			        nextLi.click(() => {
 			            goToNextGroup();
 			        });
-			        paginationUl.append(nextLi);
+			        replyPaginationUl.append(nextLi);
 			    }
 			}
 			
-			// 페이지 변경 시 호출되는 함수
-			const changePage = (newPage) => {
+			// 댓글 페이지 변경 시 호출되는 함수
+			const changeReplyPage = (newPage) => {
 			    currentPage = newPage;
 			    getReplyList(currentPage);
 			}
 			
-			// 그룹 변경 시 호출되는 함수
+			// 댓글 그룹 변경 시 호출되는 함수
 			const changeGroup = (newGroup) => {
 			    currentPage = (newGroup - 1) * naviCountPerPage + 1;
 			    getReplyList(currentPage);
 			}
 
-			// 이전 그룹으로 이동할 때 호출 
+			// 댓글 이전 그룹으로 이동할 때 호출 
 			const goToPreviousGroup = () => {
 			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
 			    if (currentGroup > 1) {
 			        const lastPageOfPreviousGroup = (currentGroup - 1) * naviCountPerPage;
-			        changePage(lastPageOfPreviousGroup);
+			        changeReplyPage(lastPageOfPreviousGroup);
 			    }
 			}
 
-			// 다음 그룹으로 이동할 때 호출
+			// 댓글 다음 그룹으로 이동할 때 호출
 			const goToNextGroup = () => {
-			    const numGroups = Math.ceil(totalPages / naviCountPerPage);
+			    const numGroups = Math.ceil(totalReplyPages / naviCountPerPage);
 			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
 			    if (currentGroup < numGroups) {
 			        changeGroup(currentGroup + 1);
 			    }
 			}
 			
+			
+			// 후원 내역 페이지 만들기 
+			const createHistoryPagination = (totalHistoryPages) => {
+			    const HistoryPaginationUl = $("#history-pagination");
+			    HistoryPaginationUl.empty(); // 이전의 페이징 링크를 지움
+			    
+			    const naviCountPerPage = 5; // 한 그룹당 페이지 수
+			    const numGroups = Math.ceil(totalHistoryPages / naviCountPerPage); // 총 그룹 수
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage); // 현재 페이지가 속한 그룹
+
+			    let startPage = (currentGroup - 1) * naviCountPerPage + 1;
+			    let endPage = Math.min(currentGroup * naviCountPerPage, totalHistoryPages);
+			    
+			 	// "이전" 버튼 추가
+			    if (currentGroup > 1) {
+			        const prevLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>');
+			        prevLi.click(() => {
+			        	goToPreviousHistoryGroup();
+			        });
+			        HistoryPaginationUl.append(prevLi);
+			    }
+			 	// 페이지 링크 추가
+			    for (let i = startPage; i <= endPage; i++) {
+			        const li = $('<li class="page-item" data-page="${i}"><a class="page-link" href="javascript:void(0)">'+i+'</a></li>');
+			        
+			     	// 현재 페이지에 해당하는 경우 클래스 추가
+			        if (i === currentPage) {
+			            li.addClass('active');
+			        }
+			     
+			        li.click(() => {
+			            changeHistoryPage(i);
+			        });
+			        HistoryPaginationUl.append(li);
+			    }
+			 	
+				// "다음" 버튼 추가
+			    if (currentGroup < numGroups) {
+			        const nextLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>');
+			        nextLi.click(() => {
+			        	goToNextHistoryGroup();
+			        });
+			        HistoryPaginationUl.append(nextLi);
+			    }
+			}
+			
+			// 후원내역 페이지 변경 시 호출되는 함수
+			const changeHistoryPage = (newPage) => {
+			    currentPage = newPage;
+			    getHistoryList(currentPage);
+			}
+			
+			// 후원내역 그룹 변경 시 호출되는 함수
+			const changeHistoryGroup = (newGroup) => {
+			    currentPage = (newGroup - 1) * naviCountPerPage + 1;
+			    getHistoryList(currentPage);
+			}
+
+			// 후원내역 이전 그룹으로 이동할 때 호출 
+			const goToPreviousHistoryGroup = () => {
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup > 1) {
+			        const lastPageOfPreviousGroup = (currentGroup - 1) * naviCountPerPage;
+			        changeHistoryPage(lastPageOfPreviousGroup);
+			    }
+			}
+
+			// 후원내역 다음 그룹으로 이동할 때 호출
+			const goToNextHistoryGroup = () => {
+			    const numGroups = Math.ceil(totalHistoryPages / naviCountPerPage);
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup < numGroups) {
+			        changeGroup(currentGroup + 1);
+			    }
+			}
+			
+			
+			// 댓글, 후원내역 출력 
 			$(function(){
 				getReplyList();
+				getHistoryList();
 				// setInterval(getReplyList, 1000); // 1초 단위로 getReplyList가 호출되어 댓글 실시간 조회
 			})
+			
+			
+			
+			
 			<!-- 디데이 구하기 -->
 			const sStart = new Date('${support.sStart}');
 		    const sEnd = new Date('${support.sEnd}');
@@ -443,8 +593,8 @@
 	            $('#s-fund-amount').text(sFundAmount);
 	        });
 	        <!-- 퍼센트 계산 -->
-	        const targetAmount = parseFloat(${support.sTargetAmount });
-	        const fundAmount = parseFloat(${support.sFundAmount });
+	        const targetAmount = (${support.sTargetAmount });
+	        const fundAmount = (${support.sFundAmount });
 	        const percentage = Math.round((fundAmount / targetAmount) * 100);
 	        // 숫자 띄워주기 
 	        $(document).ready(function() {

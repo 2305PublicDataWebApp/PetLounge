@@ -112,4 +112,22 @@ public class SupportServiceImpl implements SupportService{
 		return result;
 	}
 
+	@Override
+	public List<SupportHistory> selectSHistoryList(int sNo) {
+		List<SupportHistory> sHList = sStore.selectSHistoryList(sqlSession, sNo);
+		return sHList;
+	}
+
+	@Override
+	public int getHistoryListCount(int sNo) {
+		int result = sStore.getHistoryListCount(sqlSession, sNo);
+		return result;
+	}
+
+	@Override
+	public SupportHistory selectTodaySupport() {
+		SupportHistory sHistory = sStore.selectTodaySupport(sqlSession);
+		return sHistory;
+	}
+
 }
