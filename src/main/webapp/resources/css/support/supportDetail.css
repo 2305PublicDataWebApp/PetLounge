@@ -147,6 +147,11 @@ body {
                     text-align: left;
                     margin: auto 10px;
                 }
+                
+                .history-content {
+               		text-align: left;
+                    margin: auto 10px;
+                }
                 .support-amount {
                     text-align: left;
                     margin: auto 10px;
@@ -163,7 +168,7 @@ body {
                     color: #FFD370;
                 }
                 
-        #page-navigation {
+        .page-navigation {
             margin-top: 50px;
             display: flex;
     		justify-content: center;

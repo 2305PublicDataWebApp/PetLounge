@@ -107,11 +107,31 @@ public interface SupportService {
 	int updateSupportFund(Support sOne);
 
 	/** 
-	 * 후원 내역 확인 Service
+	 * 후원 여부 확인 Service
 	 * @param sHistory
 	 * @return int
 	 */
 	int getCountSHistory(SupportHistory sHistory);
+
+	/**
+	 * 후원 내역 조회 Service
+	 * @param sNo
+	 * @return List
+	 */
+	List<SupportHistory> selectSHistoryList(int sNo);
+
+	/**
+	 * 후원 내역 갯수 조회 Service
+	 * @param sNo
+	 * @return int
+	 */
+	int getHistoryListCount(int sNo);
+
+	/**
+	 * 오늘 후원 내역 조회 Service
+	 * @return SupportHistory
+	 */
+	SupportHistory selectTodaySupport();
 
 	
 

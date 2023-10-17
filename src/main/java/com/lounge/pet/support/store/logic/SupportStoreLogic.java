@@ -104,6 +104,24 @@ public class SupportStoreLogic implements SupportStore{
 		return result;
 	}
 
+	@Override
+	public List<SupportHistory> selectSHistoryList(SqlSession sqlSession, int sNo) {
+		List<SupportHistory> sHList = sqlSession.selectList("SHistoryMapper.selectSHistoryList", sNo);
+		return sHList;
+	}
+
+	@Override
+	public int getHistoryListCount(SqlSession sqlSession, int sNo) {
+		int result = sqlSession.selectOne("SHistoryMapper.getHistoryListCount", sNo);
+		return result;
+	}
+
+	@Override
+	public SupportHistory selectTodaySupport(SqlSession sqlSession) {
+		SupportHistory sHistory = sqlSession.selectOne("SHistoryMapper.selectTodaySupport");
+		return sHistory;
+	}
+
 	
 
 }

@@ -122,12 +122,35 @@ public interface SupportStore {
 	int updateSupportFund(SqlSession sqlSession, Support sOne);
 
 	/**
-	 * 후원 내역 확인 Store
+	 * 후원 여부 확인 Store
 	 * @param sqlSession
 	 * @param sHistory
 	 * @return int
 	 */
 	int getCountSHistory(SqlSession sqlSession, SupportHistory sHistory);
+
+	/**
+	 * 후원 내역 조회 Store
+	 * @param sqlSession
+	 * @param sNo
+	 * @return List
+	 */
+	List<SupportHistory> selectSHistoryList(SqlSession sqlSession, int sNo);
+
+	/**
+	 * 후원 내역 갯수 조회 Store
+	 * @param sqlSession
+	 * @param sNo 
+	 * @return int
+	 */
+	int getHistoryListCount(SqlSession sqlSession, int sNo);
+
+	/**
+	 * 오늘 후원 내역 조회 Store
+	 * @param sqlSession
+	 * @return SupportHistory
+	 */
+	SupportHistory selectTodaySupport(SqlSession sqlSession);
 
 
 }
