@@ -114,18 +114,18 @@
 												
 												
 												<input type="text" id="uId" value="${user.uId }" style="margin-top: -10px;" readonly><br> 
-													<span id="duplResult" style="font-size: 0.7em; width: 100%;"></span><br>
+													<span id="duplResult" style="font-size: 0.8em; width: 100%;"></span><br>
 												
 												<input type="password" name="uPw" id="uPw" value="${user.uPw }"><br> 
-													<span id="duplPwResult" style="font-size: 0.7em; width: 100%;"></span><br>
+													<span id="duplPwResult" style="font-size: 0.8em; width: 100%;"></span><br>
 												
 												<input type="password" name="uPwRe" id="uPwRe" value="${user.uPw }"><br> 
-													<span id="duplPwReResult" style="font-size: 0.7em; width: 100%;"></span><br>
+													<span id="duplPwReResult" style="font-size: 0.8em; width: 100%;"></span><br>
 											
 												<input type="text" value="${user.uName }" name="uName" readonly><br><br> 
 												
 												<input type="text" id="uNickName" name="uNickName" value="${user.uNickName }"><br> 
-													<span id="duplNickResult" style="font-size: 0.7em; width: 100%;"></span><br>
+													<span id="duplNickResult" style="font-size: 0.8em; width: 100%;"></span><br>
 												
 												<input type="text" name="uEmailPrefix" id="uEmailPrefix" value="${fn:substringBefore(user.uEmail, '@')}"
 													oninput="combineEmail()" style="width: 199px;" required>@
@@ -148,7 +148,7 @@
 												<button type="button" id="mailCheck">확인</button><br><br>
 												
 												<input type="tel" name="uPhone"  id="uPhone" value="${user.uPhone }"><br> 
-													<span id="duplPhoneResult" style="font-size: 0.7em; width: 100%;"></span><br>
+													<span id="duplPhoneResult" style="font-size: 0.8em; width: 100%;"></span><br>
 												
 												<div>
 												<input type="address" id="userZipcode" value="${user.uAddrNo }" name="uAddrNo" style="width: 58.4%;;" required>

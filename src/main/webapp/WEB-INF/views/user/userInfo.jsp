@@ -49,7 +49,7 @@
 									</ul></li>
 								<li><a href="#">병원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchHospital.pet">즐겨찾는 병원</a></li>
+										<li><a href="/user/uHospital.pet">즐겨찾는 병원</a></li>
 										<li><a href="/user/searchHospitalReview.pet">병원리뷰</a></li>
 									</ul></li>
 							</ul>

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,8 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lounge.pet.board.domain.Board;
+import com.lounge.pet.hospital.domain.HBookmark;
+import com.lounge.pet.hospital.domain.Hospital;
+import com.lounge.pet.hospital.service.HospitalService;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportHistory;
+import com.lounge.pet.user.domain.UPageInfo;
 import com.lounge.pet.user.domain.User;
 
 import com.lounge.pet.user.service.UserService;
@@ -32,6 +37,8 @@ public class UserController {
 
 	@Autowired
 	private UserService uService;
+	
+
 
 	// 비밀번호 재확인 페이지 user/checkPw.pet
 	@RequestMapping(value = "/user/checkPw.pet", method = RequestMethod.GET)
@@ -565,16 +572,26 @@ public class UserController {
 		return mv;
 	}
 
-	// 나의 즐겨찾는 병원 페이지 user/searchHospital.pet
-	@RequestMapping(value = "/user/searchHospital.pet", method = RequestMethod.GET)
-	public ModelAndView userHospitalPage(ModelAndView mv, HttpSession session) {
+	// 나의 즐겨찾는 병원 페이지 user/uHospital.pet
+	@RequestMapping(value = "/user/uHospital.pet", method = RequestMethod.GET)
+	public ModelAndView userHospitalPage(ModelAndView mv, HttpSession session
+			,@RequestParam(value = "page", required=false, defaultValue = "1") Integer currentPage) {
 		try {
 			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
 			if (sessionId != "" && sessionId != null) {
 				User user = uService.selectOneById(sessionId);
 				if (user != null) {
-					mv.addObject("user", user);
-					mv.setViewName("/user/uHospitalList");
+					
+						Integer totalCount = uService.getListCount(sessionId);
+						UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+				
+						List<Hospital> hList = uService.selectHos(sessionId, aInfo);
+						
+						mv.addObject("aInfo", aInfo);
+						mv.addObject("hList", hList);
+						mv.addObject("user", user);
+						mv.setViewName("/user/uHospitalList");
+						
 				} else {
 					mv.addObject("msg", "병원목록 조회 실패");
 					mv.addObject("url", "/home.pet");
@@ -593,7 +610,45 @@ public class UserController {
 		}
 		return mv;
 	}
+	
+	
+	
+	//즐겨찾는 병원 리스트 검색
+	@RequestMapping(value = "/user/searchHospital.pet", method = RequestMethod.GET)
+	public String userHospitalSearchPage(
+			@RequestParam("searchCondition") String searchCondition
+			, @ RequestParam("searchKeyword") String searchKeyword
+			, @ RequestParam(value="page", required=false, defaultValue="1") Integer currentPage
+			, Model model, HttpSession session) {
 
+		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("searchCondition", searchCondition);
+		paramMap.put("searchKeyword", searchKeyword);
+		paramMap.put("uId", sessionId);
+		
+		int totalCount = uService.getListCount(paramMap);
+		UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+		
+		List<Hospital> hList = uService.searchUserByKeyword(aInfo, paramMap);
+		
+		if(!hList.isEmpty()) {
+//			model.addAttribute("searchCondition", searchCondition); paramMap으로 써도 됨
+//			model.addAttribute("searchKeyword", searchKeyword);
+			model.addAttribute("paramMap", paramMap);
+			model.addAttribute("aInfo", aInfo);
+			model.addAttribute("hList", hList);
+			return "/user/uHospitalSearchList";
+		} else {
+			model.addAttribute("msg", "서비스 실패");
+			model.addAttribute("url", "/user/uHospital.pet");
+			return "common/errorPage";
+		}
+	}
+	
+	
+	
+	
 	// 나의 병원 리뷰 페이지 user/searchHospitalReview.pet
 	@RequestMapping(value = "/user/searchHospitalReview.pet", method = RequestMethod.GET)
 	public ModelAndView userHospitalReviewPage(ModelAndView mv, HttpSession session) {
@@ -730,6 +785,29 @@ public class UserController {
 		if (file.exists() && (!fileName.equals("profile.png"))) {
 			file.delete();
 		}
+	}
+	
+	
+	//병원 리스트 페이징
+	private UPageInfo getPageInfo(Integer currentPage, Integer totalCount) {
+		int recordCountPerPage = 3;
+		int naviCountPerPage = 5;
+		
+		int naviTotalCount;
+		naviTotalCount 
+			= (int)Math.ceil((double)totalCount/recordCountPerPage);   //6.2 -> 7 올림해주는 식
+		
+		int startNavi = ((int)((double)currentPage/naviCountPerPage+0.9)-1)*naviCountPerPage+1;  //이거뭐냐...
+		
+		int endNavi = startNavi + naviCountPerPage - 1;
+		
+		if(endNavi > naviTotalCount) {
+			endNavi = naviTotalCount;
+		}
+			
+		UPageInfo aInfo = new UPageInfo(currentPage, totalCount, naviTotalCount, recordCountPerPage, naviCountPerPage, startNavi, endNavi);
+		
+		return aInfo;
 	}
 
 }

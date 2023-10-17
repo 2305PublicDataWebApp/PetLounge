@@ -207,18 +207,18 @@ section[id^="content"]:target {
 									
 									
 									<input type="text" id="uId" name="uId" placeholder="아이디를 입력하세요" required><br>
-										<span id="duplResult" style="font-size: 0.7em; width: 100%;"></span><br>
+										<span id="duplResult" style="font-size: 0.8em; width: 100%;"></span><br>
 										
 									<input type="password" name="uPw" id="uPw" placeholder="영문, 숫자 조합 6~12자" required><br>
-										<span id="duplPwResult" style="font-size: 0.7em; width: 100%;"></span><br>
+										<span id="duplPwResult" style="font-size: 0.8em; width: 100%;"></span><br>
 										
 									<input type="password" name="uPwRe" id="uPwRe" placeholder="영문, 숫자 조합 6~12자" required><br>
-										<span id="duplPwReResult" style="font-size: 0.7em; width: 100%;"></span><br>
+										<span id="duplPwReResult" style="font-size: 0.8em; width: 100%;"></span><br>
 										
 									<input type="text" name="uName" placeholder="이름을 입력하세요." required><br><br>
 									
 									<input type="text" id="uNickName" name="uNickName" placeholder="닉네임을 입력하세요." required><br>
-										<span id="duplNickResult" style="font-size: 0.7em; width: 100%;"></span><br>
+										<span id="duplNickResult" style="font-size: 0.8em; width: 100%;"></span><br>
 										
 									<input type="text" name="uEmailPrefix" id="uEmailPrefix" placeholder="이메일을 입력하세요." oninput="combineEmail()" style="width: 177px;" required>
 									@ <select name="uEmailSuffix" id="uEmailSuffix" size="1" style="border-radius: 20px;" onchange="combineEmail()">
@@ -229,14 +229,14 @@ section[id^="content"]:target {
 										<option>nate.com</option>
 									</select> 
 									<input type="hidden" name="uEmail" id="uEmail" value="">
-										<span id="duplEmailResult" style="font-size: 0.7em; width: 200px;"></span>
+										<span id="duplEmailResult" style="font-size: 0.8em; width: 200px;"></span>
 									<button id="" class="dupl" style="margin-bottom: 17px; height: 20px;">메일인증</button>
 									
 									<input type="text" placeholder="인증번호를 입력하세요" style="width: 58.4%;;" required>
 									<button type="button" id="mailCheck">확인</button><br><br>
 									
 									<input type="tel" name="uPhone"  id="uPhone"  placeholder="예) 01012341375" required><br>
-										<span id="duplPhoneResult" style="font-size: 0.7em; width: 100%;"></span><br>
+										<span id="duplPhoneResult" style="font-size: 0.8em; width: 100%;"></span><br>
 										
 										<div>
 										<input type="text" id="userZipcode" name="uAddrNo" placeholder="우편번호" style="width: 58.4%;;" required>
