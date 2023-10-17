@@ -1,11 +1,16 @@
 package com.lounge.pet;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.service.SupportService;
 
 @Controller
@@ -22,7 +27,15 @@ public class HomeController {
 	@RequestMapping(value = "/home.pet", method = RequestMethod.GET)
 	public ModelAndView home(ModelAndView mv) {
 
-//		List<Support> sList = sService.selectSupportList();
+		// 후원 내역
+		String category = "all";
+		String sort = "latest";
+		Map<String, String> sMap = new HashMap();
+		sMap.put("category", category);
+		sMap.put("sort", sort);
+		List<Support> sList = sService.selectSupportList(sMap);
+		sList = sList.subList(0, 3);
+		mv.addObject("sList", sList);
 		mv.setViewName("home");
 		return mv;
 	}

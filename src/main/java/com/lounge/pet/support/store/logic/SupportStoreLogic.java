@@ -34,7 +34,7 @@ public class SupportStoreLogic implements SupportStore{
 
 	@Override
 	public int getHistoryCount(SqlSession sqlSession, int sNo) {
-		int result = sqlSession.selectOne("SHistoryMapper.getTotalCount", sNo);
+		int result = sqlSession.selectOne("SHistoryMapper.getHistoryCount", sNo);
 		return result;
 	}
 
@@ -110,11 +110,6 @@ public class SupportStoreLogic implements SupportStore{
 		return sHList;
 	}
 
-	@Override
-	public int getHistoryListCount(SqlSession sqlSession, int sNo) {
-		int result = sqlSession.selectOne("SHistoryMapper.getHistoryListCount", sNo);
-		return result;
-	}
 
 	@Override
 	public SupportHistory selectTodaySupport(SqlSession sqlSession) {

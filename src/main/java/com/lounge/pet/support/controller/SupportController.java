@@ -131,7 +131,7 @@ public class SupportController {
 			sHistory.setuId(uId);
 			sHistory.setsNo(sNo);
 			int sHistoryCount = sService.getCountSHistory(sHistory); // 후원 여부 uId, sNo로 조회 
-			int totalHistoryCount = sService.getHistoryListCount(sNo); // 후원 내역 갯수 sNo로 조회 
+			int totalHistoryCount = sService.getHistoryCount(sNo); // 후원 내역 갯수 sNo로 조회 
 			if(support != null) {
 				mv.addObject("totalHistoryCount", totalHistoryCount);
 				mv.addObject("sHistoryCount", sHistoryCount);
@@ -433,6 +433,7 @@ public class SupportController {
 		for (SupportReply sReply : sRList) {
 	        User user = uService.selectOneById(sReply.getuId()); 
 	        sReply.setsRWriter(user.getuNickName());
+	        sReply.setuFilePath(user.getuFilePath());
 	    }
 		
 		// 전체 페이지 수 계산 (댓글의 총 갯수를 페이지당 댓글 갯수로 나눠서 계산) 
@@ -478,10 +479,12 @@ public class SupportController {
 			if(sHistory.getsHType() == "A") {
 				sHistory.setsHName("숨은천사");
 			}
+			User user = uService.selectOneById(sHistory.getuId());
+			sHistory.setuFilePath(user.getuFilePath());
 		}
 		
 		// 전체 페이지 수 계산 (후원내역의 총 갯수를 페이지당 후원내역 갯수로 나눠서 계산) 
-		int totalRecords = sService.getHistoryListCount(sNo); // 후원내역의 총 갯수 
+		int totalRecords = sService.getHistoryCount(sNo); // 후원내역의 총 갯수 
 		int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 후원내역 페이지 수 
 		
 		// 후원내역 리스트와 전체 페이지 수를 Map에 담아서 보냄 

@@ -61,10 +61,10 @@
 	                        <div class="input">
 	                            <select name="sCategory" id="s-category" class="no-border">
 	                                <option value="none" style="color:#ccc;" selected disabled>카테고리를 선택해주세요.</option>
-	                                <option value="주거">주거</option>
-	                                <option value="생계">생계</option>
-	                                <option value="건강">건강</option>
-	                                <option value="개선">개선</option>
+	                                <option value="residence">주거</option>
+	                                <option value="living">생계</option>
+	                                <option value="health">건강</option>
+	                                <option value="improvement">개선</option>
 	                            </select> 
 	                        </div>
 	                        <div class="input">

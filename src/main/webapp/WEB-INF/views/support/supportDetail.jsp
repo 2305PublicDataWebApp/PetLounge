@@ -23,7 +23,7 @@
             <section id="content">
                 <div id="content-left">
                     <div class="content-left-top">
-                        <span style="margin-right:20px; width: 95px;">
+                        <span style="margin-right:20px; width: 100px;">
                         	<h3 class="h3" style="color: #FFD370;">
                         		<c:if test="${support.sCategory == 'residence' }">[ 주거 ]</c:if>
                         		<c:if test="${support.sCategory == 'living' }">[ 생계 ]</c:if>
@@ -297,61 +297,6 @@
 			    return formattedDate;
 			};
 			
-			// 후원 내역 갯수에 , 붙이기 
-			const formattedCount = (${totalHistoryCount }).toLocaleString();
-			$("#history-total").text(formattedCount);
-			
-			// 후원 내역 리스트를 불러오는 ajax Function 
-			const getHistoryList = () => {
-				const sNo = ${support.sNo };
-				$.ajax({
-					url : "/sHistory/list.pet",
-					data : { sNo : sNo, currentPage: currentPage }, // 현재 페이지와 페이지당 댓글 수 전달
-					type : "GET",
-					success : function(resultMap) {
-						const tableBody = $("#history-table tbody");
-						tableBody.html('');
-						let tr;
-						let left;
-						let center;
-						let right;
-						
-						const sHList = resultMap.sHList; // 댓글 리스트 
-						totalHistoryPages = resultMap.totalPages; // 총 페이지 수
-				        
-						if(sHList.length > 0) {
-							for(let i in sHList) {
-								let sHName = sHList[i].sHName;
-								if(sHList[i].sHType == 'A') {
-									sHName = '숨은천사';
-								}
-								
-								tr = $("<tr>"); // <tr></tr>
-								left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;'></div>"); 
-								center = $("<td class='td'>").html(
-										"<div class='user-info-div'><span class='support-history-date'>"+getFormattedTimestamp(sHList[i].sHPaydate)+"</span></div>"
-										+ "<div class='history-content'><span class='user-nickname'>"+sHName+"</span>"
-										+ "<span class='support-amount'><span style='color:#FFD370;'>"+(sHList[i].sHAmount).toLocaleString()+"</span>원 참여</span></div>"); 
-								right = $("<td class='td'>").html("");
-				
-								tr.append(left);
-								tr.append(center);
-								tr.append(right); 
-								tableBody.append(tr); 
-								
-								// 결과를 받은 후에 페이징을 업데이트
-					            createHistoryPagination(totalHistoryPages);
-							}
-						} else {
-							tr = $("<tr class='td'><td class='td'colspan='3'style='width:725px;'><div width='100%' style='color: lightgray;'>후원 내역이 없습니다.</div></td></tr>");
-							tableBody.append(tr);
-						}
-					},
-					error : function() {
-						alert("Ajax 오류! 관리자에게 문의하세요.");
-					}
-				});
-			}
 			
 			
 			// 댓글 리스트를 불러오는 ajax Function 
@@ -382,7 +327,8 @@
 								}
 								
 								tr = $("<tr>"); // <tr></tr>
-								left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;'></div>"); 
+								left = $("<td class='td'>").html("<div class='profile-div'>"
+										+"<img src='"+sRList[i].uFilePath+"' class='profile-img' onerror='this.src=\"../resources/userUploadFiles/profile.png\"'></div>"); 
 								center = $("<td class='td'>").html(
 										"<div class='user-info-div'><span class='user-nickname'>"+sRList[i].sRWriter+"</span><span class='reply-create-date'>"
 										+ ""+sRDate+"</span></div><div class='reply-content'>"+sRList[i].sRContent+"</div>"); 
@@ -487,6 +433,65 @@
 			    if (currentGroup < numGroups) {
 			        changeGroup(currentGroup + 1);
 			    }
+			}
+			
+			// 후원 내역 갯수에 , 붙이기 
+			const formattedCount = (${totalHistoryCount }).toLocaleString();
+			$("#history-total").text(formattedCount);
+			
+			// 후원 내역 리스트를 불러오는 ajax Function 
+			const getHistoryList = () => {
+				const sNo = ${support.sNo };
+				$.ajax({
+					url : "/sHistory/list.pet",
+					data : { sNo : sNo, currentPage: currentPage }, // 현재 페이지와 페이지당 댓글 수 전달
+					type : "GET",
+					success : function(resultMap) {
+						const tableBody = $("#history-table tbody");
+						tableBody.html('');
+						let tr;
+						let left;
+						let center;
+						let right;
+						
+						const sHList = resultMap.sHList; // 댓글 리스트 
+						totalHistoryPages = resultMap.totalPages; // 총 페이지 수
+				        
+						if(sHList.length > 0) {
+							for(let i in sHList) {
+								let sHName = sHList[i].sHName;
+								let uFilePath = sHList[i].uFilePath;
+								if(sHList[i].sHType == 'A') {
+									sHName = '숨은천사';
+									uFilePath = '../resources/userUploadFiles/profile.png';
+								}
+								
+								
+								tr = $("<tr>"); // <tr></tr>
+								left = $("<td class='td'>").html("<div class='profile-div'><img src='"+uFilePath+"' class='profile-img' onerror='this.src=\"../resources/userUploadFiles/profile.png\"'></div>"); 
+								center = $("<td class='td'>").html(
+										"<div class='user-info-div'><span class='support-history-date'>"+getFormattedTimestamp(sHList[i].sHPaydate)+"</span></div>"
+										+ "<div class='history-content'><span class='user-nickname'>"+sHName+"</span>"
+										+ "<span class='support-amount'><span style='color:#FFD370;'>"+(sHList[i].sHAmount).toLocaleString()+"</span>원 참여</span></div>"); 
+								right = $("<td class='td'>").html("");
+				
+								tr.append(left);
+								tr.append(center);
+								tr.append(right); 
+								tableBody.append(tr); 
+								
+								// 결과를 받은 후에 페이징을 업데이트
+					            createHistoryPagination(totalHistoryPages);
+							}
+						} else {
+							tr = $("<tr class='td'><td class='td'colspan='3'style='width:725px;'><div width='100%' style='color: lightgray;'>후원 내역이 없습니다.</div></td></tr>");
+							tableBody.append(tr);
+						}
+					},
+					error : function() {
+						alert("Ajax 오류! 관리자에게 문의하세요.");
+					}
+				});
 			}
 			
 			

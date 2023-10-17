@@ -69,7 +69,7 @@
             	<div class="container" data-aos="fade-up">
 	                <div class="row gy-4 portfolio-container" id="portfolio">
 	                
-						<!-- 이자리에 게시글 들어와야 함  -->
+						<!-- 이자리에 후원 목록 들어와야 함  -->
 						
 	                </div>
                 </div>
@@ -78,7 +78,9 @@
             <section id="page-wrap">
 				<div class="mt-5 d-flex justify-content-center">
 					<nav aria-label="Page navigation exampler">
-					    <ul id="pagination" class="pagination"></ul>
+					    <ul id="pagination" class="pagination">
+					    	<!-- 이자리에 후원 목록 페이징 들어와야 함  -->
+					    </ul>
 					</nav>
                 </div>
             </section>
@@ -319,10 +321,12 @@
             
             const category = getCurrentSearch().category;
 		    currentPage = 1; 
-			// 새로운 상태를 히스토리에 추가	
+			// 새로운 상태를 히스토리에 추가
 		    history.pushState({ page: currentPage, category: category, sort : sort }, null, "/support/sList.pet?currentPage="+currentPage+"&category=" + category+"&sort="+sort);
-		    getSupportList(currentPage);
+		    
+			getSupportList(currentPage);
             }
+            
             // 옵션 클릭시 클릭한 옵션을 넘김
             options.forEach(option => {
                 option.addEventListener('click', () => handleSelect(option))

@@ -14,6 +14,7 @@ public class SupportHistory {
 	private String sHType;
 	private int todayCount;
 	private int todayAmount;
+	private String uFilePath;
 	
 	public int getsHNo() {
 		return sHNo;
@@ -95,11 +96,20 @@ public class SupportHistory {
 		this.todayAmount = todayAmount;
 	}
 
+	public String getuFilePath() {
+		return uFilePath;
+	}
+
+	public void setuFilePath(String uFilePath) {
+		this.uFilePath = uFilePath;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "후원 내역 [후원 내역 번호=" + sHNo + ", 후원글 번호=" + sNo + ", 회원 아이디=" + uId + ", 후원자닉네임=" + sHName + ", 후원 금액="
 				+ sHAmount + ", 후원결제일자=" + sHPaydate + ", 결제 방법=" + sHPaytype + ", 후원자 타입=" + sHType
-				+ ", 오늘후원수=" + todayCount + ", 오늘후원금액=" + todayAmount + "]";
+				+ ", 오늘후원수=" + todayCount + ", 오늘후원금액=" + todayAmount + ", 이미지경로=" + uFilePath + "]";
 	}
 
 	
