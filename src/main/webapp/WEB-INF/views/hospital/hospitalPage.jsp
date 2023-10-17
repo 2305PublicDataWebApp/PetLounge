@@ -606,7 +606,7 @@
 			    		 success: function(data) {
 		    			 	totalPages = data.totalPages; // 총 페이지 수
 			    			showListFunc(data.hList);
-		    			 	createPagination(data.totalPages, data.searchKeyword);
+		    			 	createPagination(totalPages, data.searchKeyword);
 			    			
 							var hospitalListTitle = document.querySelector('th[colspan="5"]');
 							hospitalListTitle.innerHTML = '<span style="color: #FFD370;">' + searchKeyword + '</span> 검색 결과';
@@ -637,7 +637,7 @@
 			    if (currentGroup > 1) {
 			        const prevLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>');
 			        prevLi.click(() => {
-			            goToPreviousGroup();
+			            goToPreviousGroup(keyword);
 			        });
 			        paginationUl.append(prevLi);
 			    }
@@ -659,7 +659,7 @@
 			    if (currentGroup < numGroups) {
 			        const nextLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>');
 			        nextLi.click(() => {
-			            goToNextGroup();
+			            goToNextGroup(keyword);
 			        });
 			        paginationUl.append(nextLi);
 			    }
@@ -672,26 +672,26 @@
 			}
 			
 			// 그룹 변경 시 호출되는 함수
-			const changeGroup = (newGroup) => {
+			const changeGroup = (newGroup, keyword) => {
 			    currentPage = (newGroup - 1) * naviCountPerPage + 1;
-			    searchHos(currentPage);
+			    searchHos(currentPage, keyword);
 			}
 	
 			// 이전 그룹으로 이동할 때 호출 
-			const goToPreviousGroup = () => {
+			const goToPreviousGroup = (keyword) => {
 			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
 			    if (currentGroup > 1) {
 			        const lastPageOfPreviousGroup = (currentGroup - 1) * naviCountPerPage;
-			        changePage(lastPageOfPreviousGroup);
+			        changePage(lastPageOfPreviousGroup, keyword);
 			    }
 			}
 	
 			// 다음 그룹으로 이동할 때 호출
-			const goToNextGroup = () => {
+			const goToNextGroup = (keyword) => {
 			    const numGroups = Math.ceil(totalPages / naviCountPerPage);
 			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
 			    if (currentGroup < numGroups) {
-			        changeGroup(currentGroup + 1);
+			        changeGroup(currentGroup + 1, keyword);
 			    }
 			}
 			

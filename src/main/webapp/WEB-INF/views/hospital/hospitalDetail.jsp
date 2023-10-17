@@ -498,9 +498,11 @@
 							for(let i in hRList) {
 								tr = $("<tr>"); // <tr></tr>
 								if(hRList[i].hRProfileImg == null){ // ********************** 프로필 이미지 추후 수정 필요 ******************
-									left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;'></div>"); 
+// 									left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;'></div>"); 
+									left = $("<td class='td'>").html("<img src='../resources/userUploadFiles/profile.png' width='50px' height='50px' style='border-radius: 100%; border: 2px solid #FFD370;'>");
 								} else {
-									left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-img: url(" + hRProfileImg + "); border-radius: 100%;'></div>");
+// 									left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-img: url(" + hRList[i].hRProfileImg + "); border-radius: 100%;'></div>");
+									left = $("<td class='td'>").html("<img src='" + hRList[i].hRProfileImg + "' width='50px' height='50px' style='border-radius: 100%; border: 2px solid #FFD370;'>");
 								}
 // 								center = $("<td class='td'>").html(
 // 										"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
