@@ -102,24 +102,24 @@
                     <!-- 지도 -->
                     <div>
 	                    <div>
-		                    <span class="material-symbols-outlined list-icon" onclick="goBacktoList();">
+		                    <span class="material-symbols-outlined list-icon" data-tooltip-text="돌아가기" onclick="goBacktoList();">
 								list	
 							</span>
 	                    </div>
 	                    <div>
-		                    <span class="material-symbols-outlined road-icon" onclick="getRoad();">
+		                    <span class="material-symbols-outlined road-icon" data-tooltip-text="길찾기" onclick="getRoad();">
 								directions
 							</span>
-							<span class="material-symbols-outlined camera-icon" onclick="getRoadView();">
+							<span class="material-symbols-outlined camera-icon" data-tooltip-text="로드뷰 보기" onclick="getRoadView();">
 								camera_video
 							</span>
 	                    	<c:if test="${ hBookmark eq 1 }">
-							    <span id="bookmark-icon" class="material-symbols-outlined bookmark-icon-fill" style="color: #FFD370;" onclick="hosBookmark(${ hOne.hNo });">
+							    <span id="bookmark-icon" class="material-symbols-outlined bookmark-icon-fill" data-tooltip-text="즐겨찾기" style="color: #FFD370;" onclick="hosBookmark(${ hOne.hNo });">
 							        bookmark
 							    </span>
 							</c:if>
 							<c:if test="${ hBookmark eq 0 }">
-							    <span id="bookmark-icon" class="material-symbols-outlined bookmark-icon-none" style="color: #FFD370;" onclick="hosBookmark(${ hOne.hNo });">
+							    <span id="bookmark-icon" class="material-symbols-outlined bookmark-icon-none" data-tooltip-text="즐겨찾기" style="color: #FFD370;" onclick="hosBookmark(${ hOne.hNo });">
 							        bookmark
 							    </span>
 							</c:if>
@@ -139,7 +139,6 @@
                     </div>
                 </div>
             </section>
-
             <!-- 후기 리스트 -->
             <section id="hospital-review-section">
                 <div id="review-title">
@@ -169,7 +168,7 @@
 						</div>
                 </div>
             </section>
-        
+            
             <!-- 수정 모달창 -->
             <section>
                 <div class="modal fade" id="modifyModal" tabindex="-1" aria-labelledby="modifyModalLabel" aria-hidden="true">
@@ -349,6 +348,7 @@
 		                    bookmark.classList.add('bookmark-icon-none');
 		                } else if (data == "loginFail") {
 		                    alert("로그인이 필요한 서비스입니다.");
+		                    location.href="/user/login.pet";
 		                } 
 		            },
 		            error: function () {
@@ -375,6 +375,7 @@
 							getReviewList();
 						} else if(data == "loginFail") {
 							alert("로그인이 필요한 서비스입니다."); 
+							location.href="/user/login.pet";
 						} else if (data == "empty") {
 		                	alert("후기 내용은 비워둘 수 없습니다.");
 		                } else {
@@ -415,6 +416,7 @@
 							getReviewList(); // 후기 목록 새로고침 
 						} else if(data == "loginFail") {
 							alert("로그인이 필요한 서비스입니다."); 
+							location.href="/user/login.pet";
 						} else if (data == "empty") {
 		                	alert("후기 내용은 비워둘 수 없습니다.");
 		                } else {
@@ -455,7 +457,6 @@
 				});
 			}
 			
-			<!-- 페이징 처리된 후기 조회 -->
 			// 후기 페이징 
 			let currentPage = 1; // 현재 페이지 
 			let recordCountPerPage = 5; // 페이지당 후기 수 

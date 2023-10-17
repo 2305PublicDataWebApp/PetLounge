@@ -113,4 +113,12 @@ public interface HospitalStore {
 	 */
 	int getHReviewTotalCount(SqlSession session, int hNo);
 
+	/**
+	 * 동물병원 검색결과 총 개수 Store
+	 * @param session
+	 * @param hSearchKeyword
+	 * @return
+	 */
+	int getHSearchTotalCount(SqlSession session, String hSearchKeyword);
+
 }

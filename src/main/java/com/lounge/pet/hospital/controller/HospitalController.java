@@ -37,7 +37,6 @@ public class HospitalController {
 	private UserService uService;
 	
 	// 동물병원 안내 페이지
-	@ResponseBody
 	@GetMapping("/hospital/page.pet")
 	public ModelAndView hospitalPage(@RequestParam(value="hSearchKeyword", required = false) String hSearchKeyword
 									, HttpSession session
@@ -65,24 +64,24 @@ public class HospitalController {
 	}
 	
 //	 메인페이지에서 검색했을 때, 동물병원 안내 페이지에 검색 결과 반영
-	@GetMapping("/hospital/searchFromMain.pet")
-	public ModelAndView hospitalPageFromMain(@RequestParam("hSearchKeyword") String hSearchKeyword
-											, HttpSession session
-											, ModelAndView mv) {
-		try {
-			String sessionId = (String) session.getAttribute("uId");
-			
-			if(sessionId != null) {
-				User user = uService.selectOneById(sessionId);
-				mv.addObject("user", user);
-			}
-			mv.addObject("hSearchKeyword", hSearchKeyword);
-			mv.setViewName("/hospital/hospitalPage");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return mv;
-	}
+//	@GetMapping("/hospital/searchFromMain.pet")
+//	public ModelAndView hospitalPageFromMain(@RequestParam("hSearchKeyword") String hSearchKeyword
+//											, HttpSession session
+//											, ModelAndView mv) {
+//		try {
+//			String sessionId = (String) session.getAttribute("uId");
+//			
+//			if(sessionId != null) {
+//				User user = uService.selectOneById(sessionId);
+//				mv.addObject("user", user);
+//			}
+//			mv.addObject("hSearchKeyword", hSearchKeyword);
+//			mv.setViewName("/hospital/hospitalPage");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return mv;
+//	}
 	
 	// 동물병원 리스트 가져오기
 	@ResponseBody
@@ -113,18 +112,58 @@ public class HospitalController {
 	}
 			
 	// 동물병원 검색 기능
+//	@ResponseBody
+//	@GetMapping("/hospital/search.pet")
+//	public String hospitalSearch(@RequestParam("latitude") Double latitude
+//								, @RequestParam("longitude") Double longitude
+//								, @RequestParam("hSearchKeyword") String hSearchKeyword
+//								, HttpSession session) {
+//		
+//		String sessionId = (String) session.getAttribute("uId");
+//		Hospital userSearchLocation = new Hospital(latitude, longitude, sessionId, hSearchKeyword);
+//		List<Hospital> hList = hService.selectFiveByKeyword(userSearchLocation);
+//		Gson gson = new Gson();
+//		return gson.toJson(hList);
+//	}
+	
 	@ResponseBody
 	@GetMapping("/hospital/search.pet")
 	public String hospitalSearch(@RequestParam("latitude") Double latitude
-								, @RequestParam("longitude") Double longitude
-								, @RequestParam("hSearchKeyword") String hSearchKeyword
-								, HttpSession session) {
+			, @RequestParam("longitude") Double longitude
+			, @RequestParam("hSearchKeyword") String hSearchKeyword
+			, @RequestParam("currentPage") int currentPage
+			, @RequestParam("recordCountPerPage") int recordCountPerPage
+			, HttpSession session) {
 		
 		String sessionId = (String) session.getAttribute("uId");
+		
+		// 페이징을 적용하여 검색결과 데이터를 가져오도록 구현 
+	    int start = (currentPage - 1) * recordCountPerPage;
+	    int end = start + recordCountPerPage;
+		
 		Hospital userSearchLocation = new Hospital(latitude, longitude, sessionId, hSearchKeyword);
 		List<Hospital> hList = hService.selectFiveByKeyword(userSearchLocation);
+		
+		// 범위 체크를 통해 부분 리스트 추출
+	    if (start < hList.size()) {
+	        end = Math.min(end, hList.size());
+	        hList  = hList.subList(start, end);
+	    } else {
+	    	hList  = Collections.emptyList();
+	    }
+	    
+	    // 전체 페이지 수 계산 (검색결과의 총 갯수를 페이지당 후기 갯수로 나눠서 계산) 
+	    int totalRecords = hService.getHSearchTotalCount(hSearchKeyword); // 검색결과의- 총 갯수 
+	    int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 전체 페이지 수 
+	    
+	    // 검색결과 리스트와 전체 페이지 수를 Map에 담아서 보냄 
+	    Map<String, Object> resultMap = new HashMap<>();
+	    resultMap.put("hList", hList);
+	    resultMap.put("totalPages", totalPages);
+	    resultMap.put("searchKeyword", hSearchKeyword);
+	    
 		Gson gson = new Gson();
-		return gson.toJson(hList);
+		return gson.toJson(resultMap);
 	}
 	
 	// 동물병원 즐겨찾기 기능

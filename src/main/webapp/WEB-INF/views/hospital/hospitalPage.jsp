@@ -9,6 +9,7 @@
         <jsp:include page="../include/importSource.jsp"></jsp:include>
         <link rel="stylesheet" href="/resources/css/hospital/hospitalPage.css">
         <link rel="stylesheet" href="/resources/css/hospital/hosMap.css">        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" />
         <!-- 카카오맵 API services와 clusterer 라이브러리 불러오기 -->
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9674da3ceea3cb3a1acdb7044a416e8&libraries=services,clusterer"></script>
         <title>동물병원 안내</title>
@@ -78,21 +79,20 @@
 					<c:if test="${ hSearchKeyword eq null }">
 						<input type="search" name="hSearchKeyword" id="h-search-keyword" class="search-input" placeholder="찾고자 하는 주소 또는 동물 병원의 이름을 입력하세요">                     	
 					</c:if>
-					<span class="material-symbols-outlined search-icon" onclick="searchHos();" style="font-size: 3em; color: #FFD370; cursor: pointer; margin-left: 10px;">
+<!-- 					<span class="material-symbols-outlined search-icon" onclick="searchHos();" style="font-size: 3em; color: #FFD370; cursor: pointer; margin-left: 10px;"> -->
+					<span class="material-symbols-outlined search-icon" id="search-icon" style="font-size: 3em; color: #FFD370; cursor: pointer; margin-left: 10px;">
 				        search
 				    </span>
 				</div>
                 <div id="map-div">
                     <!-- 기본 주소로 돌아가기 -->
                     <div>
-                        <span class="material-symbols-outlined home-icon" style="font-size: 3.5em; color: #FFD370; cursor: pointer;" onclick="defaultLatLng();">
+                        <span class="material-symbols-outlined home-icon" data-tooltip-text="기본 주소로 이동" style="font-size: 3em; color: #FFD370; cursor: pointer;" onclick="defaultLatLng();">
                             home_pin
                         </span>
-                        <p class="home-info-box">기본 주소로 이동</p>
-                        <span class="material-symbols-outlined gps-icon" style="font-size: 2.5em; cursor: pointer;" onclick="myGps();">
+                        <span class="material-symbols-outlined gps-icon" data-tooltip-text="현위치로 이동" style="font-size: 2.5em; cursor: pointer;" onclick="myGps();">
 							my_location
 						</span>
-						<p class="home-info-box">현위치</p>
                     </div>
                     <!-- 지도 -->
                     <div id="map" style="position:relative;overflow:hidden;">
@@ -112,31 +112,36 @@
 
        		<!-- 동물병원 리스트 -->
 			<section id="hospital-list-section">
-			    <table>
-			        <colgroup>
-			            <col style="width: 5%;">
-			            <col style="width: 23%;">
-			            <col style="width: 22%;">
-			            <col style="width: 50%;">
-			        </colgroup>
-			        <thead>
-			            <th colspan="5">내 주변 동물병원</th>
-			        </thead>
-			        <tbody id="hospital-list-body">
-			        </tbody>
-			    </table>
+				<div>
+				    <table>
+				        <colgroup>
+				            <col style="width: 5%;">
+				            <col style="width: 23%;">
+				            <col style="width: 22%;">
+				            <col style="width: 50%;">
+				        </colgroup>
+				        <thead>
+				            <th colspan="5">내 주변 동물병원</th>
+				        </thead>
+				        <tbody id="hospital-list-body">
+				        </tbody>
+				    </table>
+				</div>
+		        <div id="page-navigation">
+				    <ul id="pagination" class="pagination pagination-sm"></ul>
+				</div>
 			</section>
         </main>
         
 		<jsp:include page="../include/footer.jsp"></jsp:include>
 		
 		<script>
-			window.onload = function () {
-			    var searchKeyword = document.getElementById('h-search-keyword').value;
-			    if (searchKeyword.trim() !== '') {
-			        searchHos();
-			    }
-			};
+// 			window.onload = function () {
+// 			    var searchKeyword = document.getElementById('h-search-keyword').value;
+// 			    if (searchKeyword.trim() !== '') {
+// 			        searchHos();
+// 			    }
+// 			};
 		</script>
 
 		<!-- 카카오맵 API 지도 스크립트 -->
@@ -538,35 +543,6 @@
 				document.getElementById('h-search-keyword').value = '';
 			}
 			
-			// 동물병원 검색 ajax
-			function searchHos() {
-				var searchKeyword = document.getElementById('h-search-keyword').value;
-				
-				if (searchKeyword.trim() !== '') {
-			    	$.ajax ({
-			    		 url: "/hospital/search.pet",
-			    		 type: "GET",
-			    		 dataType: "json",
-			    		 data: {
-			    			latitude: lat,
-				            longitude: lng,
-				            hSearchKeyword: searchKeyword
-			    		 },
-			    		 success: function(data) {
-			    			showListFunc(data);
-			    			
-							var hospitalListTitle = document.querySelector('th[colspan="5"]');
-							hospitalListTitle.innerHTML = '<span style="color: #FFD370;">' + searchKeyword + '</span> 검색 결과';
-			    		 },
-			    		 error: function(){
-			    			 alert("동물병원 검색 오류. 관리자에게 문의 바랍니다.");
-			    		 }
-			    	 });
-				} else {
-					createMap(lat, lng);
-				}
-			}
-			
 			// 즐겨찾기 ajax
 			function addToHBookmark(bookmarkHNo, bookmark) {
 		        $.ajax({
@@ -586,6 +562,7 @@
 		                    bookmark.classList.add('bookmark-icon-none');
 		            	} else if(data == "loginFail") {
 			                alert("로그인이 필요한 서비스입니다.");
+			                location.href="/user/login.pet";
 		            	} 
 		            },
 		            error: function () {
@@ -593,6 +570,138 @@
 		            }
 		        });
 		    }
+			
+			
+			
+			<!-- 페이징 처리된 검색결과 조회 -->
+			// 검색결과 페이징 
+			let currentPage = 1; // 현재 페이지 
+			let recordCountPerPage = 5; // 페이지당 검색결과 수 
+			let naviCountPerPage = 5; // 한 그룹당 페이지 수
+			let totalPages = 0; // 총 페이지 수
+			
+			document.getElementById("search-icon").addEventListener("click", function() {
+			    currentPage = 1;
+			    searchHos(currentPage, "");
+			});
+			
+			// 동물병원 검색 ajax
+			function searchHos(currentPage, keyword) {
+				var searchKeyword = document.getElementById('h-search-keyword').value;
+				if(keyword != "" && keyword != searchKeyword) {
+					searchKeyword = keyword;
+				}
+				if (searchKeyword.trim() !== '') {
+			    	$.ajax ({
+			    		 url: "/hospital/search.pet",
+			    		 type: "GET",
+			    		 dataType: "json",
+			    		 data: {
+			    			latitude: lat,
+				            longitude: lng,
+				            hSearchKeyword: searchKeyword,
+				            currentPage: currentPage, 
+							recordCountPerPage: recordCountPerPage 
+			    		 },
+			    		 success: function(data) {
+		    			 	totalPages = data.totalPages; // 총 페이지 수
+			    			showListFunc(data.hList);
+		    			 	createPagination(data.totalPages, data.searchKeyword);
+			    			
+							var hospitalListTitle = document.querySelector('th[colspan="5"]');
+							hospitalListTitle.innerHTML = '<span style="color: #FFD370;">' + searchKeyword + '</span> 검색 결과';
+			    		 },
+			    		 error: function(){
+			    			 alert("동물병원 검색 오류. 관리자에게 문의 바랍니다.");
+			    		 }
+			    	 });
+			    	
+				} else {
+					createMap(lat, lng);
+				}
+			}
+			
+			// 페이지 만들기 
+			const createPagination = (totalPages, keyword) => {
+			    const paginationUl = $("#pagination");
+			    paginationUl.empty(); // 이전의 페이징 링크를 지움
+			    
+			    const naviCountPerPage = 5; // 한 그룹당 페이지 수
+			    const numGroups = Math.ceil(totalPages / naviCountPerPage); // 총 그룹 수
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage); // 현재 페이지가 속한 그룹
+	
+			    let startPage = (currentGroup - 1) * naviCountPerPage + 1;
+			    let endPage = Math.min(currentGroup * naviCountPerPage, totalPages);
+			    
+			 	// "이전" 버튼 추가
+			    if (currentGroup > 1) {
+			        const prevLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>');
+			        prevLi.click(() => {
+			            goToPreviousGroup();
+			        });
+			        paginationUl.append(prevLi);
+			    }
+			 	// 페이지 링크 추가
+			    for (let i = startPage; i <= endPage; i++) {
+			        const li = $('<li class="page-item" data-page="${i}"><a class="page-link" href="javascript:void(0)">'+i+'</a></li>');
+			        
+			     	// 현재 페이지에 해당하는 경우 클래스 추가
+			        if (i === currentPage) {
+			            li.addClass('active');
+			        }
+			     
+			        li.click(() => {
+			            changePage(i, keyword);
+			        });
+			        paginationUl.append(li);
+			    }
+				// "다음" 버튼 추가
+			    if (currentGroup < numGroups) {
+			        const nextLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>');
+			        nextLi.click(() => {
+			            goToNextGroup();
+			        });
+			        paginationUl.append(nextLi);
+			    }
+			}
+			
+			// 페이지 변경 시 호출되는 함수
+			const changePage = (newPage, keyword) => {
+			    currentPage = newPage;
+			    searchHos(currentPage, keyword);
+			}
+			
+			// 그룹 변경 시 호출되는 함수
+			const changeGroup = (newGroup) => {
+			    currentPage = (newGroup - 1) * naviCountPerPage + 1;
+			    searchHos(currentPage);
+			}
+	
+			// 이전 그룹으로 이동할 때 호출 
+			const goToPreviousGroup = () => {
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup > 1) {
+			        const lastPageOfPreviousGroup = (currentGroup - 1) * naviCountPerPage;
+			        changePage(lastPageOfPreviousGroup);
+			    }
+			}
+	
+			// 다음 그룹으로 이동할 때 호출
+			const goToNextGroup = () => {
+			    const numGroups = Math.ceil(totalPages / naviCountPerPage);
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup < numGroups) {
+			        changeGroup(currentGroup + 1);
+			    }
+			}
+			
+			$(function(){
+				var hSearchKeyword = "${hSearchKeyword }";
+				setTimeout(function() {
+					searchHos(1, hSearchKeyword);	
+				}, 100);
+				// setInterval(getReviewList, 1000); // 1초 단위로 getReviewList가 호출되어 검색결과 실시간 조회
+			})
 		</script>
 		<!-- 동물병원 검색 (input search) -->
 		<script>

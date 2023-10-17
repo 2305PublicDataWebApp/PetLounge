@@ -50,9 +50,6 @@ main {
             #map-div > div:first-child {
                 width: 65%;
                 text-align: right;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
             }
 
             #map-div > div:nth-child(2) {

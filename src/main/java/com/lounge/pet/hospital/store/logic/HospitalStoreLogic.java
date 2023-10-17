@@ -91,4 +91,10 @@ public class HospitalStoreLogic implements HospitalStore {
 		return count;
 	}
 
+	@Override
+	public int getHSearchTotalCount(SqlSession session, String hSearchKeyword) {
+		int count = session.selectOne("HosMapper.getHSearchTotalCount", hSearchKeyword);
+		return count;
+	}
+
 }

@@ -98,4 +98,10 @@ public class HospitalServiceImpl implements HospitalService {
 		return count;
 	}
 
+	@Override
+	public int getHSearchTotalCount(String hSearchKeyword) {
+		int count = hStore.getHSearchTotalCount(session, hSearchKeyword);
+		return count;
+	}
+
 }
