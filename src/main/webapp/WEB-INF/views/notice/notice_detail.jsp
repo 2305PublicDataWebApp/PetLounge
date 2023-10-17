@@ -24,6 +24,18 @@
             <div id="notice">
                 <ul>
                     <li><input type="text" class="notice-title" value="${notice.nTitle}" readonly></li>
+                    <li class="user-info">
+                        <div class="user-img">
+                            <img alt="유저 프로필 이미지" src="../../resources/userUploadFiles/profile.png">
+                            <span>펫 라운지</span>
+                        </div>
+                        <div class="menu">
+                            <div class="info">
+                                <span>${notice.nCreate }</span>
+                                <span>조회수 ${notice.nViewCount }</span>
+                            </div>
+                        </div> 
+                    </li>
                     <li><textarea id="textarea" class="notice-content" readonly>${notice.nContent}</textarea></li>
                 </ul>
             </div>
@@ -55,7 +67,6 @@
 		</script>
 		<script>
 		    function backToNoticeList() {
-// 		    	location.href = "/notice/notice_list.pet?page="+${pInfo.currentPage };
 		    	location.href = "/notice/notice_list.pet";
 		    }		
 		</script>
