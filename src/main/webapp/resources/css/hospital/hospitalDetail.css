@@ -50,7 +50,33 @@ main {
             #map-div > div:first-child {
                 width: 65%;
                 text-align: right;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
             }
+            
+           		[data-tooltip-text]:hover {
+					position: relative;
+				}
+				
+				[data-tooltip-text]:hover:after {
+					background-color: rgba(0, 0, 0, 0.8);
+					box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
+					border-radius: 5px;
+				
+					color: #FFFFFF;
+					font-size: 12px;
+					font-family:'GmarketSansMedium';
+					content: attr(data-tooltip-text);
+				
+					top: 120%;
+					left: -30%;    
+					padding: 7px 12px;
+					position: absolute;
+					width: auto;
+				
+					z-index: 9999;
+				}
 
             #map-div > div:nth-child(2) {
                 width: 65%; 

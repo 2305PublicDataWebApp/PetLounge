@@ -159,6 +159,7 @@
 				lat = 37.5679212;
 				lng = 126.9830358;
 				createMap(lat, lng);
+				moveLocation();
 			} else {
 				// ************************* 회원가입 시 받은 주소로 기본 주소 *****************************
 				// 주소-좌표 변환 객체를 생성합니다
@@ -176,6 +177,7 @@
 						lng = 126.9830358;
 				    }
 			        createMap(lat, lng);
+			        moveLocation();
 				});  
 			}			
 			
@@ -454,29 +456,31 @@
 			// 지도가 이동, 확대, 축소로 인해 중심좌표가 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록
 			// 이동이 끝났을 때의 좌표를 가지고 넘어옴 (idle)
 			// 실시간 변화값은 center_changed 사용함
-			kakao.maps.event.addListener(map, 'idle', function() {
-			    // 지도의 중심좌표를 얻어옵니다
-			    var latlng = map.getCenter();
-			    var searchKeyword = document.getElementById('h-search-keyword').value.trim(); // 검색
+			function moveLocation() {
+				kakao.maps.event.addListener(map, 'idle', function() {
+				    // 지도의 중심좌표를 얻어옵니다
+				    var latlng = map.getCenter();
+				    var searchKeyword = document.getElementById('h-search-keyword').value.trim(); // 검색
+				
+				    if (searchKeyword === '') { // 검색하지 않았을 때만 동작
+				        $.ajax({
+				            url: '/hospital/moveLocation.pet',
+				            type: 'GET',
+				            data: {
+				                latitude: latlng.getLat(), // 업데이트된 위도 값
+				                longitude: latlng.getLng() // 업데이트된 경도 값
+				            },
+				            success: function(data) {
+				                getHospitalList(map, latlng.getLat(), latlng.getLng());
+				            },
+				            error: function() {
+								alert("지도 이동 이벤트 오류. 관리자에게 문의 바랍니다.");
+				            }
+				        });
+				    }
+				});
+			}
 			
-			    if (searchKeyword === '') { // 검색하지 않았을 때만 동작
-			        $.ajax({
-			            url: '/hospital/moveLocation.pet',
-			            type: 'GET',
-			            data: {
-			                latitude: latlng.getLat(), // 업데이트된 위도 값
-			                longitude: latlng.getLng() // 업데이트된 경도 값
-			            },
-			            success: function(data) {
-			                getHospitalList(map, latlng.getLat(), latlng.getLng());
-			            },
-			            error: function() {
-							alert("지도 이동 이벤트 오류. 관리자에게 문의 바랍니다.");
-			            }
-			        });
-			    }
-			});
-
 			// 지도타입 컨트롤의 지도 또는 스카이뷰 버튼을 클릭하면 호출되어 지도타입을 바꾸는 함수
 			function setMapType(maptype) { 
 			    var roadmapControl = document.getElementById('btnRoadmap');
@@ -617,7 +621,7 @@
 			    	 });
 			    	
 				} else {
-					createMap(lat, lng);
+// 					createMap(lat, lng);
 				}
 			}
 			
@@ -699,7 +703,7 @@
 				var hSearchKeyword = "${hSearchKeyword }";
 				setTimeout(function() {
 					searchHos(1, hSearchKeyword);	
-				}, 100);
+				}, 150);
 				// setInterval(getReviewList, 1000); // 1초 단위로 getReviewList가 호출되어 검색결과 실시간 조회
 			})
 		</script>
@@ -707,7 +711,9 @@
 		<script>
 			document.getElementById('h-search-keyword').addEventListener('keypress', function (event) {
 			    if (event.key === 'Enter') {
-			        searchHos();
+// 			        searchHos();
+			    	currentPage = 1;
+				    searchHos(currentPage, "");
 			    }
 			});
         </script>
