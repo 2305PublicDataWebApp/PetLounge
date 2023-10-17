@@ -361,8 +361,7 @@
             // tmi 출력
             // 랜덤 문장 배열
 			const randomSentences = [
-			    "강아지는 태어난 후 한 단 반이 지날때 까진 꼬리 흔드는 방법을 모른다.",
-			    "개과 동물 중 멍멍하는건 개밖에 없다.",
+				"개과 동물 중 멍멍하는건 개밖에 없다.",
 			    "개도 터널등을 지날 때 귀가 멍멍해진다.",
 			    "개는 똥을 쌀 때 지구 자기장 축 방향에 맞춰 싼다.",
 			    "개들은 자기와 비슷한 음역대를 가진 음악을 좋아한다고 한다.",
@@ -370,7 +369,6 @@
 			    "개는 뒷다리 구조 상 발가락으로 걸어다닌다.",
 			    "개가 등을 보여주는건 신뢰한다는 의미이다.",
 			    "개가 견주의 몸에 다리를 올리는 해동은 우위의식을 뜻한다.",
-			    "개가 몸을 쭉 펴고 스트레칭 하는 것은 반가움을 표현하는 의미이다.",
 			    "개의 시력은 0.3정도이다.",
 			    "개는 평균족으로 150~200개의 단어를 기억할 수 있다.",
 			    "개들도 스트레스를 받으면 새치가 난다.",
@@ -383,18 +381,12 @@
 			    "털이 곱슬인 말티즈가 은근히 많다.",
 			    "개는 일광욕을 즐긴다.",
 			    "고양이에게는 유당의 소화를 돕는 효소가 없다.",
-			    "레이저 포인트 놀이는 고양이에게 사냥에 실패했다는 허무함을 느끼게 한다.",
 			    "고양이가 살짝 깨무는 것은 애정표현이다.",
 			    "고양이는 안전하고 편안한 곳에서만 식빵을 굽는다.",
-			    "고양이가 창밖을 보는 이유는 사냥본능에 대한 스트레스를 푸는 것이다",
 			    "고양이의 스크래쳐에는 반가움과 애정의 표현도 담겨있다.",
 			    "고양이가 집사에게 엉덩이를 들이대는 것은 애정표현이다.",
 			    "개가 달달 떠는 것은 대부분 스트레스 때문이다.",
-			    "더운 것도 아닌데 강아지의 발이 축축하다면 스트레스 받는다는 뜻이다.",
-			    "개도 스트레스 받으면 탈모가 온다",
-			    "집 고양이는 어른이 되어서도 자신을 새끼라고 인식하는 경우가 많다.",
-			    "고양이는 인간을 몸집이 크면서도 공격성이 없는 다른 고양이라고 인식한다.",
-			    "집냥이들은 집사가 어떤 소리에 반응하는지 기억했다가 그 소리를 더 자주 낸다.",
+			    "개도 스트레스 받으면 탈모가 온다.",
 			    "고양이들은 주인의 해동을 관찰해 배운다.",
 			    "고양이는 자기 키의 5배 높게 점프할 수 있다.",
 			    "고양이는 입으로도 냄새를 맡을 수 있다.",
@@ -408,14 +400,16 @@
 			    "햄스터는 한 케이지당 한마리만 키워야 한다.",
 			    "햄스터에서 말리지 않은 과일을 먹이면 설사를 유발한다.",
 			    "햄스터는 나이를 먹을수록 귀가 커진다.",
-			    "햄스터는 유연해서인지 긴장감이 없으면 바닥에 엎드리고는 납작해진다.",
-			    "햄스터는 수염과 입 부분이 매우 예민한 편이라 뽀뽀하는 것을 싫어한다.",
 			    "토끼는 성대가 퇴화되어, 코와 목의 울림으로 소리를 낸다.",
 			    "토끼는 점프할 때 꼬리로 균형을 잡는다.",
 			    "토끼는 매우 미식가이고, 편식이 심하다.",
-			    "토끼가 바닥을 탕탕 치는 '스텀핑'은, 무섭거나 화가날 때 하는 행동이다.",
 			    "토끼는 1시간에 10~20회 정도 깜빡인다.",
-			    "토끼는 양쪽 귀를 따로 움직일 수 있다."
+			    "토끼는 양쪽 귀를 따로 움직일 수 있다.",
+			    "고양이는 유대를 표현하기 위해 서로 꼬리를 감는다.",
+			    "강이지의 코는 사람의 지문처럼 다 다르게 생겼다.",
+			    "고양이는 머쓱하면 그루밍을 하기도 한다.",
+			    "토끼는 기분이 좋으면 엉덩이를 씰룩거린다.",
+			    "강아지는 밥주는 사람보다 산책 시켜주는 사람을 더 좋아한다."
 			];
 			
 			// input 엘리먼트 찾기
@@ -711,6 +705,7 @@
 				base_time = "0730"
 				apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
 				url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
+				
 				$.getJSON (url, function(data){
 					const celsius = "℃";
 					const tempThi = data.response.body.items.item[24].fcstValue	 	 // 13:00
@@ -727,6 +722,28 @@
 					$('#time-16').empty().append(tempSixteen).append(celsius);
 					$('#time-17').empty().append(tempSeven).append(celsius);
 					$('#time-18').empty().append(tempEigh).append(celsius);
+				});
+				
+				base_time = "1830"
+				apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
+				url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
+				
+				$.getJSON (url, function(data){
+					const celsius = "℃";
+					const tempNineteen = data.response.body.items.item[24].fcstValue	// 19:00
+					const tempTwenty = data.response.body.items.item[25].fcstValue		// 20:00
+					const tempTwentyOne = data.response.body.items.item[25].fcstValue	// 21:00
+					const tempTwentyTwo = data.response.body.items.item[26].fcstValue	// 22:00
+					const tempTwentyThr = data.response.body.items.item[27].fcstValue	// 23:00
+					const tempTwentyFour = data.response.body.items.item[28].fcstValue	// 00:00
+					console.log(data.response.body.items.item[28]);
+					
+					$('#time-19').empty().append(tempNineteen).append(celsius);
+					$('#time-20').empty().append(tempTwenty).append(celsius);
+					$('#time-21').empty().append(tempTwentyOne).append(celsius);
+					$('#time-22').empty().append(tempTwentyTwo).append(celsius);
+					$('#time-23').empty().append(tempTwentyThr).append(celsius);
+					$('#time-24').empty().append(tempTwentyFour).append(celsius);
 				});
 			}
 			

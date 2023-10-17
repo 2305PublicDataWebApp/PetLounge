@@ -31,12 +31,12 @@ footer {
     background: #FAFAFA;
 }
 
-/* .contanier { */
-/*     width: 60%; */
+.contanier {
+    width: 60%;
 /*     height: 100vh; */
 /*     border : 1px solid black; */
 /*     background: #FAFAFA; */
-/* } */
+}
 
 /* ********** 타이틀 ********** */
 .main-title {
@@ -75,12 +75,11 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'GmarketSansMedium';
+    font-weight: bold;
+    font-size: 1.8em;
     width: 15%;
     border-right: 1px solid #ccc;
-}
-
-#title h1{
-    font-size: 2em;
 }
 
 #content {
@@ -88,15 +87,20 @@ footer {
     justify-content: center;
     width: 85%;
     height: 100%;
+    background-color: white;
+    border-top-right-radius: 15px;
 }
 
 #content input{
     display: flex;
-    width: 70%;
+    width: 80%;
     height: 100%;
+    font-family: 'GmarketSansMedium';
+    font-weight: bold;
     border: none;
     background-color: #FAFAFA;
     font-size: 1.7em;
+    background-color: white;
 }
 
 /* ********** 썸머노트 ********** */
