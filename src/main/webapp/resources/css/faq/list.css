@@ -76,42 +76,81 @@ h1 {
     padding: 5px;
 }
 
-.faq-title {
+.faqTitle {
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
 }
 
-.faq-title h3 {
+.faqTitle h3 {
     margin: 0;
 }
 
-.faq-content p {
+.faqContent p {
     margin-top: 15px;
     word-wrap: break-word;
 }
 
-/* .faq-content {
-    display: none;
-} */
-
 /* FAQ 항목이 초기에 숨겨져 있도록 설정 */
-.faq-content {
+/* FAQ 항목이 초기에 숨겨져 있도록 설정 */
+.faqContent {
     height: 0;
     overflow: hidden;
     opacity: 0;
-    transition: height 0.2s ease-in-out, opacity 0.9s ease-in-out; /* 지연 시간을 0.6초로 설정 */
+    transition: height 0.2s ease-in-out, opacity 0.9s ease-in-out; /* 지연 시간을 0.9초로 설정 */
 }
 
-.faq-item.open .faq-content {
-    height: 70px; /* 열린 FAQ의 높이를 자동으로 조절 */
+.faq-item .faqContent {
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: height 0.2s ease-in-out, opacity 0.6s ease-in-out; /* 지연 시간을 0.6초로 설정 */
+}
+
+/* FAQ 항목이 열릴 때 스타일 */
+.faq-item.open .faqContent {
+    height: auto; /* 열린 FAQ의 높이를 자동으로 조절 */
     opacity: 1;
+}
+
+/* FAQ 항목이 열릴 때 수정하기 버튼의 스타일 */
+.faq-item.open .edit-button {
+    display: block; /* FAQ가 열렸을 때 "수정하기" 버튼이 보이도록 설정 */
 }
 
 .faq-item:hover {
     background-color: #ffd370; /* 원하는 색상으로 변경하세요 */
 }
+
+/* 추가한 스타일 */
+.faqTitle {
+    flex: 1;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 제목과 버튼 간의 간격을 조절 */
+}
+
+.edit-button {
+    position: relative;
+    bottom: 5px;
+    font-family: 'GmarketSansMedium';
+    text-align: center;
+    border: 2px solid #ffd370;
+    width: 80px;
+    height: 28px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+
+
+
+
+
 
 /* ********** 등록하기 링크 ********** */
 
@@ -137,3 +176,32 @@ h1 {
     height: 40px;
 }
 
+/* 토글이 열렸을 때 수정하기 버튼의 스타일 */
+.faq-item.open .edit-button {
+    display: block;
+    float: right; /* 우측으로 이동 */
+    margin-left: 10px; /* 원하는 간격으로 조정 */
+}
+
+/* 추가한 스타일 */
+.faqTitle {
+    flex: 1;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 제목과 버튼 간의 간격을 조절 */
+}
+
+.edit-button {
+	position: relative;
+	bottom: 5px;
+	font-family: 'GmarketSansMedium';
+	text-align: center;
+	border: 2px solid #ffd370;
+	width: 80px;
+	height: 28px;
+	border-radius: 5px;
+	background-color: white;
+}

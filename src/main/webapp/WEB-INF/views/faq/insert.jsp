@@ -31,21 +31,22 @@
 
                 <!-- 게시글 등록 -->
                 <div id="board-title">
-                    <form action="" method="post">
+                    <form action="/faq/insert.pet" method="post">
                         <div id="faq-borad">
-                            <div id="title">
-                                <h1>제목</h1> 
-                            </div>
+                            <label for="faq-title" id="title">제목</label>
                             <div id="content">
-                                <input type="text" name="faqTitle" id="faq-title">
+                                <input type="text" name="faqTitle" id="faq-title" placeholder="제목을 입력해 주세요.">
                             </div>
                         </div>
-                        <div id="summernote"></div>
+<!--                         <div id="summernote"> -->
+                      	<textarea name="faqContent" id="summernote" style="display: none;"></textarea>
+<!--                         </div> -->
+		                <div id="btn">
+<!-- 		                    <input id="register-sub" type="submit" value="등록하기"> -->
+		                    <button id="register-sub" onclick="faqInsert();">등록하기</button>
+		                    <a class="btn-list">목록으로</a>
+		                </div>
                     </form>
-                </div>
-                <div id="btn">
-                    <input id="register-sub" type="submit" value="등록하기">
-                    <a class="btn-list">목록으로</a>
                 </div>
             </div>
         </main>
@@ -62,7 +63,7 @@
                     maxHeight: null,             // 최대 높이
                     focus: false,                // 에디터 로딩후 포커스를 맞출지 여부
                     lang: "ko-KR",              // 한글 설정
-                    placeholder: '물어보지 마세요.',  //placeholder 설정
+                    placeholder: '답변을 작성해 주세요.',  //placeholder 설정
                     toolbar: [
                         ['style', ['style']],
                         ['fontname', ['fontname']],
@@ -78,6 +79,29 @@
                     fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
                     fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
                 });
+            });
+            
+            // 글 등록 ajax
+            $("#register-sub").on("click", function() {
+//             	var faqContent = $("#summernote").val(); // 썸머노트 내용 가져옴
+				var faqContent = $("#summernote").summernote("getCode");
+            	var faqTitle = $("#title").val(); // 제목 가져옴
+            	$.ajax({
+            		url: "/faq/insert.pet",
+            		data: { faqContent : faqContent, faqTitle : faqTitle },
+            		type: "POST",
+            		success: function(result) {
+            			if(result == "success") {
+            				window.location.replace("/faq/list.pet"); // 성공한 경우 리스트로 이동
+//             				location.href = '/faq/list.pet'; // 성공한 경우 리스트로 이동
+            			} else {
+            				alert("faq 등록 실패");
+            			}
+            		}
+            		,error: function() {
+            			alert("오류");
+            		}
+           		});
             });
             </script>
     </body>

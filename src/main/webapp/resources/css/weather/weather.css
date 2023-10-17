@@ -190,15 +190,11 @@ label {
 
 #tmi {
 	position: relative;
-	left: 60px;
+	left: 30px;
 	height: 30px;
-	width: 400px;
+	width: 450px;
 	border: none;
 	background-color: #FAFAFA;
-}
-
-#tmi-area {
-	
 }
 
 .free-img {
