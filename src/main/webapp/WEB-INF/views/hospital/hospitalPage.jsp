@@ -44,6 +44,17 @@
                 'GRAD' 0,
                 'opsz' 24
             }
+            
+            .road-icon {
+            	cursor: pointer;
+            	font-size: 1.8em;
+            	color: #2d79ef;
+                font-variation-settings:
+                'FILL' 1,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+            }
         </style>
 
     </head>
@@ -81,7 +92,7 @@
                         <span class="material-symbols-outlined gps-icon" style="font-size: 2.5em; cursor: pointer;" onclick="myGps();">
 							my_location
 						</span>
-<!-- 						<p class="home-info-box">현위치</p> -->
+						<p class="home-info-box">현위치</p>
                     </div>
                     <!-- 지도 -->
                     <div id="map" style="position:relative;overflow:hidden;">
@@ -109,7 +120,7 @@
 			            <col style="width: 50%;">
 			        </colgroup>
 			        <thead>
-			            <th colspan="4">내 주변 동물병원</th>
+			            <th colspan="5">내 주변 동물병원</th>
 			        </thead>
 			        <tbody id="hospital-list-body">
 			        </tbody>
@@ -188,7 +199,7 @@
 					 success: function(data) {
 						showListFunc(data);
 						
-						var hospitalListTitle = document.querySelector('th[colspan="4"]');
+						var hospitalListTitle = document.querySelector('th[colspan="5"]');
 						hospitalListTitle.innerHTML = '내 주변 동물병원';
 					 },
 					 error: function(){
@@ -346,7 +357,7 @@
 			        var noResultRow = document.createElement('tr');
 			        noResultRow.className = 'search-list-none';
 			        var noResultCell = document.createElement('td');
-			        noResultCell.colSpan = 4;
+			        noResultCell.colSpan = 5;
 			        noResultCell.style.color = 'lightgray';
 			        noResultCell.style.textAlign = 'center';
 			        noResultCell.textContent = '검색 결과가 없습니다';
@@ -366,7 +377,6 @@
 			            var bookmarkCell = document.createElement('td');
 			            var bookmarkDiv = document.createElement('div');
 			            var bookmarkIcon = document.createElement('span');
-			            // if로 즐겨찾기를 했을 때 클래스명, 아닐 때 클래스명 나눠주기
 			            if(hList[i].hBookmark == null) {
 				            bookmarkIcon.className = 'material-symbols-outlined bookmark-icon-none';			            	
 			            } else {
@@ -409,11 +419,27 @@
 			            addressDiv.appendChild(addressIcon);
 			            addressDiv.appendChild(addressText);
 			            addressCell.appendChild(addressDiv);
+			            
+						var roadCell = document.createElement('td');
+						var roadDiv = document.createElement('div');
+			            var roadIcon = document.createElement('span');
+			            roadIcon.className = 'material-symbols-outlined road-icon';
+						roadIcon.textContent = 'directions';
+						roadDiv.appendChild(roadIcon);
+						roadCell.appendChild(roadDiv);
+						
+						roadIcon.addEventListener('click', (function (index) {
+						    return function () {
+						        var url = "https://map.kakao.com/link/to/" + hList[index].hName + "," + hList[index].hLat + "," + hList[index].hLng;
+						        window.open(url, '_blank');
+						    };
+						})(i));
 
 			            row.appendChild(bookmarkCell);
 			            row.appendChild(nameCell);
 			            row.appendChild(phoneCell);
 			            row.appendChild(addressCell);
+			            row.appendChild(roadCell);
 
 			            hospitalListBody.appendChild(row);
 			        }
@@ -529,13 +555,15 @@
 			    		 success: function(data) {
 			    			showListFunc(data);
 			    			
-							var hospitalListTitle = document.querySelector('th[colspan="4"]');
+							var hospitalListTitle = document.querySelector('th[colspan="5"]');
 							hospitalListTitle.innerHTML = '<span style="color: #FFD370;">' + searchKeyword + '</span> 검색 결과';
 			    		 },
 			    		 error: function(){
 			    			 alert("동물병원 검색 오류. 관리자에게 문의 바랍니다.");
 			    		 }
 			    	 });
+				} else {
+					createMap(lat, lng);
 				}
 			}
 			
@@ -565,7 +593,6 @@
 		            }
 		        });
 		    }
-			
 		</script>
 		<!-- 동물병원 검색 (input search) -->
 		<script>

@@ -48,7 +48,7 @@
                             </a>
                         </li>
                         <li class="dropdown">
-                            <a href="#">
+                            <a>
                                 휴게실
                             </a>
                             <ul class="dropdown-menu">
@@ -141,7 +141,7 @@
                         <h1 class="title">동물병원 안내</h1>
                         <p class="info">펫 라운지를 통해 주변 동물병원을 간편하게 찾아보세요<br>반려동물의 건강은 행복의 첫걸음입니다</p>
                     </div>
-                    <form action="/hospital/page.pet" method="get" id="search-hospital-form">
+                    <form action="/hospital/searchFromMain.pet" method="get" id="search-hospital-form">
                         <div>
                             <input type="search" name="hSearchKeyword" id="h-search-keyword" class="search-input" placeholder="찾고자 하는 주소 또는 동물 병원의 이름을 입력하세요"> 
                             <span class="material-symbols-outlined search-icon" onclick="searchHospital();" style="font-size: 3.5em; color: #FFD370; cursor: pointer; margin-left: 10px;">

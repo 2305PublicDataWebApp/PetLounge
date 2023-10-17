@@ -32,7 +32,7 @@
                 'opsz' 24
             }
 
-            .bookmark-icon-fill {
+            .bookmark-icon-fill, .camera-icon, .road-icon, .list-icon {
                 font-variation-settings:
                 'FILL' 1,
                 'wght' 400,
@@ -42,8 +42,29 @@
 
             .bookmark-icon-fill, .bookmark-icon-none {
                 font-size: 3em;
-                cursor: pointer;
+                cursor: pointer;                
             }
+            
+            .camera-icon {
+            	font-size: 2.8em;
+            	cursor: pointer;
+            	color: #a3a3a3;
+            }
+            
+            .road-icon {
+            	font-size: 2.8em;
+            	cursor: pointer;
+            	color: #2d79ef;
+            }
+            
+            .list-icon {
+            	font-size: 2.8em;
+            	cursor: pointer;
+            	color: #FFD370;
+    			vertical-align: text-bottom;
+            }
+            
+            .
         </style>
     </head>
     <body>
@@ -80,16 +101,29 @@
                 <div id="map-div">
                     <!-- 지도 -->
                     <div>
-                    	<c:if test="${ hBookmark eq 1 }">
-						    <span id="bookmark-icon" class="material-symbols-outlined bookmark-icon-fill" style="color: #FFD370;" onclick="hosBookmark(${ hOne.hNo });">
-						        bookmark
-						    </span>
-						</c:if>
-						<c:if test="${ hBookmark eq 0 }">
-						    <span id="bookmark-icon" class="material-symbols-outlined bookmark-icon-none" style="color: #FFD370;" onclick="hosBookmark(${ hOne.hNo });">
-						        bookmark
-						    </span>
-						</c:if>
+	                    <div>
+		                    <span class="material-symbols-outlined list-icon" onclick="goBacktoList();">
+								list	
+							</span>
+	                    </div>
+	                    <div>
+		                    <span class="material-symbols-outlined road-icon" onclick="getRoad();">
+								directions
+							</span>
+							<span class="material-symbols-outlined camera-icon" onclick="getRoadView();">
+								camera_video
+							</span>
+	                    	<c:if test="${ hBookmark eq 1 }">
+							    <span id="bookmark-icon" class="material-symbols-outlined bookmark-icon-fill" style="color: #FFD370;" onclick="hosBookmark(${ hOne.hNo });">
+							        bookmark
+							    </span>
+							</c:if>
+							<c:if test="${ hBookmark eq 0 }">
+							    <span id="bookmark-icon" class="material-symbols-outlined bookmark-icon-none" style="color: #FFD370;" onclick="hosBookmark(${ hOne.hNo });">
+							        bookmark
+							    </span>
+							</c:if>
+	                    </div>
                     </div>
                     <div id="map" style="position:relative;overflow:hidden;">
 	                    <!-- 지도타입 컨트롤 div 입니다 -->
@@ -157,7 +191,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn modal-modify-btn">수정</button>
+                                <button type="button" class="btn modal-modify-btn" onclick="modifyReview();">수정</button>
                             </div>
                         </div>
                     </div>
@@ -282,6 +316,18 @@
 			function zoomOut() {
 			    map.setLevel(map.getLevel() + 1);
 			}
+
+			// 길찾기
+			function getRoad() {
+				var url = "https://map.kakao.com/link/to/" + '${ hOne.hName }' + "," + '${ hOne.hLat }' + "," + '${ hOne.hLng }';
+				window.open(url, '_blank');
+			}
+			
+			// 로드뷰
+			function getRoadView() {
+				var url = "https://map.kakao.com/link/roadview/" + '${ hOne.hLat }' + "," + '${ hOne.hLng }';
+				window.open(url, '_blank');
+			}
 		</script>
 		<!-- 즐겨찾기 -->
 		<script>
@@ -347,9 +393,9 @@
 				document.querySelector('.modify-user-nickname').innerText = hRNickName;
 				document.querySelector('.review-modify-content').value = hRContent;
 				let modifyButton = document.querySelector('.modal-modify-btn');
-				modifyButton.addEventListener('click', function() {
-					modifyReview();
-				});	
+// 				modifyButton.addEventListener('click', function() {
+// 					modifyReview();
+// 				});	
 			}
 			
 			// 후기 수정 
@@ -574,6 +620,11 @@
 				getReviewList();
 				// setInterval(getReviewList, 1000); // 1초 단위로 getReviewList가 호출되어 후기 실시간 조회
 			})
+		</script>
+		<script>
+			function goBacktoList() {
+				window.history.back();
+			}
 		</script>
     </body>
 </html>
