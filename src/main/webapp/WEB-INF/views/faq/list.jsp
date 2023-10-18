@@ -12,6 +12,30 @@
         <link rel="stylesheet" href="/resources/css/reset.css">
         <link rel="stylesheet" href="/resources/css/font.css">
         <title>FAQ</title>
+        <style>
+        	.edit-icon {
+			    position: relative;
+			    top: 5px;
+			    left: 685px;
+			    cursor: pointer;
+			}
+			
+        	.delete-icon {
+			    position: relative;
+			    top: 5px;
+			    left: 740px;
+			    font-size: 27px;
+			    cursor: pointer;
+			}
+			
+			.material-symbols-outlined {
+			  font-variation-settings:
+			  'FILL' 0,
+			  'wght' 400,
+			  'GRAD' 0,
+			  'opsz' 24
+			}
+        </style>
     </head>
     <body>
     	<!-- header -->
@@ -45,20 +69,24 @@
         <jsp:include page="../include/footer.jsp"></jsp:include>
 
         <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const faqBoard = document.querySelector(".faq-board");
-            let openFaqItem = null; // 현재 열린 FAQ 아이템을 저장하는 변수
-            const maxFaqItems = 10; // 최대 FAQ 항목 개수
+        
+     	// 웹페이지 로그되면 실행되는 이벤트
+        document.addEventListener("DOMContentLoaded", function () { 
+        	
+            const faqBoard = document.querySelector(".faq-board");	// 클래스가 "faq-board"인 첫 번째 요소를 선택
+            let openFaqItem = null; 								// 현재 열린 FAQ 아이템을 저장하는 변수
+            const maxFaqItems = 10; 								// 최대 FAQ 항목 개수를 정의하는 상수
 
-            // FAQ 항목 가져오기 - ajax
+            // FAQ 항목 조회 - ajax
             $.ajax({
-                url: "/faq/show.pet",
-                type: "GET",
-                dataType: "json",
+                url: "/faq/show.pet",	// 요청이 보내질 URL 주소
+                type: "GET",			// HTTP 요청 메서드
+                dataType: "json",		// 서버에서 반환되는 데이터의 형식
                 success: function (data) {
-                    // FAQ 데이터를 받아온 후, 각 항목을 동적으로 추가
-                    data.slice(0, maxFaqItems).forEach(function (item, index) {
-                        addFaqItem(item.faqTitle, item.faqContent, data[index].faqNo);
+                	// 최대 FAQ 항목 개수(maxFaqItems)까지 반복하며 각 FAQ 항목 추가
+					data.slice(0, maxFaqItems).forEach(function (item, index) {
+					// 함수에 전달되는 매개변수
+					addFaqItem(item.faqTitle, item.faqContent, data[index].faqNo); 
                     });
                 },
                 error: function (error) {
@@ -66,15 +94,17 @@
                 },
             });
 
+            
             // "등록하기" 링크를 클릭할 때 FAQ 항목 개수를 체크
             const registerLink = document.getElementById("register-link");
-            registerLink.addEventListener("click", function (e) {
+            registerLink.addEventListener("click", function (e) { // 이벤트 리스너 추가
                 if (faqBoard.children.length >= maxFaqItems) {
                     e.preventDefault(); // 링크의 기본 동작(페이지 이동)을 중지
                     alert("등록 가능한 FAQ 항목은 최대 10개입니다.");
                 }
             });
 
+            
             // FAQ 항목을 추가하는 함수
             function addFaqItem(question, answer, faqNo) {
 
@@ -110,10 +140,12 @@
                         openFaqItem = faqItem;
                         openFaqItem.classList.add("open");
 
-                        // 삭제하기 버튼 추가
-                        addDeleteButton(contentDiv, faqNo);
-                        // 수정하기 버튼 추가
-                        addEditButton(contentDiv, faqNo);
+                        // 삭제하기, 수정하기 버튼 추가
+                        if('${sessionScope.uId}' === 'admin') {
+	                        addDeleteButton(contentDiv, faqNo);
+	                        addEditButton(contentDiv, faqNo);
+
+                        }
 
                     } else {
                         // 현재 FAQ가 이미 열려있는 경우, 토글 닫기
@@ -142,11 +174,11 @@
             function closeFaqItem(faqItem) {
                 faqItem.classList.remove("open");
                 const contentDiv = faqItem.querySelector(".faqContent");
-                const deleteButton = contentDiv.querySelector(".delete-button");
+                const deleteButton = contentDiv.querySelector(".delete-icon");
                 if (deleteButton) {
                     deleteButton.remove();
                 }
-                const editButton = contentDiv.querySelector(".edit-button");
+                const editButton = contentDiv.querySelector(".edit-icon");
                 if (editButton) {
                     editButton.remove();
                 }
@@ -154,10 +186,12 @@
 
             function addDeleteButton(contentDiv, faqNo) {
                 if (!contentDiv.querySelector(".delete-button")) {
-                    const deleteButton = document.createElement("button");
-                    deleteButton.textContent = "삭제하기";
-                    deleteButton.classList.add("delete-button");
-                    contentDiv.appendChild(deleteButton);
+					var deleteButton =document.createElement('span');
+					deleteButton.className = 'material-symbols-outlined delete-icon';
+					deleteButton.style.color = '#FF7070';
+					deleteButton.textContent = 'delete_forever';
+					contentDiv.appendChild(deleteButton);
+                    
 
                     deleteButton.addEventListener("click", function() {
                         const faqItem = this.closest(".faq-item");
@@ -181,11 +215,12 @@
 
             function addEditButton(contentDiv, faqNo) {
                 if (!contentDiv.querySelector(".edit-button")) {
-                    const editButton = document.createElement("button");
-                    editButton.textContent = "수정하기";
-                    editButton.classList.add("edit-button");
-                    contentDiv.appendChild(editButton);
-
+					var editButton = document.createElement('span');
+					editButton.className = 'material-symbols-outlined edit-icon';
+// 					editButton.style.color = '#FF7070';
+					editButton.textContent = 'edit_square';
+					contentDiv.appendChild(editButton);
+					
                     editButton.addEventListener("click", function() {
                         const faqNum = faqNo;
                         location.href = "/faq/modify.pet?FaqNo=" + faqNum;
