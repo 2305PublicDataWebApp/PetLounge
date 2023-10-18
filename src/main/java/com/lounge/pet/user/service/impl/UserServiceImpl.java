@@ -11,9 +11,11 @@ import com.lounge.pet.board.domain.Board;
 import com.lounge.pet.hospital.domain.HBookmark;
 import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.support.domain.Support;
+import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.user.domain.UPageInfo;
 import com.lounge.pet.user.domain.User;
 import com.lounge.pet.user.domain.UserHosRe;
+import com.lounge.pet.user.domain.UserSupport;
 import com.lounge.pet.user.service.UserService;
 import com.lounge.pet.user.store.UserStore;
 
@@ -141,6 +143,58 @@ public class UserServiceImpl implements UserService{
 		List<UserHosRe> hRList = uStore.searchHosReviewByKeyword(session, aInfo, paramMap);
 		return hRList;
 	}
+
+	@Override
+	public Integer getSupportListCount(String sessionId) {
+		int result = uStore.selectSupportListCount(session, sessionId);
+		return result;
+	}
+
+	@Override
+	public List<SupportReply> selectSupport(String sessionId, UPageInfo aInfo) {
+		List<SupportReply> sList = uStore.selectSupport(session, sessionId, aInfo);
+		return sList;
+	}
+
+	@Override
+	public int getSupportSearchListCount(Map<String, String> paramMap) {
+		int result = uStore.selectSupportSearchListCount(session, paramMap);
+		return result;
+	}
+
+	@Override
+	public List<UserSupport> searchSupportByKeyword(UPageInfo aInfo, Map<String, String> paramMap) {
+		List<UserSupport> sList = uStore.searchSupportByKeyword(session, aInfo, paramMap);
+		return sList;
+	}
+
+	@Override
+	public Integer getSupportReplyListCount(String sessionId) {
+		int result = uStore.selectSupportReplyListCount(session, sessionId);
+		return result;
+	}
+
+	@Override
+	public List<UserSupport> selectSupportReply(String sessionId, UPageInfo aInfo) {
+		List<UserSupport> sList = uStore.selectSupportReply(session, sessionId, aInfo);
+		return sList;
+	}
+
+	@Override
+	public int getSupportReplySearchlistCount(Map<String, String> paramMap) {
+		int result = uStore.selectSupportReplySearchlistCount(session, paramMap);
+		return result;
+	}
+
+	@Override
+	public List<UserSupport> searchSupportReplyByKeyword(UPageInfo aInfo, Map<String, String> paramMap) {
+		List<UserSupport> sList = uStore.searchSupportReplyByKeyword(session, aInfo, paramMap);
+		return sList;
+	}
+
+
+
+
 
 	
 

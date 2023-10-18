@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -15,7 +17,7 @@
 		<link rel="stylesheet" href="/resources/css/reset.css">
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<title>나의 게시글</title>
+		<title>나의 후원</title>
 	</head>
 	<body>
 		<jsp:include page="../include/header.jsp"></jsp:include>
@@ -61,7 +63,7 @@
 									<img src="/resources/images/pet.png">
 								</div>
 								<div class="info_h1">
-									<h1 style="font-size: 1em; font-weight: bold;">나의 게시글</h1>
+									<h1 style="font-size: 1em; font-weight: bold;">나의 후원</h1>
 								</div>
 							</div>
 							<div class="info_hr">
@@ -70,14 +72,13 @@
 						</div>
 						<div style="margin: 30px 60px 30px 60px;">
 							<div id="boardTable" class="board-list">
-								<form action="/user/searchBoard.pet" method="get">
-								<input type="hidden" name="uId" value="${uId}">
+								<form action="/user/searchSupport.pet" method="get">
 									<div class="filter input-group mb-3">
 										<select name="searchCondition" style="border-radius: 20px; padding-top: 2px;">
 											<option value="all" <c:if test="${param.searchCondition == 'all' }">selected</c:if>>전체</option>
 											<option value="title" <c:if test="${param.searchCondition == 'title' }">selected</c:if>>제목</option>
-											<option value="name" <c:if test="${param.searchCondition == 'name' }">selected</c:if>>작성일</option>
-											<option value="date" <c:if test="${param.searchCondition == 'date' }">selected</c:if>>작성자</option>   
+											<option value="date" <c:if test="${param.searchCondition == 'date' }">selected</c:if>>후원일</option>
+											<option value="type" <c:if test="${param.searchCondition == 'type' }">selected</c:if>>결제방법</option>   
 										</select> <input class="form-control" type="text" name="searchKeyword"
 											placeholder="검색" value="${paramMap.searchKeyword }"
 											style="width: 75%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 0; border-color: #FFD370; padding-top: 10px;" />
@@ -90,72 +91,85 @@
 								<thead>
 									<tr>
 										<th style="border-bottom: 1px solid #dee2e6;">No</th>
-										<th style="border-bottom: 1px solid #dee2e6;  width: 235px;">제목</th>
-										<th style="border-bottom: 1px solid #dee2e6;">작성자</th>
-										<th style="border-bottom: 1px solid #dee2e6;">작성일</th>
-										<th style="border-bottom: 1px solid #dee2e6;">조회수</th>
+										<th style="border-bottom: 1px solid #dee2e6; width: 260px">제목</th>
+										<th style="border-bottom: 1px solid #dee2e6;">후원금액</th>
+										<th style="border-bottom: 1px solid #dee2e6;">후원일</th>
+										<th style="border-bottom: 1px solid #dee2e6;">결제방법</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${bList }" var="bList" varStatus="i">
-										<tr>
-											<td>${i.count }</td>
-											<c:url var="detailUrl" value="#">
-												<c:param name="fNo" value="${bList.fNo }"></c:param>
-											</c:url>
-											<td><a href="${detailUrl }">${bList.fTitle }</a></td>
-											<td>${bList.uId}</td>
-											<td>${bList.fCreate}</td>
-											<td>${bList.fViewCount}</td>
-										</tr>
-									</c:forEach>
+								<c:forEach items="${sList}" var="sList" varStatus="i">
+								    <tr>
+								        <td>${i.count}</td>
+								        <c:url var="detailUrl" value="/support/detail.pet">
+								            <c:param name="sNo" value="${sList.sNo}"></c:param>
+								        </c:url>
+								        <td><a href="${detailUrl}">${sList.sTitle}</a></td>
+								        <td>${sList.sHAmount}</td>
+								        <c:set var="formattedDate" value="${fn:substring(sList.sHPaydate, 0, 10)}" />
+								        <td>${formattedDate}</td>
+								        <td>${sList.sHPaytype}</td>
+								    </tr>
+								</c:forEach>
+
+<%-- 									<c:forEach items="${sList }" var="sList" varStatus="i"> --%>
+<!-- 										<tr> -->
+<%-- 											<td>${i.count }</td> --%>
+<%-- 											<c:url var="detailUrl" value="/support/detail.pet"> --%>
+<%-- 												<c:param name="sNo" value="${sList.sNo }"></c:param> --%>
+<%-- 											</c:url> --%>
+<%-- 											<td><a href="${detailUrl }">${sList.sTitle }</a></td> --%>
+<%-- 											<td>${sList.sHAmount }</td> --%>
+<%-- 											<td>${sList.sHPaydate }</td> --%>
+<%-- 											<td>${sList.sHPaytype }</td> --%>
+<!-- 										</tr> -->
+<%-- 									</c:forEach> --%>
 								</tbody>
 							</table>
-							
 							<div aria-label="Page navigation example" class="page">
 							
-						        <c:url var="prevUrl" value="/user/searchBoard.pet">
-									<c:param name="page" value="${aInfo.startNavi -1 }"></c:param>
-									<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
-									<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
-									<c:param name="uId" value="${sessionScope.uId}"></c:param>
-								</c:url>
-					            <div></div>
-					          	<ul style="display: flex; justify-content: center;">
-						         	<c:if test="${aInfo.startNavi != 1 }">
-										<li><a href="${prevUrl }" >이전</a></li>
-						            </c:if>
-					            
-						            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
-										<c:url var="pageUrl" value="/user/searchBoard.pet">
-											<c:param name="page" value="${p }"></c:param>
-											<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
-											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
-											<c:param name="uId" value="${sessionScope.uId}"></c:param>
-										</c:url>
-						            	&nbsp;&nbsp;&nbsp;<li><a href="${pageUrl }">${p }</a></li>&nbsp;&nbsp;&nbsp;
-						            </c:forEach>
-					            
-						            <c:if test="${aInfo.endNavi != aInfo.naviTotalCount }">
-										<c:url var="nextUrl" value="/user/searchBoard.pet"> 
-											<c:param name="page" value="${aInfo.endNavi + 1 }"></c:param>
-											<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
-											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
-											<c:param name="uId" value="${sessionScope.uId}"></c:param>
-										</c:url>
-						            	<li><a href="${nextUrl }">Next</a></li>
-						            </c:if>
-					            </ul>
-					        </div> 
-
+							<c:url var="prevUrl" value="/user/searchSupport.pet">
+								<c:param name="page" value=""></c:param>
+								<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
+								<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+								<c:param name="uId" value="${sessionScope.uId}"></c:param>
+							</c:url>
+							<div></div>
+				            <ul style="display: flex; justify-content: center;">
+					         	<c:if test="${aInfo.startNavi != 1 }">
+						            <li class="page-item"  ><a class="page-link" href="${prevUrl }" >Prev</a></li>
+					            </c:if>
+					         
+					            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
+									<c:url var="pageUrl" value="/user/searchSupport.pet">
+										<c:param name="page" value="${p }"></c:param>
+										<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
+										<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+										<c:param name="uId" value="${sessionScope.uId}"></c:param>
+									</c:url>
+									&nbsp;&nbsp;&nbsp;<li><a href="${pageUrl }">${p }</a></li>&nbsp;&nbsp;&nbsp;
+					            </c:forEach>
+					            <c:if test="${aInfo.endNavi != aInfo.naviTotalCount }">
+									<c:url var="nextUrl" value="/user/searchSupport.pet"> 
+										<c:param name="page" value="${aInfo.endNavi + 1 }"></c:param>
+										<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
+										<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+										<c:param name="uId" value="${sessionScope.uId}"></c:param>
+									</c:url>
+						            <li><a href="${nextUrl }">Next</a></li>
+					            </c:if>
+				            </ul>
+				           </div> 
+				           
 						</div>
-					</section>
-				</div>
+				</section>
+			</div>
 			</section>
 	
 	
 		</main>
 		<jsp:include page="../include/footer.jsp"></jsp:include>
+	
 		<script>
 	        // 클릭했을 때
 	        $(".nav > ul > li > a").click(function (e) {

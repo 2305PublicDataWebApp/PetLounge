@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -37,19 +39,19 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchBoard.pet">게시글 조회</a></li>
+										<li><a href="/user/Board.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
 								<li><a href="#">후원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchSupport.pet">후원목록</a></li>
-										<li><a href="/user/searchSupportReply.pet">후원댓글</a></li>
+										<li><a href="/user/uSupport.pet">후원내역</a></li>
+										<li><a href="/user/uSupportReply.pet">후원댓글</a></li>
 									</ul></li>
 								<li><a href="#">병원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchHospital.pet">즐겨찾는 병원</a></li>
-										<li><a href="/user/searchHospitalReview.pet">병원리뷰</a></li>
+										<li><a href="/user/uHospital.pet">즐겨찾는 병원</a></li>
+										<li><a href="/user/uHosReview.pet">병원리뷰</a></li>
 									</ul></li>
 							</ul>
 						</nav>
@@ -104,15 +106,28 @@
 												<c:param name="hNo" value="${hRList.hNo }"></c:param>
 											</c:url>
 											<td><a href="${detailUrl }">${hRList.hRContent }</a></td>
-											<td>${hRList.hRCreate}</td>
+											<c:choose>
+												  <c:when test="${not empty hRList.hRCreate}">
+												    <c:set var="dateParts" value="${fn:split(hRList.hRCreate, ' ')}" />
+												    <c:if test="${fn:length(dateParts) >= 1}">
+												      <c:set var="modifiedDate" value="${dateParts[0]}" />
+												    </c:if>
+												  </c:when>
+												  <c:otherwise>
+												    <c:set var="modifiedDate" value="N/A" />
+												  </c:otherwise>
+												</c:choose>
+												<td>${modifiedDate}</td>	
+<%-- 											<td>${hRList.hRCreate}</td> --%>
 										</tr>
 									</c:forEach>
 
 								</tbody>
 							</table>
+							
 								<div aria-label="Page navigation example" class="page">
 							
-						        <c:url var="prevUrl" value="/user/uHospital.pet">
+						        <c:url var="prevUrl" value="/user/uHosReview.pet">
 									<c:param name="page" value="${aInfo.startNavi -1 }"></c:param>
 									<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
 									<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
@@ -125,7 +140,7 @@
 						            </c:if>
 					            
 						            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
-										<c:url var="pageUrl" value="/user/uHospital.pet">
+										<c:url var="pageUrl" value="/user/uHosReview.pet">
 											<c:param name="page" value="${p }"></c:param>
 											<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
 											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
@@ -135,13 +150,13 @@
 						            </c:forEach>
 					            
 						            <c:if test="${aInfo.endNavi != aInfo.naviTotalCount }">
-										<c:url var="nextUrl" value="/user/uHospital.pet"> 
+										<c:url var="nextUrl" value="/user/uHosReview.pet"> 
 											<c:param name="page" value="${aInfo.endNavi + 1 }"></c:param>
 											<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
 											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
 											<c:param name="uId" value="${sessionScope.uId}"></c:param>
 										</c:url>
-						            	<li><a href="${nextUrl }">Next</a></li>
+						            	<li><a href="${nextUrl }">다음</a></li>
 						            </c:if>
 					            </ul>
 					        </div> 

@@ -9,9 +9,11 @@ import com.lounge.pet.board.domain.Board;
 import com.lounge.pet.hospital.domain.HBookmark;
 import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.support.domain.Support;
+import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.user.domain.UPageInfo;
 import com.lounge.pet.user.domain.User;
 import com.lounge.pet.user.domain.UserHosRe;
+import com.lounge.pet.user.domain.UserSupport;
 
 
 public interface UserStore {
@@ -172,6 +174,74 @@ public interface UserStore {
 	 * @return
 	 */
 	List<UserHosRe> searchHosReviewByKeyword(SqlSession session, UPageInfo aInfo, Map<String, String> paramMap);
+
+	/**
+	 * 후원 게시글 수
+	 * @param session
+	 * @param sessionId
+	 * @return
+	 */
+	int selectSupportListCount(SqlSession session, String sessionId);
+
+	/**
+	 * 후원목록 조회
+	 * @param session
+	 * @param sessionId
+	 * @param aInfo
+	 * @return
+	 */
+	List<SupportReply> selectSupport(SqlSession session, String sessionId, UPageInfo aInfo);
+
+	/**
+	 * 후원 게시글 검색 수
+	 * @param session
+	 * @param paramMap
+	 * @return
+	 */
+	int selectSupportSearchListCount(SqlSession session, Map<String, String> paramMap);
+
+	/**
+	 * 조건에 따른 후원목록 검색
+	 * @param session
+	 * @param aInfo
+	 * @param paramMap
+	 * @return
+	 */
+	List<UserSupport> searchSupportByKeyword(SqlSession session, UPageInfo aInfo, Map<String, String> paramMap);
+
+	/**
+	 * 후원 댓글 수
+	 * @param session
+	 * @param sessionId
+	 * @return
+	 */
+	int selectSupportReplyListCount(SqlSession session, String sessionId);
+
+	/**
+	 * 후원댓글 조회
+	 * @param session
+	 * @param sessionId
+	 * @param aInfo
+	 * @return
+	 */
+	List<UserSupport> selectSupportReply(SqlSession session, String sessionId, UPageInfo aInfo);
+
+	/**
+	 * 후원댓글 검색 수
+	 * @param session
+	 * @param paramMap
+	 * @return
+	 */
+	int selectSupportReplySearchlistCount(SqlSession session, Map<String, String> paramMap);
+
+	/**
+	 * 조건에 따른 후원댓글 검색
+	 * @param session
+	 * @param aInfo
+	 * @param paramMap
+	 * @return
+	 */
+	List<UserSupport> searchSupportReplyByKeyword(SqlSession session, UPageInfo aInfo, Map<String, String> paramMap);
 
 	
 

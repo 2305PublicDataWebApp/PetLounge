@@ -44,8 +44,8 @@
 									</ul></li>
 								<li><a href="#">후원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchSupport.pet">후원목록</a></li>
-										<li><a href="/user/searchSupportReply.pet">후원댓글</a></li>
+										<li><a href="/user/uSupport.pet">후원내역</a></li>
+										<li><a href="/user/uSupportReply.pet">후원댓글</a></li>
 									</ul></li>
 								<li><a href="#">병원관리</a>
 									<ul class="subMenu">

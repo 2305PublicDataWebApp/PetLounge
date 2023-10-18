@@ -11,9 +11,11 @@ import com.lounge.pet.board.domain.Board;
 import com.lounge.pet.hospital.domain.HBookmark;
 import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.support.domain.Support;
+import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.user.domain.UPageInfo;
 import com.lounge.pet.user.domain.User;
 import com.lounge.pet.user.domain.UserHosRe;
+import com.lounge.pet.user.domain.UserSupport;
 import com.lounge.pet.user.store.UserStore;
 
 @Repository
@@ -158,6 +160,71 @@ public class UserStoreLogic implements UserStore{
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		List<UserHosRe> searchList = session.selectList("UserMapper.searchHosReviewByKeyword", paramMap, rowBounds);
+		return searchList;
+	}
+
+	@Override
+	public int selectSupportListCount(SqlSession session, String sessionId) {
+		int result = session.selectOne("UserMapper.selectSupportListCount", sessionId);
+		return result;
+	}
+
+	@Override
+	public List<SupportReply> selectSupport(SqlSession session, String sessionId, UPageInfo aInfo) {
+		int limit = aInfo.getRecordCountPerPage();
+		int offset = (aInfo.getCurrentPage()-1)*limit;
+		
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		List<SupportReply> sList = session.selectList("UserMapper.selectSupport", sessionId,  rowbounds);
+		return sList;
+	}
+
+	@Override
+	public int selectSupportSearchListCount(SqlSession session, Map<String, String> paramMap) {
+		int result = session.selectOne("UserMapper.selectSupportSearchListCount", paramMap);
+		return result;
+	}
+
+	@Override
+	public List<UserSupport> searchSupportByKeyword(SqlSession session, UPageInfo aInfo, Map<String, String> paramMap) {
+		int limit = aInfo.getRecordCountPerPage();
+		int offset = (aInfo.getCurrentPage()-1)*limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<UserSupport> searchList = session.selectList("UserMapper.searchSupportByKeyword", paramMap, rowBounds);
+		return searchList;
+	}
+
+	@Override
+	public int selectSupportReplyListCount(SqlSession session, String sessionId) {
+		int result = session.selectOne("UserMapper.selectSupportReplyListCount", sessionId);
+		return result;
+	}
+
+	@Override
+	public List<UserSupport> selectSupportReply(SqlSession session, String sessionId, UPageInfo aInfo) {
+		int limit = aInfo.getRecordCountPerPage();
+		int offset = (aInfo.getCurrentPage()-1)*limit;
+		
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		List<UserSupport> sList = session.selectList("UserMapper.selectSupportReply", sessionId,  rowbounds);
+		return sList;
+	}
+
+	@Override
+	public int selectSupportReplySearchlistCount(SqlSession session, Map<String, String> paramMap) {
+		int result = session.selectOne("UserMapper.selectSupportReplySearchlistCount", paramMap);
+		return result;
+	}
+
+	@Override
+	public List<UserSupport> searchSupportReplyByKeyword(SqlSession session, UPageInfo aInfo,
+			Map<String, String> paramMap) {
+		int limit = aInfo.getRecordCountPerPage();
+		int offset = (aInfo.getCurrentPage()-1)*limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<UserSupport> searchList = session.selectList("UserMapper.searchSupportReplyByKeyword", paramMap, rowBounds);
 		return searchList;
 	}
 

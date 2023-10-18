@@ -9,12 +9,12 @@
 		<jsp:include page="../include/importSource.jsp"></jsp:include>
 		
 			<link rel="stylesheet" href="/resources/css/user/userUpdateForm.css">
-		<link rel="stylesheet" href="/resources/css/user/userBoardList.css">
-		<link rel="stylesheet" href="/resources/css/user/userMyPage.css">
-		<link rel="stylesheet" href="/resources/css/font.css">
-		<link rel="stylesheet" href="/resources/css/reset.css">
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<link rel="stylesheet" href="/resources/css/user/userBoardList.css">
+			<link rel="stylesheet" href="/resources/css/user/userMyPage.css">
+			<link rel="stylesheet" href="/resources/css/font.css">
+			<link rel="stylesheet" href="/resources/css/reset.css">
+			<script
+				src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<title>나의 후원 댓글</title>
 	</head>
 	<body>
@@ -25,8 +25,7 @@
 				<div id="wrap" class="clearfix">
 					<aside class="aside">
 					<div class="logo">
-							<img class="logoImg"
-								src="${user.uFilePath }">
+						<img class="logoImg" src="${user.uFilePath }">
 					</div>
 					<nav class="nav" style="display: block;">
 							<ul>
@@ -38,19 +37,19 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchBoard.pet">게시글 조회</a></li>
+										<li><a href="/user/Board.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
 								<li><a href="#">후원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchSupport.pet">후원목록</a></li>
-										<li><a href="/user/searchSupportReply.pet">후원댓글</a></li>
+										<li><a href="/user/uSupport.pet">후원내역</a></li>
+										<li><a href="/user/uSupportReply.pet">후원댓글</a></li>
 									</ul></li>
 								<li><a href="#">병원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchHospital.pet">즐겨찾는 병원</a></li>
-										<li><a href="/user/searchHospitalReview.pet">병원리뷰</a></li>
+										<li><a href="/user/uHospital.pet">즐겨찾는 병원</a></li>
+										<li><a href="/user/uHosReview.pet">병원리뷰</a></li>
 									</ul></li>
 							</ul>
 						</nav>
@@ -74,12 +73,12 @@
 								<form action="/user/searchSupportReply.pet" method="get">
 									<div class="filter input-group mb-3">
 										<select name="searchCondition" style="border-radius: 20px; padding-top: 2px;">
-											<option value="all">전체</option>
-											<option value="name">이름</option>
-											<option value="id">아이디</option>
-											<option value="nickname">닉네임</option>
+											<option value="all" <c:if test="${param.searchCondition == 'all' }">selected</c:if>>전체</option>
+											<option value="title" <c:if test="${param.searchCondition == 'title' }">selected</c:if>>제목</option>
+											<option value="content" <c:if test="${param.searchCondition == 'content' }">selected</c:if>>내용</option>
+											<option value="create" <c:if test="${param.searchCondition == 'create' }">selected</c:if>>작성일</option>   
 										</select> <input class="form-control" type="text" name="searchKeyword"
-											placeholder="검색"
+											placeholder="검색" value="${searchKeyword }"
 											style="width: 75%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 0; border-color: #FFD370; padding-top: 10px;" />
 										<input type="submit" value="검색"
 											style="background-color: #ffd370; color: white; border-color: #ffd370; width: 10%; height: 28px; border-radius: 20px; margin-left: 0; padding-top: 3px;">
@@ -90,75 +89,64 @@
 								<thead>
 									<tr>
 										<th style="border-bottom: 1px solid #dee2e6;">No</th>
-										<th style="border-bottom: 1px solid #dee2e6;">게시글 제목</th>
-										<th style="border-bottom: 1px solid #dee2e6;">댓글 내용</th>
+										<th style="border-bottom: 1px solid #dee2e6;">제목</th>
+										<th style="border-bottom: 1px solid #dee2e6;">내용</th>
 										<th style="border-bottom: 1px solid #dee2e6;">작성일</th>
-										<th style="border-bottom: 1px solid #dee2e6;">작성자</th>
+<!-- 										<th style="border-bottom: 1px solid #dee2e6;">작성자</th> -->
 									</tr>
 								</thead>
 								<tbody>
-<%-- 									<c:forEach items="${user }" var="uOne" varStatus="i"> --%>
+									<c:forEach items="${sRList }" var="sRList" varStatus="i">
 										<tr>
-											<td>user</td>
-											<td>password</td>
-<%-- 											<c:url var="detailUrl" value="/admin/aInfo.pet"> --%>
-<%-- 												<c:param name="userId" value="${uOne.userId }"></c:param> --%>
-<%-- 											</c:url> --%>
-											<td><a href="${detailUrl }">이름</a></td>
-											<td>닉네임</td>
-											<td>가입일</td>
+											<td>${i.count }</td>
+												<c:url var="detailUrl" value="/support/detail.pet">
+													<c:param name="sNo" value="${sRList.sNo }"></c:param>
+												</c:url>
+											<td><a href="${detailUrl }">${sRList.sTitle }</a></td>
+											<td>${sRList.sRContent}</td>
+											<td>${sRList.sUpdate}</td>
 										</tr>
-										<tr>
-											<td>user</td>
-											<td>password</td>
-<%-- 											<c:url var="detailUrl" value="/admin/aInfo.pet"> --%>
-<%-- 												<c:param name="userId" value="${uOne.userId }"></c:param> --%>
-<%-- 											</c:url> --%>
-											<td><a href="${detailUrl }">이름</a></td>
-											<td>닉네임</td>
-											<td>가입일</td>
-										</tr>
-										<tr>
-											<td>user</td>
-											<td>password</td>
-<%-- 											<c:url var="detailUrl" value="/admin/aInfo.pet"> --%>
-<%-- 												<c:param name="userId" value="${uOne.userId }"></c:param> --%>
-<%-- 											</c:url> --%>
-											<td><a href="${detailUrl }">이름</a></td>
-											<td>닉네임</td>
-											<td>가입일</td>
-										</tr>
-<%-- 									</c:forEach> --%>
+									</c:forEach>
 								</tbody>
 							</table>
-							<div class="paging" style="margin-top: 50px;">
-								<div>
-<%-- 									<c:if test="${nInfo.nStartNavi != 1}"> --%>
-<%-- 										<c:url var="preUrl" value="/notice/n_list.pet"> --%>
-<%-- 											<c:param name="page" value="${nInfo.nStartNavi -1 }" /> --%>
-<%-- 										</c:url> --%>
-<%-- 										<a href="${preUrl }">[이전]</a> --%>
-<%-- 									</c:if> --%>
-<%-- 									<c:forEach begin="${nInfo.nStartNavi }" end="${nInfo.nEndNavi }" --%>
-<%-- 										var="n"> --%>
-<%-- 										<c:url var="pageUrl" value="/notice/n_list.pet"> --%>
-<%-- 											<c:param name="page" value="${n }"></c:param> --%>
-<%-- 										</c:url> --%>
-<%-- 										<a href="${pageUrl }">1 2 3 4 5</a>&nbsp; --%>
-<%-- 	                                </c:forEach> --%>
-<%-- 									<c:if test="${nInfo.nEndNavi != nInfo.nNaviTotalCount }"> --%>
-<%-- 										<c:url var="nextUrl" value="/notice/n_list.pet"> --%>
-<%-- 											<c:param name="page" value="${nInfo.nEndNavi +1 }" /> --%>
-<%-- 										</c:url> --%>
-<%-- 										<a href="${nextUrl }">[다음]</a> --%>
-<%-- 									</c:if> --%>
-								</div>
-							</div>
+							<div aria-label="Page navigation example" class="page">
+							
+						        <c:url var="prevUrl" value="/user/uSupportReply.pet">
+									<c:param name="page" value="${aInfo.startNavi -1 }"></c:param>
+									<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
+									<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+									<c:param name="uId" value="${sessionScope.uId}"></c:param>
+								</c:url>
+					            <div></div>
+					          	<ul style="display: flex; justify-content: center;">
+						         	<c:if test="${aInfo.startNavi != 1 }">
+										<li><a href="${prevUrl }" >이전</a></li>
+						            </c:if>
+					            
+						            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
+										<c:url var="pageUrl" value="/user/uSupportReply.pet">
+											<c:param name="page" value="${p }"></c:param>
+											<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
+											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+											<c:param name="uId" value="${sessionScope.uId}"></c:param>
+										</c:url>
+						            	&nbsp;&nbsp;&nbsp;<li><a href="${pageUrl }">${p }</a></li>&nbsp;&nbsp;&nbsp;
+						            </c:forEach>
+					            
+						            <c:if test="${aInfo.endNavi != aInfo.naviTotalCount }">
+										<c:url var="nextUrl" value="/user/uSupportReply.pet"> 
+											<c:param name="page" value="${aInfo.endNavi + 1 }"></c:param>
+											<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
+											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+											<c:param name="uId" value="${sessionScope.uId}"></c:param>
+										</c:url>
+						            	<li><a href="${nextUrl }">다음</a></li>
+						            </c:if>
+					            </ul>
+					        </div> 
 						</div>
+					</section>
 				</div>
-				</div>
-			</section>
-			</div>
 			</section>
 	
 	

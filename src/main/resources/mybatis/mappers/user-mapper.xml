@@ -85,23 +85,23 @@
 		SELECT * FROM USER_TBL
 		WHERE U_NICKNAME= #{uNickName }
 	</select>
+	
+	
 
-	<!-- 즐겨찾는 병원 리스트 조회 -->
-	<select id="selectHos" resultMap="UserHosResultMap">
-		SELECT * FROM HOSPITAL_TBL H
-		JOIN H_BOOKMARK_TBL B ON B.H_NO = H.H_NO
-		WHERE B.U_ID = #{value } ORDER
-		BY H.H_NO DESC
-	</select>
-
-
+	
 	<!--전체 즐겨찾기 병원 갯수 -->
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT (*) FROM
 		H_BOOKMARK_TBL WHERE U_ID = #{ uId }
 	</select>
 
-
+	<!-- 즐겨찾는 병원 조회 -->
+	<select id="selectHos" resultMap="UserHosResultMap">
+		SELECT * FROM HOSPITAL_TBL H
+		JOIN H_BOOKMARK_TBL B ON B.H_NO = H.H_NO
+		WHERE B.U_ID = #{value } ORDER
+		BY H.H_NO DESC
+	</select>
 
 	<!-- 즐겨찾는 병원 검색 수 -->
 	<select id="selectListByKeywordCount" resultType="_int">
@@ -148,15 +148,17 @@
 		ORDER BY H.H_NO DESC
 	</select>
 	
-	<!--전체 즐겨찾기 병원 갯수 -->
+	
+	
+	
+	
+	<!--전체 자유게시판 게시글 갯수 -->
 	<select id="selectBoardListCount" resultType="_int">
 		SELECT COUNT (*) FROM
 		FREE_TBL WHERE U_ID = #{ uId }
 	</select>
 	
-
-
-	<!-- 게시글 조회 -->
+	<!-- 자유게시판 게시글 조회 -->
 	<select id="selectBoard" resultType="Board">
 		SELECT * FROM FREE_TBL WHERE U_ID = #{ uId } 
 	</select>
@@ -198,6 +200,8 @@
 	</select>
 
 
+
+
 	<!--전체 병원리뷰 게시글 갯수 -->
 	<select id="selectHosReListCount" resultType="_int">
 		SELECT COUNT (*) FROM
@@ -233,8 +237,7 @@
 		</if>
 	</select>
 	
-	
-	
+
 	<!-- 리뷰 병원 검색 -->
 	<select id="searchHosReviewByKeyword" resultType="UserHosRe">
 		SELECT * FROM H_REVIEW_TBL R   
@@ -259,23 +262,118 @@
 	
 	
 	
+	<!--전체 후원 목록 갯수 -->
+	<select id="selectSupportListCount" resultType="_int">
+		SELECT COUNT (*) FROM
+		S_HISTORY_TBL WHERE U_ID = #{ uId }
+	</select>
+	
+	<!-- 후원 목록 조회 -->
+	<select id="selectSupport" resultType="UserSupport">
+		SELECT * FROM S_HISTORY_TBL H   
+		JOIN SUPPORT_TBL S ON S.S_NO = H.S_NO
+		WHERE H.U_ID = #{uId } ORDER
+		BY S.S_NO DESC
+	</select>
+	
+	
+	<!-- 후원목록 검색 수 -->
+	<select id="selectSupportSearchListCount" resultType="_int">
+		SELECT COUNT(*) FROM S_HISTORY_TBL H   
+		JOIN SUPPORT_TBL S ON S.S_NO = H.S_NO
+		WHERE H.U_ID = #{uId }
+		<if test="searchCondition == 'all'">
+			AND (S.S_TITLE LIKE '%'||#{searchKeyword}||'%' OR H.S_H_PAYDATE LIKE '%'||#{searchKeyword}||'%' OR H.S_H_TYPE LIKE '%'||#{searchKeyword}||'%')
+		</if>
+		<if test="searchCondition == 'title'">
+			AND S.S_TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'date'">
+			AND H.S_H_PAYDATE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'type'">
+			AND H.S_H_TYPE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY S.S_NO DESC
+	</select>
+	
+	
+	<!-- 후원 목록 검색 -->
+	<select id="searchSupportByKeyword" resultType="UserSupport">
+		SELECT *  FROM S_HISTORY_TBL H   
+		JOIN SUPPORT_TBL S ON S.S_NO = H.S_NO
+		WHERE H.U_ID = #{uId }
+		<if test="searchCondition == 'all'">
+			AND (S.S_TITLE LIKE '%'||#{searchKeyword}||'%' OR H.S_H_PAYDATE LIKE '%'||#{searchKeyword}||'%' OR H.S_H_TYPE LIKE '%'||#{searchKeyword}||'%')
+		</if>
+		<if test="searchCondition == 'title'">
+			AND S.S_TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'date'">
+			AND H.S_H_PAYDATE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'type'">
+			AND H.S_H_TYPE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY S.S_NO DESC
+	</select>
+	
 	
 
-	<!-- 후원목록조회 -->
-	<!-- <select id="selectSupporList" parameterType="String" resultMap="UserSupportResultMap"> -->
-	<!-- SELECT * FROM S_HISTORY_TBL H -->
-	<!-- JOIN SUPPORT_TBL S ON S.S_NO = H.S_H_NO -->
-	<!-- WHERE H.U_ID = #{uId} -->
-	<!-- ORDER BY S.S_NO DESC; -->
-	<!-- </select> -->
+	<!--전체 후원 댓글 갯수 -->
+	<select id="selectSupportReplyListCount" resultType="_int">
+		SELECT COUNT (*) FROM
+		S_REPLY_TBL WHERE U_ID = #{ uId }
+	</select>
+	
+	<!-- 후원댓글 조회 -->
+	<select id="selectSupportReply" resultType="UserSupport">
+		SELECT * FROM S_REPLY_TBL R   
+		JOIN SUPPORT_TBL S ON S.S_NO = R.S_NO
+		WHERE R.U_ID = #{uId } ORDER
+		BY S.S_NO DESC
+	</select>
+	
+	<!-- 후원댓글 검색 수 -->
+	<select id="selectSupportReplySearchlistCount" resultType="_int">
+		SELECT COUNT(*) FROM S_REPLY_TBL R   
+		JOIN SUPPORT_TBL S ON S.S_NO = R.S_NO
+		WHERE R.U_ID = #{uId }
+		<if test="searchCondition == 'all'">
+			AND (S.S_TITLE LIKE '%'||#{searchKeyword}||'%' OR R.S_R_CONTENT LIKE '%'||#{searchKeyword}||'%' OR R.S_R_CREATE LIKE '%'||#{searchKeyword}||'%')
+		</if>
+		<if test="searchCondition == 'title'">
+			AND S.S_TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'content'">
+			AND R.S_R_CONTENT LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'create'">
+			AND R.S_R_CREATE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY S.S_NO DESC
+	</select>
 
-	<!-- <select id="selectSupporList" parameterType="String" resultMap="UserSupportResultMap"> -->
-	<!-- SELECT S.*, H.* -->
-	<!-- FROM SUPPORT_TBL S -->
-	<!-- JOIN S_HISTORY_TBL H ON S.S_NO = H.S_H_NO -->
-	<!-- WHERE H.U_ID = #{uId} -->
-	<!-- ORDER BY S.S_NO DESC -->
-	<!-- </select> -->
 
+
+	<!-- 후원 댓글 검색 -->
+	<select id="searchSupportReplyByKeyword" resultType="UserSupport">
+		SELECT *  FROM S_REPLY_TBL R   
+		JOIN SUPPORT_TBL S ON S.S_NO = R.S_NO
+		WHERE R.U_ID = #{uId }
+		<if test="searchCondition == 'all'">
+			AND (S.S_TITLE LIKE '%'||#{searchKeyword}||'%' OR R.S_R_CONTENT LIKE '%'||#{searchKeyword}||'%' OR R.S_R_CREATE LIKE '%'||#{searchKeyword}||'%')
+		</if>
+		<if test="searchCondition == 'title'">
+			AND S.S_TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'content'">
+			AND R.S_R_CONTENT LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'create'">
+			AND R.S_R_CREATE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY S.S_NO DESC
+	</select>
 
 </mapper>

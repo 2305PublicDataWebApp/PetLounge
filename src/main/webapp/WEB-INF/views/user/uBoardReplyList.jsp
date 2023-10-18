@@ -24,10 +24,10 @@
 			<section style="padding-top: 120px;">
 				<div id="wrap" class="clearfix">
 					<aside class="aside">
-						<div class="logo">
-							<img class="logoImg" src="${user.uFilePath }">
-						</div>
-						<nav class="nav" style="display: block;">
+					<div class="logo">
+						<img class="logoImg" src="${user.uFilePath }">
+					</div>
+					<nav class="nav" style="display: block;">
 							<ul>
 								<li><a href="#">회원관리</a>
 									<ul class="subMenu">
@@ -37,19 +37,19 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchBoard.pet">게시글 조회</a></li>
+										<li><a href="/user/Board.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
 								<li><a href="#">후원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchSupport.pet">후원목록</a></li>
-										<li><a href="/user/searchSupportReply.pet">후원댓글</a></li>
+										<li><a href="/user/uSupport.pet">후원내역</a></li>
+										<li><a href="/user/uSupportReply.pet">후원댓글</a></li>
 									</ul></li>
 								<li><a href="#">병원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchHospital.pet">즐겨찾는 병원</a></li>
-										<li><a href="/user/searchHospitalReview.pet">병원리뷰</a></li>
+										<li><a href="/user/uHospital.pet">즐겨찾는 병원</a></li>
+										<li><a href="/user/uHosReview.pet">병원리뷰</a></li>
 									</ul></li>
 							</ul>
 						</nav>

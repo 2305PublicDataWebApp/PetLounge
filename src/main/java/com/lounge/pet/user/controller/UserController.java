@@ -27,9 +27,11 @@ import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.hospital.service.HospitalService;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportHistory;
+import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.user.domain.UPageInfo;
 import com.lounge.pet.user.domain.User;
 import com.lounge.pet.user.domain.UserHosRe;
+import com.lounge.pet.user.domain.UserSupport;
 import com.lounge.pet.user.service.UserService;
 
 @Controller
@@ -763,7 +765,7 @@ public class UserController {
 				model.addAttribute("paramMap", paramMap);
 				model.addAttribute("aInfo", aInfo);
 				model.addAttribute("hRList", hRList);
-				return "/user/uHospitalReviewList";
+				return "/user/uHospitalReviewSearchList";
 			} else {
 				model.addAttribute("msg", "서비스 실패");
 				model.addAttribute("url", "/user/uHospital.pet");
@@ -773,65 +775,158 @@ public class UserController {
 		}
 		
 		
+		// 나의 후원목록 페이지 user/uSupport.pet
+		@RequestMapping(value = "/user/uSupport.pet", method = RequestMethod.GET)
+		public ModelAndView userSupport(ModelAndView mv, HttpSession session
+				,@RequestParam(value = "page", required=false, defaultValue = "1") Integer currentPage) {
+			
+			try {
+				String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+				
+				if (sessionId != "" && sessionId != null) {
+					User user = uService.selectOneById(sessionId);
+					
+					if (user != null) {
+						
+						Integer totalCount = uService.getSupportListCount(sessionId);
+						UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+				
+						List<SupportReply> sList = uService.selectSupport(sessionId, aInfo);
+						
+						mv.addObject("aInfo", aInfo);
+						mv.addObject("sList", sList);
+						mv.addObject("user", user);
+						mv.setViewName("/user/uSupportList");
+						
+					} else {
+						mv.addObject("msg", "후원목록 조회 실패");
+						mv.addObject("url", "/home.pet");
+						mv.setViewName("common/errorPage");
+					}
+				} else {
+					mv.addObject("msg", "로그인 후 이용 바랍니다.");
+					mv.addObject("url", "/user/login.pet");
+					mv.setViewName("common/errorPage");
+				}
+			} catch (Exception e) {
+				mv.addObject("msg", "관리자에게 문의바랍니다.");
+				mv.addObject("error", e.getMessage());
+				mv.addObject("url", "/home.pet");
+				mv.setViewName("common/errorPage");
+			}
+			return mv;
+		}
 		
 
 	// 나의 후원목록 검색 페이지 user/searchSupport.pet
 	@RequestMapping(value = "/user/searchSupport.pet", method = RequestMethod.GET)
-	public ModelAndView userSearchSupport(ModelAndView mv, HttpSession session) {
-		try {
-			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
-			if (sessionId != "" && sessionId != null) {
-				User user = uService.selectOneById(sessionId);
-				if (user != null) {
-					mv.addObject("user", user);
-					mv.setViewName("/user/uSupportList");
-				} else {
-					mv.addObject("msg", "후원목록 조회 실패");
-					mv.addObject("url", "/home.pet");
-					mv.setViewName("common/errorPage");
-				}
-			} else {
-				mv.addObject("msg", "로그인 후 이용 바랍니다.");
-				mv.addObject("url", "/user/login.pet");
-				mv.setViewName("common/errorPage");
-			}
-		} catch (Exception e) {
-			mv.addObject("msg", "관리자에게 문의바랍니다.");
-			mv.addObject("error", e.getMessage());
-			mv.addObject("url", "/home.pet");
-			mv.setViewName("common/errorPage");
-		}
-		return mv;
+	public String userSearchSupport(
+			@RequestParam("searchCondition") String searchCondition
+			, @ RequestParam("searchKeyword") String searchKeyword
+			, @ RequestParam(value="page", required=false, defaultValue="1") Integer currentPage
+			, Model model, HttpSession session) {
+		
+		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("searchCondition", searchCondition);
+		paramMap.put("searchKeyword", searchKeyword);
+		paramMap.put("uId", sessionId);
+		
+		int totalCount = uService.getSupportSearchListCount(paramMap);
+		UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+		
+		List<UserSupport> sList = uService.searchSupportByKeyword(aInfo, paramMap);
+		
+		if(!sList.isEmpty()) {
+			model.addAttribute("paramMap", paramMap);
+			model.addAttribute("aInfo", aInfo);
+			model.addAttribute("sList", sList);
+			return "/user/uSupportSearchList";
+		} else {
+			model.addAttribute("msg", "서비스 실패");
+			model.addAttribute("url", "/user/uHospital.pet");
+			return "common/errorPage";
+		}	
+		
 	}
-
+	
+	
+	
+	
+	
 	// 나의 후원댓글 페이지 user/searchSupportReply.pet
-	@RequestMapping(value = "/user/searchSupportReply.pet", method = RequestMethod.GET)
-	public ModelAndView userSupportReplyPage(ModelAndView mv, HttpSession session) {
-		try {
-			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
-			if (sessionId != "" && sessionId != null) {
-				User user = uService.selectOneById(sessionId);
-				if (user != null) {
-					mv.addObject("user", user);
-					mv.setViewName("/user/uSupportReplyList");
+		@RequestMapping(value = "/user/uSupportReply.pet", method = RequestMethod.GET)
+		public ModelAndView userSupportReplyPage(ModelAndView mv, HttpSession session
+				,@RequestParam(value = "page", required=false, defaultValue = "1") Integer currentPage) {
+			try {
+				String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+				if (sessionId != "" && sessionId != null) {
+					User user = uService.selectOneById(sessionId);
+					if (user != null) {
+						Integer totalCount = uService.getSupportReplyListCount(sessionId);
+						UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+				
+						List<UserSupport> sRList = uService.selectSupportReply(sessionId, aInfo);
+						
+						mv.addObject("aInfo", aInfo);
+						mv.addObject("sRList", sRList);
+						mv.addObject("user", user);
+						mv.setViewName("/user/uSupportReplyList");
+						
+					} else {
+						mv.addObject("msg", "후원댓글 조회 실패");
+						mv.addObject("url", "/home.pet");
+						mv.setViewName("common/errorPage");
+					}
 				} else {
-					mv.addObject("msg", "후원댓글 조회 실패");
-					mv.addObject("url", "/home.pet");
+					mv.addObject("msg", "로그인 후 이용 바랍니다.");
+					mv.addObject("url", "/user/login.pet");
 					mv.setViewName("common/errorPage");
 				}
-			} else {
-				mv.addObject("msg", "로그인 후 이용 바랍니다.");
-				mv.addObject("url", "/user/login.pet");
+			} catch (Exception e) {
+				mv.addObject("msg", "관리자에게 문의바랍니다.");
+				mv.addObject("error", e.getMessage());
+				mv.addObject("url", "/home.pet");
 				mv.setViewName("common/errorPage");
 			}
-		} catch (Exception e) {
-			mv.addObject("msg", "관리자에게 문의바랍니다.");
-			mv.addObject("error", e.getMessage());
-			mv.addObject("url", "/home.pet");
-			mv.setViewName("common/errorPage");
+			return mv;
 		}
-		return mv;
+		
+		
+
+	// 나의 후원댓글 검색 페이지 user/searchSupportReply.pet
+	@RequestMapping(value = "/user/searchSupportReply.pet", method = RequestMethod.GET)
+	public String userSupportReplySearchPage(
+			@RequestParam("searchCondition") String searchCondition
+			, @ RequestParam("searchKeyword") String searchKeyword
+			, @ RequestParam(value="page", required=false, defaultValue="1") Integer currentPage
+			, Model model, HttpSession session) {
+		
+			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+			Map<String, String> paramMap = new HashMap<String, String>();
+			paramMap.put("searchCondition", searchCondition);
+			paramMap.put("searchKeyword", searchKeyword);
+			paramMap.put("uId", sessionId);
+			
+			int totalCount = uService.getSupportReplySearchlistCount(paramMap);
+			UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+			
+			List<UserSupport> sRList = uService.searchSupportReplyByKeyword(aInfo, paramMap);
+			
+			if(!sRList.isEmpty()) {
+				model.addAttribute("paramMap", paramMap);
+				model.addAttribute("aInfo", aInfo);
+				model.addAttribute("sRList", sRList);
+				return "/user/uSupportReplySearchList";
+			} else {
+				model.addAttribute("msg", "서비스 실패");
+				model.addAttribute("url", "/user/uHospital.pet");
+				return "common/errorPage";
+			}	
 	}
+	
+	
+	
 
 	private Map<String, Object> saveFile(HttpServletRequest request, MultipartFile uploadFile) throws Exception {
 

@@ -7,9 +7,11 @@ import com.lounge.pet.board.domain.Board;
 import com.lounge.pet.hospital.domain.HBookmark;
 import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.support.domain.Support;
+import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.user.domain.UPageInfo;
 import com.lounge.pet.user.domain.User;
 import com.lounge.pet.user.domain.UserHosRe;
+import com.lounge.pet.user.domain.UserSupport;
 
 
 public interface UserService {
@@ -153,6 +155,70 @@ public interface UserService {
 	 * @return
 	 */
 	List<UserHosRe> searchHosReviewByKeyword(UPageInfo aInfo, Map<String, String> paramMap);
+
+	/**
+	 * 후원 게시글 수 
+	 * @param sessionId
+	 * @return
+	 */
+	Integer getSupportListCount(String sessionId);
+
+	/**
+	 * 후원 목록 조회
+	 * @param sessionId
+	 * @param aInfo
+	 * @return
+	 */
+	List<SupportReply> selectSupport(String sessionId, UPageInfo aInfo);
+
+	/**
+	 * 후원 게시글 검색 수
+	 * @param paramMap
+	 * @return
+	 */
+	int getSupportSearchListCount(Map<String, String> paramMap);
+
+	/**
+	 * 조건에 따른 후원목록 검색
+	 * @param aInfo
+	 * @param paramMap
+	 * @return
+	 */
+	List<UserSupport> searchSupportByKeyword(UPageInfo aInfo, Map<String, String> paramMap);
+
+	/**
+	 * 후원댓글 수
+	 * @param sessionId
+	 * @return
+	 */
+	Integer getSupportReplyListCount(String sessionId);
+
+	/**
+	 * 후원댓글 조회
+	 * @param sessionId
+	 * @param aInfo
+	 * @return
+	 */
+	List<UserSupport> selectSupportReply(String sessionId, UPageInfo aInfo);
+
+	/**
+	 * 후원댓글 검색 수
+	 * @param paramMap
+	 * @return
+	 */
+	int getSupportReplySearchlistCount(Map<String, String> paramMap);
+
+	/**
+	 * 조건에 따른 후원댓글 검색
+	 * @param aInfo
+	 * @param paramMap
+	 * @return
+	 */
+	List<UserSupport> searchSupportReplyByKeyword(UPageInfo aInfo, Map<String, String> paramMap);
+
+	
+
+	
 
 	
 
