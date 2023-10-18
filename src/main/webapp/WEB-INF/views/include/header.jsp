@@ -31,13 +31,13 @@
                 <li class="nav-item" id="faqLink">
                     <a class="nav-link" href="/faq/list.pet">FAQ</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="boardLink">
                     <a class="nav-link" href="/board/freeList.pet">자유게시판</a>
                 </li>
             </ul>
             <c:if test="${ sessionScope.uId eq null }">
 	            <ul class="navbar-nav ml-auto">
-	                <li class="nav-item">
+	                <li class="nav-item" id="loginLink">
 	                    <a class="nav-link" href="/user/login.pet">로그인</a>
 	                </li>
 	                <li class="nav-item">
@@ -51,12 +51,12 @@
 	                    <a class="nav-link" href="/user/logout.pet">로그아웃</a>
 	                </li>
 	                <c:if test="${ sessionScope.uId eq 'admin' }">
-		                <li class="nav-item">
+		                <li class="nav-item" id="adminLink">
 		                    <a class="nav-link" href="/admin/main_board.pet">관리자페이지</a>
 		                </li>
 	                </c:if>
 	                <c:if test="${ sessionScope.uId ne 'admin' }">
-		                <li class="nav-item">
+		                <li class="nav-item" id="userLink">
 		                    <a class="nav-link" href="/user/userInfo.pet">마이페이지</a>
 		                </li>
 	                </c:if>
@@ -159,36 +159,62 @@
 <script>
     // 현재 페이지 경로 가져오기
     var currentPath = window.location.pathname;
+    
+ 	// 정규 표현식 패턴 정의
+    var hospitalPattern = /^\/hospital\//;
+    var supportPattern = /^\/support\//;
+    var noticePattern = /^\/notice\//;
+    var faqPattern = /^\/faq\//;
+    var boardPattern = /^\/board\//;
+    var userPattern = /^\/user\//;
+    var adminPattern = /^\/admin\//;
 
     // 조건 확인 후 메뉴 업데이트
-    if (currentPath === '/hospital/detail.pet' || currentPath === '/hospital/search.pet') {
-        // '/hospital/detail.pet' 경로에 해당하는 경우
+    if (hospitalPattern.test(currentPath)) {
         document.getElementById('hospitalLink').classList.add('active');
     } else {
-        // 다른 경우
         document.getElementById('hospitalLink').classList.remove('active');
     }
     
-    if (currentPath === '/support/list.pet' || currentPath === '/support/detail.pet' 
-    		|| currentPath === '/support/insert.pet' || currentPath === '/support/update.pet' 
-    		|| currentPath === '/support/payment.pet' || currentPath === '/support/complete.pet') {
+    if (supportPattern.test(currentPath)) {
         document.getElementById('supportLink').classList.add('active');
     } else {
         document.getElementById('supportLink').classList.remove('active');
     }
     
-    if (currentPath === '/notice/noticeList.pet' || currentPath === '/notice/noticeSubmit.pet' 
-		|| currentPath === '/notice/noticeDetail.pet' || currentPath === '/notice/noticeSearch.pet' 
-		|| currentPath === '/notice/noticeUpdate.pet' || currentPath === '/notice/delete.pet') {
-    document.getElementById('noticeLink').classList.add('active');
+    if (noticePattern.test(currentPath)) {
+   		document.getElementById('noticeLink').classList.add('active');
 	} else {
 	    document.getElementById('noticeLink').classList.remove('active');
 	}
     
-    if (currentPath === '/faq/list.pet' || currentPath === '/faq/insert.pet'
-    		|| currentPath === '/faq/modify.pet') {
+    if (faqPattern.test(currentPath)) {
     document.getElementById('faqLink').classList.add('active');
 	} else {
 	    document.getElementById('faqLink').classList.remove('active');
+	}
+    
+    if (boardPattern.test(currentPath)) {
+    document.getElementById('boardLink').classList.add('active');
+	} else {
+	    document.getElementById('boardLink').classList.remove('active');
+	}
+    
+    if (userPattern.test(currentPath)) {
+    document.getElementById('loginLink').classList.add('active');
+	} else {
+	    document.getElementById('loginLink').classList.remove('active');
+	}
+    
+    if (userPattern.test(currentPath)) {
+    document.getElementById('userLink').classList.add('active');
+	} else {
+	    document.getElementById('userLink').classList.remove('active');
+	}
+    
+    if (adminPattern.test(currentPath)) {
+    document.getElementById('adminLink').classList.add('active');
+	} else {
+	    document.getElementById('adminLink').classList.remove('active');
 	}
 </script>
