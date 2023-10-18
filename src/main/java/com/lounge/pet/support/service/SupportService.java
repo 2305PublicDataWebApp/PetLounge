@@ -120,18 +120,13 @@ public interface SupportService {
 	 */
 	List<SupportHistory> selectSHistoryList(int sNo);
 
-	/**
-	 * 후원 내역 갯수 조회 Service
-	 * @param sNo
-	 * @return int
-	 */
-	int getHistoryListCount(int sNo);
 
 	/**
 	 * 오늘 후원 내역 조회 Service
 	 * @return SupportHistory
 	 */
 	SupportHistory selectTodaySupport();
+
 
 	
 

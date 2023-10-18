@@ -35,14 +35,6 @@ public interface SupportStore {
 	 */
 	int updateSupport(SqlSession sqlSession, Support support);
 
-	/**
-	 * 후원 내역 갯수 조회 Store
-	 * @param sqlSession
-	 * @param sNo
-	 * @return int
-	 */
-	int getHistoryCount(SqlSession sqlSession, int sNo);
-
 	/** 
 	 * 후원글 삭제 Store
 	 * @param sqlSession
@@ -106,14 +98,6 @@ public interface SupportStore {
 	int getSearchCount(SqlSession sqlSession, Map<String, String> sMap);
 
 	/**
-	 * 후원 내역 등록 Store
-	 * @param sqlSession
-	 * @param sHistory
-	 * @return int
-	 */
-	int insertHistory(SqlSession sqlSession, SupportHistory sHistory);
-
-	/**
 	 * 후원 금액, 인원 추가 Service 
 	 * @param sqlSession
 	 * @param sOne
@@ -138,12 +122,20 @@ public interface SupportStore {
 	List<SupportHistory> selectSHistoryList(SqlSession sqlSession, int sNo);
 
 	/**
-	 * 후원 내역 갯수 조회 Store
+	 * 후원 내역 등록 Store
 	 * @param sqlSession
-	 * @param sNo 
+	 * @param sHistory
 	 * @return int
 	 */
-	int getHistoryListCount(SqlSession sqlSession, int sNo);
+	int insertHistory(SqlSession sqlSession, SupportHistory sHistory);
+
+	/**
+	 * 후원 내역 갯수 조회 Store
+	 * @param sqlSession
+	 * @param sNo
+	 * @return int
+	 */
+	int getHistoryCount(SqlSession sqlSession, int sNo);
 
 	/**
 	 * 오늘 후원 내역 조회 Store

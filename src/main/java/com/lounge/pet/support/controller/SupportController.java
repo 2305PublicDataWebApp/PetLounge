@@ -131,7 +131,7 @@ public class SupportController {
 			sHistory.setuId(uId);
 			sHistory.setsNo(sNo);
 			int sHistoryCount = sService.getCountSHistory(sHistory); // 후원 여부 uId, sNo로 조회 
-			int totalHistoryCount = sService.getHistoryListCount(sNo); // 후원 내역 갯수 sNo로 조회 
+			int totalHistoryCount = sService.getHistoryCount(sNo); // 후원 내역 갯수 sNo로 조회 
 			if(support != null) {
 				mv.addObject("totalHistoryCount", totalHistoryCount);
 				mv.addObject("sHistoryCount", sHistoryCount);
@@ -244,20 +244,10 @@ public class SupportController {
 	// 후원글 등록 
 	@RequestMapping(value = "/support/insert.pet", method = RequestMethod.POST)
 	public ModelAndView insertSupport(ModelAndView mv
-			, @ModelAttribute Support support
-			, @RequestParam(value="uploadFile", required = false) MultipartFile uploadFile) {
+			, @ModelAttribute Support support) {
 		System.out.println(support.toString());
 		try {
-			if(uploadFile != null && !uploadFile.getOriginalFilename().equals("")) {
-				// 파일 정보(이름, 리네임, 경로) 및 파일 저장 
-//				Map<String, Object> fBMap = this.saveFile(request, uploadFile);
-//				support.setFindFilename((String)fBMap.get("fileName"));
-//				support.setFindFilerename((String)fBMap.get("fileRename"));
-//				support.setFindFilepath((String)fBMap.get("filePath"));
-				String sImageUrl = "image";
-				support.setsImageUrl(sImageUrl);
 				System.out.println(support.toString());
-			}
 			int result = sService.insertSupport(support);
 			if(result > 0) {
 				mv.addObject("msg", "게시글이 등록되었습니다.");
@@ -281,24 +271,9 @@ public class SupportController {
 	@RequestMapping(value="/support/update.pet", method = RequestMethod.POST)
 	public ModelAndView updateSupport(ModelAndView mv
 			,@ModelAttribute Support support
-			, @RequestParam(value="uploadFile", required = false) MultipartFile uploadFile
 			, HttpServletRequest request) {
 		try {
-			if(uploadFile != null && !uploadFile.getOriginalFilename().equals("")) {
-				String sImageUrl = "image";
-				support.setsImageUrl(sImageUrl);
-				System.out.println(support.toString());
-				// 기존 업로드 파일 있으면 삭제 
-//				String fileRename = support.getFindFilerename();
-//				if(fileRename != null) {
-//					this.deleteFile(fileRename, request);
-//				}
-				// 새로운 파일 저장 - 파일 정보(이름, 리네임, 경로) 및 파일 저장 
-//				Map<String, Object> fBMap = this.saveFile(request, uploadFile);
-//				support.setFindFilename((String)fBMap.get("fileName"));
-//				support.setFindFilerename((String)fBMap.get("fileRename"));
-//				support.setFindFilepath((String)fBMap.get("filePath"));
-			}
+			System.out.println(support.toString());
 			int result = sService.updateSupport(support);
 			if(result > 0) {
 				mv.addObject("msg", "게시글이 수정되었습니다.");
@@ -433,6 +408,7 @@ public class SupportController {
 		for (SupportReply sReply : sRList) {
 	        User user = uService.selectOneById(sReply.getuId()); 
 	        sReply.setsRWriter(user.getuNickName());
+	        sReply.setuFilePath(user.getuFilePath());
 	    }
 		
 		// 전체 페이지 수 계산 (댓글의 총 갯수를 페이지당 댓글 갯수로 나눠서 계산) 
@@ -478,10 +454,12 @@ public class SupportController {
 			if(sHistory.getsHType() == "A") {
 				sHistory.setsHName("숨은천사");
 			}
+			User user = uService.selectOneById(sHistory.getuId());
+			sHistory.setuFilePath(user.getuFilePath());
 		}
 		
 		// 전체 페이지 수 계산 (후원내역의 총 갯수를 페이지당 후원내역 갯수로 나눠서 계산) 
-		int totalRecords = sService.getHistoryListCount(sNo); // 후원내역의 총 갯수 
+		int totalRecords = sService.getHistoryCount(sNo); // 후원내역의 총 갯수 
 		int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 후원내역 페이지 수 
 		
 		// 후원내역 리스트와 전체 페이지 수를 Map에 담아서 보냄 

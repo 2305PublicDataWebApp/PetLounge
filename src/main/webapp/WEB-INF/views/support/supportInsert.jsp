@@ -8,17 +8,21 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<jsp:include page="../include/importSource.jsp"></jsp:include>
 		<link rel="stylesheet" href="/resources/css/support/supportInsert.css">
+
+		<!-- jquery -->		
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 		
         <!-- include summernote css/js -->
-		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
+<!-- 		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" -->
+<!--         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" -->
+<!--         crossorigin="anonymous"></script> -->
         <link
         href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
         rel="stylesheet">
         <script
         src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/summernote/lang/summernote-ko-KR.js"></script>
+        
         
 		<title>펫 라운지 모금함 : 등록</title>
 	</head>
@@ -37,8 +41,9 @@
 	                    <input type="file" class="real-upload" accept="image/*" required 
 	                        onchange="setThumbnail(event);" name="uploadFile"
 	                        multiple style="display: none;">
+	                    <input type="hidden" id="s-image-url" name="sImageUrl" value="">
 	                    <div id="thumbnail">
-	                        <img id="image-preview" src="/resources/images/uploadfile.png" style="width: 100px; height: 100px;">
+	                        <img id="image-preview" src="https://petlounge.s3.ap-northeast-2.amazonaws.com/%EC%97%85%EB%A1%9C%EB%93%9C%ED%8C%8C%EC%9D%BC.png" style="width: 100px; height: 100px;">
 	                    </div>
 	                    <div class="labels">
 	                        <div class="label">
@@ -61,10 +66,10 @@
 	                        <div class="input">
 	                            <select name="sCategory" id="s-category" class="no-border">
 	                                <option value="none" style="color:#ccc;" selected disabled>카테고리를 선택해주세요.</option>
-	                                <option value="주거">주거</option>
-	                                <option value="생계">생계</option>
-	                                <option value="건강">건강</option>
-	                                <option value="개선">개선</option>
+	                                <option value="residence">주거</option>
+	                                <option value="living">생계</option>
+	                                <option value="health">건강</option>
+	                                <option value="improvement">개선</option>
 	                            </select> 
 	                        </div>
 	                        <div class="input">
@@ -102,17 +107,39 @@
             const realUpload = document.querySelector('.real-upload');
             const upload = document.querySelector('#thumbnail');
             upload.addEventListener('click', () => realUpload.click());
-            <!-- 이미지 업로드 미리보기 -->
+            <!-- 이미지 업로드 미리보기, S3에 파일업로드 후에 받은 url input에 넣어주기 -->
             function setThumbnail(event){
-                for(const image of event.target.files){
-                    const reader = new FileReader();
-                    reader.onload = function(event){
-                        const img = document.getElementById("image-preview");
-                        img.src = event.target.result;
-                        img.removeAttribute("style");
-                    }
-                    reader.readAsDataURL(image);
-                }
+            	let formData = new FormData();
+            	   formData.append("multipartFile", event.target.files[0]);
+            	   
+            	   let imageUrl = document.getElementById('s-image-url');
+            	   
+            	   $.ajax({
+            	      type: "POST",
+            	      url: '/s3/file.im',
+            	      data: formData,
+            	      async: false,
+            	      enctype: "multipart/form-data",
+            	      processData: false,
+            	      contentType: false,
+            	      success: function(result) {
+            	         console.log("파일 업로드 성공");
+            	         for(const image of event.target.files){
+                             const reader = new FileReader();
+                             reader.onload = function(event){
+                                 const img = document.getElementById("image-preview");
+                                 img.src = event.target.result;
+                                 img.removeAttribute("style");
+                             }
+                             reader.readAsDataURL(image);
+                         }
+            	         console.log(result);
+            	         imageUrl.setAttribute('value', result);
+            	      },
+            	      error: function() {
+            	         console.log(error);
+            	      }
+            	   });
             }
             <!-- 숫자만 사용 가능, 콤마 -->
             document.getElementById("s-target-amount-input").addEventListener("keyup", function (e) {
