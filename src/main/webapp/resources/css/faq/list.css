@@ -146,7 +146,18 @@ h1 {
     background-color: white;
 }
 
-
+.delete-button {
+	position: relative;
+	bottom: 5px;
+	left: 610px;
+	font-family: 'GmarketSansMedium';
+	text-align: center;
+	border: 2px solid #ffd370;
+	width: 80px;
+	height: 28px;
+	border-radius: 5px;
+	background-color: white;
+}
 
 
 
@@ -177,7 +188,7 @@ h1 {
 }
 
 /* 토글이 열렸을 때 수정하기 버튼의 스타일 */
-.faq-item.open .edit-button {
+.faq-item.open .edit-button  {
     display: block;
     float: right; /* 우측으로 이동 */
     margin-left: 10px; /* 원하는 간격으로 조정 */

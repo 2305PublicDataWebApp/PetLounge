@@ -14,7 +14,8 @@
         <title>FAQ</title>
     </head>
     <body>
-        <jsp:include page="../include/header.jsp"></jsp:include> <!-- header -->
+    	<!-- header -->
+        <jsp:include page="../include/header.jsp"></jsp:include> 
 
         <main class="main">
             <div class="contanier">
@@ -25,128 +26,173 @@
 
                 <div id="line"></div>
 
-                <!-- FAQ 게시판 -->
-                <form action="">
-                    <div class="faq-board">
-                        <!-- FAQ 항목이 동적으로 추가됩니다. -->
-                    </div>
-                    <c:if test="${ sessionScope.uId eq 'admin' }">
-	                    <div class="faq-register">
-	                        <a href="/faq/insert.pet">등록하기</a>
-	                    </div>
-                    </c:if>
-                </form>
-
+                <!-- FAQ 목록 -->
+				<div class="faq-board">
+				    <!-- FAQ 항목이 동적으로 추가 됨 -->
+				</div>
+				
+				<!-- 아이디가 admin일 경우에만 등록버튼 보이게 함. -->
+				<c:if test="${ sessionScope.uId eq 'admin' }">
+				 <div class="faq-register">
+				     <a href="/faq/insert.pet" id="register-link">등록하기</a>
+				 </div>
+				</c:if>
 
             </div>
         </main>
 
+		<!-- footer -->
         <jsp:include page="../include/footer.jsp"></jsp:include>
 
-        <!-- js -->
         <script>
-	        document.addEventListener("DOMContentLoaded", function () {
-	            const faqBoard = document.querySelector(".faq-board");
-	            let openFaqItem = null; // 현재 열린 FAQ 아이템을 저장하는 변수
-	            
-	            // FAQ 항목 가져오기 - ajax
-	            $.ajax({
-	                url: "/faq/show.pet",
-	                type: "GET",
-	                dataType: "json",
-	                success: function (data) {
-	                    // FAQ 데이터를 받아온 후, 각 항목을 동적으로 추가
-	                    data.forEach(function (item) {
-	                        addFaqItem(item.faqTitle, item.faqContent);
-	                    });
-	                },
-	                error: function (error) {
-	                    alert("FAQ 조회 실패");
-	                },
-	            });
-	
-	            // FAQ 항목을 추가하는 함수
-	            function addFaqItem(question, answer) {
-	                const faqItem = document.createElement("div");
-	                faqItem.classList.add("faq-item");
-	
-	                const titleDiv = document.createElement("div");
-	                titleDiv.classList.add("faqTitle");
-	
-	                const title = document.createElement("h3");
-	                title.textContent = question;
-	
-	                // + 아이콘 추가
-	                const iconPlus = document.createElement("span");
-	                iconPlus.textContent = "+";
-	                iconPlus.classList.add("icon");
-	                iconPlus.classList.add("plus");
-	
-	                // 내용을 토글하는 이벤트 리스너 추가
-	                titleDiv.addEventListener("click", function () {
-	                    const contentDiv = faqItem.querySelector(".faqContent");
-	                    const icon = titleDiv.querySelector(".icon");
-	
-	                    if (faqItem !== openFaqItem) {
-	                        // 다른 FAQ를 클릭했을 때만 기존 FAQ를 닫습니다.
-	                        if (openFaqItem) {
-	                            const openContentDiv = openFaqItem.querySelector(".faqContent");
-	                            const openIcon = openFaqItem.querySelector(".icon");
-	                            openFaqItem.classList.remove("open");
-	                            openContentDiv.removeChild(openContentDiv.querySelector(".edit-button"));
-	                        }
-	
-	                        // 현재 FAQ를 엽니다.
-	                        faqItem.classList.add("open");
-	                        openFaqItem = faqItem;
-	
-	                        // 현재 FAQ의 수정하기 버튼을 추가함
-	                        const editButton = document.createElement("button");
-	                        editButton.textContent = "수정하기";
-	                        editButton.classList.add("edit-button");
-	                        contentDiv.appendChild(editButton);
-	                    } else {
-	                        // 현재 FAQ가 이미 열려있는 경우, 닫습니다.
-	                        faqItem.classList.remove("open");
-	                        openFaqItem = null;
-	
-	                        // 수정하기 버튼을 삭제함
-	                        contentDiv.removeChild(contentDiv.querySelector(".edit-button"));
-	                    }
-	                });
-	
-	                titleDiv.appendChild(title);
-	                titleDiv.appendChild(iconPlus);
-	
-	                const contentDiv = document.createElement("div");
-	                contentDiv.classList.add("faqContent");
-	
-	                const content = document.createElement("p");
-	                content.textContent = answer;
-	
-	                contentDiv.appendChild(content);
-	
-	                faqItem.appendChild(titleDiv);
-	                faqItem.appendChild(contentDiv);
-	
-	                faqBoard.appendChild(faqItem);
-	            }
-	            
-	            // 페이지 로드 시 FAQ 데이터 가져오기
-	            addFaqItem();
-	
-	            // 예시 FAQ 항목을 추가합니다.
-// 	            addFaqItem("질문 1", "답변 1답변 1답변 1답변 1답변 1답변 1답변 1답변 1답변 1답변 1 1답변 1 1답변 1 1답변 1 1답변 1 1답변 1 1답변 1 1답변 1 1답변 1 1답변 1 1답변 1");
-// 	            addFaqItem("질문 2", "답변 2");
-// 	            addFaqItem("질문 3", "답변 3");
-// 	            addFaqItem("질문 4", "답변 4");
-// 	            addFaqItem("질문 5", "답변 5");
-// 	            addFaqItem("질문 6", "답변 6");
-// 	            addFaqItem("질문 7", "답변 7");
-// 	            addFaqItem("질문 8", "답변 8");
-// 	            addFaqItem("질문 9", "답변 9");
-// 	            addFaqItem("질문 10", "답변 10");
-	        });
+        document.addEventListener("DOMContentLoaded", function () {
+            const faqBoard = document.querySelector(".faq-board");
+            let openFaqItem = null; // 현재 열린 FAQ 아이템을 저장하는 변수
+            const maxFaqItems = 10; // 최대 FAQ 항목 개수
+
+            // FAQ 항목 가져오기 - ajax
+            $.ajax({
+                url: "/faq/show.pet",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    // FAQ 데이터를 받아온 후, 각 항목을 동적으로 추가
+                    data.slice(0, maxFaqItems).forEach(function (item, index) {
+                        addFaqItem(item.faqTitle, item.faqContent, data[index].faqNo);
+                    });
+                },
+                error: function (error) {
+                    alert("FAQ 조회 실패");
+                },
+            });
+
+            // "등록하기" 링크를 클릭할 때 FAQ 항목 개수를 체크
+            const registerLink = document.getElementById("register-link");
+            registerLink.addEventListener("click", function (e) {
+                if (faqBoard.children.length >= maxFaqItems) {
+                    e.preventDefault(); // 링크의 기본 동작(페이지 이동)을 중지
+                    alert("등록 가능한 FAQ 항목은 최대 10개입니다.");
+                }
+            });
+
+            // FAQ 항목을 추가하는 함수
+            function addFaqItem(question, answer, faqNo) {
+
+                const faqItem = document.createElement("div");
+                faqItem.classList.add("faq-item");
+
+                const titleDiv = document.createElement("div");
+                titleDiv.classList.add("faqTitle");
+
+                const title = document.createElement("h3");
+                title.textContent = question;
+
+                // + 아이콘 추가
+                const iconPlus = document.createElement("span");
+                iconPlus.textContent = "+";
+                iconPlus.classList.add("icon");
+                iconPlus.classList.add("plus");
+
+                // 내용을 토글하는 이벤트 리스너 추가
+                titleDiv.addEventListener("click", function () {
+
+                    const contentDiv = faqItem.querySelector(".faqContent");
+
+                    const icon = titleDiv.querySelector(".icon");
+
+                    // 다른 FAQ를 클릭했을 때만 기존 FAQ 닫기
+                    if (faqItem !== openFaqItem) {
+                        if (openFaqItem) {
+                            closeFaqItem(openFaqItem);
+                        }
+
+                        // 현재 FAQ를 열기
+                        openFaqItem = faqItem;
+                        openFaqItem.classList.add("open");
+
+                        // 삭제하기 버튼 추가
+                        addDeleteButton(contentDiv, faqNo);
+                        // 수정하기 버튼 추가
+                        addEditButton(contentDiv, faqNo);
+
+                    } else {
+                        // 현재 FAQ가 이미 열려있는 경우, 토글 닫기
+                        closeFaqItem(faqItem);
+                        openFaqItem = null;
+                    }
+                });
+
+                titleDiv.appendChild(title);
+                titleDiv.appendChild(iconPlus);
+
+                const contentDiv = document.createElement("div");
+                contentDiv.classList.add("faqContent");
+
+                const content = document.createElement("p");
+                content.innerHTML = answer;
+
+                contentDiv.appendChild(content);
+
+                faqItem.appendChild(titleDiv);
+                faqItem.appendChild(contentDiv);
+
+                faqBoard.appendChild(faqItem);
+            }
+
+            function closeFaqItem(faqItem) {
+                faqItem.classList.remove("open");
+                const contentDiv = faqItem.querySelector(".faqContent");
+                const deleteButton = contentDiv.querySelector(".delete-button");
+                if (deleteButton) {
+                    deleteButton.remove();
+                }
+                const editButton = contentDiv.querySelector(".edit-button");
+                if (editButton) {
+                    editButton.remove();
+                }
+            }
+
+            function addDeleteButton(contentDiv, faqNo) {
+                if (!contentDiv.querySelector(".delete-button")) {
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent = "삭제하기";
+                    deleteButton.classList.add("delete-button");
+                    contentDiv.appendChild(deleteButton);
+
+                    deleteButton.addEventListener("click", function() {
+                        const faqItem = this.closest(".faq-item");
+                        const confirmDelete = window.confirm("이 FAQ 항목을 삭제하시겠습니까?");
+                        if (confirmDelete) {
+                            $.ajax({
+                                url: "/faq/delete.pet",
+                                type: "POST",
+                                data: {faqNo: faqNo},
+                                success: function(result) {
+                                    faqItem.remove();
+                                },
+                                error: function() {
+                                    alert("FAQ 삭제에 실패했습니다.");
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+
+            function addEditButton(contentDiv, faqNo) {
+                if (!contentDiv.querySelector(".edit-button")) {
+                    const editButton = document.createElement("button");
+                    editButton.textContent = "수정하기";
+                    editButton.classList.add("edit-button");
+                    contentDiv.appendChild(editButton);
+
+                    editButton.addEventListener("click", function() {
+                        const faqNum = faqNo;
+                        location.href = "/faq/modify.pet?FaqNo=" + faqNum;
+                    });
+                }
+            }
+        });
         </script>
     </body>
 </html>

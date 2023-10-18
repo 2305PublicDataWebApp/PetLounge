@@ -25,6 +25,12 @@ public class Faq {
 		this.faqUpdate = faqUpdate;
 		this.faqStatus = faqStatus;
 	}
+	
+	public Faq(String faqTitle, String faqContent) {
+		super();
+		this.faqTitle = faqTitle;
+		this.faqContent = faqContent;
+	}
 
 	public int getFaqNo() {
 		return faqNo;

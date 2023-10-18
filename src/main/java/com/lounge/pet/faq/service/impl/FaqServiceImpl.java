@@ -32,4 +32,32 @@ public class FaqServiceImpl implements FaqService{
 		return faqList;
 	}
 
+	// faq 목록 갯수 조회
+	@Override
+	public int getFaqCount() {
+		int faqCount = fStore.getFaqCount(session);
+		return faqCount;
+	}
+
+	// faq 글 삭제
+	@Override
+	public int deleteFaq(Integer faqNo) {
+		int result = fStore.deleteFaq(session, faqNo);
+		return result;
+	}
+
+	// faq 수정페이지 정보 불러오기
+	@Override
+	public Faq selectOneByNo(Faq faqNo) {
+		Faq faq = fStore.selectOneByNo(session, faqNo);
+		return faq;
+	}
+
+	// faq 글 수정
+	@Override
+	public int modifyFaq(Faq faq) {
+		int result = fStore.modifyFaq(session, faq);
+		return result;
+	}
+
 }

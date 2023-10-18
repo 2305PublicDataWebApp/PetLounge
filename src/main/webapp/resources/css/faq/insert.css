@@ -129,6 +129,14 @@ button, input[type="submit"] {
     /* border: 2px solid black; */
 }
 
+#btn a {
+	text-decoration: none;
+}
+
+a:hover {
+    color: #ffd370;
+}
+
 .btn-list {
     position: relative;
     display: flex;

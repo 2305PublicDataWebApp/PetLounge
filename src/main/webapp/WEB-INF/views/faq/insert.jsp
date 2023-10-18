@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="ko">
     <head>
@@ -11,7 +13,7 @@
         <link rel="stylesheet" href="/resources/css/font.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css">
         <title>FAQ 등록</title>
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
@@ -31,7 +33,7 @@
 
                 <!-- 게시글 등록 -->
                 <div id="board-title">
-                    <form action="/faq/insert.pet" method="post">
+<!--                     <form action="/faq/insert.pet" method="post"> -->
                         <div id="faq-borad">
                             <label for="faq-title" id="title">제목</label>
                             <div id="content">
@@ -40,13 +42,14 @@
                         </div>
 <!--                         <div id="summernote"> -->
                       	<textarea name="faqContent" id="summernote" style="display: none;"></textarea>
+
 <!--                         </div> -->
 		                <div id="btn">
 <!-- 		                    <input id="register-sub" type="submit" value="등록하기"> -->
-		                    <button id="register-sub" onclick="faqInsert();">등록하기</button>
-		                    <a class="btn-list">목록으로</a>
+		                    <button id="register-sub" type="button">등록하기</button>
+		                    <a class="btn-list" href="/faq/list.pet" >목록으로</a>
 		                </div>
-                    </form>
+<!--                     </form> -->
                 </div>
             </div>
         </main>
@@ -82,24 +85,25 @@
             });
             
             // 글 등록 ajax
+            const maxFaqItems = 10;
+        	const registerLink = document.querySelector("#register-sub");
             $("#register-sub").on("click", function() {
-//             	var faqContent = $("#summernote").val(); // 썸머노트 내용 가져옴
-				var faqContent = $("#summernote").summernote("getCode");
-            	var faqTitle = $("#title").val(); // 제목 가져옴
+				var faqContent = $("#summernote").summernote('code');
+            	var faqTitle = $("#faq-title").val(); // 제목 가져옴
             	$.ajax({
-            		url: "/faq/insert.pet",
-            		data: { faqContent : faqContent, faqTitle : faqTitle },
-            		type: "POST",
-            		success: function(result) {
+            		url : "/faq/insert.pet",
+            		data : { faqContent : faqContent, faqTitle : faqTitle },
+            		type : "POST",
+            		success : function(result) {
             			if(result == "success") {
-            				window.location.replace("/faq/list.pet"); // 성공한 경우 리스트로 이동
-//             				location.href = '/faq/list.pet'; // 성공한 경우 리스트로 이동
-            			} else {
-            				alert("faq 등록 실패");
-            			}
-            		}
-            		,error: function() {
-            			alert("오류");
+// 	        				window.location.replace("/faq/list.pet"); // 성공한 경우 리스트로 이동
+	         				location.href="/faq/list.pet";
+	         			} else {
+	         				alert("faq 등록 실패");
+	         			}
+            		},
+            		error : function() {
+            			alert("관리자에게 문의 바랍니다.");
             		}
            		});
             });
