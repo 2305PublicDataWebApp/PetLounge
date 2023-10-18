@@ -190,7 +190,6 @@ label {
 
 #tmi {
 	position: relative;
-	left: 30px;
 	height: 30px;
 	width: 450px;
 	border: none;
@@ -217,10 +216,12 @@ label {
 }
 
 .board-logo {
+	display: flex;
+	align-items: center;
     width: 35px;
     height: 35px;
     margin-left: 7px;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
 /* ********** 오늘의 날씨 ********** */

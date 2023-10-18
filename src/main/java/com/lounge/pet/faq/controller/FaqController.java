@@ -122,22 +122,24 @@ public class FaqController {
 			if(sessionId.equals("admin") && !sessionId.isEmpty()) {
 				int result = fService.modifyFaq(faq);
 				if(result > 0) {
-					return "faq/list";
+					model.addAttribute("msg", "FAQ 수정 완료하였습니다");
+					model.addAttribute("url", "/faq/list.pet");
+					return "common/alert";
 				} else {
 					model.addAttribute("msg", "FAQ 수정에 실패하였습니다.");
 					model.addAttribute("url", "/faq/modify.pet?FaqNo="+faq.getFaqNo());
-					return "common/message";
+					return "common/alert";
 				}
 			} else {
 				model.addAttribute("msg", "로그인 후 이용가능합니다.");
 				model.addAttribute("url", "/user/login.pet");
-				return "common/message";
+				return "common/alert";
 			}
 			
 		} catch (Exception e) {
 			model.addAttribute("msg", "FAQ 수정에 오류가 발생하였습니다.");
 			model.addAttribute("url", "/faq/modify.pet?FaqNo="+faq.getFaqNo());
-			return "common/message";
+			return "common/alert";
 		}
 	}
 	
