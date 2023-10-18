@@ -24,6 +24,22 @@ public interface BoardStore {
 	 */
 	int getSearchCount(SqlSession session, Map<String, String> fMap);
 
+	/**
+	 * 게시글 상세 조회
+	 * @param session
+	 * @param fNo
+	 * @return
+	 */
+	Board selectFreeBoardByNo(SqlSession session, int fNo);
+
+	/**
+	 * 게시글 조회수 증가
+	 * @param session
+	 * @param bOne
+	 * @return
+	 */
+	int updateViewCount(SqlSession session, Board bOne);
+
 
 
 }

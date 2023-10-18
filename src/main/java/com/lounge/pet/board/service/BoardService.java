@@ -21,4 +21,19 @@ public interface BoardService {
 	 */
 	int getSearchCount(Map<String, String> fMap);
 
+	/**
+	 * 게시글 상세 조회
+	 * @param fNo
+	 * @return
+	 */
+	Board selectFreeBoardByNo(int fNo);
+
+	/**
+	 * 게시글 조회수 증가
+	 * @param bOne
+	 * @return
+	 */
+	int updateViewCount(Board bOne);
+
+
 }

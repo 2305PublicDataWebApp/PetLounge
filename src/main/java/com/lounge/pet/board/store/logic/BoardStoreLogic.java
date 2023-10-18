@@ -24,4 +24,16 @@ public class BoardStoreLogic implements BoardStore {
 		return result;
 	}
 
+	@Override
+	public Board selectFreeBoardByNo(SqlSession session, int fNo) {
+		Board bOne = session.selectOne("BoardMapper.selectFreeBoardByNo", fNo);
+		return bOne;
+	}
+
+	@Override
+	public int updateViewCount(SqlSession session, Board bOne) {
+		int result = session.update("BoardMapper.updateViewCount", bOne);
+		return result;
+	}
+
 }

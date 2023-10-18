@@ -35,4 +35,18 @@ public class BoardServiceImpl implements BoardService {
 		return result;
 	}
 
+
+	@Override
+	public Board selectFreeBoardByNo(int fNo) {
+		Board bOne = bStore.selectFreeBoardByNo(session, fNo);
+		return bOne;
+	}
+
+
+	@Override
+	public int updateViewCount(Board bOne) {
+		int result = bStore.updateViewCount(session, bOne);
+		return result;
+	}
+
 }

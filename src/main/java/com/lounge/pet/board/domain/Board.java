@@ -16,6 +16,7 @@ public class Board {
 	private int fFileLength;
 	private String fStatus;
 	private String fViewCount;
+	private String fWriter;
 	
 	public int getfNo() {
 		return fNo;
@@ -89,12 +90,18 @@ public class Board {
 	public void setfViewCount(String fViewCount) {
 		this.fViewCount = fViewCount;
 	}
+	public String getfWriter() {
+		return fWriter;
+	}
+	public void setfWriter(String fWriter) {
+		this.fWriter = fWriter;
+	}
 	@Override
 	public String toString() {
 		return "자유게시판 [글번호=" + fNo + ", 아이디=" + uId + ", 제목=" + fTitle + ", 내용=" + fContent + ", 작성일="
 				+ fCreate + ", 수정일=" + fUpdate + ", 파일이름=" + fFileName + ", 파일리네임=" + fFileRename
 				+ ", 파일경로=" + fFilePath + ", 파일크기=" + fFileLength + ", 사용여부=" + fStatus + ", 조회수="
-				+ fViewCount + "]";
+				+ fViewCount + ", 작성자=" + fWriter + "]";
 	}
 	
 	
