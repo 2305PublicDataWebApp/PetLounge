@@ -110,7 +110,6 @@
 			        OR H_ROAD_ADDR LIKE '%' || #{ hSearchKeyword } || '%' )
 			    ORDER BY distance
 			)
-			WHERE ROWNUM <= 5
 		]]>
 	</select>
 	
@@ -124,5 +123,15 @@
 		  FROM H_REVIEW_TBL 
 		 WHERE H_NO = #{ hNo } 
 		   AND H_R_STATUS = 'Y'
+	</select>
+	
+	<select id="getHSearchTotalCount" resultType="_int">
+		SELECT COUNT(*)
+	      FROM HOSPITAL_TBL 
+	     WHERE H_STATUS = '정상'
+	       AND H_X IS NOT NULL
+	       AND ( H_NAME LIKE '%' || #{ hSearchKeyword } || '%' 
+	        OR H_ADDR LIKE '%' || #{ hSearchKeyword } || '%' 
+	        OR H_ROAD_ADDR LIKE '%' || #{ hSearchKeyword } || '%' )
 	</select>
 </mapper>

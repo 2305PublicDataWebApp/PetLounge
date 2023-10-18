@@ -98,4 +98,11 @@ public interface HospitalService {
 	 */
 	int getHReviewTotalCount(int hNo);
 
+	/**
+	 * 동물병원 검색결과 총 개수 Service
+	 * @param hSearchKeyword
+	 * @return
+	 */
+	int getHSearchTotalCount(String hSearchKeyword);
+
 }

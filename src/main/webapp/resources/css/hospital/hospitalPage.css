@@ -55,45 +55,29 @@ main {
                 align-items: center;
             } 
 
-                .home-icon {
-                    position: relative;
-                }
-
-                .home-info-box {
-                    display: none;
-                    position: absolute;
-                    width: auto;
-                    padding: 10px 20px;
-                    -webkit-border-radius: 8px;
-                    -moz-border-radius: 8px;
-                    border-radius: 8px;
-                    background: #333;
-                    color: #fff;
-                    font-size: 0.8em;
-                }
-
-                .home-info-box:after {
-                    position: absolute;
-                    top: 100%; 
-                    left: 50%;
-                    width: 0;
-                    height: 0;
-                    margin-left: -10px;
-                    border: solid transparent;
-                    border-color: rgba(51, 51, 51, 0);
-                    border-top-color: #333;
-                    border-width: 10px;
-                    pointer-events: none;
-                    content: ' ';
-                }
-
-                .home-icon:hover + .home-info-box {
-                    display: block;
-                    top: calc(30% - 15px);
-                    left: calc(20% - 22px);
-                }
-
-
+                [data-tooltip-text]:hover {
+					position: relative;
+				}
+				
+				[data-tooltip-text]:hover:after {
+					background-color: rgba(0, 0, 0, 0.8);
+					box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
+					border-radius: 5px;
+				
+					color: #FFFFFF;
+					font-size: 12px;
+					font-family:'GmarketSansMedium';
+					content: attr(data-tooltip-text);
+				
+					top: 120%;
+					left: -60%;    
+					padding: 7px 12px;
+					position: absolute;
+					width: auto;
+				
+					z-index: 9999;
+				}
+				                
             #map {
                 width: 65%; 
                 height: 380px; 
@@ -101,49 +85,75 @@ main {
                 margin: 10px;
             } 
 
-    #hospital-list-section {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-        table {
-            width: 55%;
-            text-align: left;
-            margin-top: 80px;
-            margin-bottom: 150px;
-        }
-            
-            th {
-                font-size: 1.5em;
-            }
-
-            tr:not(thead > tr:first-child, .search-list-none):hover {
-                background-color: rgba(255, 212, 112, 0.14);
-                transition: background-color 0.5s ease;
-                cursor: pointer;
-            }
-
-/*                 tr:not(thead > tr:first-child):hover td { */
-/*                     font-size: 1.1em; */
-/*                     transition: font-size 0.3s ease; */
-/*                 } */
-
-/*                 tr:not(thead > tr:first-child) td { */
-/*                     transition: font-size 0.3s ease; */
-/*                 } */
-
-            th, td {
-                padding: 20px 10px;
-                border-bottom: 1px solid #ddd;
-            }
-
-            td > div {
-                display: flex;
-                --align-items: flex-end;
-                --align-items: center;
-            }
-
-                .arrow-icon {
-                    display: flex;
-                }
+	    #hospital-list-section > div {
+	        display: flex;
+	        justify-content: center;
+	        align-items: center;
+	    }
+	
+	        table {
+	            width: 55%;
+	            text-align: left;
+	            margin-top: 80px;
+	            margin-bottom: 40px;
+	        }
+	            
+	            th {
+	                font-size: 1.5em;
+	            }
+	
+	            tr:not(thead > tr:first-child, .search-list-none):hover {
+	                background-color: rgba(255, 212, 112, 0.14);
+	                transition: background-color 0.5s ease;
+	                cursor: pointer;
+	            }
+	
+	/*                 tr:not(thead > tr:first-child):hover td { */
+	/*                     font-size: 1.1em; */
+	/*                     transition: font-size 0.3s ease; */
+	/*                 } */
+	
+	/*                 tr:not(thead > tr:first-child) td { */
+	/*                     transition: font-size 0.3s ease; */
+	/*                 } */
+	
+	            th, td {
+	                padding: 20px 10px;
+	                border-bottom: 1px solid #ddd;
+	            }
+	
+	            td > div {
+	                display: flex;
+	                --align-items: flex-end;
+	                --align-items: center;
+	            }
+	
+	                .arrow-icon {
+	                    display: flex;
+	                }
+	                
+			#page-navigation {
+				margin-bottom: 150px;
+			}
+			
+				/* 페이징 */
+				.page-link {
+				  color: #000; 
+				  background-color: #fafafa;
+				  border: 1px solid #fafafa; 
+				}
+				
+				.page-item.active .page-link {
+				 z-index: 1;
+				 color: #fff;
+				 font-weight:bold;
+				 background-color: #FFD370;
+				 border-color: #fafafa;
+				 
+				}
+				
+				.page-link:focus, .page-link:hover {
+				  color: #000;
+				  background-color: #ececec; 
+				  border-color: #fafafa;
+				}
