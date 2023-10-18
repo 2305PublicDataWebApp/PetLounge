@@ -2,189 +2,280 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-  <mapper namespace="UserMapper">
-  
-<!--   <resultMap type="User" id="userResultMap"> -->
-<!-- 		<id property="uId" 					column="U_ID" /> -->
-<!-- 		<result property="uPw" 				column="U_PW" /> -->
-<!-- 		<result property="uPwRe" 			column="U_PWRE" /> -->
-<!-- 		<result property="uName" 			column="U_NAME" /> -->
-<!-- 		<result property="uNickName" 		column="U_NICKNAME" /> -->
-<!-- 		<result property="uEmail" 			column="U_EMAIL" /> -->
-<!-- 		<result property="uPhone" 			column="U_PHONE" /> -->
-<!-- 		<result property="uAddr" 			column="U_ADDR" /> -->
-<!-- 		<result property="uAddrNo" 			column="U_ADDRNO" /> -->
-<!-- 		<result property="uFileName" 		column="U_FILENAME" /> -->
-<!-- 		<result property="uFileReName" 		column="U_FILERENAME" /> -->
-<!-- 		<result property="uFilePath" 		column="U_FILEPATH" /> -->
-<!-- 		<result property="uFileLength" 		column="U_FILELENGTH" /> -->
-<!-- 		<result property="uRegDate" 		column="U_REGDATE" /> -->
-<!-- 		<result property="uStatus" 			column="U_STATUS" /> -->
-<!-- 	</resultMap> -->
 
-  <resultMap type="Hospital" id="UserHosResultMap">
-		<id property="hNo" 						column="H_NO" />
-		<result property="hName" 				column="H_NAME" />
-		<result property="hOpen" 				column="H_OPEN" />
-		<result property="hStatus" 				column="H_STATUS" />
-		<result property="hPhone" 				column="H_PHONE" />
-		<result property="hAddr" 				column="H_ADDR" />
-		<result property="hRoadAddr" 			column="H_ROAD_ADDR" />
-		<result property="hX" 					column="H_X" />
-		<result property="hY" 					column="H_Y" />
-		<result property="hLat" 				column="H_LAT" />
-		<result property="hLng" 				column="H_LNG" />
+<mapper namespace="UserMapper">
+
+	<!-- <resultMap type="User" id="userResultMap"> -->
+	<!-- <id property="uId" column="U_ID" /> -->
+	<!-- <result property="uPw" column="U_PW" /> -->
+	<!-- <result property="uPwRe" column="U_PWRE" /> -->
+	<!-- <result property="uName" column="U_NAME" /> -->
+	<!-- <result property="uNickName" column="U_NICKNAME" /> -->
+	<!-- <result property="uEmail" column="U_EMAIL" /> -->
+	<!-- <result property="uPhone" column="U_PHONE" /> -->
+	<!-- <result property="uAddr" column="U_ADDR" /> -->
+	<!-- <result property="uAddrNo" column="U_ADDRNO" /> -->
+	<!-- <result property="uFileName" column="U_FILENAME" /> -->
+	<!-- <result property="uFileReName" column="U_FILERENAME" /> -->
+	<!-- <result property="uFilePath" column="U_FILEPATH" /> -->
+	<!-- <result property="uFileLength" column="U_FILELENGTH" /> -->
+	<!-- <result property="uRegDate" column="U_REGDATE" /> -->
+	<!-- <result property="uStatus" column="U_STATUS" /> -->
+	<!-- </resultMap> -->
+
+	<resultMap type="Hospital" id="UserHosResultMap">
+		<id property="hNo" column="H_NO" />
+		<result property="hName" column="H_NAME" />
+		<result property="hOpen" column="H_OPEN" />
+		<result property="hStatus" column="H_STATUS" />
+		<result property="hPhone" column="H_PHONE" />
+		<result property="hAddr" column="H_ADDR" />
+		<result property="hRoadAddr" column="H_ROAD_ADDR" />
+		<result property="hX" column="H_X" />
+		<result property="hY" column="H_Y" />
+		<result property="hLat" column="H_LAT" />
+		<result property="hLng" column="H_LNG" />
 	</resultMap>
-	
-	
 
-	
+
 	<!-- 회원가입 -->
 	<insert id="insertUser">
-		INSERT INTO USER_TBL VALUES(#{ uId }, #{ uPw }, #{ uPwRe }, #{ uName }, #{ uNickName }, #{ uEmail }, #{ uPhone }, #{ uAddr }, #{ uAddrNo }, #{ uFileName }, #{ uFileReName }, #{ uFilePath }, #{ uFileLength }, DEFAULT, DEFAULT)
+		INSERT INTO USER_TBL VALUES(#{ uId }, #{ uPw }, #{
+		uPwRe }, #{ uName }, #{ uNickName }, #{ uEmail }, #{ uPhone }, #{
+		uAddr }, #{ uAddrNo }, #{ uFileName }, #{ uFileReName }, #{ uFilePath
+		}, #{ uFileLength }, DEFAULT, DEFAULT)
 	</insert>
-	
+
 	<!-- 로그인 -->
 	<select id="userLogin" resultType="User">
-		SELECT * FROM USER_TBL WHERE U_ID = #{ uId } AND U_PW = #{ uPw } AND U_STATUS = 'Y'
+		SELECT * FROM USER_TBL WHERE
+		U_ID = #{ uId } AND U_PW = #{ uPw } AND U_STATUS = 'Y'
 	</select>
-	
+
 	<!-- 회원정보조회 -->
 	<select id="selectOneById" resultType="User">
-		SELECT * FROM USER_TBL WHERE U_ID = #{ uId } AND U_STATUS = 'Y'
+		SELECT * FROM USER_TBL
+		WHERE U_ID = #{ uId } AND U_STATUS = 'Y'
 	</select>
-	
+
 	<!-- 회원정보수정 -->
 	<update id="updateUser">
-		UPDATE USER_TBL SET U_PW = #{ uPw }, U_PWRE = #{ uPwRe }, U_NAME = #{ uName }, U_NICKNAME = #{ uNickName }, U_EMAIL = #{ uEmail } , U_PHONE = #{ uPhone }, U_ADDR = #{ uAddr }, U_ADDRNO = #{ uAddrNo }, U_FILENAME = #{ uFileName }, U_FILERENAME = #{ uFileReName }, U_FILEPATH = #{ uFilePath }, U_FILELENGTH = #{ uFileLength } WHERE U_ID = #{ uId } AND U_STATUS = 'Y'
+		UPDATE USER_TBL SET U_PW = #{ uPw }, U_PWRE = #{
+		uPwRe }, U_NAME = #{ uName }, U_NICKNAME = #{ uNickName }, U_EMAIL =
+		#{ uEmail } , U_PHONE = #{ uPhone }, U_ADDR = #{ uAddr }, U_ADDRNO =
+		#{ uAddrNo }, U_FILENAME = #{ uFileName }, U_FILERENAME = #{
+		uFileReName }, U_FILEPATH = #{ uFilePath }, U_FILELENGTH = #{
+		uFileLength } WHERE U_ID = #{ uId } AND U_STATUS = 'Y'
 	</update>
-  
-  	<!-- 회원 탈퇴 -->
+
+	<!-- 회원 탈퇴 -->
 	<update id="deleteUser">
-		UPDATE USER_TBL SET U_STATUS = 'N' WHERE U_ID = #{ uId }
+		UPDATE USER_TBL SET U_STATUS = 'N' WHERE U_ID = #{
+		uId }
 	</update>
-	
+
 	<!-- 아이디 중복확인 -->
 	<select id="userCheckId" resultType="User">
-		SELECT * FROM USER_TBL WHERE U_ID= #{uId }
+		SELECT * FROM USER_TBL WHERE
+		U_ID= #{uId }
 	</select>
-	
+
 	<!-- 닉네임 중복확인 -->
 	<select id="userCheckNick" resultType="User">
-		SELECT * FROM USER_TBL WHERE U_NICKNAME= #{uNickName }
+		SELECT * FROM USER_TBL
+		WHERE U_NICKNAME= #{uNickName }
 	</select>
-	
+
 	<!-- 즐겨찾는 병원 리스트 조회 -->
 	<select id="selectHos" resultMap="UserHosResultMap">
-		SELECT * FROM HOSPITAL_TBL H 
+		SELECT * FROM HOSPITAL_TBL H
 		JOIN H_BOOKMARK_TBL B ON B.H_NO = H.H_NO
-		WHERE B.U_ID = #{value } ORDER BY H.H_NO DESC
+		WHERE B.U_ID = #{value } ORDER
+		BY H.H_NO DESC
 	</select>
-	
-	
+
+
 	<!--전체 즐겨찾기 병원 갯수 -->
 	<select id="selectListCount" resultType="_int">
-		SELECT COUNT (*) FROM H_BOOKMARK_TBL WHERE U_ID = #{ uId }
+		SELECT COUNT (*) FROM
+		H_BOOKMARK_TBL WHERE U_ID = #{ uId }
+	</select>
+
+
+
+	<!-- 즐겨찾는 병원 검색 수 -->
+	<select id="selectListByKeywordCount" resultType="_int">
+		SELECT COUNT(*) FROM HOSPITAL_TBL H
+		JOIN H_BOOKMARK_TBL B ON B.H_NO = H.H_NO
+		WHERE B.U_ID = #{uId }
+		<if test="searchCondition == 'all'">
+			AND (H.H_NAME LIKE '%'||#{searchKeyword}||'%' OR H.H_ADDR LIKE
+			'%'||#{searchKeyword}||'%' OR H.H_PHONE LIKE
+			'%'||#{searchKeyword}||'%')
+		</if>
+		<if test="searchCondition == 'name'">
+			AND H.H_NAME LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'addr'">
+			AND H.H_ADDR LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'phone'">
+			AND H.H_PHONE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+	</select>
+
+
+	<!-- 즐겨찾는 병원 검색 -->
+	<select id="searchHosByKeyword" resultMap="UserHosResultMap">
+		SELECT H.*
+		FROM HOSPITAL_TBL H
+		JOIN H_BOOKMARK_TBL B ON B.H_NO = H.H_NO
+		WHERE B.U_ID = #{uId }
+		<if test="searchCondition == 'all'">
+			AND (H.H_NAME LIKE '%'||#{searchKeyword}||'%' OR H.H_ADDR LIKE
+			'%'||#{searchKeyword}||'%' OR H.H_PHONE LIKE
+			'%'||#{searchKeyword}||'%')
+		</if>
+		<if test="searchCondition == 'name'">
+			AND H.H_NAME LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'addr'">
+			AND H.H_ADDR LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'phone'">
+			AND H.H_PHONE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY H.H_NO DESC
 	</select>
 	
-	<!--즐겨찾는 병원 검색 전체 갯수 -->
-<!-- 	<select id="selectListByKeywordCount" resultType="_int"> -->
-<!-- 		SELECT COUNT (*) FROM HOSPITAL_TBL -->
-<!-- 		<if test="searchCondition == 'all'"> -->
-<!-- 			WHERE H_NAME LIKE '%'||#{ searchKeyword }||'%'OR H_ADDR LIKE '%'||#{ searchKeyword }||'%' OR H_PHONE LIKE '%'||#{ searchKeyword }||'%'  -->
-<!-- 		</if> -->
-<!-- 		<if test="searchCondition == 'name'"> -->
-<!-- 			WHERE H_NAME LIKE '%'||#{ searchKeyword }||'%' -->
-<!-- 		</if>  -->
-<!-- 		<if test="searchCondition == 'addr'"> -->
-<!-- 			WHERE H_ADDR LIKE '%'||#{ searchKeyword }||'%' -->
-<!-- 		</if> -->
-<!-- 		<if test="searchCondition == 'phone'"> -->
-<!-- 			WHERE H_PHONE LIKE '%'||#{ searchKeyword }||'%' -->
-<!-- 		</if>  -->
-<!-- 	</select> -->
-
-
-<select id="selectListByKeywordCount" resultType="_int">
-	SELECT COUNT(*) FROM HOSPITAL_TBL H
-	JOIN H_BOOKMARK_TBL B ON B.H_NO = H.H_NO
-	WHERE B.U_ID = #{uId }
-	<if test="searchCondition == 'all'">
-		AND (H.H_NAME LIKE '%'||#{searchKeyword}||'%' OR H.H_ADDR LIKE '%'||#{searchKeyword}||'%' OR H.H_PHONE LIKE '%'||#{searchKeyword}||'%')
-	</if>
-	<if test="searchCondition == 'name'">
-		AND H.H_NAME LIKE '%'||#{searchKeyword}||'%'
-	</if>
-	<if test="searchCondition == 'addr'">
-		AND H.H_ADDR LIKE '%'||#{searchKeyword}||'%'
-	</if>
-	<if test="searchCondition == 'phone'">
-		AND H.H_PHONE LIKE '%'||#{searchKeyword}||'%'
-	</if>
-</select>
-
-
-
+	<!--전체 즐겨찾기 병원 갯수 -->
+	<select id="selectBoardListCount" resultType="_int">
+		SELECT COUNT (*) FROM
+		FREE_TBL WHERE U_ID = #{ uId }
+	</select>
 	
-	<!--즐겨찾는 병원 검색 -->
-<!-- 	<select id="searchUserByKeyword" resultMap="UserHosResultMap"> -->
-<!-- 		SELECT * FROM HOSPITAL_TBL -->
-<!-- 		<if test="searchCondition == 'all'"> -->
-<!-- 			WHERE H_NAME LIKE '%'||#{ searchKeyword }||'%'OR H_ADDR LIKE '%'||#{ searchKeyword }||'%' OR H_PHONE LIKE '%'||#{ searchKeyword }||'%'  -->
-<!-- 		</if> -->
-<!-- 		<if test="searchCondition == 'name'"> -->
-<!-- 			WHERE H_NAME LIKE '%'||#{ searchKeyword }||'%' -->
-<!-- 		</if>  -->
-<!-- 		<if test="searchCondition == 'addr'"> -->
-<!-- 			WHERE H_ADDR LIKE '%'||#{ searchKeyword }||'%' -->
-<!-- 		</if> -->
-<!-- 		<if test="searchCondition == 'phone'"> -->
-<!-- 			WHERE H_PHONE LIKE '%'||#{ searchKeyword }||'%' -->
-<!-- 		</if>  -->
-<!-- 	</select> -->
 
 
-
-<select id="searchUserByKeyword" resultMap="UserHosResultMap">
-	SELECT H.* 
-	FROM HOSPITAL_TBL H
-	JOIN H_BOOKMARK_TBL B ON B.H_NO = H.H_NO
-	WHERE B.U_ID = #{uId }
-	<if test="searchCondition == 'all'">
-		AND (H.H_NAME LIKE '%'||#{searchKeyword}||'%' OR H.H_ADDR LIKE '%'||#{searchKeyword}||'%' OR H.H_PHONE LIKE '%'||#{searchKeyword}||'%')
-	</if>
-	<if test="searchCondition == 'name'">
-		AND H.H_NAME LIKE '%'||#{searchKeyword}||'%'
-	</if>
-	<if test="searchCondition == 'addr'">
-		AND H.H_ADDR LIKE '%'||#{searchKeyword}||'%'
-	</if>
-	<if test="searchCondition == 'phone'">
-		AND H.H_PHONE LIKE '%'||#{searchKeyword}||'%'
-	</if>
-	ORDER BY H.H_NO DESC
-</select>
-
-
-
-
-		
-		<!-- 후원목록조회 -->
-<!-- 	<select id="selectSupporList" parameterType="String" resultMap="UserSupportResultMap"> -->
-<!-- 		SELECT * FROM S_HISTORY_TBL H -->
-<!-- 		JOIN SUPPORT_TBL S ON S.S_NO = H.S_H_NO -->
-<!--         WHERE H.U_ID = #{uId} -->
-<!--         ORDER BY S.S_NO DESC; -->
-<!-- 	</select> -->
+	<!-- 게시글 조회 -->
+	<select id="selectBoard" resultType="Board">
+		SELECT * FROM FREE_TBL WHERE U_ID = #{ uId } 
+	</select>
 	
-<!-- 	<select id="selectSupporList" parameterType="String" resultMap="UserSupportResultMap"> -->
-<!-- 	  SELECT S.*, H.* -->
-<!-- 	  FROM SUPPORT_TBL S -->
-<!-- 	  JOIN S_HISTORY_TBL H ON S.S_NO = H.S_H_NO -->
-<!-- 	  WHERE H.U_ID = #{uId} -->
-<!-- 	  ORDER BY S.S_NO DESC -->
-<!-- 	</select> -->
 	
-  
-  </mapper>
+	<!--자유게시판 검색 -->
+	<select id="searchBoardByKeyword" resultType="Board">
+		SELECT * FROM FREE_TBL WHERE U_ID = #{ uId } 
+		<if test="searchCondition == 'all'">
+			AND (F_TITLE LIKE '%'||#{searchKeyword}||'%' OR U_ID LIKE '%'||#{searchKeyword}||'%' OR F_CREATE LIKE '%'||#{searchKeyword}||'%')
+		</if>
+		<if test="searchCondition == 'title'">
+			AND F_TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'name'">
+			AND U_ID LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'date'">
+			AND F_CREATE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY F_CREATE DESC
+	</select>
+	
+	<!-- 자유게시판 검색 수 -->
+	<select id="selectBoardSearchListCount" resultType="_int">
+		SELECT COUNT(*) FROM FREE_TBL WHERE U_ID = #{ uId } 
+		<if test="searchCondition == 'all'">
+			AND (F_TITLE LIKE '%'||#{searchKeyword}||'%' OR U_ID LIKE '%'||#{searchKeyword}||'%' OR F_CREATE LIKE '%'||#{searchKeyword}||'%')
+		</if>
+		<if test="searchCondition == 'title'">
+			AND F_TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'name'">
+			AND U_ID LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'date'">
+			AND F_CREATE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+	</select>
+
+
+	<!--전체 병원리뷰 게시글 갯수 -->
+	<select id="selectHosReListCount" resultType="_int">
+		SELECT COUNT (*) FROM
+		H_REVIEW_TBL WHERE U_ID = #{ uId }
+	</select>
+	
+	
+	<!-- 병원리뷰 리스트 조회 -->
+	<select id="selectHosRe" resultType="UserHosRe">
+		SELECT * FROM H_REVIEW_TBL R   
+		JOIN HOSPITAL_TBL H ON H.H_NO = R.H_NO
+		WHERE R.U_ID = #{uId } ORDER
+		BY H.H_NO DESC
+	</select>
+	
+
+	<!-- 병원 리뷰 검색 수 -->
+	<select id="selectHosReSearchListCount" resultType="_int">
+		SELECT COUNT(*) FROM H_REVIEW_TBL R  
+		JOIN HOSPITAL_TBL H ON H.H_NO = R.H_NO
+		WHERE R.U_ID = #{uId }
+		<if test="searchCondition == 'all'">
+			AND (H.H_NAME LIKE '%'||#{searchKeyword}||'%' OR R.H_R_CONTENT LIKE '%'||#{searchKeyword}||'%' OR R.H_R_CREATE LIKE '%'||#{searchKeyword}||'%')
+		</if>
+		<if test="searchCondition == 'name'">
+			AND H.H_NAME LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'content'">
+			AND R.H_R_CONTENT LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'create'">
+			AND R.H_R_CREATE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+	</select>
+	
+	
+	
+	<!-- 리뷰 병원 검색 -->
+	<select id="searchHosReviewByKeyword" resultType="UserHosRe">
+		SELECT * FROM H_REVIEW_TBL R   
+		JOIN HOSPITAL_TBL H ON H.H_NO = R.H_NO
+		WHERE R.U_ID = #{uId }
+		<if test="searchCondition == 'all'">
+			AND (H.H_NAME LIKE '%'||#{searchKeyword}||'%' OR R.H_R_CONTENT LIKE '%'||#{searchKeyword}||'%' OR R.H_R_CREATE LIKE '%'||#{searchKeyword}||'%')
+		</if>
+		<if test="searchCondition == 'name'">
+			AND H.H_NAME LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'content'">
+			AND R.H_R_CONTENT LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'create'">
+			AND R.H_R_CREATE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY H.H_NO DESC
+	</select>
+	
+	
+	
+	
+	
+	
+
+	<!-- 후원목록조회 -->
+	<!-- <select id="selectSupporList" parameterType="String" resultMap="UserSupportResultMap"> -->
+	<!-- SELECT * FROM S_HISTORY_TBL H -->
+	<!-- JOIN SUPPORT_TBL S ON S.S_NO = H.S_H_NO -->
+	<!-- WHERE H.U_ID = #{uId} -->
+	<!-- ORDER BY S.S_NO DESC; -->
+	<!-- </select> -->
+
+	<!-- <select id="selectSupporList" parameterType="String" resultMap="UserSupportResultMap"> -->
+	<!-- SELECT S.*, H.* -->
+	<!-- FROM SUPPORT_TBL S -->
+	<!-- JOIN S_HISTORY_TBL H ON S.S_NO = H.S_H_NO -->
+	<!-- WHERE H.U_ID = #{uId} -->
+	<!-- ORDER BY S.S_NO DESC -->
+	<!-- </select> -->
+
+
+</mapper>

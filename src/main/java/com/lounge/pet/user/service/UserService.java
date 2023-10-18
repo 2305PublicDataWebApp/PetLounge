@@ -9,6 +9,7 @@ import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.user.domain.UPageInfo;
 import com.lounge.pet.user.domain.User;
+import com.lounge.pet.user.domain.UserHosRe;
 
 
 public interface UserService {
@@ -79,7 +80,7 @@ public interface UserService {
 	Integer getListCount(String sessionId);
 
 	/**
-	 * 즐겨찾는 병원 검색
+	 * 즐겨찾는 병원 검색 수
 	 * @param paramMap
 	 * @return
 	 */
@@ -91,7 +92,69 @@ public interface UserService {
 	 * @param paramMap
 	 * @return
 	 */
-	List<Hospital> searchUserByKeyword(UPageInfo aInfo, Map<String, String> paramMap);
+	List<Hospital> searchHosByKeyword(UPageInfo aInfo, Map<String, String> paramMap);
+
+	/**
+	 * 나의 게시글 조회
+	 * @param sessionId
+	 * @param aInfo
+	 * @return
+	 */
+	List<Board> selectBoard(String sessionId, UPageInfo aInfo);
+
+	/**
+	 * 게시글 페이징
+	 * @param sessionId
+	 * @return
+	 */
+	Integer getBoardListCount(String sessionId);
+
+	/**
+	 * 조건에 따른 게시글 검색
+	 * @param aInfo
+	 * @param paramMap
+	 * @return
+	 */
+	List<Board> searchBoardByKeyword(UPageInfo aInfo, Map<String, String> paramMap);
+
+	/**
+	 * 게시글 검색 수
+	 * @param paramMap
+	 * @return
+	 */
+	int getBoardSearchListCount(Map<String, String> paramMap);
+
+	/**
+	 * 병원리뷰 게시글 수
+	 * @param sessionId
+	 * @return
+	 */
+	Integer getHosReListCount(String sessionId);
+
+	/**
+	 * 병원리뷰 조회
+	 * @param sessionId
+	 * @param aInfo
+	 * @return
+	 */
+	List<Hospital> selectHosRe(String sessionId, UPageInfo aInfo);
+
+	/**
+	 * 병원리뷰 검색 수
+	 * @param paramMap
+	 * @return
+	 */
+	int getHosReviewSearchListCount(Map<String, String> paramMap);
+
+	/**
+	 * 조건에 따른 병원리뷰 검색
+	 * @param aInfo
+	 * @param paramMap
+	 * @return
+	 */
+	List<UserHosRe> searchHosReviewByKeyword(UPageInfo aInfo, Map<String, String> paramMap);
+
+	
 
 
 

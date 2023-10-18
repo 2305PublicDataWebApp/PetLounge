@@ -13,7 +13,7 @@ import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.user.domain.UPageInfo;
 import com.lounge.pet.user.domain.User;
-
+import com.lounge.pet.user.domain.UserHosRe;
 import com.lounge.pet.user.service.UserService;
 import com.lounge.pet.user.store.UserStore;
 
@@ -89,9 +89,57 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<Hospital> searchUserByKeyword(UPageInfo aInfo, Map<String, String> paramMap) {
-		List<Hospital> hList = uStore.searchUserByKeyword(session, aInfo, paramMap);
+	public List<Hospital> searchHosByKeyword(UPageInfo aInfo, Map<String, String> paramMap) {
+		List<Hospital> hList = uStore.searchHosByKeyword(session, aInfo, paramMap);
 		return hList;
+	}
+
+	@Override
+	public List<Board> selectBoard(String sessionId, UPageInfo aInfo) {
+		List<Board> bList = uStore.selectBoard(session, sessionId, aInfo);
+		return bList;
+	}
+
+	@Override
+	public Integer getBoardListCount(String sessionId) {
+		int result = uStore.selectBoardListCount(session, sessionId);
+		return result;
+	}
+
+	@Override
+	public List<Board> searchBoardByKeyword(UPageInfo aInfo, Map<String, String> paramMap) {
+		List<Board> bList = uStore.searchBoardByKeyword(session, aInfo, paramMap);
+		return bList;
+	}
+
+	@Override
+	public int getBoardSearchListCount(Map<String, String> paramMap) {
+		int result = uStore.selectBoardSearchListCount(session, paramMap);
+		return result;
+	}
+
+	@Override
+	public Integer getHosReListCount(String sessionId) {
+		int result = uStore.selectHosReListCount(session, sessionId);
+		return result;
+	}
+
+	@Override
+	public List<Hospital> selectHosRe(String sessionId, UPageInfo aInfo) {
+		List<Hospital> hList = uStore.selectHosRe(session, sessionId, aInfo);
+		return hList;
+	}
+
+	@Override
+	public int getHosReviewSearchListCount(Map<String, String> paramMap) {
+		int result = uStore.selectHosReSearchListCount(session, paramMap);
+		return result;
+	}
+
+	@Override
+	public List<UserHosRe> searchHosReviewByKeyword(UPageInfo aInfo, Map<String, String> paramMap) {
+		List<UserHosRe> hRList = uStore.searchHosReviewByKeyword(session, aInfo, paramMap);
+		return hRList;
 	}
 
 	

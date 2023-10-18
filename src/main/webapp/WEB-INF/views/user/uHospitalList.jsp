@@ -37,7 +37,7 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchBoard.pet">게시글 조회</a></li>
+										<li><a href="/user/Board.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
@@ -79,7 +79,7 @@
 											<option value="addr" <c:if test="${param.searchCondition == 'addr' }">selected</c:if>>주소</option>
 											<option value="phone" <c:if test="${param.searchCondition == 'phone' }">selected</c:if>>전화번호</option>   
 										</select> <input class="form-control" type="text" name="searchKeyword"
-											placeholder="검색"
+											placeholder="검색" value="${searchKeyword }"
 											style="width: 75%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 0; border-color: #FFD370; padding-top: 10px;" />
 										<input type="submit" value="검색" 
 											style="background-color: #ffd370; color: white; border-color: #ffd370; width: 10%; height: 28px; border-radius: 20px; margin-left: 0; padding-top: 3px;">
@@ -122,6 +122,9 @@
 							
 						        <c:url var="prevUrl" value="/user/uHospital.pet">
 									<c:param name="page" value="${aInfo.startNavi -1 }"></c:param>
+									<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
+									<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+									<c:param name="uId" value="${sessionScope.uId}"></c:param>
 								</c:url>
 					            <div></div>
 					          	<ul style="display: flex; justify-content: center;">
@@ -132,6 +135,9 @@
 						            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
 										<c:url var="pageUrl" value="/user/uHospital.pet">
 											<c:param name="page" value="${p }"></c:param>
+											<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
+											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+											<c:param name="uId" value="${sessionScope.uId}"></c:param>
 										</c:url>
 						            	&nbsp;&nbsp;&nbsp;<li><a href="${pageUrl }">${p }</a></li>&nbsp;&nbsp;&nbsp;
 						            </c:forEach>
@@ -139,6 +145,9 @@
 						            <c:if test="${aInfo.endNavi != aInfo.naviTotalCount }">
 										<c:url var="nextUrl" value="/user/uHospital.pet"> 
 											<c:param name="page" value="${aInfo.endNavi + 1 }"></c:param>
+											<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
+											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+											<c:param name="uId" value="${sessionScope.uId}"></c:param>
 										</c:url>
 						            	<li><a href="${nextUrl }">Next</a></li>
 						            </c:if>
@@ -191,7 +200,10 @@
 	        });
 	        
 	        
-	      
+	        
+	        
+
+	        
 	    
 	
 	    </script>

@@ -38,7 +38,7 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchBoard.pet">게시글 조회</a></li>
+										<li><a href="/user/Board.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
@@ -50,7 +50,7 @@
 								<li><a href="#">병원관리</a>
 									<ul class="subMenu">
 										<li><a href="/user/uHospital.pet">즐겨찾는 병원</a></li>
-										<li><a href="/user/searchHospitalReview.pet">병원리뷰</a></li>
+										<li><a href="/user/uHosReview.pet">병원리뷰</a></li>
 									</ul></li>
 							</ul>
 						</nav>

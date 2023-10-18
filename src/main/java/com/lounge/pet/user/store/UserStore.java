@@ -11,6 +11,7 @@ import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.user.domain.UPageInfo;
 import com.lounge.pet.user.domain.User;
+import com.lounge.pet.user.domain.UserHosRe;
 
 
 public interface UserStore {
@@ -89,7 +90,7 @@ public interface UserStore {
 	int selectListCount(SqlSession session, String sessionId);
 
 	/**
-	 * 즐겨찾는 병원 검색
+	 * 즐겨찾는 병원 검색 수
 	 * @param session
 	 * @param paramMap
 	 * @return
@@ -103,7 +104,74 @@ public interface UserStore {
 	 * @param paramMap
 	 * @return
 	 */
-	List<Hospital> searchUserByKeyword(SqlSession session, UPageInfo aInfo, Map<String, String> paramMap);
+	List<Hospital> searchHosByKeyword(SqlSession session, UPageInfo aInfo, Map<String, String> paramMap);
+
+	/**
+	 * 나의 게시글 조회
+	 * @param session
+	 * @param sessionId
+	 * @param aInfo
+	 * @return
+	 */
+	List<Board> selectBoard(SqlSession session, String sessionId, UPageInfo aInfo);
+
+	/**
+	 * 게시글 페이징
+	 * @param session
+	 * @param sessionId
+	 * @return
+	 */
+	int selectBoardListCount(SqlSession session, String sessionId);
+
+	/**
+	 * 조건에 따른 게시글 검색
+	 * @param session
+	 * @param aInfo
+	 * @param paramMap
+	 * @return
+	 */
+	List<Board> searchBoardByKeyword(SqlSession session, UPageInfo aInfo, Map<String, String> paramMap);
+
+	/**
+	 * 게시글 검색 수
+	 * @param session
+	 * @param paramMap
+	 * @return
+	 */
+	int selectBoardSearchListCount(SqlSession session, Map<String, String> paramMap);
+
+	/**
+	 * 병원리뷰 게시글 수
+	 * @param session
+	 * @param sessionId
+	 * @return
+	 */
+	int selectHosReListCount(SqlSession session, String sessionId);
+
+	/**
+	 * 병원리뷰 게시글 조회
+	 * @param session
+	 * @param aInfo
+	 * @return
+	 */
+	List<Hospital> selectHosRe(SqlSession session, String sessionId, UPageInfo aInfo);
+
+	/**
+	 * 병원 리뷰 검색 게시글 수
+	 * @param session
+	 * @param paramMap
+	 * @return
+	 */
+	int selectHosReSearchListCount(SqlSession session, Map<String, String> paramMap);
+
+	/**
+	 * 조건에 따른 병원 리뷰 검색
+	 * @param session
+	 * @param aInfo
+	 * @param paramMap
+	 * @return
+	 */
+	List<UserHosRe> searchHosReviewByKeyword(SqlSession session, UPageInfo aInfo, Map<String, String> paramMap);
 
 	
 
