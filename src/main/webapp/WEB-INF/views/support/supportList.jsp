@@ -48,7 +48,9 @@
                     </div>
                 </a>
                 <!-- 글쓰기 버튼 (관리자만 보임)-->
-                <button class="btn-create" onClick="location.href='/support/insert.pet'">후원 등록</button>
+                <c:if test="${sessionScope.uId == 'admin' }">
+                	<button class="btn-create" onClick="location.href='/support/insert.pet'">후원 등록</button>
+                </c:if>
             </section>
             <!-- 정렬 -->
             <div class="sorting-wrap">
@@ -133,11 +135,11 @@
 								const sFundAmount = sList[i].sFundAmount.toLocaleString();
 								supportList = $("<div class='col-xl-3 col-md-6 portfolio-item'>")
 												.html("<div class='cards' style='border-radius: 20px;''>"
-												+"<div style='height: 50%;'><a href='/support/detail.pet?sNo="+sList[i].sNo+"' class='a-detail'>"
+												+"<div><a href='/support/detail.pet?sNo="+sList[i].sNo+"' class='a-detail'>"
 												+"<img src='"+sList[i].sImageUrl+"' class='card-img'"
 												+"onerror='this.src=\"https://petlounge.s3.ap-northeast-2.amazonaws.com/noimage.jpg\"'></a></div>"
-												+"<div class='card-content'><strong class='card-title'><a href='/support/detail.pet?sNo="+sList[i].sNo+"' class='a-detail s-title' title='More Details'>"
-												+""+truncatedTitle+"</a></strong><div class='card-group'>"+sList[i].sGroup+"</div><div class='card-bar'>"
+												+"<div class='card-content'><div style='height: 45px;'><strong class='card-title'><a href='/support/detail.pet?sNo="+sList[i].sNo+"' class='a-detail s-title' title='More Details'>"
+												+""+truncatedTitle+"</a></strong></div><div class='card-group'>"+sList[i].sGroup+"</div><div class='card-bar'>"
 												+"<span class='card-bar-collection' id='graph-num' style='width: "+percent+"%;'></span></div><div>"
 												+"<strong class='card-percent' id='per-num'>"+percent+"%</strong>"
 												+"<strong class='card-money'><span class='text'>"+sFundAmount+"원</span></strong></div></div></div>");

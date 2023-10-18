@@ -9,13 +9,10 @@
 		<jsp:include page="../include/importSource.jsp"></jsp:include>
 		<link rel="stylesheet" href="/resources/css/support/supportUpdate.css">
 
-		<!-- jquery -->		
+		<!-- jQuery -->		
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 		
         <!-- include summernote css/js -->
-<!-- 		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" -->
-<!--         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" -->
-<!--         crossorigin="anonymous"></script> -->
         <link
         href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
         rel="stylesheet">
@@ -38,7 +35,7 @@
 				<input type="hidden" name="sNo" value="${support.sNo }">
 	            <section id="content">
 	                <div id="content-top">
-	                    <input type="file" class="real-upload" accept="image/*" required 
+	                    <input type="file" class="real-upload" accept="image/*" 
 	                        onchange="setThumbnail(event);" name="uploadFile"
 	                        multiple style="display: none;">
                         <input type="hidden" id="s-image-url" name="sImageUrl" value="${support.sImageUrl }">
@@ -136,7 +133,7 @@
             	         console.log(result);
             	         imageUrl.setAttribute('value', result);
             	      },
-            	      error: function() {
+            	      error: function(error) {
             	         console.log(error);
             	      }
             	   });
@@ -221,7 +218,7 @@
                         ['table', ['table']],
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['height', ['height']],
-                        ['insert',['picture', 'link']],
+                        ['insert',['link']],
                         ['view', ['fullscreen', 'help']]
                     ],
                     fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],

@@ -183,9 +183,9 @@
 <!--                             </div> -->
 <!--                         </div> -->
 							<c:forEach var="support" items="${ sList }" varStatus="i">
-			                	<div class="col-xl-3 col-md-6 portfolio-item filter-books">
+			                	<div class="col-xl-3 col-md-6 portfolio-item">
 					                <div class="cards" style="border-radius: 20px;">
-					                	<div style="height: 50%;">
+					                	<div>
 						                	<a href="/support/detail.pet?sNo=${support.sNo }" class="a-detail">
 			                                         <img src="${support.sImageUrl }" class="card-img"
 						                    	onerror="this.src='https://petlounge.s3.ap-northeast-2.amazonaws.com/noimage.jpg'"></a>
@@ -198,8 +198,11 @@
 						                            $(".s-title").eq(${i.index}).text(truncatedTitle);
 						                        });
 											</script>
-					                    	
-					                        <strong class="card-title"><a href="/support/detail.pet?sNo=${support.sNo }" class="a-detail s-title"></a></strong>
+					                    	<div style='height: 45px;'>
+					                        	<strong class="card-title">
+					                        		<a href="/support/detail.pet?sNo=${support.sNo }" class="a-detail s-title"></a>
+				                        		</strong>
+					                        </div>
 					                        <div class="card-group">${support.sGroup }</div>
 					                        <div class="card-bar">
 					                            <sapn class="card-bar-collection" id="graph-num" style="width: ${(support.sFundAmount / support.sTargetAmount) * 100}%;"></sapn>

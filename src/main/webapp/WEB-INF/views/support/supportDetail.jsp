@@ -34,6 +34,8 @@
                         <span><h3 class="h3">${support.sTitle }</h3></span>
                     </div>
                     <div class="s-content">
+                        <img src="${support.sImageUrl }" style="width:80%;">
+                        
                         ${support.sContent }
                     </div>
                     <!-- 댓글, 후원 내역 리스트 -->
@@ -187,8 +189,10 @@
             <section id="button" style="margin-bottom: 100px;">
                 <div><button class="btn-cancel" onClick="location.href='/support/list.pet'">목록으로</button></div>
                 <div class="admin-btn">
-                    <button class="btn-update" onClick="location.href='/support/update.pet?sNo='+${support.sNo }">수정하기</button>
-                    <button class="btn-delete" onclick="checkDelete();">삭제하기</button>
+                	<c:if test="${sessionScope.uId == 'admin' }">
+	                    <button class="btn-update" onClick="location.href='/support/update.pet?sNo='+${support.sNo }">수정하기</button>
+	                    <button class="btn-delete" onclick="checkDelete();">삭제하기</button>
+                    </c:if>
                 </div>
                 
             </section>
