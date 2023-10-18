@@ -25,4 +25,32 @@ public class FaqStoreLogic implements FaqStore{
 		return faqList;
 	}
 
+	// faq 목록 갯수 조회
+	@Override
+	public int getFaqCount(SqlSession session) {
+		int faqCount = session.selectOne("FaqMapper.getFaqCount");
+		return faqCount;
+	}
+
+	// faq 글 삭제
+	@Override
+	public int deleteFaq(SqlSession session, Integer faqNo) {
+		int result = session.update("FaqMapper.deleteFaq", faqNo);
+		return result;
+	}
+
+	// faq 수정페이지 정보 불러오기
+	@Override
+	public Faq selectOneByNo(SqlSession session, Faq faqNo) {
+		Faq faq = session.selectOne("FaqMapper.selectOneByNo", faqNo);
+		return faq;
+	}
+
+	// faq 글 수정
+	@Override
+	public int modifyFaq(SqlSession session, Faq faq) {
+		int result = session.update("FaqMapper.modifyFaq", faq);
+		return result;
+	}
+
 }

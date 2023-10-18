@@ -28,7 +28,7 @@
                 <li class="nav-item" id="noticeLink">
                     <a class="nav-link" href="/notice/notice_list.pet">공지사항</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="faqLink">
                     <a class="nav-link" href="/faq/list.pet">FAQ</a>
                 </li>
                 <li class="nav-item">
@@ -183,5 +183,12 @@
     document.getElementById('noticeLink').classList.add('active');
 	} else {
 	    document.getElementById('noticeLink').classList.remove('active');
+	}
+    
+    if (currentPath === '/faq/list.pet' || currentPath === '/faq/insert.pet'
+    		|| currentPath === '/faq/modify.pet') {
+    document.getElementById('faqLink').classList.add('active');
+	} else {
+	    document.getElementById('faqLink').classList.remove('active');
 	}
 </script>
