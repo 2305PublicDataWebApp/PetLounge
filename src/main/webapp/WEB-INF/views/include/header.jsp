@@ -26,13 +26,13 @@
                     <a class="nav-link" href="/support/list.pet">펫 라운지 모금함</a>
                 </li>
                 <li class="nav-item" id="noticeLink">
-                    <a class="nav-link" href="/notice/notice_list.pet">공지사항</a>
+                    <a class="nav-link" href="/notice/noticeList.pet">공지사항</a>
                 </li>
                 <li class="nav-item" id="faqLink">
                     <a class="nav-link" href="/faq/list.pet">FAQ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/board/free_list.pet">자유게시판</a>
+                    <a class="nav-link" href="/board/freeList.pet">자유게시판</a>
                 </li>
             </ul>
             <c:if test="${ sessionScope.uId eq null }">
@@ -177,9 +177,9 @@
         document.getElementById('supportLink').classList.remove('active');
     }
     
-    if (currentPath === '/notice/notice_list.pet' || currentPath === '/notice/notice_submit.pet' 
-		|| currentPath === '/notice/notice_detail.pet' || currentPath === '/notice/notice_search.pet' 
-		|| currentPath === '/notice/notice_update.pet' || currentPath === '/notice/delete.pet') {
+    if (currentPath === '/notice/noticeList.pet' || currentPath === '/notice/noticeSubmit.pet' 
+		|| currentPath === '/notice/noticeDetail.pet' || currentPath === '/notice/noticeSearch.pet' 
+		|| currentPath === '/notice/noticeUpdate.pet' || currentPath === '/notice/delete.pet') {
     document.getElementById('noticeLink').classList.add('active');
 	} else {
 	    document.getElementById('noticeLink').classList.remove('active');

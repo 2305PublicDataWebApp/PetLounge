@@ -52,9 +52,9 @@
                                 휴게실
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="/notice/notice_list.pet">공지사항</a></li>
+                                <li><a href="/notice/noticeList.pet">공지사항</a></li>
                                 <li><a href="/faq/list.pet">FAQ</a></li>
-                                <li><a href="board/free_list.pet">자유게시판</a></li>
+                                <li><a href="/board/freeList.pet">자유게시판</a></li>
                             </ul>
                         </li>
                     </ul>

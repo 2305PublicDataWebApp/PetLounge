@@ -11,7 +11,13 @@
 
 	<select id="getSearchCount" resultType="_int">
 		SELECT COUNT(*) FROM FREE_TBL WHERE F_STATUS = 'Y' 
-
 	</select>
 	
+	<select id="selectFreeBoardByNo" resultType="Board">
+  		SELECT * FROM FREE_TBL WHERE F_NO = #{fNo }
+  	</select>
+	
+	<update id="updateViewCount">
+		UPDATE FREE_TBL SET F_VIEWCOUNT = #{fViewCount } +1 WHERE F_NO = #{fNo }
+	</update>
 </mapper>
