@@ -134,15 +134,6 @@
         </main>
         
 		<jsp:include page="../include/footer.jsp"></jsp:include>
-		
-		<script>
-// 			window.onload = function () {
-// 			    var searchKeyword = document.getElementById('h-search-keyword').value;
-// 			    if (searchKeyword.trim() !== '') {
-// 			        searchHos();
-// 			    }
-// 			};
-		</script>
 
 		<!-- 카카오맵 API 지도 스크립트 -->
 		<script>
@@ -159,7 +150,6 @@
 				lat = 37.5679212;
 				lng = 126.9830358;
 				createMap(lat, lng);
-				moveLocation();
 			} else {
 				// ************************* 회원가입 시 받은 주소로 기본 주소 *****************************
 				// 주소-좌표 변환 객체를 생성합니다
@@ -177,7 +167,6 @@
 						lng = 126.9830358;
 				    }
 			        createMap(lat, lng);
-			        moveLocation();
 				});  
 			}			
 			
@@ -191,6 +180,7 @@
 		
 				map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 				getHospitalList(map, lat, lng);
+				moveLocation(map);
 			}
 			
 			// 리스트를 불러오는 ajax
@@ -215,7 +205,7 @@
 				 });
 			}
 			
-			// 리스트 출력 함수
+			// 리스트 매핑 함수
 			function showListFunc(hList) {
 				positions = [];
 				for(let i = 0; i < hList.length; i++){
@@ -356,6 +346,7 @@
 				overlays[0].setMap(map); // 첫번째 결과만 우선 표시
 			}
 			
+			// 리스트 표시 함수
 			function loadHospitalList(hList) {
 			    var hospitalListBody = document.getElementById('hospital-list-body');
 			    hospitalListBody.innerHTML = '';
@@ -456,13 +447,14 @@
 			// 지도가 이동, 확대, 축소로 인해 중심좌표가 변경되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록
 			// 이동이 끝났을 때의 좌표를 가지고 넘어옴 (idle)
 			// 실시간 변화값은 center_changed 사용함
-			function moveLocation() {
+			function moveLocation(map) {
 				kakao.maps.event.addListener(map, 'idle', function() {
 				    // 지도의 중심좌표를 얻어옵니다
 				    var latlng = map.getCenter();
 				    var searchKeyword = document.getElementById('h-search-keyword').value.trim(); // 검색
 				
 				    if (searchKeyword === '') { // 검색하지 않았을 때만 동작
+				    	$("#pagination").html('');
 				        $.ajax({
 				            url: '/hospital/moveLocation.pet',
 				            type: 'GET',
@@ -512,6 +504,7 @@
 			    map.panTo(moveLatLng);            
 			    getHospitalList(map, lat, lng);
 			    document.getElementById('h-search-keyword').value = '';
+			    $("#pagination").html('');
 			}        
 			
 			// 리스트 클릭 시 중심좌표 부드럽게 이동
@@ -545,6 +538,7 @@
 				}
 				
 				document.getElementById('h-search-keyword').value = '';
+				$("#pagination").html('');
 			}
 			
 			// 즐겨찾기 ajax
@@ -621,7 +615,8 @@
 			    	 });
 			    	
 				} else {
-// 					createMap(lat, lng);
+					createMap(lat, lng);
+					$("#pagination").html('');
 				}
 			}
 			
