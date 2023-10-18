@@ -19,7 +19,7 @@
                 <div id="line"></div>
 			</section>
             <section id="contents">
-                <img src="/resources/images/check.png">
+                <img src="https://petlounge.s3.ap-northeast-2.amazonaws.com/check.png">
                 <h3>결제 정보</h3>
                 <div class="content">
                     <ul>

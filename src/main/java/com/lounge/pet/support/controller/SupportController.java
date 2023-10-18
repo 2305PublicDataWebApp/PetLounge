@@ -244,20 +244,10 @@ public class SupportController {
 	// 후원글 등록 
 	@RequestMapping(value = "/support/insert.pet", method = RequestMethod.POST)
 	public ModelAndView insertSupport(ModelAndView mv
-			, @ModelAttribute Support support
-			, @RequestParam(value="uploadFile", required = false) MultipartFile uploadFile) {
+			, @ModelAttribute Support support) {
 		System.out.println(support.toString());
 		try {
-			if(uploadFile != null && !uploadFile.getOriginalFilename().equals("")) {
-				// 파일 정보(이름, 리네임, 경로) 및 파일 저장 
-//				Map<String, Object> fBMap = this.saveFile(request, uploadFile);
-//				support.setFindFilename((String)fBMap.get("fileName"));
-//				support.setFindFilerename((String)fBMap.get("fileRename"));
-//				support.setFindFilepath((String)fBMap.get("filePath"));
-				String sImageUrl = "image";
-				support.setsImageUrl(sImageUrl);
 				System.out.println(support.toString());
-			}
 			int result = sService.insertSupport(support);
 			if(result > 0) {
 				mv.addObject("msg", "게시글이 등록되었습니다.");
@@ -281,24 +271,9 @@ public class SupportController {
 	@RequestMapping(value="/support/update.pet", method = RequestMethod.POST)
 	public ModelAndView updateSupport(ModelAndView mv
 			,@ModelAttribute Support support
-			, @RequestParam(value="uploadFile", required = false) MultipartFile uploadFile
 			, HttpServletRequest request) {
 		try {
-			if(uploadFile != null && !uploadFile.getOriginalFilename().equals("")) {
-				String sImageUrl = "image";
-				support.setsImageUrl(sImageUrl);
-				System.out.println(support.toString());
-				// 기존 업로드 파일 있으면 삭제 
-//				String fileRename = support.getFindFilerename();
-//				if(fileRename != null) {
-//					this.deleteFile(fileRename, request);
-//				}
-				// 새로운 파일 저장 - 파일 정보(이름, 리네임, 경로) 및 파일 저장 
-//				Map<String, Object> fBMap = this.saveFile(request, uploadFile);
-//				support.setFindFilename((String)fBMap.get("fileName"));
-//				support.setFindFilerename((String)fBMap.get("fileRename"));
-//				support.setFindFilepath((String)fBMap.get("filePath"));
-			}
+			System.out.println(support.toString());
 			int result = sService.updateSupport(support);
 			if(result > 0) {
 				mv.addObject("msg", "게시글이 수정되었습니다.");

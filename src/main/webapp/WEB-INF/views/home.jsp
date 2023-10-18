@@ -185,10 +185,10 @@
 							<c:forEach var="support" items="${ sList }" varStatus="i">
 			                	<div class="col-xl-3 col-md-6 portfolio-item filter-books">
 					                <div class="cards" style="border-radius: 20px;">
-					                	<div>
+					                	<div style="height: 50%;">
 						                	<a href="/support/detail.pet?sNo=${support.sNo }" class="a-detail">
-			                                         <img src="/resources/images/cat.jpg" class="card-img"
-						                    	onerror="this.src='https://petrounge.s3.ap-northeast-2.amazonaws.com/noimage.png'"></a>
+			                                         <img src="${support.sImageUrl }" class="card-img"
+						                    	onerror="this.src='https://petlounge.s3.ap-northeast-2.amazonaws.com/noimage.jpg'"></a>
 					                	</div>
 					                    <div class="card-content">
 					                    	<script>

@@ -133,9 +133,9 @@
 								const sFundAmount = sList[i].sFundAmount.toLocaleString();
 								supportList = $("<div class='col-xl-3 col-md-6 portfolio-item'>")
 												.html("<div class='cards' style='border-radius: 20px;''>"
-												+"<div><a href='/support/detail.pet?sNo="+sList[i].sNo+"' class='a-detail'>"
-												+"<img src='/resources/images/cat.jpg' class='card-img'"
-												+"onerror='this.src='https://petrounge.s3.ap-northeast-2.amazonaws.com/noimage.png''></a></div>"
+												+"<div style='height: 50%;'><a href='/support/detail.pet?sNo="+sList[i].sNo+"' class='a-detail'>"
+												+"<img src='"+sList[i].sImageUrl+"' class='card-img'"
+												+"onerror='this.src=\"https://petlounge.s3.ap-northeast-2.amazonaws.com/noimage.jpg\"'></a></div>"
 												+"<div class='card-content'><strong class='card-title'><a href='/support/detail.pet?sNo="+sList[i].sNo+"' class='a-detail s-title' title='More Details'>"
 												+""+truncatedTitle+"</a></strong><div class='card-group'>"+sList[i].sGroup+"</div><div class='card-bar'>"
 												+"<span class='card-bar-collection' id='graph-num' style='width: "+percent+"%;'></span></div><div>"
