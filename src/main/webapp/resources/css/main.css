@@ -281,8 +281,8 @@ h3 {
 }
 .cards img {
     border-radius: 20px 20px 0px 0px;
-    width : 100%;
-    height: 100%;
+    width : 250px;
+    height: 182.5px;
 }
 .cards .card-content {
     padding: 20px;
@@ -306,7 +306,7 @@ h3 {
     background-color: #e8e8e8;
 }
 .cards .card-bar-collection {
-    display: inline-block;
+    display: flex;
     height: 100%;
     background-color: #ffd370;
     text-align: right;
@@ -314,7 +314,7 @@ h3 {
     float: left;
 }
 .cards .card-percent {
-    display: inline-block;
+    display: flex;
     float: left;
     margin-top: 13px;
     font-size: 17px;
@@ -334,12 +334,4 @@ h3 {
     font-size: 17px;
 }
 
-
-/* .a-detail, .a-detail:hover, .a-detail:link, .a-detail:active, .a-detail:visited { */
-/*     text-decoration: none; */
-/*     color: black; */
-/*     width: 100%; */
-/*     height: 100%; */
-/*     padding : 0px; */
-/* } */
 

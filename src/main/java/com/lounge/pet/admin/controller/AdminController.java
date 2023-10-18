@@ -31,5 +31,10 @@ public class AdminController {
 	@GetMapping("/main_useredit.pet")
 	public String adminUserEdit() {
 		return "admin/main_useredit";
+	}
+	
+	@GetMapping("/support.pet")
+	public String adminSupportPage() {
+		return "admin/adminSupport";
 	}	
 }

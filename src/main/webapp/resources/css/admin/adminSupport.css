@@ -1,0 +1,131 @@
+@charset "UTF-8";
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+
+a {
+    text-decoration: none;
+    color: #505D68;
+}
+
+li {
+    list-style: none;
+}
+
+ul {
+	padding-inline-start: 0px;
+}
+
+#main {
+    background-color: #fafafa;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 120px 0px 90px 0px;
+}
+
+#wrap {
+    background-color: white;
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    width:60%;
+    height: 100%;
+    margin: 50px 0px 50px 0px;
+    display: flex;
+    text-align: center;
+}
+
+.left-section {
+    width: 20%;
+}
+    
+    .menu {
+        border: 2px solid #ccc;
+        border-radius: 20px;
+        margin: 20px 20px 0px 20px;
+    }
+    .sub-title-name {
+        font-size: 20px;
+        margin-top: 20px;
+        font-weight: bold;
+    }
+    .menu .sub-menu > li {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        padding: 20px 0px;
+    }
+
+.right-section {
+    width: 80%;
+}
+    .content {
+        border: 2px solid #ccc;
+        border-radius: 20px;
+        margin: 20px;
+    }
+    #logo {
+        margin: 30px 0px 25px 40px;
+        width: 35px;
+        height: 35px;
+    }
+    .right-title {
+        display: flex;
+    }
+    .main-title-name {
+    	font-weight: bold;
+        font-size: 25px;
+        margin: 30px 0px 25px 10px;
+        text-align: left;
+        
+    }
+    .line-hr {
+        border: 0.1px solid #ccc;
+    }
+    .line {
+        width: 350px;
+        height: 0.5px;
+        background-color: lightgray;
+        margin: 20px auto 50px auto;
+    }
+    .content-title-name {
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 50px;
+    }
+    .content-inner {
+        display: flex;
+        text-align: center;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+    table {
+        width: 700px;
+        margin-bottom: 30px;
+    }
+    .table-border {
+        border-bottom: 1px solid #dee2e6;
+    }
+    th {
+        border-top: 1px solid #dee2e6;
+        padding: 12px;
+        font-size: 14.4px;
+    }
+	td {
+		padding: 12px 5px 12px 5px;
+		font-size: 14.4px;
+	}
+    .table-left {
+        text-align: left;
+        padding-left: 10px;
+    }
+
+    .page {
+        margin-bottom: 40px;
+    }
