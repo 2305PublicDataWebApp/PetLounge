@@ -85,9 +85,9 @@
 <!-- 											<option value="id">아이디</option> -->
 <!-- 											<option value="nickname">닉네임</option> -->
 										</select> <input class="form-control" type="text" name="searchKeyword"
-											placeholder="검색" 
+											placeholder="검색" value="${paramMap.searchKeyword }"
 											style="width: 75%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 0; border-color: #FFD370; padding-top: 10px;" />
-										<input type="submit" value="검색" 
+										<input type="submit" value="검색"  
 											style="background-color: #ffd370; color: white; border-color: #ffd370; width: 10%; height: 28px; border-radius: 20px; margin-left: 0; padding-top: 3px;">
 									</div>
 								</form>
@@ -129,6 +129,7 @@
 								<c:param name="page" value=""></c:param>
 								<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
 								<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+								<c:param name="uId" value="${sessionScope.uId}"></c:param>
 							</c:url>
 							<div></div>
 				            <ul style="display: flex; justify-content: center;">
@@ -141,6 +142,7 @@
 										<c:param name="page" value="${p }"></c:param>
 										<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
 										<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+										<c:param name="uId" value="${sessionScope.uId}"></c:param>
 									</c:url>
 									&nbsp;&nbsp;&nbsp;<li><a href="${pageUrl }">${p }</a></li>&nbsp;&nbsp;&nbsp;
 					            </c:forEach>
@@ -149,11 +151,12 @@
 										<c:param name="page" value="${aInfo.endNavi + 1 }"></c:param>
 										<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
 										<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+										<c:param name="uId" value="${sessionScope.uId}"></c:param>
 									</c:url>
 						            <li><a href="${nextUrl }">Next</a></li>
 					            </c:if>
 				            </ul>
-				            
+				           </div> 
             
 							
 <%-- 						        <c:url var="prevUrl" value="/user/searchHospital.pet"> --%>

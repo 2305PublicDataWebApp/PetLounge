@@ -37,7 +37,7 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchBoard.pet">게시글 조회</a></li>
+										<li><a href="/user/Board.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
@@ -48,7 +48,7 @@
 									</ul></li>
 								<li><a href="#">병원관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/searchHospital.pet">즐겨찾는 병원</a></li>
+										<li><a href="/user/uHospital.pet">즐겨찾는 병원</a></li>
 										<li><a href="/user/searchHospitalReview.pet">병원리뷰</a></li>
 									</ul></li>
 							</ul>
@@ -71,12 +71,13 @@
 						<div style="margin: 30px 60px 30px 60px;">
 							<div id="boardTable" class="board-list">
 								<form action="/user/searchBoard.pet" method="get">
+								<input type="hidden" name="uId" value="${uId}">
 									<div class="filter input-group mb-3">
 										<select name="searchCondition" style="border-radius: 20px; padding-top: 2px;">
-											<option value="all">전체</option>
-											<option value="name">이름</option>
-											<option value="id">아이디</option>
-											<option value="nickname">닉네임</option>
+											<option value="all" <c:if test="${param.searchCondition == 'all' }">selected</c:if>>전체</option>
+											<option value="title" <c:if test="${param.searchCondition == 'title' }">selected</c:if>>제목</option>
+											<option value="date" <c:if test="${param.searchCondition == 'date' }">selected</c:if>>작성일</option>
+											<option value="name" <c:if test="${param.searchCondition == 'name' }">selected</c:if>>작성자</option>   
 										</select> <input class="form-control" type="text" name="searchKeyword"
 											placeholder="검색"
 											style="width: 75%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 0; border-color: #FFD370; padding-top: 10px;" />
@@ -89,75 +90,67 @@
 								<thead>
 									<tr>
 										<th style="border-bottom: 1px solid #dee2e6;">No</th>
-										<th style="border-bottom: 1px solid #dee2e6;">제목</th>
-										<th style="border-bottom: 1px solid #dee2e6;">작성일</th>
+										<th style="border-bottom: 1px solid #dee2e6;  width: 235px;">제목</th>
 										<th style="border-bottom: 1px solid #dee2e6;">작성자</th>
+										<th style="border-bottom: 1px solid #dee2e6;">작성일</th>
 										<th style="border-bottom: 1px solid #dee2e6;">조회수</th>
 									</tr>
 								</thead>
 								<tbody>
-<%-- 									<c:forEach items="${user }" var="uOne" varStatus="i"> --%>
+									<c:forEach items="${bList }" var="bList" varStatus="i">
 										<tr>
-											<td>user</td>
-											<td>password</td>
-<%-- 											<c:url var="detailUrl" value="/admin/aInfo.pet"> --%>
-<%-- 												<c:param name="userId" value="${uOne.userId }"></c:param> --%>
-<%-- 											</c:url> --%>
-											<td><a href="${detailUrl }">이름</a></td>
-											<td>닉네임</td>
-											<td>가입일</td>
+											<td>${i.count }</td>
+											<c:url var="detailUrl" value="#">
+												<c:param name="fNo" value="${bList.fNo }"></c:param>
+											</c:url>
+											<td><a href="${detailUrl }">${bList.fTitle }</a></td>
+											<td>${bList.uId}</td>
+											<td>${bList.fCreate}</td>
+											<td>${bList.fViewCount}</td>
 										</tr>
-										<tr>
-											<td>user</td>
-											<td>password</td>
-<%-- 											<c:url var="detailUrl" value="/admin/aInfo.pet"> --%>
-<%-- 												<c:param name="userId" value="${uOne.userId }"></c:param> --%>
-<%-- 											</c:url> --%>
-											<td><a href="${detailUrl }">이름</a></td>
-											<td>닉네임</td>
-											<td>가입일</td>
-										</tr>
-										<tr>
-											<td>user</td>
-											<td>password</td>
-<%-- 											<c:url var="detailUrl" value="/admin/aInfo.pet"> --%>
-<%-- 												<c:param name="userId" value="${uOne.userId }"></c:param> --%>
-<%-- 											</c:url> --%>
-											<td><a href="${detailUrl }">이름</a></td>
-											<td>닉네임</td>
-											<td>가입일</td>
-										</tr>
-<%-- 									</c:forEach> --%>
+									</c:forEach>
 								</tbody>
 							</table>
-							<div class="paging" style="margin-top: 50px;">
-								<div>
-<%-- 									<c:if test="${nInfo.nStartNavi != 1}"> --%>
-<%-- 										<c:url var="preUrl" value="/notice/n_list.pet"> --%>
-<%-- 											<c:param name="page" value="${nInfo.nStartNavi -1 }" /> --%>
-<%-- 										</c:url> --%>
-<%-- 										<a href="${preUrl }">[이전]</a> --%>
-<%-- 									</c:if> --%>
-<%-- 									<c:forEach begin="${nInfo.nStartNavi }" end="${nInfo.nEndNavi }" --%>
-<%-- 										var="n"> --%>
-<%-- 										<c:url var="pageUrl" value="/notice/n_list.pet"> --%>
-<%-- 											<c:param name="page" value="${n }"></c:param> --%>
-<%-- 										</c:url> --%>
-<%-- 										<a href="${pageUrl }">1 2 3 4 5</a>&nbsp; --%>
-<%-- 	                                </c:forEach> --%>
-<%-- 									<c:if test="${nInfo.nEndNavi != nInfo.nNaviTotalCount }"> --%>
-<%-- 										<c:url var="nextUrl" value="/notice/n_list.pet"> --%>
-<%-- 											<c:param name="page" value="${nInfo.nEndNavi +1 }" /> --%>
-<%-- 										</c:url> --%>
-<%-- 										<a href="${nextUrl }">[다음]</a> --%>
-<%-- 									</c:if> --%>
-								</div>
-							</div>
+							
+							<div aria-label="Page navigation example" class="page">
+							
+						        <c:url var="prevUrl" value="/user/Board.pet">
+									<c:param name="page" value="${aInfo.startNavi -1 }"></c:param>
+									<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
+									<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+									<c:param name="uId" value="${sessionScope.uId}"></c:param>
+								</c:url>
+					            <div></div>
+					          	<ul style="display: flex; justify-content: center;">
+						         	<c:if test="${aInfo.startNavi != 1 }">
+										<li><a href="${prevUrl }" >이전</a></li>
+						            </c:if>
+					            
+						            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
+										<c:url var="pageUrl" value="/user/Board.pet">
+											<c:param name="page" value="${p }"></c:param>
+											<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
+											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+											<c:param name="uId" value="${sessionScope.uId}"></c:param>
+										</c:url>
+						            	&nbsp;&nbsp;&nbsp;<li><a href="${pageUrl }">${p }</a></li>&nbsp;&nbsp;&nbsp;
+						            </c:forEach>
+					            
+						            <c:if test="${aInfo.endNavi != aInfo.naviTotalCount }">
+										<c:url var="nextUrl" value="/user/Board.pet"> 
+											<c:param name="page" value="${aInfo.endNavi + 1 }"></c:param>
+											<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
+											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+											<c:param name="uId" value="${sessionScope.uId}"></c:param>
+										</c:url>
+						            	<li><a href="${nextUrl }">Next</a></li>
+						            </c:if>
+					            </ul>
+					        </div> 
+
 						</div>
+					</section>
 				</div>
-				</div>
-			</section>
-			</div>
 			</section>
 	
 	
