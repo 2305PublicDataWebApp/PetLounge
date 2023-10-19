@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <!DOCTYPE html>
 <html>
@@ -10,9 +12,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<jsp:include page="../include/importSource.jsp"></jsp:include>
 		
-		<link rel="stylesheet" href="/resources/css/user/userUpdateForm.css">
+		<link rel="stylesheet" href="/resources/css/user/userBoardForm.css">
 		<link rel="stylesheet" href="/resources/css/user/userBoardList.css">
-		<link rel="stylesheet" href="/resources/css/user/userMyPage.css">
+		<link rel="stylesheet" href="/resources/css/user/userBoardPage.css">
 		<link rel="stylesheet" href="/resources/css/font.css">
 		<link rel="stylesheet" href="/resources/css/reset.css">
 		<script
@@ -23,7 +25,7 @@
 		<jsp:include page="../include/header.jsp"></jsp:include>
 		<main>
 	
-			<section style="padding-top: 120px;">
+			<section style="padding-top: 170px;">
 				<div id="wrap" class="clearfix">
 					<aside class="aside">
 					<div class="logo">
@@ -81,7 +83,7 @@
 											<option value="type" <c:if test="${param.searchCondition == 'type' }">selected</c:if>>결제방법</option>   
 										</select> <input class="form-control" type="text" name="searchKeyword"
 											placeholder="검색" value="${paramMap.searchKeyword }"
-											style="width: 75%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 0; border-color: #FFD370; padding-top: 10px;" />
+											style="width: 73%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 10px; border-color: #FFD370; padding-top: 10px; margin-right: 10px;" />
 										<input type="submit" value="검색"
 											style="background-color: #ffd370; color: white; border-color: #ffd370; width: 10%; height: 28px; border-radius: 20px; margin-left: 0; padding-top: 3px;">
 									</div>
@@ -105,10 +107,19 @@
 								            <c:param name="sNo" value="${sList.sNo}"></c:param>
 								        </c:url>
 								        <td><a href="${detailUrl}">${sList.sTitle}</a></td>
-								        <td>${sList.sHAmount}</td>
-								        <c:set var="formattedDate" value="${fn:substring(sList.sHPaydate, 0, 10)}" />
-								        <td>${formattedDate}</td>
-								        <td>${sList.sHPaytype}</td>
+    								    <td><fmt:formatNumber value="${sList.sHAmount}" pattern="#,###" /></td>
+<%-- 								        <td>${sList.sHAmount}</td> --%>
+								        <c:set var="formattedDate" value="${fn:split(sList.sHPaydate, ' ')}" />
+										<c:set var="dateParts" value="${fn:split(formattedDate[0], '-')}"/>
+										<td>${dateParts[0]}.${dateParts[1]}.${dateParts[2]}</td>
+										<td>
+										  <c:choose>
+										    <c:when test="${sList.sHPaytype == 'kakaopay'}">카카오페이</c:when>
+										    <c:when test="${sList.sHPaytype == 'creditcard'}">신용카드</c:when>
+										    <c:otherwise>${sList.sHPaytype}</c:otherwise>
+										  </c:choose>
+										</td>
+<%-- 								        <td>${sList.sHPaytype}</td> --%>
 								    </tr>
 								</c:forEach>
 

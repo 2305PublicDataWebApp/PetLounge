@@ -25,20 +25,22 @@ table {
 
 #wrap {
 	border: 2px solid lightgray;
-	width: 960px;
-	height: 700px;
-	margin: 0 auto;
-	padding: 5px;
-	margin-bottom: 120px;
-	box-sizing: content-box !important;
+    width: 960px;
+    height: 670px;
+    margin: 0 auto;
+    padding: 5px;
+    margin-bottom: 140px;
+    box-sizing: content-box !important;
+    border-radius: 20px;
+    padding: 30px;
 }
 
 .aside { 
-	-border: 1px solid #000;
-	float: left;
-	width: 200px;
-	height: 1000px;
-	margin-right: 5px;
+	--border: 1px solid #000;
+    float: left;
+    width: 200px;
+    height: 1000px;
+    margin-right: 10px;
 }
 
 .aside .logo {
@@ -60,7 +62,7 @@ table {
 	width: 100%;
     height: 100%;
     border-radius: 50%;
-    border: 1px solid #ffd370;
+    border: 2px solid #ffd370;
 }
 .aside .logo .logoImgNo {
 	width: 80%;
@@ -68,7 +70,7 @@ table {
     border-radius: 50%;
 }
 .aside .nav {
-	border: 1px solid #ffd370;
+	border: 2px solid #ffd370;
 	margin: 5px;
 	border-radius: 20px;
 	margin-top: 20px;
@@ -124,10 +126,11 @@ table {
 
 .contents {
 	border-radius: 20px;
-	border: 1px solid #ffd370;
-	float: left;
-	width: 751px;
-	height: 700px;
+    border: 2px solid #ffd370;
+    float: left;
+    width: 730px;
+    height: 670px;
+    margin-left: 20px;
 }
 
 .title {
@@ -153,7 +156,7 @@ table {
 }
 
 .info_hr {
-	width: 700px;
+	width: 670px;
 	color: black;
 	margin-left: 30px;
 }

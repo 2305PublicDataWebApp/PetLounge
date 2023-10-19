@@ -980,9 +980,9 @@ public class UserController {
 	}
 	
 	
-	//병원 리스트 페이징
+	//페이징
 	private UPageInfo getPageInfo(Integer currentPage, Integer totalCount) {
-		int recordCountPerPage = 3;
+		int recordCountPerPage = 5;
 		int naviCountPerPage = 5;
 		
 		int naviTotalCount;

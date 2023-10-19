@@ -27,7 +27,7 @@ table {
 #wrap {
 	border: 2px solid lightgray;
     width: 960px;
-    height: 1350px;
+    height: 1000px;
     margin: 0 auto;
     padding: 5px;
     margin-bottom: 140px;
@@ -130,7 +130,7 @@ table {
     border: 2px solid #ffd370;
     float: left;
     width: 730px;
-    height: 1350px;
+    height: 1000px;
     margin-left: 20px;
 }
 
