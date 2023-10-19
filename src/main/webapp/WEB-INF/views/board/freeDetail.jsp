@@ -11,6 +11,9 @@
         <link rel="stylesheet" href="/resources/css/board/freeDetail.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css" />
         <title>자유게시판</title>
+    <script>
+        history.replaceState({}, null, location.pathname);
+    </script>
     </head>
     <body>
         <jsp:include page="../include/header.jsp"></jsp:include>
@@ -47,12 +50,12 @@
 		<c:choose>
 		    <c:when test="${sessionScope.uId == 'admin'}">
 		        <div class="square-container2">
-		            <div class="search-container"> 
+		            <div class="search-container3"> 
 		                <div class="sub">
-		                    <button class="submit">수정하기</button>
-		                    <button class="submit-del">삭제하기</button>
+		                    <button class="submit" onclick="location.href='/board/freeDetailEdit.pet?fNo='+${board.fNo }">수정하기</button>
+		                    <button class="submit-del" onclick="freeBoardDelete();">삭제하기</button>
 		                </div>
-		                <button class="backtolist" onClick="location.href='/board/freeList.pet'">목록으로</button>
+		                <button class="backtolist1" onClick="location.href='/board/freeList.pet'">목록으로</button>
 		            </div>
 		        </div>
 		    </c:when>
@@ -60,14 +63,14 @@
 		        <div class="square-container2">
 		            <div class="search-container"> 
 		                <div class="sub">
-		                    <button class="submit">수정하기</button>
-		                    <button class="submit-del">삭제하기</button>
+		                    <button class="submit" onclick="location.href='/board/freeDetailEdit.pet?fNo='+${board.fNo }">수정하기</button>
+		                    <button class="submit-del" onclick="freeBoardDelete();">삭제하기</button>
 		                </div>
 		                <button class="bookmark">북마크하기</button>
 		                <button class="backtolist" onClick="location.href='/board/freeList.pet'">목록으로</button>
 		            </div>
 		        </div>
-		    </c:when>
+		    </c:when>				
 		    <c:when test="${sessionScope.uId != null && sessionScope.uId != board.uId}">
 		        <div class="square-container2">
 		            <div class="search-container-1"> 
@@ -202,8 +205,16 @@
 
         </main>
         
-		<jsp:include page="../include/footer.jsp"></jsp:include>        
+		<jsp:include page="../include/footer.jsp"></jsp:include>   
 		
+		<script>
+			function freeBoardDelete() {
+				const fNo = '${board.fNo}';
+				if (confirm("삭제하시겠습니까?")) {
+					location.href = "/board/fdelete.pet?fNo=" + fNo;
+				}
+			}
+		</script>		     
     </body>
     </html>
     

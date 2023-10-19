@@ -9,6 +9,10 @@
 		<jsp:include page="../include/importSource.jsp"></jsp:include>
         <link rel="stylesheet" href="/resources/css/notice/noticeDetail.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css" />
+        <title>공지사항</title>
+    <script>
+        history.replaceState({}, null, location.pathname);
+    </script>
     </head>
     <body>
         <jsp:include page="../include/header.jsp"></jsp:include>

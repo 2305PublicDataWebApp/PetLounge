@@ -6,7 +6,7 @@
 <mapper namespace="BoardMapper">
 
 	<select id="selectFreeBoardList" resultType="Board">
-		SELECT * FROM FREE_TBL ORDER BY F_NO DESC
+		SELECT * FROM FREE_TBL WHERE F_STATUS = 'Y' ORDER BY F_NO DESC
 	</select> 
 
 	<select id="getSearchCount" resultType="_int">
@@ -26,4 +26,27 @@
 		VALUES(F_SEQ_NO.NEXTVAL, #{uId}, #{fTitle}, #{fContent}, DEFAULT, DEFAULT, 
 		#{fFileName}, #{fFileRename}, #{fFilePath}, #{fFileLength}, DEFAULT, DEFAULT, #{fWriter})
 	</insert>
+	
+	<select id="selectOneFreeBoardNo" resultType="Board">
+		SELECT * FROM FREE_TBL WHERE F_NO = #{fNo }
+	</select>
+	
+	<update id="updateFreeBoardPage">
+		UPDATE FREE_TBL
+		SET
+			F_TITLE = #{fTitle },
+			F_CONTENT = #{fContent },
+			F_UPDATE = DEFAULT
+		WHERE F_NO = #{fNo }
+	</update>
+	
+	<update id="freeBoardDelete">
+		UPDATE FREE_TBL
+		SET 
+			F_UPDATE = DEFAULT,
+			F_STATUS = 'N'
+		WHERE F_NO = #{fNo }
+	</update>
+	
+	
 </mapper>
