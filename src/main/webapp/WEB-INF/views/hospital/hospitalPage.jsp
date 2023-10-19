@@ -137,13 +137,13 @@
 
 		<!-- 카카오맵 API 지도 스크립트 -->
 		<script>
-			var lat;
-			var lng;
-			var positions = [];
-			var markers = [];
-			var marker;
-			var overlays = [];
-			var overlay;
+			let lat; // 위도
+			let lng; // 경도
+			let positions = [];
+			let markers = []; // 마커
+			let marker;
+			let overlays = []; // 커스텀 오버레이 (인포윈도우)
+			let overlay;
 			
 			if(${sessionScope.uId eq null}) {
 				// ************************* 비회원 기본 주소 *****************************			
@@ -152,17 +152,17 @@
 				createMap(lat, lng);
 			} else {
 				// ************************* 회원가입 시 받은 주소로 기본 주소 *****************************
-				// 주소-좌표 변환 객체를 생성합니다
+				// 주소-좌표 변환 객체를 생성
 				var geocoder = new kakao.maps.services.Geocoder();
 				
-				// 주소로 좌표를 검색합니다
+				// 주소로 좌표를 검색
 				const userAddr = '${ user.uAddr }'; // 회원의 주소
 				geocoder.addressSearch(userAddr, function(result, status) {
 				
 				     if (status === kakao.maps.services.Status.OK) { // 정상적으로 검색이 완료됐으면 
 				    	lat = result[0].y;
 				    	lng = result[0].x;
-				    } else { // 정상적으로 검색이 완료되지 않았으면 비회원 기본주소와 동일
+				    } else { // 정상적으로 검색이 완료되지 않았으면 비회원 기본 주소와 동일
 				    	lat = 37.5679212;
 						lng = 126.9830358;
 				    }
@@ -183,7 +183,7 @@
 				moveLocation(map);
 			}
 			
-			// 리스트를 불러오는 ajax
+			// 하단에 표시되는 동물병원 리스트를 불러오는 ajax
 			function getHospitalList(map, lat, lng) {
 				$.ajax ({
 					 url: "/hospital/getHospitalList.pet",
@@ -245,17 +245,17 @@
 				for (var i = 0; i < positions.length; i ++) {	
 					var imageSrc = "/resources/images/hospital/hospitalMarker.png"; 
 					
-					// 마커 이미지의 이미지 크기 입니다
+					// 마커 이미지 크기
 				    var imageSize = new kakao.maps.Size(55, 55); 
 				    
-				    // 마커 이미지를 생성합니다    
+				    // 마커 이미지 생성  
 				    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 				    
-				    // 마커를 생성합니다
+				    // 마커 생성
 				    var marker = new kakao.maps.Marker({
 				        map: map, // 마커를 표시할 지도
 				        position: positions[i].latlng, // 마커를 표시할 위치
-				        title : positions[i].name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+				        title : positions[i].name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시
 				        image : markerImage // 마커 이미지 
 				    });
 				    
@@ -326,7 +326,7 @@
 					content.appendChild(infoDiv);
 					            
 					// 마커 위에 커스텀오버레이를 표시합니다
-					// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+					// 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정
 					overlay = new kakao.maps.CustomOverlay({
 					    content: content,
 					    map: null,      
