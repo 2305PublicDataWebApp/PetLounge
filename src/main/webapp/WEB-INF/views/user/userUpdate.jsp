@@ -74,7 +74,7 @@
 							<article class="find1">
 								<!-- <h2>회원가입</h2> -->
 								<p>
-									펫 라운지 회원정보를 수정수정수정.<br>여기에도 뭔가 쓰고싶당 서비스를 이용하실 수 있습니다.
+									펫 라운지 회원정보를 수정합니다.<br>회원 정보를 최신 상태로 유지하려면 아래의 옵션을 활용해보세요.
 								</p>
 
 								<div>
@@ -113,7 +113,7 @@
 												</div><br> 
 												
 												
-												<input type="text" id="uId" value="${user.uId }" style="margin-top: -10px;" readonly><br> 
+												<input type="text" id="uId" value="${user.uId }" style="margin-top: -10px; background-color: rgba(255, 212, 112, 0.14);" readonly><br> 
 													<span id="duplResult" style="font-size: 0.8em; width: 100%;"></span><br>
 												
 												<input type="password" name="uPw" id="uPw" value="${user.uPw }"><br> 
@@ -122,7 +122,7 @@
 												<input type="password" name="uPwRe" id="uPwRe" value="${user.uPw }"><br> 
 													<span id="duplPwReResult" style="font-size: 0.8em; width: 100%;"></span><br>
 											
-												<input type="text" value="${user.uName }" name="uName" readonly><br><br> 
+												<input type="text" value="${user.uName }" name="uName" readonly style="background-color: rgba(255, 212, 112, 0.14);"><br><br> 
 												
 												<input type="text" id="uNickName" name="uNickName" value="${user.uNickName }"><br> 
 													<span id="duplNickResult" style="font-size: 0.8em; width: 100%;"></span><br>

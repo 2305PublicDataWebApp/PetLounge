@@ -116,8 +116,21 @@ section[id^="content"]:target {
 								</h2>
 								<div id="collapseOne" class="accordion-collapse collapse"
 									data-bs-parent="#accordionExample">
-									<div class="accordion-body">
-										<strong style="color: red">아닙니다</strong> 그렇지 않습니다.
+									<div class="accordion-body"><strong>
+제 1 조 (목적)
+본 약관은 NICE평가정보(주)(이하 "회사"라 한다)가 제공하는 NICE아이디 서비스(이하 "서비스"라 한다)의 이용조건 및 절차를 포함한 제반 사항을 규정함을 목적으로 합니다.
+제 2 조 (용어의 정의)
+본 약관에서 사용하는 용어의 정의는 다음과 같습니다.
+1. 서비스: 구현되는 단말기(PC, 휴대폰 등의 각종 유무선 장치를 포함)와 상관없이 “이용자”가 본인 또는 본인의 정보 일부를 식별하여 그 결과값을 “서비스 이용사”에게 전달하는 NICE아이디 제반 서비스를 말합니다.
+2. 이용자: 본 약관에 정한 바에 따라서 "회사"가 제공하는 “서비스”를 이용하는 고객을 말합니다.
+제 3 조 (약관의 효력 발생 및 개정)
+1. 본 약관은 그 내용을 "서비스"의 화면에 게시하거나 기타의 방법으로 이용자에게 공지함으로써 즉시 그 효력이 발생합니다.
+제 4 조 (약관 외 준칙)
+본 약관에 명시되지 아니한 사항에 대해서는 「신용정보의 이용 및 보호에 관한 법률」, 「정보통신망 이용촉진 및 정보보호 등에 관한 법률」, 「개인정보 보호법」, 「통신비밀보호법」, 「전자서명법」 등 관련 법령 또는 일반관행에 따릅니다.
+부칙
+1. 이 약관은 2022년 12월 29일부터 적용됩니다.
+2. 이전에 시행되던 종전의 약관은 본 약관으로 대체합니다.
+ </strong> 
 									</div>
 								</div>
 							</div>
@@ -132,15 +145,13 @@ section[id^="content"]:target {
 								<div id="collapseTwo" class="accordion-collapse collapse"
 									data-bs-parent="#accordionExample">
 									<div class="accordion-body">
-										<strong>This is the second item's accordion body.</strong> It
-										is hidden by default, until the collapse plugin adds the
-										appropriate classes that we use to style each element. These
-										classes control the overall appearance, as well as the showing
-										and hiding via CSS transitions. You can modify any of this
-										with custom CSS or overriding our default variables. It's also
-										worth noting that just about any HTML can go within the
-										<code>.accordion-body</code>
-										, though the transition does limit overflow.
+										<strong>
+1. 개인정보의 수집･이용에 관한 사항 펫라운지에서 제공하는 사회서비스 신청과 관련하여 아래와 같이 귀하의 
+개인정보를 수집･ 이용하기 위하여 「개인정보보호법」 제15조에 따라 동의를 구합니다.  
+개인정보의 수집･이용 목적 : 펫라운지 서비스 이용자 선정 심사, 계약 체결, 서비스 이용, 
+서비스 중복수혜 및 부정수급 확인, 서비스 만족도 조사 및 각종 안내문 발송, 기타 중앙부처･지방 자치단체의 
+일자리관련시스템 등 정보제공 및 정책자료 활용(사업 관련 각종 연구∙설문조사 포함) 
+</strong> 
 									</div>
 								</div>
 							</div>
@@ -155,15 +166,14 @@ section[id^="content"]:target {
 								<div id="collapseThree" class="accordion-collapse collapse"
 									data-bs-parent="#accordionExample">
 									<div class="accordion-body">
-										<strong>This is the third item's accordion body.</strong> It
-										is hidden by default, until the collapse plugin adds the
-										appropriate classes that we use to style each element. These
-										classes control the overall appearance, as well as the showing
-										and hiding via CSS transitions. You can modify any of this
-										with custom CSS or overriding our default variables. It's also
-										worth noting that just about any HTML can go within the
-										<code>.accordion-body</code>
-										, though the transition does limit overflow.
+										<strong>
+마케팅정보 수신동의 개인정보보호법 제22조 제4항에 의해 선택정보 사항에 대해서는 기재하지 않으셔도 서비스를 
+이용하실 수 있습니다. 1. 마케팅 및 광고에의 활용신규 서비스(제품) 개발 및 맞춤 서비스 제공, 이벤트 및 광고성 
+정보 제공 및 참여기회 제공, 인구통계학적 특성에 따른 서비스 제공 및 광고 게재, 서비스의 유효성 확인, 접속빈도
+파악 또는 회원의 서비스 이용에 대한 통계 등을 목적으로 개인정보를 처리합니다. 2. 펫라운지는 서비스를 운용함에 있어 
+각종 정보를 서비스 화면, 전화, e-mail, SMS, 우편물, 앱푸시 등의 방법으로 펫라운지 회원에게 제공할 수 있으며, 펫라운지 
+모바일 쿠폰의 수신 등, 의무적으로 안내되어야 하는 정보성 내용은 수신동의 여부와 무관하게 제공됩니다.
+</strong>
 									</div>
 								</div>
 							</div>
@@ -727,6 +737,8 @@ section[id^="content"]:target {
         });
         
             
+        
+        
         
         
 	    </script>

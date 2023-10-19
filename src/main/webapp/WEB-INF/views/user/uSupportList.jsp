@@ -101,12 +101,12 @@
 								</thead>
 								<tbody>
 								<c:forEach items="${sList}" var="sList" varStatus="i">
-								    <tr>
-								        <td>${i.count}</td>
-								        <c:url var="detailUrl" value="/support/detail.pet">
+										<c:url var="detailUrl" value="/support/detail.pet">
 								            <c:param name="sNo" value="${sList.sNo}"></c:param>
 								        </c:url>
-								        <td><a href="${detailUrl}">${sList.sTitle}</a></td>
+								    <tr onclick="window.location.href='${detailUrl}'" id="tr">
+								        <td>${i.count}</td>
+								        <td>${sList.sTitle}</td>
 								        <td><fmt:formatNumber value="${sList.sHAmount}" pattern="#,###" /></td>
 <%-- 								        <td>${sList.sHAmount}</td> --%>
 								        <c:set var="formattedDate" value="${fn:split(sList.sHPaydate, ' ')}" />
@@ -114,8 +114,8 @@
 										<td>${dateParts[0]}.${dateParts[1]}.${dateParts[2]}</td>
 										<td>
 										  <c:choose>
-										    <c:when test="${sList.sHPaytype == 'kakaopay'}">카카오페이</c:when>
-										    <c:when test="${sList.sHPaytype == 'creditcard'}">신용카드</c:when>
+										    <c:when test="${sList.sHPaytype == 'kakaopay'}"><img src="/resources/images/user/kakaoLogo2.png" style="width: 30px; height: 30px"></c:when>
+										    <c:when test="${sList.sHPaytype == 'creditcard'}"><img src="/resources/images/user/card_credit.png" style="width: 30px; height: 30px"></c:when>
 										    <c:otherwise>${sList.sHPaytype}</c:otherwise>
 										  </c:choose>
 										</td>
@@ -136,7 +136,7 @@
 <!-- 										</tr> -->
 <%-- 									</c:forEach> --%>
 								</tbody>
-							</table>
+							</table><br>
 							<div aria-label="Page navigation example" class="page">
 							
 							<c:url var="prevUrl" value="/user/uSupport.pet">
@@ -148,7 +148,7 @@
 							<div></div>
 				            <ul style="display: flex; justify-content: center;">
 					         	<c:if test="${aInfo.startNavi != 1 }">
-						            <li class="page-item"  ><a class="page-link" href="${prevUrl }" >Prev</a></li>
+						            <li class="page-item"  ><a class="page-link" href="${prevUrl }" ><img src="/resources/images/user/previous.png" style="width: 13px;"></a></li>&nbsp;
 					            </c:if>
 					         
 					            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
@@ -167,7 +167,7 @@
 										<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
 										<c:param name="uId" value="${sessionScope.uId}"></c:param>
 									</c:url>
-						            <li><a href="${nextUrl }">Next</a></li>
+						            &nbsp;<li><a href="${nextUrl }"><img src="/resources/images/user/next.png" style="width: 13px;"></a></li>
 					            </c:if>
 				            </ul>
 				           </div> 

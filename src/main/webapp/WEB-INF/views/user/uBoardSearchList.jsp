@@ -99,12 +99,12 @@
 								</thead>
 								<tbody>
 									<c:forEach items="${bList }" var="bList" varStatus="i">
-										<tr>
+										<c:url var="detailUrl" value="/board/freeDetail.pet">
+											<c:param name="fNo" value="${bList.fNo }"></c:param>
+										</c:url>
+										<tr onclick="window.location.href='${detailUrl}'" id="tr" >
 											<td>${i.count }</td>
-											<c:url var="detailUrl" value="#">
-												<c:param name="fNo" value="${bList.fNo }"></c:param>
-											</c:url>
-											<td><a href="${detailUrl }">${bList.fTitle }</a></td>
+											<td>${bList.fTitle }</td>
 											<td>${bList.uId}</td>
 											<c:set var="formattedDate" value="${fn:split(bList.fCreate, '-')}" />
 											<td>${formattedDate[0]}.${formattedDate[1]}.${formattedDate[2]}</td>
@@ -112,7 +112,7 @@
 										</tr>
 									</c:forEach>
 								</tbody>
-							</table>
+							</table><br>
 							
 							<div aria-label="Page navigation example" class="page">
 							
@@ -125,7 +125,7 @@
 					            <div></div>
 					          	<ul style="display: flex; justify-content: center;">
 						         	<c:if test="${aInfo.startNavi != 1 }">
-										<li><a href="${prevUrl }" >이전</a></li>
+										<li><a href="${prevUrl }" ><img src="/resources/images/user/previous.png" style="width: 13px;"></a></li>&nbsp;
 						            </c:if>
 					            
 						            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
@@ -145,7 +145,7 @@
 											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
 											<c:param name="uId" value="${sessionScope.uId}"></c:param>
 										</c:url>
-						            	<li><a href="${nextUrl }">Next</a></li>
+						            	&nbsp;<li><a href="${nextUrl }"><img src="/resources/images/user/next.png" style="width: 13px;"></a></li>
 						            </c:if>
 					            </ul>
 					        </div> 

@@ -71,7 +71,7 @@
 							<form action="/user/checkPw.pet" method="post">
 								<article class="find1">
 									<p>
-										펫 라운지 회원정보수정<br>회원님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인해주세요.
+										회원님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인해주세요.
 									</p>
 	
 									<div>

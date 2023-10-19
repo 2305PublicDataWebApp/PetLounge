@@ -103,12 +103,12 @@
 								</thead>
 								<tbody>
 									<c:forEach items="${hList }" var="hList" varStatus="i">
-										<tr>
+										<c:url var="detailUrl" value="/hospital/detail.pet">
+											<c:param name="hNo" value="${hList.hNo }"></c:param>
+										</c:url>
+										<tr onclick="window.location.href='${detailUrl}'" id="tr">
 											<td>${i.count }</td>
-											<c:url var="detailUrl" value="/hospital/detail.pet">
-												<c:param name="hNo" value="${hList.hNo }"></c:param>
-											</c:url>
-											<td><a href="${detailUrl }">${hList.hName }</a></td>
+											<td>${hList.hName }</td>
 											 <td>${hList.hAddr}</td>
 											<td style="width: 135px;">
 												<c:if test="${hList.hPhone eq null}">
@@ -121,7 +121,7 @@
 										</tr>
 									</c:forEach>
 								</tbody>
-							</table>
+							</table><br>
 							
 							<div aria-label="Page navigation example" class="page">
 							
@@ -134,7 +134,7 @@
 							<div></div>
 				            <ul style="display: flex; justify-content: center;">
 					         	<c:if test="${aInfo.startNavi != 1 }">
-						            <li class="page-item"  ><a class="page-link" href="${prevUrl }" >Prev</a></li>
+						            <li class="page-item"  ><a class="page-link" href="${prevUrl }" ><img src="/resources/images/user/previous.png" style="width: 13px;"></a></li>&nbsp;
 					            </c:if>
 					         
 					            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
@@ -153,7 +153,7 @@
 										<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
 										<c:param name="uId" value="${sessionScope.uId}"></c:param>
 									</c:url>
-						            <li><a href="${nextUrl }">Next</a></li>
+						            &nbsp;<li><a href="${nextUrl }"><img src="/resources/images/user/next.png" style="width: 13px;"></a></li>
 					            </c:if>
 				            </ul>
 				           </div> 

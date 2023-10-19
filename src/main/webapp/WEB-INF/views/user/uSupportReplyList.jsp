@@ -100,19 +100,19 @@
 								</thead>
 								<tbody>
 									<c:forEach items="${sRList }" var="sRList" varStatus="i">
-										<tr>
+										<c:url var="detailUrl" value="/support/detail.pet">
+											<c:param name="sNo" value="${sRList.sNo }"></c:param>
+										</c:url>
+										<tr onclick="window.location.href='${detailUrl}'" id="tr">
 											<td>${i.count }</td>
-												<c:url var="detailUrl" value="/support/detail.pet">
-													<c:param name="sNo" value="${sRList.sNo }"></c:param>
-												</c:url>
-											<td><a href="${detailUrl }">${sRList.sTitle }</a></td>
+											<td>${sRList.sTitle }</td>
 											<td>${sRList.sRContent}</td>
 											<td><fmt:formatDate value="${sRList.sRCreate}" pattern="yyyy.MM.dd" /></td>
 <%-- 											<td>${sRList.sRCreate}</td> --%>
 										</tr>
 									</c:forEach>
 								</tbody>
-							</table>
+							</table><br>
 							<div aria-label="Page navigation example" class="page">
 							
 						        <c:url var="prevUrl" value="/user/uSupportReply.pet">
@@ -124,7 +124,7 @@
 					            <div></div>
 					          	<ul style="display: flex; justify-content: center;">
 						         	<c:if test="${aInfo.startNavi != 1 }">
-										<li><a href="${prevUrl }" >이전</a></li>
+										<li><a href="${prevUrl }" ><img src="/resources/images/user/previous.png" style="width: 13px;"></a></li>&nbsp;
 						            </c:if>
 					            
 						            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
@@ -144,7 +144,7 @@
 											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
 											<c:param name="uId" value="${sessionScope.uId}"></c:param>
 										</c:url>
-						            	<li><a href="${nextUrl }">다음</a></li>
+						            	&nbsp;<li><a href="${nextUrl }"><img src="/resources/images/user/next.png" style="width: 13px;"></a></li>
 						            </c:if>
 					            </ul>
 					        </div> 
