@@ -40,7 +40,11 @@
                             </div>
                         </div> 
                     </li>
-                    <li><textarea id="textarea" class="notice-content" readonly>${notice.nContent}</textarea></li>
+                    <li>
+                    	<div class="n-content">
+                    		<textarea id="textarea" class="notice-content" readonly>${notice.nContent}</textarea>
+                    	</div>
+                    </li>
                 </ul>
             </div>
         </div>

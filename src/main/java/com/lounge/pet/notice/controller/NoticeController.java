@@ -62,7 +62,7 @@ public class NoticeController {
 			int result = nService.submitNoticeForm(notice);
 			if(result > 0) {
 				mv.addObject("msg", "공지가 등록되었습니다.");
-				mv.addObject("url", "/notice/noticeSubmit.pet");
+				mv.addObject("url", "/notice/noticeList.pet");
 				mv.setViewName("common/message");
 			} else {
 				mv.addObject("msg", "게시글 등록이 완료되지 않았습니다.");
