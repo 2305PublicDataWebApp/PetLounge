@@ -146,7 +146,7 @@
                         
                         	<!-- 날씨 아이콘 동적으로 수정 예정 -->
                         	<img class="weather-icon" src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg">
-                            <span class="tTemp"></span>℃
+                            <span class="tTemp"></span>
                         </div>
                         <div class="img-area">
                             <img class="dog-img" src="/resources/images/weather/dog.png">
@@ -156,16 +156,16 @@
                     <div class="today-rigth">
                         <!-- 강수 확률 -->
                         <div id="pro-rain" class="today-info">
-                            강수 확률 <span class="pro-rain"></span>%
+                            강수 확률 <span class="pro-rain"></span>
                         </div>
                         <!-- 최고 기온 -->
                         <div id="temp-max" class="today-info">
-                            최고 기온 <span class="temp-max"></span>℃
+                            최고 기온 <span class="temp-max"></span>
                         </div>
                         <!-- 최저 기온 -->
                         <div id="temp-min" class="today-info">
                             최저 기온 <span></span>
-                            <span class="temp-min"></span>℃
+                            <span class="temp-min"></span>
                         </div>
                     </div>
                 </div>
@@ -436,141 +436,126 @@
 //    				base_time = calculateBaseTime(formattedTime, 60); // -60분
 
 				base_time = getFormattedTime();
-				console.log("온도 베이스타임:" + base_time);
 				
 	            const url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
 	          	
 	            $.getJSON (url, function(data){
+	            	const celsius = "℃";
+	            	
 		            const temp = data.response.body.items.item[3].obsrValue; // 현재 온도 api 배열
 		            
-		            $('.tTemp').empty().append(temp); // 현재 온도
+		            $('.tTemp').empty().append(temp).append(celsius); // 현재 온도
 		        });
             }
-            
-         	// ************************************************ 단기 예보(강수량) ************************************************//
-         	// 단기 예보 시간 구하는 함수
-// 			function getTimeByCondition(base_time) {
-// 			    // base_time을 "HHMM" 형식의 문자열로 가정
-// 			    // 문자열로 변환하고 앞에 0을 붙임
-// 			    const time = base_time.toString().padStart(4, '0');
-			
-// 			    if (time >= '0211' && time <= '0459') {
-// 			        return "0200";
-// 			    } else if (time >= '0511' && time <= '0810') {
-// 			        return "0500";
-// 			    } else if (time >= '0811' && time <= '1110') {
-// 			        return "0800";
-// 			    } else if (time >= '1111' && time <= '1410') {
-// 			        return "1100";
-// 			    } else if (time >= '1411' && time <= '1710') {
-// 			        return "1400";
-// 			    } else if (time >= '1711' && time <= '2010') {
-// 			        return "1700";
-// 			    } else if (time >= '2011' && time <= '2310') {
-// 			        return "2000";
-// 			    } else if ((time >= '2311' && time <= '2400') || (time >= '0000' && time <= '0200')) {
-// 			        return "2300";
-// 			    } else {
-// 			        return "Unknown";
-// 			    }
-// 			}
-         	
-			// ************************************************ 초단기 예보(일 시간별 기온) ************************************************//
-// 			function getTimeByUltraShort(base_time) {
-				
-// 				const time = base_time.toString().padStart(4, '0');
-				
-// 				if(time >= "0030" && time <= "0130") {
-// 					return "0030";
-// 				} else if(time >= "0130" && time < "0230") {
-// 					return "0130";
-// 				} else if(time >= "0230" && time < "0330") {
-// 					return "0230";0
-// 				} else if(time >= "0330" && time < "0430") {
-// 					return "0330";
-// 				} else if(time >= "0430" && time < "0530") {
-// 					return "0430";
-// 				} else if(time >= "0530" && time < "0630") {
-// 					return "0530";
-// 				} else if(time >= "0630" && time < "0730") {
-// 					return "0630"
-// 				} else if(time >= "0730" && time < "0830") {
-// 					return "0730";
-// 				} else if(time >= "0830" && time < "0930") {
-// 					return "0830";
-// 				} else if(time >= "0930" && time < "1030") {
-// 					return "0930";
-// 				} else if(time >= "1030" && time < "1130") {
-// 					return "1030";
-// 				} else if(time >= "1130" && time < "1230") {
-// 					return "1130";
-// 				} else if(time >= "1230" && time < "1330") {
-// 					return "1230";
-// 				} else if(time >= "1330" && time < "1430") {
-// 					return "1330";
-// 				} else if(time >= "1430" && time < "1530") {
-// 					return "1430";
-// 				} else if(time >= "1530" && time < "1630") {
-// 					return "1530";
-// 				} else if(time >= "1630" && time < "1730") {
-// 					return "1630";
-// 				} else if(time >= "1730" && time < "1830") {
-// 					return "1730";
-// 				} else if(time >= "1830" && time < "1930") {
-// 					return "1830";
-// 				} else if(time >= "1930" && time < "2030") {
-// 					return "1930";
-// 				} else if(time >= "2030" && time < "2130") {
-// 					return "2030";
-// 				} else if(time >= "2130" && time < "2230") {
-// 					return "2130";
-// 				} else if(time >= "2230" && time < "2330") {
-// 					return "2230";
-// 				} else if((time >= "2330" && time < "2339") || time >= 0000 && time < 0030) {
-// 					return "2330";
-// 				} else {
-// 					return "Unknown";
-// 				}
-// 			}
 			
 			// ************************************************ 단기 예보(강수확률) ************************************************//
          	function weatherRain(nx, ny) {
 				
-         		base_date = initDate-1;
-         		console.log("강수확률 기준 날짜 : " + base_date);
+         		base_date = initDate;
+				base_time="0200";
+				
+				// 0시 ~ 2시 비는 시간은 전날 23시 예보 출력
+				formattedTime = getFormattedTime(); // 현재 시간
+// 				formattedTime = "0020"; // 현재 시간
+				
+				if(formattedTime >= "0000" && formattedTime < "0300") {
+			        base_date = initDate - 1;
+			        base_time = "2300";
+				}
          		
 	         	apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
-				base_time="2300";
+				
+				let fcstTime = getFormattedTime(); // 현재 시간(이걸로 배열 가져와야 함)
+// 				let fcstTime = "0200"; // 현재 시간(이걸로 배열 가져와야 함)
+				fcstTime = fcstTime.substring(0, 2) + "00";
+				let fcstValue = "";
+				
+				console.log("fcstTime : " + fcstTime);
 				
 	         	url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
+	         	console.log(url);
 	         	
 				$.getJSON (url, function(data){
-					const probRain = data.response.body.items.item[152].fcstValue;	// 현재 강수확률 api 배열
+					const percentage = "%";
+					console.log("formattedTime : " + formattedTime);
 					
-// 					switch(base_time) {
-// 						case "" : 
-// 							break;
-// 					}
+					if(formattedTime >= "0000" && formattedTime < "0300") {
+						console.log("fcstTime" + fcstTime);
+						switch(fcstTime) {
+							case '0000': fcstValue = data.response.body.items.item[7].fcstValue; break;
+							case '0100': fcstValue = data.response.body.items.item[19].fcstValue; break;
+							case '0200': fcstValue = data.response.body.items.item[31].fcstValue; break;
+						}
+					} else {
+						console.log("fcstTime" + fcstTime);
+						switch(fcstTime) {
+							case '0300': fcstValue = data.response.body.items.item[8].fcstValue; break;
+							case '0400': fcstValue = data.response.body.items.item[20].fcstValue; break;
+							case '0500': fcstValue = data.response.body.items.item[32].fcstValue; break;
+							case '0600': fcstValue = data.response.body.items.item[44].fcstValue; break;
+							case '0700': fcstValue = data.response.body.items.item[57].fcstValue; break;
+							case '0800': fcstValue = data.response.body.items.item[69].fcstValue; break;
+							case '0900': fcstValue = data.response.body.items.item[81].fcstValue; break;
+							case '1000': fcstValue = data.response.body.items.item[93].fcstValue; break;
+							case '1100': fcstValue = data.response.body.items.item[105].fcstValue; break;
+							case '1200': fcstValue = data.response.body.items.item[117].fcstValue; break;
+							case '1300': fcstValue = data.response.body.items.item[129].fcstValue; break;
+							case '1400': fcstValue = data.response.body.items.item[141].fcstValue; break;
+							case '1500': fcstValue = data.response.body.items.item[153].fcstValue; break;
+							case '1600': fcstValue = data.response.body.items.item[166].fcstValue; break;
+							case '1700': fcstValue = data.response.body.items.item[178].fcstValue; break;
+							case '1800': fcstValue = data.response.body.items.item[190].fcstValue; break;
+							case '1900': fcstValue = data.response.body.items.item[202].fcstValue; break;
+							case '2000': fcstValue = data.response.body.items.item[214].fcstValue; break;
+							case '2100': fcstValue = data.response.body.items.item[226].fcstValue; break;
+							case '2200': fcstValue = data.response.body.items.item[238].fcstValue; break;
+							case '2300': fcstValue = data.response.body.items.item[250].fcstValue; break;
+						}
+					}
 					
-					$('.pro-rain').empty().append(probRain); // 강수 확률
+					console.log(data.response.body.items.item[178]);
+					$('.pro-rain').empty().append(fcstValue).append(percentage); // 강수 확률
 				});
          	}
 			
 			// ************************************************ 단기 예보(최고/최저 기온) ************************************************//
 			function weatherTempMinMax(nx, ny) {
+				
+				base_date = initDate;
 				base_time = "0200";
-				console.log("최고/최저 기온 베이스타임:" + base_time);
+				
+				// 0시 ~ 2시 비는 시간은 전날 23시 예보 출력
+				formattedTime = getFormattedTime(); // 현재 시간
+				if(formattedTime >= "0000" && formattedTime < "0300") {
+			        base_date = initDate - 1;
+			        base_time = "2300";
+				}
+				
 				apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
 				url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-
+				
 				$.getJSON (url, function(data){
-					const tempMax = data.response.body.items.item[158].fcstValue;
-					const tempMin = data.response.body.items.item[48].fcstValue;
-					const roundedTempMax = Math.round(tempMax);
-					const roundedTempMin = Math.round(tempMin);
+					const celsius = "℃";
+					let tempMax;
+					let tempMin;
+					let roundedTempMax;
+					let roundedTempMin;
 					
-					$('.temp-max').empty().append(roundedTempMax); // 최고 기온
-					$('.temp-min').empty().append(roundedTempMin); // 최고 기온
+					//  0시 ~ 2시 일 경우
+					if(formattedTime >= "0000" && formattedTime < "0200") {
+						tempMax = data.response.body.items.item[193].fcstValue;
+						tempMin = data.response.body.items.item[84].fcstValue;
+						roundedTempMax = Math.round(tempMax);
+						roundedTempMin = Math.round(tempMin);
+					}
+					
+					tempMax = data.response.body.items.item[157].fcstValue;
+					tempMin = data.response.body.items.item[48].fcstValue;
+					roundedTempMax = Math.round(tempMax);
+					roundedTempMin = Math.round(tempMin);
+					
+					$('.temp-max').empty().append(roundedTempMax).append(celsius); // 최고 기온
+					$('.temp-min').empty().append(roundedTempMin).append(celsius); // 최고 기온
 				});
 			}
 			
@@ -578,11 +563,14 @@
 			function weatherTime(nx, ny) {
 // 				const formattedTime = getFormattedTime(); // 현재 시간을 가져옴
 				base_time = "0030"
-	         	console.log("일 시간별 / 기준시간:" + base_time);
+// 	         	console.log("일 시간별 / 기준시간:" + base_time);
+	         	
+				base_date = initDate
 				
 				apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
 				
 				url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
+// 				console.log("일 시간별 / url:" + url);
 				
 				$.getJSON (url, function(data){
 					const celsius = "℃";
@@ -614,7 +602,7 @@
 					const tempTen = data.response.body.items.item[26].fcstValue  // 10:00
 					const tempEle = data.response.body.items.item[27].fcstValue	 // 11:00
 					const tempTwe = data.response.body.items.item[28].fcstValue	 // 12:00
-					console.log(data.response.body.items.item[28]);
+// 					console.log(data.response.body.items.item[28]);
 					
 					$('#time-07').empty().append(tempSev).append(celsius);
 					$('#time-08').empty().append(tempEig).append(celsius);
@@ -636,7 +624,7 @@
 					const tempSixteen = data.response.body.items.item[26].fcstValue  // 16:00
 					const tempSeven = data.response.body.items.item[27].fcstValue	 // 17:00
 					const tempEigh = data.response.body.items.item[28].fcstValue	 // 18:00
-					console.log(data.response.body.items.item[28]);
+// 					console.log(data.response.body.items.item[28]);
 					
 					$('#time-13').empty().append(tempThi).append(celsius);
 					$('#time-14').empty().append(tempFou).append(celsius);
@@ -658,7 +646,7 @@
 					const tempTwentyTwo = data.response.body.items.item[26].fcstValue	// 22:00
 					const tempTwentyThr = data.response.body.items.item[27].fcstValue	// 23:00
 					const tempTwentyFour = data.response.body.items.item[28].fcstValue	// 00:00
-					console.log(data.response.body.items.item[28]);
+// 					console.log(data.response.body.items.item[28]);
 					
 					$('#time-19').empty().append(tempNineteen).append(celsius);
 					$('#time-20').empty().append(tempTwenty).append(celsius);
