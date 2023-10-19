@@ -7,9 +7,38 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<jsp:include page="../include/importSource.jsp"></jsp:include>
+		
+		<link rel="stylesheet" href="/resources/css/reset.css">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/resources/css/include/header.css">
+		<link rel="stylesheet" href="/resources/css/include/footer.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" />
+		
+		<style type="text/css">
+        	@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@400;700&display=swap');
+			@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+			@font-face {
+			    font-family: 'GmarketSansMedium';
+			    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+			    font-weight: normal;
+			    font-style: normal;
+			}
+	        *:not(.s-content *) {
+			    font-family: 'GmarketSansMedium';
+			    font-size: 1em;
+			    color: #3d3d3d;
+			}
+        </style>
+        
 		<link rel="stylesheet" href="/resources/css/support/supportDetail.css">
+		
+		
+		
 		<title>펫 라운지 모금함 : 상세</title>
 	</head>
 	<body>
@@ -169,7 +198,7 @@
                             <p>${support.sStart } ~ ${support.sEnd }</p>
                         </div>
                         <div>
-                            <span id="d-day" class="d-day">D-25</span>
+                            <span id="d-day" class="d-day">디데이출력</span>
                         </div>
                         <div class="num-area">
                             <p class="fund-amount"><span id="s-fund-amount">0</span>원</p>
@@ -201,6 +230,36 @@
 		<jsp:include page="../include/footer.jsp"></jsp:include>
 		<script>
 			// 댓글 등록 
+			$("#reply-create-content").on("keydown", function(event) {
+			    if (event.keyCode === 13) { // 엔터 키의 keyCode는 13
+			        event.preventDefault(); // 기본 엔터 동작을 막음 
+			
+			        const sRContent = $("#reply-create-content").val();
+			        const sNo = ${support.sNo };
+			
+			        if (!sRContent) {
+			            alert("댓글 내용을 입력해주세요.");
+			        } else {
+			            $.ajax({
+			                url: "/sReply/insert.pet",
+			                data: { sRContent: sRContent, sNo: sNo },
+			                type: "POST",
+			                success: function (result) {
+			                    if (result == "success") {
+			                        getReplyList();
+			                        $("#reply-create-content").val("");
+			                    } else {
+			                        alert("댓글 등록 실패");
+			                    }
+			                },
+			                error: function () {
+			                    alert("Ajax 오류! 관리자에게 문의하세요.");
+			                }
+			            });
+			        }
+			    }
+			});
+			
 			$("#reply-create-btn").on("click", function() {
 				const sRContent = $("#reply-create-content").val();
 				const sNo = ${support.sNo };
@@ -336,7 +395,7 @@
 								center = $("<td class='td'>").html(
 										"<div class='user-info-div'><span class='user-nickname'>"+sRList[i].sRWriter+"</span><span class='reply-create-date'>"
 										+ ""+sRDate+"</span></div><div class='reply-content'>"+sRList[i].sRContent+"</div>"); 
-								if(sessionId === sRList[i].uId) {
+								if(sessionId === sRList[i].uId || sessionId === "admin") {
 									right = $("<td class='td'>").html(
 											"<a href='javascript:void(0)' class='reply-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal' "
 											+ "onclick='openModifyView("+sRList[i].sRNo+",\""+sRList[i].sRWriter+"\",\""+sRList[i].sRContent+"\");'>수정</a>"
@@ -574,7 +633,6 @@
 			    }
 			}
 			
-			
 			// 댓글, 후원내역 출력 
 			$(function(){
 				getReplyList();
@@ -582,22 +640,27 @@
 				// setInterval(getReplyList, 1000); // 1초 단위로 getReplyList가 호출되어 댓글 실시간 조회
 			})
 			
-			
-			
-			
 			<!-- 디데이 구하기 -->
-			const sStart = new Date('${support.sStart}');
+			const today = new Date();
+			today.setHours(0, 0, 0, 0);
 		    const sEnd = new Date('${support.sEnd}');
-		    const timeDiff = sEnd - sStart;
+			sEnd.setHours(0, 0, 0, 0);
+		    const timeDiff = sEnd - today;
 		    const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-		    
-		    // daysDiff가 0보다 크면 아직 진행 중인 후원 
-		    document.getElementById('d-day').innerText = "D-" + daysDiff;
-		    
-		    // daysDiff가 0이면 daysDiff 대신 d-day로 출력되도록 하기 
-		    // daysDiff가 0보다 작으면 D-가 아니라 D+ 이렇게 
+		    if(daysDiff > 0) {
+		    	// daysDiff가 0보다 크면 아직 진행 중인 후원 
+			    document.getElementById('d-day').innerText = "D-" + daysDiff;
+		    } else if(daysDiff == 0) {
+		    	// daysDiff가 0이면 daysDiff 대신 d-day로 출력되도록 하기 
+		    	document.getElementById('d-day').innerText = "D-day";
+		    } else {
+		    	// daysDiff가 0보다 작으면 D-가 아니라 D+로 나오게 하기 
+		    	document.getElementById('d-day').innerText = "D+" + Math.abs(daysDiff); // Math.abs 절대값 구하는 함수 
+		    }
 		    // 후원버튼도 이걸로 비교해서 0보다 작으면 없어지고 모금 종료 뜨도록 하기 
-		    
+		    if(daysDiff < 0) {
+		    	$(".section-btn").html('<span style="font-size:1.5em;">종료된 모금입니다.</span>');
+		    }
 			<!-- 목표 금액 불러온 숫자 사이에 , 넣어주기  -->
 	        let sTargetAmount = (${support.sTargetAmount }).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	        $(document).ready(function() {

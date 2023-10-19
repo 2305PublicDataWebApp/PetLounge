@@ -48,7 +48,7 @@
 	<select id="selectSupportList" resultType="Support">
 		SELECT * FROM SUPPORT_TBL 
 		<if test="category != 'all'">
-		WHERE S_STATUS = 'Y' AND S_CATEGORY = #{category}
+		WHERE S_STATUS = 'Y' AND S_CATEGORY = #{category} 
 			<if test="sort == 'latest'">
 				ORDER BY S_NO DESC
 			</if>
