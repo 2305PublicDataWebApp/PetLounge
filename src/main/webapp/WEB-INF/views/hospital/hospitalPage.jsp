@@ -144,6 +144,7 @@
 			let marker;
 			let overlays = []; // 커스텀 오버레이 (인포윈도우)
 			let overlay;
+			let searchKeyword; // 검색어
 			
 			if(${sessionScope.uId eq null}) {
 				// ************************* 비회원 기본 주소 *****************************			
@@ -153,7 +154,7 @@
 			} else {
 				// ************************* 회원가입 시 받은 주소로 기본 주소 *****************************
 				// 주소-좌표 변환 객체를 생성
-				var geocoder = new kakao.maps.services.Geocoder();
+				const geocoder = new kakao.maps.services.Geocoder();
 				
 				// 주소로 좌표를 검색
 				const userAddr = '${ user.uAddr }'; // 회원의 주소
@@ -234,7 +235,7 @@
 			// 마커와 커스텀 오버레이 생성
 			function makeMarkerAndOverlay(map, positions) {
 	   			// 마커와 커스텀 오버레이 초기화
-				for (var i = 0; i < markers.length; i++) {
+				for (let i = 0; i < markers.length; i++) {
 	                markers[i].setMap(null);
 	                overlays[i].setMap(null);
 	            }
@@ -242,7 +243,7 @@
 	   			overlays = [];
 	   			
 			    // 새로운 마커 생성
-				for (var i = 0; i < positions.length; i ++) {	
+				for (let i = 0; i < positions.length; i ++) {	
 					var imageSrc = "/resources/images/hospital/hospitalMarker.png"; 
 					
 					// 마커 이미지 크기
@@ -258,12 +259,6 @@
 				        title : positions[i].name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시
 				        image : markerImage // 마커 이미지 
 				    });
-				    
-// 				    marker = new kakao.maps.Marker({
-// 				        map: map, // 마커를 표시할 지도
-// 				        title : positions[i].name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-// 				        position: positions[i].latlng // 마커를 표시할 위치
-// 				    });
 				    
 				    markers.push(marker);
 				    
@@ -330,13 +325,12 @@
 					overlay = new kakao.maps.CustomOverlay({
 					    content: content,
 					    map: null,      
-// 					    map: map,      
 					    position: positions[i].latlng     
 					});
 					
 					overlays.push(overlay);
 					
-					var searchKeyword = document.getElementById('h-search-keyword').value;
+					searchKeyword = document.getElementById('h-search-keyword').value;
 				    if (searchKeyword.trim() !== '') {
 						map.setCenter(positions[0].latlng); // 첫 검색 결과의 좌표로 중앙 좌표 이동			
 				    }
@@ -378,7 +372,7 @@
 			        noResultRow.appendChild(noResultCell);
 			        hospitalListBody.appendChild(noResultRow);
 			    } else {
-			        for (var i = 0; i < hList.length; i++) {
+			        for (let i = 0; i < hList.length; i++) {
 			            var row = document.createElement('tr');
 
 			            // 중심 좌표 이동
@@ -465,9 +459,8 @@
 			// 실시간 변화값은 center_changed 사용함
 			function moveLocation(map) {
 				kakao.maps.event.addListener(map, 'idle', function() {
-				    // 지도의 중심좌표를 얻어옵니다
-				    var latlng = map.getCenter();
-				    var searchKeyword = document.getElementById('h-search-keyword').value.trim(); // 검색
+				    var latlng = map.getCenter(); // 지도의 중심좌표
+				    searchKeyword = document.getElementById('h-search-keyword').value.trim(); // 검색
 				
 				    if (searchKeyword === '') { // 검색하지 않았을 때만 동작
 				    	$("#pagination").html('');
@@ -526,7 +519,7 @@
 			// 리스트 클릭 시 중심좌표 부드럽게 이동
 			function changeCenter(lat, lng, count) {
 			    var moveLatLon = new kakao.maps.LatLng(lat, lng);
-                for(var i = 0; i < overlays.length; i++){
+                for(let i = 0; i < overlays.length; i++){
 				    overlays[i].setMap(null); 
                 }
                 overlays[count].setMap(map); // 클릭한 리스트의 오버레이만 표시
@@ -601,7 +594,7 @@
 			
 			// 동물병원 검색 ajax
 			function searchHos(currentPage, keyword) {
-				var searchKeyword = document.getElementById('h-search-keyword').value;
+				searchKeyword = document.getElementById('h-search-keyword').value;
 				if(keyword != "" && keyword != searchKeyword) {
 					searchKeyword = keyword;
 				}
