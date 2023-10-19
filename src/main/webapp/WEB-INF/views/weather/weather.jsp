@@ -124,15 +124,14 @@
 
                 <!-- 오늘의 tmi -->
                 <div class="today-tmi">
-                    <label for="tmi" class="tmi-text">
-                        <img class="free-img" src="/resources/images/weather/jong.png">
-	                    <input type="text" id="tmi" readonly>
-                    </label>
-                    <!-- 자유게시판 이동 -->
-                    <a class="free-board" href="/resources/images/pet-white.png">
-                        <img class="board-logo" src="/resources/images/weather/pet.png" alt="로고">
-                        자유게시판
-                    </a>
+	                <div class="tmi-text">
+						<img class="free-img" src="/resources/images/weather/jong.png">
+						<div class="tmi" id="randomTmi"></div>
+	                </div>
+					<a class="free-board" href="/board/freeList.pet" style="text-decoration: none; color: white;">
+					    <img class="board-logo" src="/resources/images/pet-white.png" alt="로고">
+					    자유게시판
+					</a>
                 </div>
 
                 <!-- 오늘의 날씨 -->
@@ -144,7 +143,10 @@
                         </div>
                         <!-- 기온 -->
                         <div class="today-weather-Temperature">
-                            <div class="tIcon"></div> <span class="tTemp"></span>℃
+                        
+                        	<!-- 날씨 아이콘 동적으로 수정 예정 -->
+                        	<img class="weather-icon" src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg">
+                            <span class="tTemp"></span>℃
                         </div>
                         <div class="img-area">
                             <img class="dog-img" src="/resources/images/weather/dog.png">
@@ -334,12 +336,13 @@
 
         <jsp:include page="../include/footer.jsp"></jsp:include>
 
-        <script>
+        <script>        
             // 지역 선택
             document.addEventListener("DOMContentLoaded", function () {
                 const selectRegion = document.getElementById("select-region");
                 selectRegion.textContent = "서울"; // 기본값으로 서울 설정
             });
+            
             const selectRegion = document.getElementById("select-region");
             const buttons = document.querySelectorAll(".button-item");
 
@@ -357,118 +360,24 @@
                     selectRegion.textContent = buttonText;
                 });
             });
-            
-            // tmi 출력
-            // 랜덤 문장 배열
-			const randomSentences = [
-				"개과 동물 중 멍멍하는건 개밖에 없다.",
-			    "개도 터널등을 지날 때 귀가 멍멍해진다.",
-			    "개는 똥을 쌀 때 지구 자기장 축 방향에 맞춰 싼다.",
-			    "개들은 자기와 비슷한 음역대를 가진 음악을 좋아한다고 한다.",
-			    "강아지는 냄새로 시간을 느낀다.",
-			    "개는 뒷다리 구조 상 발가락으로 걸어다닌다.",
-			    "개가 등을 보여주는건 신뢰한다는 의미이다.",
-			    "개가 견주의 몸에 다리를 올리는 해동은 우위의식을 뜻한다.",
-			    "개의 시력은 0.3정도이다.",
-			    "개는 평균족으로 150~200개의 단어를 기억할 수 있다.",
-			    "개들도 스트레스를 받으면 새치가 난다.",
-			    "안겨있는 개가 손을 핥는 이유는 놔달라는 부탁의 뜻이다.",
-			    "개가 긴장했을 때 주인이 심호흡을 하면 긴장완화 효과가 있다.",
-			    "고음은 개를 움직이게 하고 저음은 멈추게 한다.",
-			    "겁이 많은 개에게는 느리게 행동해주는 것이 좋다.",
-			    "인기 있는 반려견 이름 1위는 코코다.",
-			    "개도 가끔 주인을 못알아본다!",
-			    "털이 곱슬인 말티즈가 은근히 많다.",
-			    "개는 일광욕을 즐긴다.",
-			    "고양이에게는 유당의 소화를 돕는 효소가 없다.",
-			    "고양이가 살짝 깨무는 것은 애정표현이다.",
-			    "고양이는 안전하고 편안한 곳에서만 식빵을 굽는다.",
-			    "고양이의 스크래쳐에는 반가움과 애정의 표현도 담겨있다.",
-			    "고양이가 집사에게 엉덩이를 들이대는 것은 애정표현이다.",
-			    "개가 달달 떠는 것은 대부분 스트레스 때문이다.",
-			    "개도 스트레스 받으면 탈모가 온다.",
-			    "고양이들은 주인의 해동을 관찰해 배운다.",
-			    "고양이는 자기 키의 5배 높게 점프할 수 있다.",
-			    "고양이는 냄새를 맡을 수 있다.",
-			    "고양이의 눈 색깔은 성장하며 변한다.",
-			    "고양이의 단기기억력은 15분이다.",
-			    "고양이는 발자국이 일렬도 찍힌다.",
-			    "고양이는 그루밍을 통해 체온을 조절 한다.",
-			    "햄스터의 앞니는 평생동안 자라서 견과류로 이갈이를 해줘야 한다.",
-			    "햄스터는 당황하면 똥오줌을 싼다.",
-			    "햄스터는 새가슴이라 잘 놀란다.",
-			    "햄스터는 한 케이지당 한마리만 키워야 한다.",
-			    "햄스터에서 말리지 않은 과일을 먹이면 설사를 유발한다.",
-			    "햄스터는 나이를 먹을수록 귀가 커진다.",
-			    "토끼는 성대가 퇴화되어, 코와 목의 울림으로 소리를 낸다.",
-			    "토끼는 점프할 때 꼬리로 균형을 잡는다.",
-			    "토끼는 매우 미식가이고, 편식이 심하다.",
-			    "토끼는 1시간에 10~20회 정도 깜빡인다.",
-			    "토끼는 양쪽 귀를 따로 움직일 수 있다.",
-			    "고양이는 유대를 표현하기 위해 서로 꼬리를 감는다.",
-			    "강이지의 코는 사람의 지문처럼 다 다르게 생겼다.",
-			    "고양이는 머쓱하면 그루밍을 하기도 한다.",
-			    "토끼는 기분이 좋으면 엉덩이를 씰룩거린다.",
-			    "강아지는 밥주는 사람보다 산책 시켜주는 사람을 더 좋아한다.",
-			    "강아지는 태어난 후 한 달 반이 지날 때 까진 꼬리 흔드는 방법을 모른다.",
-			    "개들을 자기와 비슷한 음역대를 가진 음악을 좋아한다고 한다.",
-			    "고양이에게는 유당의 소화를 돕는 효소가 없다.",
-			    "고양이는 인간을 몸집이 크면서도 공격성이 없는 다른 고양이라고 인식한다.",
-			    "견주가 우울해하면 반려견도 우울해진다."
-			];
-			
-			// input 엘리먼트 찾기
-			const tmiInput = document.getElementById("tmi");
-			
-			// 랜덤 문장 선택
-			const randomIndex = Math.floor(Math.random() * randomSentences.length);
-			const randomSentence = randomSentences[randomIndex];
-			
-			// input 값에 랜덤 문장 설정
-			tmiInput.value = randomSentence;
 
-			// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 기상청 api ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ //
+			// ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 날씨 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ //
 			
 			// 오늘 날짜 출력
             const $now = new Date($.now());
            	const $date = $now.getFullYear() + '년 ' + ($now.getMonth() + 1) +'월 ' + $now.getDate() +'일 ' +$now.getHours() + '시 ' + $now.getMinutes() + '분';
             $('.tDate').prepend($date);
             
-			// API url - 날짜 형식 만들어두기
+			// API url 날짜 형식 변수화
 	        let date = new Date();
-	        let year = date.getFullYear();          // 2023
+	        let year = date.getFullYear();
 	        let month = "0" + (date.getMonth() +1);
-	        let month2 = month.substr(-2);          // 월
+	        let month2 = month.substr(-2);
 	        let day = "0" + date.getDate();
-	        let day2 = day.substr(-2);              // 일
+	        let day2 = day.substr(-2);
 	        let initDate = year + month2 + day2;    // 오늘 날짜
-
-			// ******************** time 메소드화 ********************//
-			function getFormattedTime() {
-			    const now = new Date();
-			    const hours = String(now.getHours()).padStart(2, '0');
-			    const minutes = String(now.getMinutes()).padStart(2, '0');
-			    console.log("ft : " + hours + minutes);
-			    return hours + minutes;
-			}
-			
-			function calculateBaseTime(formattedTime, subtractMinutes) {
-			    let base_time = "0" + (formattedTime - subtractMinutes);
-			    console.log("bt : " +base_time);
-			    console.log("bt : " +base_time.slice(-4));
-			    return base_time.slice(-4);
-			}
-			
-			// 사용 예
-			const formattedTime = getFormattedTime();
-			console.log("formattedTime:", formattedTime);
-			
-			let time = calculateBaseTime(formattedTime, 60);
-			console.log("time:", time);
-			// ******************** time 메소드화 ********************//
-			
-	
-	        // parameter, serviceKey
+	        
+	        // API url, serviceKey, parameter 기본값
 	        let apiUrl = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst";
             const serviceKey = "4pYTUL0IAyNldYcuL1CFGcJpGrgPllaY%2BkD8xcBEHAbaLSA8xraNMsfHFO%2BXhGJmos%2FBszyn6LH7HoSBORAAhQ%3D%3D";
             const pageNo = "1";
@@ -477,8 +386,23 @@
             let base_date = initDate;
             let nx = "60";
             let ny = "127";
-//             let nx; // 격자 x 값
-//             let ny; // 격자 y 값
+	        
+			// base_time 형식 메소드화 ex. 0200
+			function getFormattedTime() {
+			    const now = new Date();										// 현재 시간
+			    const hours = String(now.getHours()).padStart(2, '0');		// 왼쪽에 0을 채워넣어 2자리 문자열로 변환(시간)
+			    const minutes = String(now.getMinutes()).padStart(2, '0');	// 왼쪽에 0을 채워넣어 2자리 문자열로 변환(분)
+			    console.log("ft : " + hours + minutes);						// 현재 시간
+			    return hours + minutes;
+			}
+			
+			// api 발표시간 오차로 60분 빼기
+			function calculateBaseTime(formattedTime, subtractMinutes) {
+			    let base_time = "0" + (formattedTime - subtractMinutes); // 구한 시간 앞에 0 추가
+			    console.log("bt : " +base_time.slice(-4));				 // 현재시간 - 1시간
+			    return base_time.slice(-4);								 // 0을 포함한 시간을 뒤에서 부터 4자리 반환
+			}
+
             
 			// 지역 선택(버튼 클릭)
 			function handleButtonClick (nxValue, nyValue) {
@@ -487,151 +411,146 @@
 		        console.log('nx:', nxValue);
 		        console.log('ny:', nyValue);
 		        
-		        nx = nxValue;
-		        ny = nyValue;
+		        nx = nxValue; // 버튼 누른 지역의 nx 값
+		        ny = nyValue; // 버튼 누른 지역의 ny 값
 		        
-		        weatherTemp(nx, ny);
-		        weatherRain(nx, ny);
-		        weatherTempMinMax(nx, ny);
-		        weatherTime(nx, ny);
-		        weatherDay(nx, ny);
-		        
-				// 오늘 날짜 출력
-	            const $now = new Date($.now());
-	           	const $date = $now.getFullYear() + '년 ' + ($now.getMonth() + 1) +'월 ' + $now.getDate() +'일 ' +$now.getHours() + '시 ' + $now.getMinutes() + '분';
-	            $('.tDate').empty().prepend($date);
+		        weatherTemp(nx, ny);		// 현재 온도
+		        weatherRain(nx, ny);		// 오늘 강수량
+		        weatherTempMinMax(nx, ny);	// 오늘 최저/최대 온도
+		        weatherTime(nx, ny);		// 오늘 시간별 기온
+		        weatherDay(nx, ny);			// 일별 강수량/최저, 최대 온도
 			}
-            
-            // ************************************************ 초단기 실황(현재 온도) ************************************************//
-            // !!!!!!!!!! 이거 시간 어떻게 계산해야할 지 강사님께 여쭤보기
-//             let base_time = "0"+(formattedTime-60);	// 시간
-//             base_time = base_time.slice(-4);
-//             console.log(base_time);
-        	weatherTemp('60', '127'); // 기본값 (서울)
+
+			// api 출력 메소드 위치 기본값 세팅(서울)
+        	weatherTemp('60', '127');
         	weatherRain('60', '127');
         	weatherTempMinMax('60', '127');
         	weatherTime('60', '127');
         	weatherDay('60', '127');
-        	
+            
+            // ************************************************ 초단기 실황(현재 온도) ************************************************//
             function weatherTemp(nx, ny) {
             	apiUrl = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst";
             	
-			    const formattedTime = getFormattedTime(); // 현재 시간을 가져옴
-   				base_time = calculateBaseTime(formattedTime, 60);
+// 			    const formattedTime = getFormattedTime(); // 현재 시간을 가져옴
+//    				base_time = calculateBaseTime(formattedTime, 60); // -60분
+
+				base_time = getFormattedTime();
 				console.log("온도 베이스타임:" + base_time);
 				
-	            let url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-	          	
-	            console.log("현재온도 url" + url);  
+	            const url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
 	          	
 	            $.getJSON (url, function(data){
-		            const temp = data.response.body.items.item[3].obsrValue;
+		            const temp = data.response.body.items.item[3].obsrValue; // 현재 온도 api 배열
 		            
-// 		            $('.tTemp').append(temp);   // 현재 온도
 		            $('.tTemp').empty().append(temp); // 현재 온도
 		        });
             }
             
          	// ************************************************ 단기 예보(강수량) ************************************************//
          	// 단기 예보 시간 구하는 함수
-			function getTimeByCondition(base_time) {
-			    // base_time을 "HHMM" 형식의 문자열로 가정합니다.
-			    // 문자열로 변환하고 앞에 0을 붙입니다.
-			    const time = base_time.toString().padStart(4, '0');
+// 			function getTimeByCondition(base_time) {
+// 			    // base_time을 "HHMM" 형식의 문자열로 가정
+// 			    // 문자열로 변환하고 앞에 0을 붙임
+// 			    const time = base_time.toString().padStart(4, '0');
 			
-			    if (time >= '0211' && time <= '0459') {
-			        return "0200";
-			    } else if (time >= '0511' && time <= '0810') {
-			        return "0500";
-			    } else if (time >= '0811' && time <= '1110') {
-			        return "0800";
-			    } else if (time >= '1111' && time <= '1410') {
-			        return "1100";
-			    } else if (time >= '1411' && time <= '1710') {
-			        return "1400";
-			    } else if (time >= '1711' && time <= '2010') {
-			        return "1700";
-			    } else if (time >= '2011' && time <= '2310') {
-			        return "2000";
-			    } else if ((time >= '2311' && time <= '2400') || (time >= '0000' && time <= '0200')) {
-			        return "2300";
-			    } else {
-			        return "Unknown";
-			    }
-			}
-			
+// 			    if (time >= '0211' && time <= '0459') {
+// 			        return "0200";
+// 			    } else if (time >= '0511' && time <= '0810') {
+// 			        return "0500";
+// 			    } else if (time >= '0811' && time <= '1110') {
+// 			        return "0800";
+// 			    } else if (time >= '1111' && time <= '1410') {
+// 			        return "1100";
+// 			    } else if (time >= '1411' && time <= '1710') {
+// 			        return "1400";
+// 			    } else if (time >= '1711' && time <= '2010') {
+// 			        return "1700";
+// 			    } else if (time >= '2011' && time <= '2310') {
+// 			        return "2000";
+// 			    } else if ((time >= '2311' && time <= '2400') || (time >= '0000' && time <= '0200')) {
+// 			        return "2300";
+// 			    } else {
+// 			        return "Unknown";
+// 			    }
+// 			}
+         	
 			// ************************************************ 초단기 예보(일 시간별 기온) ************************************************//
-			function getTimeByUltraShort(base_time) {
+// 			function getTimeByUltraShort(base_time) {
 				
-				const time = base_time.toString().padStart(4, '0');
+// 				const time = base_time.toString().padStart(4, '0');
 				
-				if(time >= "0030" && time <= "0130") {
-					return "0030";
-				} else if(time >= "0130" && time < "0230") {
-					return "0130";
-				} else if(time >= "0230" && time < "0330") {
-					return "0230";0
-				} else if(time >= "0330" && time < "0430") {
-					return "0330";
-				} else if(time >= "0430" && time < "0530") {
-					return "0430";
-				} else if(time >= "0530" && time < "0630") {
-					return "0530";
-				} else if(time >= "0630" && time < "0730") {
-					return "0630"
-				} else if(time >= "0730" && time < "0830") {
-					return "0730";
-				} else if(time >= "0830" && time < "0930") {
-					return "0830";
-				} else if(time >= "0930" && time < "1030") {
-					return "0930";
-				} else if(time >= "1030" && time < "1130") {
-					return "1030";
-				} else if(time >= "1130" && time < "1230") {
-					return "1130";
-				} else if(time >= "1230" && time < "1330") {
-					return "1230";
-				} else if(time >= "1330" && time < "1430") {
-					return "1330";
-				} else if(time >= "1430" && time < "1530") {
-					return "1430";
-				} else if(time >= "1530" && time < "1630") {
-					return "1530";
-				} else if(time >= "1630" && time < "1730") {
-					return "1630";
-				} else if(time >= "1730" && time < "1830") {
-					return "1730";
-				} else if(time >= "1830" && time < "1930") {
-					return "1830";
-				} else if(time >= "1930" && time < "2030") {
-					return "1930";
-				} else if(time >= "2030" && time < "2130") {
-					return "2030";
-				} else if(time >= "2130" && time < "2230") {
-					return "2130";
-				} else if(time >= "2230" && time < "2330") {
-					return "2230";
-				} else if((time >= "2330" && time < "2339") || time >= 0000 && time < 0030) {
-					return "2330";
-				} else {
-					return "Unknown";
-				}
-			}
+// 				if(time >= "0030" && time <= "0130") {
+// 					return "0030";
+// 				} else if(time >= "0130" && time < "0230") {
+// 					return "0130";
+// 				} else if(time >= "0230" && time < "0330") {
+// 					return "0230";0
+// 				} else if(time >= "0330" && time < "0430") {
+// 					return "0330";
+// 				} else if(time >= "0430" && time < "0530") {
+// 					return "0430";
+// 				} else if(time >= "0530" && time < "0630") {
+// 					return "0530";
+// 				} else if(time >= "0630" && time < "0730") {
+// 					return "0630"
+// 				} else if(time >= "0730" && time < "0830") {
+// 					return "0730";
+// 				} else if(time >= "0830" && time < "0930") {
+// 					return "0830";
+// 				} else if(time >= "0930" && time < "1030") {
+// 					return "0930";
+// 				} else if(time >= "1030" && time < "1130") {
+// 					return "1030";
+// 				} else if(time >= "1130" && time < "1230") {
+// 					return "1130";
+// 				} else if(time >= "1230" && time < "1330") {
+// 					return "1230";
+// 				} else if(time >= "1330" && time < "1430") {
+// 					return "1330";
+// 				} else if(time >= "1430" && time < "1530") {
+// 					return "1430";
+// 				} else if(time >= "1530" && time < "1630") {
+// 					return "1530";
+// 				} else if(time >= "1630" && time < "1730") {
+// 					return "1630";
+// 				} else if(time >= "1730" && time < "1830") {
+// 					return "1730";
+// 				} else if(time >= "1830" && time < "1930") {
+// 					return "1830";
+// 				} else if(time >= "1930" && time < "2030") {
+// 					return "1930";
+// 				} else if(time >= "2030" && time < "2130") {
+// 					return "2030";
+// 				} else if(time >= "2130" && time < "2230") {
+// 					return "2130";
+// 				} else if(time >= "2230" && time < "2330") {
+// 					return "2230";
+// 				} else if((time >= "2330" && time < "2339") || time >= 0000 && time < 0030) {
+// 					return "2330";
+// 				} else {
+// 					return "Unknown";
+// 				}
+// 			}
 			
 			// ************************************************ 단기 예보(강수확률) ************************************************//
          	function weatherRain(nx, ny) {
+				
+         		base_date = initDate-1;
+         		console.log("강수확률 기준 날짜 : " + base_date);
          		
 	         	apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
-				base_time="0200";
+				base_time="2300";
 				
-	         	// api url
 	         	url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-// 	         	console.log("강수확률 url : " + url);
 	         	
 				$.getJSON (url, function(data){
-					const probRain = data.response.body.items.item[152].fcstValue;
-// 					console.log(data.response.body.items.item[152]);
-// 					console.log("강수확률: "+probRain);
+					const probRain = data.response.body.items.item[152].fcstValue;	// 현재 강수확률 api 배열
+					
+// 					switch(base_time) {
+// 						case "" : 
+// 							break;
+// 					}
 					
 					$('.pro-rain').empty().append(probRain); // 강수 확률
 				});
@@ -643,8 +562,7 @@
 				console.log("최고/최저 기온 베이스타임:" + base_time);
 				apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
 				url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-// 				console.log(base_time);
-				console.log("최고/최저온도 url" + url);
+
 				$.getJSON (url, function(data){
 					const tempMax = data.response.body.items.item[158].fcstValue;
 					const tempMin = data.response.body.items.item[48].fcstValue;
@@ -665,7 +583,6 @@
 				apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
 				
 				url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-				console.log("일 시간별 url : " + url);
 				
 				$.getJSON (url, function(data){
 					const celsius = "℃";
@@ -758,18 +675,12 @@
 			function weatherDay(nx, ny) {
 				// 오늘 날짜 출력
 	            const $now = new Date($.now());
-// 	           	const $today =($now.getMonth() + 1) +'월 ' + $now.getDate() +'일 ';
-// 	           	const $tomorrow =($now.getMonth() + 1) +'월 ' + ($now.getDate()+1) +'일 ';
 	           	const $aftTomorrow =($now.getMonth() + 1) +'월 ' + ($now.getDate()+2) +'일 ';
-// 	            $('#today').empty().append($today);
-// 	            $('#tomorrow').empty().append($tomorrow);
 	            $('#aft-tomorrow').empty().append($aftTomorrow);
-	            console.log($date);
 	            
 	            base_time="0200";
 	            apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
 	            url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-				console.log("일별 url : " + url);
 				
 				$.getJSON (url, function(data){ // 오후 3시 기준	
 					const percentage = "%";
@@ -803,7 +714,7 @@
 					$('#aft-tomorrow-temp-max').empty().append(aftTomorrowTempMax).append(celsius);
 				});
 			}
-			
         </script>
+        <script type="text/javascript" src="../resources/js/weather/tmi.js"></script>
     </body>
 </html>
