@@ -93,7 +93,7 @@
 	            </section>
 	            <section id="button" style="margin-bottom: 100px;">
 	                <button class="btn-create" type="submit">등록하기</button>
-	                <button class="btn-list" onClick="location.href='/support/list.pet'">목록으로</button>
+	                <button class="btn-list" type="button" onClick="location.href='/support/list.pet'">목록으로</button>
 	            </section>
             </form>
         </main>

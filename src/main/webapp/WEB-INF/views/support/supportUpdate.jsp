@@ -93,7 +93,7 @@
 	            </section>
 	            <section id="button" style="margin-bottom: 100px;">
 	                <button class="btn-update" type="submit">수정하기</button>
-	                <button class="btn-cancel" onClick="location.href='/support/detail.pet?sNo=${support.sNo }'">돌아가기</button>
+	                <button class="btn-cancel" type="button" onClick="location.href='/support/detail.pet?sNo=${support.sNo }'">돌아가기</button>
 	            </section>
             </form>
         </main>

@@ -590,7 +590,14 @@
 		    const sEnd = new Date('${support.sEnd}');
 		    const timeDiff = sEnd - sStart;
 		    const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+		    
+		    // daysDiff가 0보다 크면 아직 진행 중인 후원 
 		    document.getElementById('d-day').innerText = "D-" + daysDiff;
+		    
+		    // daysDiff가 0이면 daysDiff 대신 d-day로 출력되도록 하기 
+		    // daysDiff가 0보다 작으면 D-가 아니라 D+ 이렇게 
+		    // 후원버튼도 이걸로 비교해서 0보다 작으면 없어지고 모금 종료 뜨도록 하기 
+		    
 			<!-- 목표 금액 불러온 숫자 사이에 , 넣어주기  -->
 	        let sTargetAmount = (${support.sTargetAmount }).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	        $(document).ready(function() {
