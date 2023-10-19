@@ -124,7 +124,7 @@
                 iconPlus.classList.add("plus");
 
                 // 내용을 토글하는 이벤트 리스너 추가
-                titleDiv.addEventListener("click", function () {
+                faqItem.addEventListener("click", function () {
 
                     const contentDiv = faqItem.querySelector(".faqContent");
 
