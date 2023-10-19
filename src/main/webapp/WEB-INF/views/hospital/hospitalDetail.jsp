@@ -214,10 +214,24 @@
 			var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 			
 		   	// 마커와 커스텀 오버레이 생성
+		   	var imageSrc = "/resources/images/hospital/hospitalMarker.png"; 
+			
+			// 마커 이미지의 이미지 크기 입니다
+		    var imageSize = new kakao.maps.Size(55, 55); 
+		    
+		    // 마커 이미지를 생성합니다    
+		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+		    
 		    var marker = new kakao.maps.Marker({
-		        map: map, // 마커를 표시할 지도
-		        position: new kakao.maps.LatLng(lat, lng) // 마커를 표시할 위치
+		    	map: map, // 마커를 표시할 지도
+		        position: new kakao.maps.LatLng(lat, lng), // 마커를 표시할 위치
+		        image : markerImage // 마커 이미지 
 		    });
+		    
+// 		    var marker = new kakao.maps.Marker({
+// 		        map: map, // 마커를 표시할 지도
+// 		        position: new kakao.maps.LatLng(lat, lng) // 마커를 표시할 위치
+// 		    });
 		    
 		    var nameToShow = '${ hOne.hName }'.length > 14 ? '${ hOne.hName }'.substring(0, 13) + '...' : '${ hOne.hName }'; // 이름이 13자가 넘어가면 ... 처리
 		    

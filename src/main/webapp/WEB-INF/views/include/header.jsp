@@ -189,31 +189,30 @@
 	}
     
     if (faqPattern.test(currentPath)) {
-    document.getElementById('faqLink').classList.add('active');
+    	document.getElementById('faqLink').classList.add('active');
 	} else {
 	    document.getElementById('faqLink').classList.remove('active');
 	}
     
     if (boardPattern.test(currentPath)) {
-    document.getElementById('boardLink').classList.add('active');
+    	document.getElementById('boardLink').classList.add('active');
 	} else {
 	    document.getElementById('boardLink').classList.remove('active');
 	}
     
-    if (userPattern.test(currentPath)) {
-    document.getElementById('loginLink').classList.add('active');
-	} else {
-	    document.getElementById('loginLink').classList.remove('active');
-	}
-    
-    if (userPattern.test(currentPath)) {
-    document.getElementById('userLink').classList.add('active');
-	} else {
-	    document.getElementById('userLink').classList.remove('active');
-	}
+    if (currentPath === '/user/idpwFind.pet') {
+        document.getElementById('loginLink').classList.add('active');
+        document.getElementById('userLink').classList.remove('active');
+    } else if (userPattern.test(currentPath) && currentPath !== '/user/login.pet') {
+//         document.getElementById('loginLink').classList.remove('active');
+        document.getElementById('userLink').classList.add('active');
+    } else {
+        document.getElementById('loginLink').classList.remove('active');
+        document.getElementById('userLink').classList.remove('active');
+    }
     
     if (adminPattern.test(currentPath)) {
-    document.getElementById('adminLink').classList.add('active');
+    	document.getElementById('adminLink').classList.add('active');
 	} else {
 	    document.getElementById('adminLink').classList.remove('active');
 	}
