@@ -21,7 +21,7 @@
 		<jsp:include page="../include/header.jsp"></jsp:include>
 		<main>
 	
-			<section style="padding-top: 120px;">
+			<section style="padding-top: 170px;">
 				<div id="wrap" class="clearfix">
 					<aside class="aside">
 					<div class="logo">

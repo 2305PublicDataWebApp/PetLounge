@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -8,9 +9,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<jsp:include page="../include/importSource.jsp"></jsp:include>
 		
-		<link rel="stylesheet" href="/resources/css/user/userUpdateForm.css">
+		<link rel="stylesheet" href="/resources/css/user/userBoardForm.css">
 		<link rel="stylesheet" href="/resources/css/user/userBoardList.css">
-		<link rel="stylesheet" href="/resources/css/user/userMyPage.css">
+		<link rel="stylesheet" href="/resources/css/user/userBoardPage.css">
 		<link rel="stylesheet" href="/resources/css/font.css">
 		<link rel="stylesheet" href="/resources/css/reset.css">
 		<script
@@ -21,7 +22,7 @@
 		<jsp:include page="../include/header.jsp"></jsp:include>
 		<main>
 	
-			<section style="padding-top: 120px;">
+			<section style="padding-top: 170px;">
 				<div id="wrap" class="clearfix">
 					<aside class="aside">
 					<div class="logo">
@@ -80,7 +81,7 @@
 											<option value="name" <c:if test="${param.searchCondition == 'name' }">selected</c:if>>작성자</option>   
 										</select> <input class="form-control" type="text" name="searchKeyword"
 											placeholder="검색"
-											style="width: 75%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 0; border-color: #FFD370; padding-top: 10px;" />
+											style="width: 73%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 10px; border-color: #FFD370; padding-top: 10px; margin-right: 10px;" />
 										<input type="submit" value="검색"
 											style="background-color: #ffd370; color: white; border-color: #ffd370; width: 10%; height: 28px; border-radius: 20px; margin-left: 0; padding-top: 3px;">
 									</div>
@@ -105,7 +106,9 @@
 											</c:url>
 											<td><a href="${detailUrl }">${bList.fTitle }</a></td>
 											<td>${bList.uId}</td>
-											<td>${bList.fCreate}</td>
+											<c:set var="formattedDate" value="${fn:split(bList.fCreate, '-')}" />
+											<td>${formattedDate[0]}.${formattedDate[1]}.${formattedDate[2]}</td>
+<%-- 											<td>${bList.fCreate}</td> --%>
 											<td>${bList.fViewCount}</td>
 										</tr>
 									</c:forEach>
@@ -169,6 +172,8 @@
 	            $(".subMenu").not(subMenu).slideUp();
 	        });
 	
+	   
+	        
 	    </script>
 	</body>
 </html>

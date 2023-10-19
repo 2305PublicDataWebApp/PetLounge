@@ -10,9 +10,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<jsp:include page="../include/importSource.jsp"></jsp:include>
 		
-		<link rel="stylesheet" href="/resources/css/user/userUpdateForm.css">
+		<link rel="stylesheet" href="/resources/css/user/userBoardForm.css">
 		<link rel="stylesheet" href="/resources/css/user/userBoardList.css">
-		<link rel="stylesheet" href="/resources/css/user/userMyPage.css">
+		<link rel="stylesheet" href="/resources/css/user/userBoardPage.css">
 		<link rel="stylesheet" href="/resources/css/font.css">
 		<link rel="stylesheet" href="/resources/css/reset.css">
 		<script
@@ -23,7 +23,7 @@
 		<jsp:include page="../include/header.jsp"></jsp:include>
 		<main>
 	
-			<section style="padding-top: 120px;">
+			<section style="padding-top: 170px;">
 				<div id="wrap" class="clearfix">
 					<aside class="aside">
 					<div class="logo">
@@ -81,7 +81,7 @@
 											<option value="create" <c:if test="${param.searchCondition == 'create' }">selected</c:if>>작성일</option>   
 										</select> <input class="form-control" type="text" name="searchKeyword"
 											placeholder="검색" value="${searchKeyword }"
-											style="width: 75%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 0; border-color: #FFD370; padding-top: 10px;" />
+											style="width: 73%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 10px; border-color: #FFD370; padding-top: 10px; margin-right: 10px;" />
 										<input type="submit" value="검색"
 											style="background-color: #ffd370; color: white; border-color: #ffd370; width: 10%; height: 28px; border-radius: 20px; margin-left: 0;">
 									</div>
@@ -91,7 +91,7 @@
 								<thead>
 									<tr>
 										<th style="border-bottom: 1px solid #dee2e6;">No</th>
-										<th style="border-bottom: 1px solid #dee2e6;">병원명</th>
+										<th style="border-bottom: 1px solid #dee2e6; width: 165px;">병원명</th>
 										<th style="border-bottom: 1px solid #dee2e6;">내용</th>
 										<th style="border-bottom: 1px solid #dee2e6;">작성일</th>
 									</tr>
@@ -106,18 +106,9 @@
 												<c:param name="hNo" value="${hRList.hNo }"></c:param>
 											</c:url>
 											<td><a href="${detailUrl }">${hRList.hRContent }</a></td>
-											<c:choose>
-												  <c:when test="${not empty hRList.hRCreate}">
-												    <c:set var="dateParts" value="${fn:split(hRList.hRCreate, ' ')}" />
-												    <c:if test="${fn:length(dateParts) >= 1}">
-												      <c:set var="modifiedDate" value="${dateParts[0]}" />
-												    </c:if>
-												  </c:when>
-												  <c:otherwise>
-												    <c:set var="modifiedDate" value="N/A" />
-												  </c:otherwise>
-												</c:choose>
-												<td>${modifiedDate}</td>	
+											<c:set var="formattedDate" value="${fn:split(hRList.hRCreate, ' ')}" />
+											<c:set var="dateParts" value="${fn:split(formattedDate[0], '-')}"/>
+											<td>${dateParts[0]}.${dateParts[1]}.${dateParts[2]}</td>	
 <%-- 											<td>${hRList.hRCreate}</td> --%>
 										</tr>
 									</c:forEach>
