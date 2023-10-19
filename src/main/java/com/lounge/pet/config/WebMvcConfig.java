@@ -7,9 +7,14 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.lounge.pet.interceptor.AdminInterceptor;
+import com.lounge.pet.interceptor.LoginInterceptor;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer{
+	
+	@Autowired
+	@Qualifier("loginInterceptor")
+	private LoginInterceptor loginInterceptor;
 	
 	@Autowired
 	@Qualifier("adminInterceptor")
@@ -17,7 +22,8 @@ public class WebMvcConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(adminInterceptor).addPathPatterns("/support/insert.pet");
+		registry.addInterceptor(loginInterceptor).addPathPatterns("/support/payment.pet", "/support/complete.pet");
+		registry.addInterceptor(adminInterceptor).addPathPatterns("/support/insert.pet", "/support/update.pet", "/support/delete.pet");
 		
 		
 		WebMvcConfigurer.super.addInterceptors(registry);

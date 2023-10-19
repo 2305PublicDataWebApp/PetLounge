@@ -269,9 +269,9 @@ h3 {
 }
 
 .cards {
+	padding: 25px;
     width: 250px;
     height: 365px;
-    border: 25px solid #fff;
     border-radius: 20px;
     margin : 10px;
     display: flex;

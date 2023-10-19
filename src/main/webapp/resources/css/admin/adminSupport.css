@@ -129,3 +129,91 @@ ul {
     .page {
         margin-bottom: 40px;
     }
+    .page-navigation {
+    	margin: 50px 0px 20px 0px;
+		display: flex;
+		justify-content: center;
+	}
+
+	
+	
+	
+.funding-wrap {
+    margin : 30px 70px 20px 0px;
+    width: 95%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.funding {
+    position: relative;
+    width: 120px;
+    height: 25px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: url(/resources/images/arrow.png) calc(100% - 7px) center no-repeat;
+    background-size: 15px;
+    cursor: pointer;
+}
+.funding:after {
+    content: '';
+    display: block; 
+    width: 2px;
+    height: 100%; 
+    position: absolute; 
+        top: 0; 
+        right: 35px;
+    background: #ccc;
+}
+.funding .funding-label {
+    display: flex;
+    align-items: center;
+    width: inherit;
+    height: inherit;
+    border: 0 none;
+    outline: 0 none;
+    padding-left: 15px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+} 
+.funding .optionList {
+    position: absolute; 
+    z-index: 10;
+    top: 23px;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    list-style-type: none;
+    padding: 0;
+/*     margin-top: 3px; */
+    border-radius: 6px;
+    overflow: hidden;
+    max-height: 0;
+    --transition: .3s ease-in;
+}
+.funding.active .optionList {
+    max-height: 500px;
+    border: 1px solid #ccc;
+}
+.funding .optionItem {
+    padding: 5px 5px 5px;
+    transition: .1s;
+    font-size: 14px;
+}
+
+.funding .optionItem:hover {
+    background: #c1c1c1;
+    color : #ffffff;
+}
+
+.funding .optionItem:last-child {
+    border-bottom: 0 none;
+}
+
+/*  스크롤 커스텀 */
+.funding .optionList::-webkit-scrollbar {width: 6px;}
+.funding .optionList::-webkit-scrollbar-track {background: transparent; }
+.funding .optionList::-webkit-scrollbar-thumb {background: #303030; border-radius: 45px;}
+.funding .optionList::-webkit-scrollbar-thumb:hover {background: #303030;}

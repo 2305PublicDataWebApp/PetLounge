@@ -183,23 +183,17 @@ public class SupportController {
 			, HttpSession session) {
 		try {
 			String uId = (String)session.getAttribute("uId");
-			if(uId != null && uId != "") {
-				User user = uService.selectOneById(uId);
-				Support support = sService.selectSupportByNo(sNo);
-				if(support != null && user != null) {
-					mv.addObject("user", user);
-					mv.addObject("support", support);
-					mv.setViewName("/support/supportPayment");
-				} else {
-					mv.addObject("msg", "데이터 조회가 완료되지 않았습니다.");
-					mv.addObject("url", "/support/detail.pet?sNo="+sNo);
-					mv.setViewName("common/message");
-				}				
+			User user = uService.selectOneById(uId);
+			Support support = sService.selectSupportByNo(sNo);
+			if(support != null && user != null) {
+				mv.addObject("user", user);
+				mv.addObject("support", support);
+				mv.setViewName("/support/supportPayment");
 			} else {
-				mv.addObject("msg", "로그인이 필요한 서비스입니다.");
+				mv.addObject("msg", "데이터 조회가 완료되지 않았습니다.");
 				mv.addObject("url", "/support/detail.pet?sNo="+sNo);
 				mv.setViewName("common/message");
-			}
+			}				
 		} catch (Exception e) {
 			mv.addObject("msg", "관리자에게 문의하세요.");
 			mv.addObject("error", e.getMessage());

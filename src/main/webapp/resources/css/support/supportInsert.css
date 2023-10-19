@@ -155,3 +155,8 @@ form {
     flex-direction: column;
     align-items: center;
 }
+
+
+.note-icon-caret {
+	display: none;
+}

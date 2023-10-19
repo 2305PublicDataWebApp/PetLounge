@@ -81,6 +81,17 @@
 	                            <p class="content-title-name">펫 라운지 모금함 : 후원글 조회</p>
 	                            <div class="line"></div>
 	                        </div>
+	                        <!-- 정렬 -->
+				            <div class="funding-wrap">
+				                <div class="funding" style="">
+				                    <button name="" id="funding-label" class="funding-label">전체</button>
+				                    <ul class="optionList">
+				                        <li class="optionItem" data-sort="all">전체</li>
+				                        <li class="optionItem" data-sort="ongoing">진행중</li>
+				                        <li class="optionItem" data-sort="closed">종료</li>
+				                    </ul>
+				                </div>
+				            </div>
 	                        <div class="content-inner">
 	                            <div id="support-list">
 	                                <table id="support-table">
@@ -294,5 +305,37 @@
 		
 		
 		<jsp:include page="../include/footer.jsp"></jsp:include>
+		
+		<script>
+			<!-- 정렬바 -->
+	        const label = document.querySelector('.funding-label');
+	        const options = document.querySelectorAll('.optionItem');
+	
+	        // 클릭한 옵션의 텍스트를 라벨 안에 넣음
+	        const handleSelect = (item) => {
+	        label.parentNode.classList.remove('active');
+	        const sort = item.getAttribute('data-sort');
+	        label.innerHTML = item.textContent;
+	        
+		    currentPage = 1; 
+		    
+			getSupportList(currentPage);
+	        }
+	        
+	        // 옵션 클릭시 클릭한 옵션을 넘김
+	        options.forEach(option => {
+	            option.addEventListener('click', () => handleSelect(option))
+	        })
+	
+	        // 라벨을 클릭시 옵션 목록이 열림/닫힘
+	        label.addEventListener('click', () => {
+	        if(label.parentNode.classList.contains('active')) {
+	            label.parentNode.classList.remove('active');
+	        } else {
+	            label.parentNode.classList.add('active');
+	        }
+	        })
+		</script>
+		
 	</body>
 </html>

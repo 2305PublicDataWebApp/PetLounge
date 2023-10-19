@@ -171,60 +171,49 @@
                         <h1 class="title">펫 라운지 모금함</h1>
                         <p class="info">펫 라운지에서 동물들에게 더 나은 삶을 선물하세요</p>
                     </div>
-                    <div>
-                    
-                    
-<!--                         <div class="item"> -->
-<!--                             <div class="img img-first"></div> -->
-<!--                             <div class="card"> -->
-<!--                                 <h3>Rock climbing</h3> -->
-<!--                                 <p>The goal is to reach the summit of a formation or the endpoint of a usually pre-defined route without falling</p> -->
-<!--                                 <a href="#">Learn more</a> -->
-<!--                             </div> -->
-<!--                         </div> -->
+                    	<div>
 							<c:forEach var="support" items="${ sList }" varStatus="i">
 			                	<div class="col-xl-3 col-md-6 portfolio-item">
-					                <div class="cards" style="border-radius: 20px;">
-					                	<div>
-						                	<a href="/support/detail.pet?sNo=${support.sNo }" class="a-detail">
-			                                         <img src="${support.sImageUrl }" class="card-img"
-						                    	onerror="this.src='https://petlounge.s3.ap-northeast-2.amazonaws.com/noimage.jpg'"></a>
-					                	</div>
-					                    <div class="card-content">
-					                    	<script>
-						                    	$(document).ready(function() {
-						                            const title = "${support.sTitle}";
-						                            const truncatedTitle = title.length > 27 ? title.substring(0, 26) + '...' : title;
-						                            $(".s-title").eq(${i.index}).text(truncatedTitle);
-						                        });
-											</script>
-					                    	<div style='height: 45px;'>
-					                        	<strong class="card-title">
-					                        		<a href="/support/detail.pet?sNo=${support.sNo }" class="a-detail s-title"></a>
-				                        		</strong>
-					                        </div>
-					                        <div class="card-group">${support.sGroup }</div>
-					                        <div class="card-bar">
-					                            <sapn class="card-bar-collection" id="graph-num" style="width: ${(support.sFundAmount / support.sTargetAmount) * 100}%;"></sapn>
-					                        </div>
-					                        <div>
-						                        <fmt:parseNumber var="percent"
-														value="${(support.sFundAmount / support.sTargetAmount) * 100 }"
-														integerOnly="true" />
-						                        <strong class="card-percent" id="per-num">${percent}%</strong>
-						                        <strong class="card-money">
-						                            <fmt:formatNumber var="formattedAmount" pattern="#,###" value="${support.sFundAmount}" />
-						                            ${formattedAmount }
-						                            <span class="text">원</span>
-						                        </strong>
-					                        </div>
-					                    </div>
-					                </div>
+			                		<a href="/support/detail.pet?sNo=${support.sNo }" class="a-detail">
+						                <div class="cards" style="border-radius: 20px;">
+						                	<div>
+	                                        	<img src="${support.sImageUrl }" class="card-img"
+							                    	onerror="this.src='https://petlounge.s3.ap-northeast-2.amazonaws.com/noimage.jpg'">
+						                	</div>
+						                    <div class="card-content">
+						                    	<script>
+							                    	$(document).ready(function() {
+							                            const title = "${support.sTitle}";
+							                            const truncatedTitle = title.length > 27 ? title.substring(0, 26) + '...' : title;
+							                            $(".s-title").eq(${i.index}).text(truncatedTitle);
+							                        });
+												</script>
+						                    	<div style='height: 45px;'>
+						                        	<strong class="card-title">
+						                        		<span class="a-detail s-title"></span>
+					                        		</strong>
+						                        </div>
+						                        <div class="card-group">${support.sGroup }</div>
+						                        <div class="card-bar">
+						                            <span class="card-bar-collection" id="graph-num" style="width: ${(support.sFundAmount / support.sTargetAmount) * 100}%;"></span>
+						                        </div>
+						                        <div>
+							                        <fmt:parseNumber var="percent"
+															value="${(support.sFundAmount / support.sTargetAmount) * 100 }"
+															integerOnly="true" />
+							                        <strong class="card-percent" id="per-num">${percent}%</strong>
+							                        <strong class="card-money">
+							                            <fmt:formatNumber var="formattedAmount" pattern="#,###" value="${support.sFundAmount}" />
+							                            ${formattedAmount }
+							                            <span class="text">원</span>
+							                        </strong>
+						                        </div>
+						                    </div>
+						                </div>
+					                </a>
 				                </div>
 			                </c:forEach>
-                        
-                        
-                    </div>
+                    	</div>
                     <div>
                         <button class="link-btn" onclick="location.href='/support/list.pet'">더 많은 후원 보기</button>
                     </div>
