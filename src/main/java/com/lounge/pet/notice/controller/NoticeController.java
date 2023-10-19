@@ -28,7 +28,11 @@ public class NoticeController {
 	@Autowired
 	private NoticeService nService;
 	
-	
+	/**
+	 * 공지글 등록 페이지
+	 * @param mv
+	 * @return
+	 */
 	@RequestMapping(value="/noticeSubmit.pet", method=RequestMethod.GET)
 	public ModelAndView showSubmitForm(ModelAndView mv) {
 		mv.setViewName("notice/noticeSubmit");

@@ -20,4 +20,10 @@
 	<update id="updateViewCount">
 		UPDATE FREE_TBL SET F_VIEWCOUNT = #{fViewCount } +1 WHERE F_NO = #{fNo }
 	</update>
+	
+	<insert id="submitFreeBoardForm">
+		INSERT INTO FREE_TBL
+		VALUES(F_SEQ_NO.NEXTVAL, #{uId}, #{fTitle}, #{fContent}, DEFAULT, DEFAULT, 
+		#{fFileName}, #{fFileRename}, #{fFilePath}, #{fFileLength}, DEFAULT, DEFAULT, #{fWriter})
+	</insert>
 </mapper>

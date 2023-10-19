@@ -33,6 +33,11 @@
 			    <ul id="pagination" class="pagination">
 <!-- 			    페이지 링크가 들어갈 부분입니다 -->
 			    </ul>
+    		    <c:if test="${sessionScope.uId != null}">
+				    <div class="fsubmit">
+				    	<button class="submit" onClick="location.href='/board/freeDetailSubmit.pet'">글쓰기</button>
+				    </div>
+			    </c:if>
 			</div>
 
         </main>
@@ -97,7 +102,7 @@
 						                            <tr>
 						                                <th>번호</th>
 						                                <th>제목</th>
-						                                <th>닉네임</th>
+						                                <th>작성자</th>
 						                                <th>작성일</th>
 						                                <th>조회수</th>
 						                            </tr>
@@ -111,6 +116,7 @@
 							        var fTitle = f.fTitle;
 							        var fCreate = f.fCreate;
 							        var fViewCount = f.fViewCount;
+							        var fWriter = f.fWriter;
 							        
 							     // 날짜 문자열에서 월, 일, 연도를 추출
 							        var dateParts = fCreate.match(/(\d{1,2})월 (\d{1,2}), (\d{4})/);
@@ -135,28 +141,13 @@
 														+"<td colspan='5'>"+"<hr class='line3'>"+"</td>"
 														+"</tr>"
 														+"<tr>"
-														+"<td class='right2'>"+fNo+"</td>"
-														+"<td class='right1'><a href='/board/freeDetail.pet?fNo=" + fNo + "'>"+fTitle+"</a></td>"
-														+"<td class='right2'>"+uId+"</td>"
-														+"<td class='right2'>"+formattedDate+"</td>"
-														+"<td class='right2'>"+fViewCount+"</td>"
-														+"</tr>";
-									
-// 									portfolio.append(freeBoardList);
-									
-								}
-// 								freeBoardList += `
-// 													</tbody>
-// 								                    </table>
-// 								            </div>
-// 								                <ul class="pagination">
-// 								                    <li class="Mui-selected"><a href="#">1</a></li>
-// 								                    <li><a href="#">2</a></li>
-// 								                    <li><a href="#">3</a></li>
-// 								                    <li><a href="#">4</a></li>
-// 								                    <li><a href="#">5</a></li>
-// 								                    <li><a href="#">다음</a></li>
-// 								                </ul>`;									
+														+"<td class='right2'>" + fNo + "</td>"
+														+"<td class='right1'>" + "<a href='/board/freeDetail.pet?fNo=" + fNo + "'>" + (fTitle.length > 21 ? fTitle.substring(0, 20) + '...' : fTitle) + "</a>" + "</td>"
+														+"<td class='right2'>" + (fWriter.length > 11 ? fWriter.substring(0, 10) + '...' : fWriter) + "</td>"
+														+"<td class='right2'>" + formattedDate + "</td>"
+														+"<td class='right2'>" + fViewCount + "</td>"
+														+"</tr>";									
+								}						
 						createPagination(totalPages)
 							} else {
 								alert("게시글이 없습니다.")

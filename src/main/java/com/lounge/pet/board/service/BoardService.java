@@ -35,5 +35,12 @@ public interface BoardService {
 	 */
 	int updateViewCount(Board bOne);
 
+	/**
+	 * 게시글 등록
+	 * @param board
+	 * @return
+	 */
+	int submitFreeBoardForm(Board board);
+
 
 }

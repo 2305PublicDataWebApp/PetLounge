@@ -71,6 +71,7 @@ ul {
     border: 3px solid #ffd370;
     margin: 0 auto;
     padding: 15px 50px 30px 50px;
+    border-radius: 20px;
 }
 
 .pagination {

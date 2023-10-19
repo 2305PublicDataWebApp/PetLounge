@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.lounge.pet.board.domain.Board;
 import com.lounge.pet.board.service.BoardService;
-import com.lounge.pet.support.domain.Support;
-import com.lounge.pet.support.domain.SupportHistory;
+import com.lounge.pet.notice.domain.Notice;
 import com.lounge.pet.user.domain.User;
 import com.lounge.pet.user.service.UserService;
 
@@ -62,6 +62,18 @@ public class BoardController {
 
 			// 게시글 리스트 불러옴 
 			List<Board> freeBoardList = bService.selectFreeBoardList();
+			
+	        // 각 게시글의 닉네임을 가져와 설정
+	        for (Board board : freeBoardList) {
+	            String uId = board.getuId(); // 게시글의 작성자 ID
+	            User user = uService.selectOneById(uId);
+	            if (user != null) {
+	            	board.setfWriter(user.getuNickName()); // 게시글의 작성자 닉네임 설정
+	            } else {
+	            	board.setfWriter("UnKnown User"); // 게시글의 작성자 닉네임 설정	            	
+	            }
+	        }
+			
 			int totalSearchRecords = freeBoardList.size(); // 게시글의 총 갯수 
 			// 범위 체크를 통해 부분 리스트 추출
 			if (start < freeBoardList.size()) {
@@ -95,7 +107,14 @@ public class BoardController {
 	
 	
 	
-	// 게시글 상세 페이지
+	/**
+	 * 게시글 상세 페이지로 이동
+	 * @param mv
+	 * @param board
+	 * @param fNo
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value="/freeDetail.pet", method = RequestMethod.GET)
 	public ModelAndView freeBoardDetailPage(ModelAndView mv
 			, @ModelAttribute Board board
@@ -108,16 +127,22 @@ public class BoardController {
 				mv.addObject("board", bOne);
 				
 				// 게시글 작성자의 U_ID를 세션에서 가져옴
-				String uId = (String)session.getAttribute("uId");
+				String uId = bOne.getuId();
 				if (uId != null) {
 					User user = uService.selectOneById(uId);
-	                board.setfWriter(user.getuNickName());
-	                mv.addObject("uNickname", board.getfWriter());
-				} else {
-					// // 비회원인 경우, 비회원을 나타내는 특정 문자열을 사용하거나 다른 처리를 수행할 수 있습니다.
-					board.setfWriter("비회원"); // 예시: 비회원인 경우 "비회원"으로 설정
-	                mv.addObject("uNickname", board.getfWriter());
-				}
+					 if (user != null) {
+		                    String writerNickname = user.getuNickName();
+		                    mv.addObject("uNickname", writerNickname); // 작성자의 닉네임을 추가
+		                } else {
+		                    // 사용자를 찾을 수 없을 때 처리
+		                    mv.addObject("uNickname", "UnKnown User");
+		                }
+		            } else {
+		                // U_ID가 없을 때 처리
+		                mv.addObject("uNickname", "비회원");
+		            }					
+			
+				
 				mv.setViewName("board/freeDetail");
 			} else {
 				mv.addObject("msg", "데이터 조회가 완료되지 않았습니다.");
@@ -134,6 +159,42 @@ public class BoardController {
 	}
 	
 	
+	@RequestMapping(value="/freeDetailSubmit.pet", method=RequestMethod.GET)
+	public ModelAndView showfSubmitForm(ModelAndView mv) {
+		mv.setViewName("board/freeDetailSubmit");
+		return mv;
+	}
+
+	@RequestMapping(value = "/freeDetailSubmit.pet", method = RequestMethod.POST)
+	public ModelAndView fSubmitForm(ModelAndView mv
+			, @ModelAttribute Board board
+			, @RequestParam(value="uploadFile", required = false) MultipartFile uploadFile) {
+//	    String sanitizedContent = notice.getnContent().replaceAll("<p>", "").replaceAll("</p>", "");
+//	    notice.setnContent(sanitizedContent);
+		try {
+//			if(uploadFile != null && !uploadFile.getOriginalFilename().equals("")) {
+//				String sImageUrl = "image";
+//				notice.setsImageUrl(sImageUrl);
+//				System.out.println(notice.toString());
+//			}
+			int result = bService.submitFreeBoardForm(board);
+			if(result > 0) {
+				mv.addObject("msg", "게시글이 등록되었습니다.");
+				mv.addObject("url", "/board/freeDetailSubmit.pet");
+				mv.setViewName("common/message");
+			} else {
+				mv.addObject("msg", "게시글 등록이 완료되지 않았습니다.");
+				mv.addObject("url", "/board/freeDetailSubmit.pet");
+				mv.setViewName("common/message");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의하세요.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/board/freeDetailSubmit.pet");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}	
 	
 	
 	
