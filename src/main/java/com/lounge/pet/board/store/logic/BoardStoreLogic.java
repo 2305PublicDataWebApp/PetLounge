@@ -36,4 +36,10 @@ public class BoardStoreLogic implements BoardStore {
 		return result;
 	}
 
+	@Override
+	public int submitFreeBoardForm(SqlSession session, Board board) {
+		int result = session.insert("BoardMapper.submitFreeBoardForm", board);
+		return result;
+	}
+
 }

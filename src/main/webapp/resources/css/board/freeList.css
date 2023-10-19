@@ -93,6 +93,7 @@ ul {
     border: 3px solid #ffd370;
     margin: 0 auto;
     padding: 50px 50px 30px 50px;
+    border-radius: 20px;
 }
 
 .pagination {
@@ -100,7 +101,7 @@ ul {
     list-style: none;
     padding: 0;
     justify-content: center;
-    padding: 20px 0 0 0;
+    padding: 60px 0 0 0;
 }
 
 .pagination li {
@@ -111,12 +112,10 @@ ul {
 }
 
 .pagination li:last-child {
-    background-color: #ffffff;
-    border: 2px solid #ffd370;
-    color: #ffd370;
-    padding: 3px;
+    background-color: #ececec;
     font-size: 12px;
     border-radius: 5px;
+    outline: none;
 }
 
 .search-container {
@@ -169,7 +168,7 @@ hr:not([size]) {
 
 .pagination li a {
     line-height: 1.85714;
-    font-size: 0.875rem;
+    font-size: 1.0rem;
     font-family: Pretendard, sans-serif;
 }
 .pagination li.Mui-selected {
@@ -187,7 +186,7 @@ hr:not([size]) {
 }
 .submit {
     background-color: #ffd370;
-    border: 2px solid;
+    border: 2px solid #ffd370;
     color: #ffffff;
     padding: 5px 5px;
     font-size: 13px;
@@ -198,6 +197,11 @@ hr:not([size]) {
     font-weight: bold;
     font-family: Pretendard;
     letter-spacing: -0.02em;    
+}
+
+.fsubmit {
+	display: flex;
+	justify-content: flex-end;
 }
 
 .header-row {
@@ -235,7 +239,8 @@ th, td {
 .page-link {
   color: #000; 
   background-color: #FAFAFA;
-  border: 1px solid #FAFAFA; 
+  border: 1px solid #FAFAFA;
+  margin: -10px; 
 }
 
 .page-item.active .page-link {

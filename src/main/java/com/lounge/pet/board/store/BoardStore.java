@@ -40,6 +40,14 @@ public interface BoardStore {
 	 */
 	int updateViewCount(SqlSession session, Board bOne);
 
+	/**
+	 * 게시글 등록
+	 * @param session
+	 * @param board
+	 * @return
+	 */
+	int submitFreeBoardForm(SqlSession session, Board board);
+
 
 
 }

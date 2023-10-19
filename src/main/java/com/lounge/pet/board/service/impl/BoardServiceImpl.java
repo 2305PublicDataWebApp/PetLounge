@@ -49,4 +49,11 @@ public class BoardServiceImpl implements BoardService {
 		return result;
 	}
 
+
+	@Override
+	public int submitFreeBoardForm(Board board) {
+		int result = bStore.submitFreeBoardForm(session, board);
+		return result;
+	}
+
 }

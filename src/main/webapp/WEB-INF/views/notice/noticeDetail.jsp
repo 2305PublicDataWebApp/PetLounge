@@ -54,9 +54,9 @@
             </c:if>
 
         </main>
-      	<footer>
+        
 		<jsp:include page="../include/footer.jsp"></jsp:include>
-		</footer>
+
 		<script>
 			function noticeDelete() {
 				const nNo = '${notice.nNo}';
