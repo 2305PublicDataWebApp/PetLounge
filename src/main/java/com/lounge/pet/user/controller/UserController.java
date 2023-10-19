@@ -215,7 +215,7 @@ public class UserController {
 			if (uOne != null) { // 성공 시 아이디, 닉네임 세션에 저장
 				session.setAttribute("uId", uOne.getuId());
 				session.setAttribute("uNickname", uOne.getuNickName());
-				mv.setViewName("home");
+				mv.setViewName("redirect:/home.pet");
 			} else { // 실패
 				mv.addObject("msg", "로그인 실패");
 				mv.addObject("url", "/user/login.pet");
@@ -236,7 +236,7 @@ public class UserController {
 	public ModelAndView userLogout(ModelAndView mv, HttpSession session) {
 		if (session != null) {
 			session.invalidate();
-			mv.setViewName("home");
+			mv.setViewName("redirect:/home.pet");
 		} else {
 			mv.addObject("msg", "로그아웃 실패");
 			mv.addObject("url", "/home.pet");
