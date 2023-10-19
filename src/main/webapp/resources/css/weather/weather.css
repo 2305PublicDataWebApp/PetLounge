@@ -440,11 +440,11 @@ label {
 
 .day-temp {
 	width: 265px;
-	height: 70%;
+	--height: 70%;
 	border: 1px solid black;
 	border-radius: 15px;
-	padding: 5px;
-	padding-top: 10px;
+	padding: 10px;
+	--padding-top: 10px;
 	font-size: 15px;
 }
 
@@ -453,7 +453,7 @@ label {
 	margin-bottom: 20px;
 }
 
-#today-rain {
+.today-rain {
 	display: inline-block;
 	margin-bottom: 20px;
 	color: blue;
@@ -474,7 +474,7 @@ label {
 	margin-bottom: 20px;
 }
 
-#tomorrow-rain {
+.tomorrow-rain {
 	display: inline-block;
 	margin-bottom: 20px;
 	color: blue;
@@ -490,15 +490,15 @@ label {
 	color: red;
 }
 
-#aft-tomorrow {
-	display: block;
-	margin-bottom: 20px;
-}
-
-#aft-tomorrow-rain {
+.aft-tomorrow {
 	display: inline-block;
 	margin-bottom: 20px;
 	color: blue;
+}
+
+#aft-tomorrow {
+	display: block;
+	margin-bottom: 20px;
 }
 
 #aft-tomorrow-temp-min {
@@ -511,26 +511,7 @@ label {
 	color: red;
 }
 
-.day-dog1 {
-	position: relative;
-	left: 170px;
-	bottom: 115px;
-	width: 80px;
-	height:80px;
-}
-
-.day-dog2 {
-	position: relative;
-	left: 170px;
-	bottom: 110px;
-	width: 90px;
-	height:70px;
-}
-
-.day-dog3 {
-	position: relative;
-	left: 170px;
-	bottom: 110px;
-	width: 90px;
-	height:70px;
+.day-text {
+	color: #9d9898;
+	margin-right: 3px;
 }
