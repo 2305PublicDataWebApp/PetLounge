@@ -42,4 +42,22 @@ public class BoardStoreLogic implements BoardStore {
 		return result;
 	}
 
+	@Override
+	public Board selectOneFreeBoardNo(SqlSession session, int fNo) {
+		Board bOne = session.selectOne("BoardMapper.selectOneFreeBoardNo", fNo);
+		return bOne;
+	}
+
+	@Override
+	public int updateFreeBoardPage(SqlSession session, Board board) {
+		int result = session.update("BoardMapper.updateFreeBoardPage", board);
+		return result;
+	}
+
+	@Override
+	public int freeBoardDelete(SqlSession session, int fNo) {
+		int result = session.update("BoardMapper.freeBoardDelete", fNo);
+		return result;
+	}
+
 }

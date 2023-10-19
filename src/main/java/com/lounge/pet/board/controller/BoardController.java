@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,7 +109,7 @@ public class BoardController {
 	
 	
 	/**
-	 * 게시글 상세 페이지로 이동
+	 * 자유게시글 상세 페이지로 이동
 	 * @param mv
 	 * @param board
 	 * @param fNo
@@ -158,29 +159,60 @@ public class BoardController {
 		return mv;
 	}
 	
-	
+	/**
+	 * 자유게시글 작성 페이지로 이동
+	 * @param mv
+	 * @return
+	 */
 	@RequestMapping(value="/freeDetailSubmit.pet", method=RequestMethod.GET)
 	public ModelAndView showfSubmitForm(ModelAndView mv) {
 		mv.setViewName("board/freeDetailSubmit");
 		return mv;
 	}
 
+	/**
+	 * 새 자유게시글 등록
+	 * @param mv
+	 * @param board
+	 * @param uploadFile
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value = "/freeDetailSubmit.pet", method = RequestMethod.POST)
 	public ModelAndView fSubmitForm(ModelAndView mv
 			, @ModelAttribute Board board
-			, @RequestParam(value="uploadFile", required = false) MultipartFile uploadFile) {
-//	    String sanitizedContent = notice.getnContent().replaceAll("<p>", "").replaceAll("</p>", "");
-//	    notice.setnContent(sanitizedContent);
+			, @RequestParam(value="uploadFile", required = false) MultipartFile uploadFile
+			, HttpSession session) {
+	    String sanitizedContent = board.getfContent().replaceAll("<p>", "").replaceAll("</p>", "");
+	    board.setfContent(sanitizedContent);
 		try {
 //			if(uploadFile != null && !uploadFile.getOriginalFilename().equals("")) {
 //				String sImageUrl = "image";
 //				notice.setsImageUrl(sImageUrl);
 //				System.out.println(notice.toString());
 //			}
+			// 현재 로그인한 사용자의 아이디 가져오기
+	        String uId = (String) session.getAttribute("uId"); 
+	        if (uId == null) {
+				mv.addObject("msg", "글작성을 위해 로그인을 먼저 해주세요.");
+				mv.addObject("url", "/board/freeList.pet");
+				mv.setViewName("common/message");	        	
+	        }
+	        // 아이디 설정
+	        board.setuId(uId);
+	        
 			int result = bService.submitFreeBoardForm(board);
 			if(result > 0) {
+				// 게시글이 성공적으로 등록되었을 때
+				// 작성자의 닉네임을 설정
+				User user = uService.selectOneById(uId);
+				if(user != null) {
+					board.setfWriter(user.getuNickName());
+				} else {
+					board.setfWriter("-");
+				}
 				mv.addObject("msg", "게시글이 등록되었습니다.");
-				mv.addObject("url", "/board/freeDetailSubmit.pet");
+				mv.addObject("url", "/board/freeList.pet");
 				mv.setViewName("common/message");
 			} else {
 				mv.addObject("msg", "게시글 등록이 완료되지 않았습니다.");
@@ -196,6 +228,95 @@ public class BoardController {
 		return mv;
 	}	
 	
+	/**
+	 * 게시글 수정 페이지 이동
+	 * @param mv
+	 * @param fNo
+	 * @return
+	 */
+	@RequestMapping(value="/freeDetailEdit.pet", method = RequestMethod.GET)
+	public ModelAndView editFreeBoardPage(ModelAndView mv
+			, @RequestParam int fNo) {
+		try {
+			Board bOne = bService.selectOneFreeBoardNo(fNo);
+			mv.addObject("board", bOne);
+			mv.setViewName("board/freeDetailEdit");			
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의하세요.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/board/freeList.pet");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}	
+	
+	/**
+	 * 자유게시글 수정
+	 * @param mv
+	 * @param board
+	 * @param uploadFile
+	 * @param session
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/freeDetailEdit.pet", method = RequestMethod.POST)
+	public ModelAndView updateFreeBoardPage(ModelAndView mv
+			,@ModelAttribute Board board
+			, @RequestParam(value="uploadFile", required = false) MultipartFile uploadFile
+			, HttpSession session
+			, HttpServletRequest request
+			, @RequestParam int fNo) {
+		try {			
+	        // 게시글 번호를 Board 객체에 설정
+	        board.setfNo(fNo);
+	        
+			int result = bService.updateFreeBoardPage(board);
+			if(result > 0) {
+				mv.addObject("msg", "공지글이 수정되었습니다.");
+				mv.setViewName("redirect:/board/freeDetail.pet?fNo="+board.getfNo());
+			} else {
+				mv.addObject("msg", "공지글 수정이 완료되지 않았습니다.");
+				mv.addObject("url", "/board/freeDetailEdit.pet?fNo="+board.getfNo());
+				mv.setViewName("common/errorPage");
+			} 
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의하세요.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/board/freeDetailEdit.pet?fNo="+board.getfNo());
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}	
+	
+	/**
+	 * 자유게시판 글 삭제
+	 * @param mv
+	 * @param fNo
+	 * @return
+	 */
+	@RequestMapping(value="/fdelete.pet", method = RequestMethod.GET)
+	public ModelAndView freeBoardDelete(ModelAndView mv
+			, @RequestParam("fNo") int fNo) {
+		try {
+				int result = bService.freeBoardDelete(fNo);
+				if(result > 0) {
+					mv.addObject("msg", "게시글이 삭제되었습니다.");
+					mv.addObject("url", "/board/freeList.pet");
+					mv.setViewName("common/message");
+				} else {
+					mv.addObject("msg", "게시글 삭제가 완료되지 않았습니다.");
+					mv.addObject("url", "/board/freeList.pet");
+					mv.setViewName("common/message");
+				}
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의하세요.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/board/freeDetail.pet?fNo="+fNo);
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}	
 	
 	
+   
 }

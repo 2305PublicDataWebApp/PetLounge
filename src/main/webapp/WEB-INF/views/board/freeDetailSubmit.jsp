@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<jsp:include page="../include/importSource.jsp"></jsp:include> 
-		        <link rel="stylesheet" href="/resources/css/board/freeDetailSubmit.css">
+        <link rel="stylesheet" href="/resources/css/board/freeDetailSubmit.css">
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
@@ -19,6 +19,7 @@
 <!--         <link rel="stylesheet" href="/resources/css/reset.css"> -->
 <!--         <link rel="stylesheet" href="/resources/css/font.css"> -->
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css" />
+        <title>자유게시판</title>
     </head>
     <body>
         <jsp:include page="../include/header.jsp"></jsp:include>
@@ -54,7 +55,7 @@
             $(document).ready(function() {
                 //여기 아래 부분
                 $('#summernote').summernote({
-                    height: 400,                 // 에디터 높이
+                    height: 300,                 // 에디터 높이
                     minHeight: null,             // 최소 높이
                     maxHeight: null,             // 최대 높이
                     focus: false,                // 에디터 로딩후 포커스를 맞출지 여부

@@ -18,6 +18,10 @@
             src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/summernote/lang/summernote-ko-KR.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css" />
+        <title>공지사항</title>
+    <script>
+        history.replaceState({}, null, location.pathname);
+    </script>        
     </head>
     <body>
         <jsp:include page="../include/header.jsp"></jsp:include>

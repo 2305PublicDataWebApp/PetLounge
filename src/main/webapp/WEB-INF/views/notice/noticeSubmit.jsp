@@ -19,6 +19,10 @@
 <!--         <link rel="stylesheet" href="/resources/css/reset.css"> -->
 <!--         <link rel="stylesheet" href="/resources/css/font.css"> -->
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css" />
+        <title>공지사항</title>
+    <script>
+        history.replaceState({}, null, location.pathname);
+    </script>        
     </head>
     <body>
         <jsp:include page="../include/header.jsp"></jsp:include>

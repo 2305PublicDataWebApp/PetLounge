@@ -56,4 +56,25 @@ public class BoardServiceImpl implements BoardService {
 		return result;
 	}
 
+
+	@Override
+	public Board selectOneFreeBoardNo(int fNo) {
+		Board bOne = bStore.selectOneFreeBoardNo(session, fNo);
+		return bOne;
+	}
+
+
+	@Override
+	public int updateFreeBoardPage(Board board) {
+		int result = bStore.updateFreeBoardPage(session, board);
+		return result;
+	}
+
+
+	@Override
+	public int freeBoardDelete(int fNo) {
+		int result = bStore.freeBoardDelete(session, fNo);
+		return result;
+	}
+
 }
