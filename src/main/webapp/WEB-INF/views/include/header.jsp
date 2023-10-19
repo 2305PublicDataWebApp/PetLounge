@@ -204,7 +204,7 @@
         document.getElementById('loginLink').classList.add('active');
         document.getElementById('userLink').classList.remove('active');
     } else if (userPattern.test(currentPath) && currentPath !== '/user/login.pet') {
-        document.getElementById('loginLink').classList.remove('active');
+//         document.getElementById('loginLink').classList.remove('active');
         document.getElementById('userLink').classList.add('active');
     } else {
         document.getElementById('loginLink').classList.remove('active');
