@@ -6,7 +6,7 @@
 <mapper namespace="NoticeMapper">
 
 	<select id="getListCount2" resultType="_int">
-		SELECT COUNT(*) FROM NOTICE_TBL
+		SELECT COUNT(*) FROM NOTICE_TBL WHERE N_STATUS = 'Y'
 	</select>
 	
 	<select id="selectNoticeList" resultType="Notice">

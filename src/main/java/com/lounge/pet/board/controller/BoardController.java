@@ -52,12 +52,17 @@ public class BoardController {
 	@RequestMapping(value = "/freeList1.pet"
 			, produces = "application/json; charset=utf-8"
 			, method = RequestMethod.GET)
-	public String showFreeBoardList(@RequestParam(defaultValue = "1") Integer currentPage, @RequestParam(defaultValue = "10") Integer recordCountPerPage) {
+	public String showFreeBoardList(@RequestParam(defaultValue = "1") Integer currentPage
+				, @RequestParam(defaultValue = "10") Integer recordCountPerPage
+				, Model model) {
 		try {
 			// currentPage와 recordCountPerPage를 이용하여 페이징 처리
 			// 페이징을 적용하여 댓글 데이터를 가져오도록 구현 
 			int start = (currentPage - 1) * recordCountPerPage;
 			int end = start + recordCountPerPage;
+			
+			int totalCount = bService.getSearchCount();
+			model.addAttribute("totalCount", totalCount);
 			
 			Map<String, String> fMap = new HashMap();
 

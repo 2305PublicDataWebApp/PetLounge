@@ -24,7 +24,6 @@
 
         <div class="square-container">
             <div id="notice">
-                <ul>
                     <table>
                         <colgroup>
                             <col width="10%">
@@ -41,31 +40,39 @@
                             </tr>
                         </thead>
                         <tbody>
-                        	<c:forEach var="notice" items="${nList }" varStatus="i">
-	                            <tr>
-	                                <td colspan="5"><hr class="line3"></td>
-	                            </tr>
-                        		<tr>
-                        			<td class="right2">
-                        				${notice.nNo }
-                       				</td>
-                        			<c:url var="detailUrl" value="/notice/noticeDetail.pet">
-                        				<c:param name="nNo" value="${notice.nNo }" />
-                        			</c:url>
-                        			<td class="right1" style="text-align: left;">
-                        				<a href="${detailUrl }">${notice.nTitle }</a>
-                        			</td>
-                        			<td class="right2">
-                        				<fmt:formatDate pattern="yyyy.MM.dd" value="${notice.nCreate }" />
-                        			</td>
-                        			<td class="right2">
-                        				${notice.nViewCount }
-                        			</td>
-                        		</tr>
-                       		</c:forEach>
+                        	<c:choose>
+                        		<c:when test="${empty nList }">
+                        			<tr>
+                        				<td class="right1" colspan="5">검색결과가 없습니다!</td>
+                        			</tr>
+                        		</c:when>
+                        		<c:otherwise>
+		                        	<c:forEach var="notice" items="${nList }" varStatus="i">
+			                            <tr>
+			                                <td colspan="5"><hr class="line3"></td>
+			                            </tr>
+		                        		<tr>
+		                        			<td class="right2">
+		                        				${notice.nNo }
+		                       				</td>
+		                        			<c:url var="detailUrl" value="/notice/noticeDetail.pet">
+		                        				<c:param name="nNo" value="${notice.nNo }" />
+		                        			</c:url>
+		                        			<td class="right1" style="text-align: left;">
+		                        				<a href="${detailUrl }">${notice.nTitle }</a>
+		                        			</td>
+		                        			<td class="right2">
+		                        				<fmt:formatDate pattern="yyyy.MM.dd" value="${notice.nCreate }" />
+		                        			</td>
+		                        			<td class="right2">
+		                        				${notice.nViewCount }
+		                        			</td>
+		                        		</tr>
+		                       		</c:forEach>                        		
+                        		</c:otherwise>
+                        	</c:choose>
                         </tbody>
                     </table>
-                </ul>
             </div>
       	        <div class="pagination">
 	                <c:if test="${pInfo.startNavi != 1 }">

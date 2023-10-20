@@ -72,6 +72,13 @@ public interface BoardStore {
 	 */
 	int freeBoardDelete(SqlSession session, int fNo);
 
+	/**
+	 * 자유 게시판 기등록된 총 게시물 수
+	 * @param session
+	 * @return
+	 */
+	int getSearchCount(SqlSession session);
+
 
 
 }
