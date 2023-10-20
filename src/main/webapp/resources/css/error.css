@@ -48,7 +48,7 @@ body {
   padding: 5px;
 }
 .wrapper .button {
-  background: #FF5659;
+  background: #FFD370;
   color: #fff;
   text-transform: uppercase;
   padding: 10px 40px;
@@ -56,7 +56,7 @@ body {
   transition: 150ms;
 }
 .wrapper .button:hover {
-  background: #FF2629;
+  background: #FFD370;
   transition: 150ms;
 }
 .wrapper .button:hover .fa-angle-left {

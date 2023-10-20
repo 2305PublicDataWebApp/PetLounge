@@ -179,9 +179,9 @@
                             </div>
                             <div class="modal-body">
                                 <div class="modify-user-info-div">
-                                    <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%; margin-right: 20px;"></div>
+<!--                                     <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%; margin-right: 20px;"></div> -->
+									<img src="" class="review-modify-profile-img" style="border-radius: 100%; border: 2px solid #FFD370; width:50px; height:50px; margin-right: 20px;">
                                     <span class="user-nickname modify-user-nickname">
-                                        동숲주민
                                     </span>
                                 </div>
                                 <div id="review-modify-div">
@@ -403,14 +403,17 @@
 			}
 			
 			// 후기 수정창 보이기 
-			function openModifyView(hRNo, hRNickName, hRContent) {
+			function openModifyView(hRNo, hRNickName, hRContent, hRProfileImg) {
 				document.querySelector('.h-r-no').value = hRNo;
 				document.querySelector('.modify-user-nickname').innerText = hRNickName;
 				document.querySelector('.review-modify-content').value = hRContent;
+				document.querySelector('.review-modify-profile-img').src = hRProfileImg;
 				let modifyButton = document.querySelector('.modal-modify-btn');
 // 				modifyButton.addEventListener('click', function() {
 // 					modifyReview();
 // 				});	
+
+				console.log(hRProfileImg);
 			}
 			
 			// 후기 수정 
@@ -534,7 +537,7 @@
 								if(sessionId === hRList[i].uId || sessionId === 'admin') {
 									right = $("<td class='td'>").html(
 											"<a href='javascript:void(0)' class='review-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal' "
-											+ "onclick='openModifyView("+hRList[i].hRNo+",\""+hRList[i].hRNickName+"\",\""+hRList[i].hRContent+"\");'>수정</a>"
+											+ "onclick='openModifyView("+hRList[i].hRNo+",\""+hRList[i].hRNickName+"\",\""+hRList[i].hRContent+"\",\"" + hRList[i].hRProfileImg + "\");'>수정</a>"
 											+ "<a href='javascript:void(0)' class='review-delete-btn' onclick='checkDeleteReview("+hRList[i].hRNo+");'>삭제</a>"); 
 								} else {
 									right = $("<td class='td'>").html("");
