@@ -431,6 +431,52 @@
             });
         });
         
+        
+        
+        
+    	// 이메일 인증 ajax
+        $(document).ready(function() {
+         $("#sendMailBtn").on("click",function(){
+            var emailVal = $("#uEmail").val();
+            if(emailVal == null || emailVal == ""){
+               alert("이메일을 먼저 입력해주세요.");
+            }
+//             if($("#user-ck-email").val() === "false"){
+//                alert("사용할 수 없는 이메일입니다.")
+//             } else {
+               alert("인증번호가 발송되었습니다. 이메일을 확인해주세요.");
+               
+               $.ajax({
+                  url : "/user/sendMail.pet",
+                  type : "POST",
+                  data : { mail : emailVal },
+                  success : function(data) {
+                     $("#send-certification-num").attr("value", data);
+                  },
+                  error : function() {
+                     alert:("ajax 오류, 관리자에게 문의 바랍니다.");
+                  }
+               });
+//             }
+         });
+      });
+        
+        function confirmNumber(){
+           var num1 = $("#user-email-check").val();
+           var num2 = $("#send-certification-num").val();
+           if(num1 == num2) {
+              alert("인증이 완료되었습니다.");
+              //일치할 때 유효성 체크 여부 확인을 위해서 값을 true로 넣어줌
+              $("#check-certification-num").attr("value", "true");
+              $("#duplEmailResult").text("인증 완료").removeClass("error").addClass("success");
+           } else {
+              alert("작성한 인증번호가 다릅니다.");
+              $("#check-certification-num").attr("value", "false");
+              $("#duplEmailResult").text("인증 실패").removeClass("success").addClass("error");
+           }
+        }
+        
+        
             
 	</script>
 </body>

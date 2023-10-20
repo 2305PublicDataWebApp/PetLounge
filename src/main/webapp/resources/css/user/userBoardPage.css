@@ -192,6 +192,22 @@ header {
 	 border-color: #fafafa;
 } 
 
-#pageBtn:hover {
+#pageBtn:hover, #pageBtn:focus {
 	color: black;
+	background-color: #ececec;
+	border-color: #fafafa;
 }
+
+#pageBtn {
+	color: black;
+	border: none;
+	background-color: #fafafa;
+}
+
+#pageBtnSelect {
+	background-color: #FFD370;
+	color: white;
+    border: none;
+}
+
+

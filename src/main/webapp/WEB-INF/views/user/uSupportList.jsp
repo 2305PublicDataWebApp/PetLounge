@@ -95,7 +95,7 @@
 										<th style="border-bottom: 1px solid #dee2e6;">No</th>
 										<th style="border-bottom: 1px solid #dee2e6;">제목</th>
 										<th style="border-bottom: 1px solid #dee2e6;">후원금액</th>
-										<th style="border-bottom: 1px solid #dee2e6;">후원일</th>
+										<th style="border-bottom: 1px solid #dee2e6; width: 145px;">후원일</th>
 										<th style="border-bottom: 1px solid #dee2e6;">결제방법</th>
 									</tr>
 								</thead>
@@ -105,18 +105,20 @@
 								            <c:param name="sNo" value="${sList.sNo}"></c:param>
 								        </c:url>
 								    <tr onclick="window.location.href='${detailUrl}'" id="tr">
-								        <td>${i.count}</td>        
+								        <td>${i.count}</td>  
 								        <c:set var="inputString" value="${sList.sTitle}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
-											<c:choose>
-											    <c:when test="${fn:length(inputString) > 5}"> <!-- 만약 문자열 길이가 5를 초과한다면 -->
-											        <c:set var="truncatedString" value="${fn:substring(inputString, 0, 12)}..." /> <!-- 문자열을 자르고 "..."을 추가하여 truncatedString 변수에 저장 -->
-											        <td>${truncatedString}</td> <!-- truncatedString을 <td> 태그 안에 출력 -->
-											    </c:when>
-											    <c:otherwise>
-											        <td>${inputString}</td> <!-- 그렇지 않으면 원래 문자열을 <td> 태그 안에 출력 -->
-											    </c:otherwise>
-											</c:choose>
-<%-- 								        <td>${sList.sTitle}</td> --%>
+											<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
+											    <c:choose>
+											        <c:when test="${fn:length(inputString) > 3}"> <!-- 만약 문자열 길이가 5를 초과한다면 -->
+											            <c:set var="truncatedString" value="${fn:substring(inputString, 0, 12)}..." /> <!-- 문자열을 자르고 "..."을 추가하여 truncatedString 변수에 저장 -->
+											            <c:out value="${truncatedString}" /> <!-- truncatedString을 출력 -->
+											        </c:when>
+											        <c:otherwise>
+											            <c:out value="${inputString}" /> <!-- 그렇지 않으면 원래 문자열을 출력 -->
+											        </c:otherwise>
+											    </c:choose>
+											</td>
+								          
 								        <td style="text-align: right;"><fmt:formatNumber value="${sList.sHAmount}" pattern="#,###" />원</td>
 <%-- 								        <td>${sList.sHAmount}</td> --%>
 								        <c:set var="formattedDate" value="${fn:split(sList.sHPaydate, ' ')}" />
@@ -133,18 +135,7 @@
 								    </tr>
 								</c:forEach>
 
-<%-- 									<c:forEach items="${sList }" var="sList" varStatus="i"> --%>
-<!-- 										<tr> -->
-<%-- 											<td>${i.count }</td> --%>
-<%-- 											<c:url var="detailUrl" value="/support/detail.pet"> --%>
-<%-- 												<c:param name="sNo" value="${sList.sNo }"></c:param> --%>
-<%-- 											</c:url> --%>
-<%-- 											<td><a href="${detailUrl }">${sList.sTitle }</a></td> --%>
-<%-- 											<td>${sList.sHAmount }</td> --%>
-<%-- 											<td>${sList.sHPaydate }</td> --%>
-<%-- 											<td>${sList.sHPaytype }</td> --%>
-<!-- 										</tr> -->
-<%-- 									</c:forEach> --%>
+
 								</tbody>
 							</table><br><br>
 							<div aria-label="Page navigation example" class="page">
@@ -158,7 +149,7 @@
 							<div></div>
 				            <ul style="display: flex; justify-content: center;">
 					         	<c:if test="${aInfo.startNavi != 1 }">
-						            <li class="boardLi" ><a class="page-link"  href="${prevUrl }" ><img src="/resources/images/user/previous.png" style="width: 13px;"></a></li>&nbsp;
+						            <li class="boardLi" ><a class="page-link" id="pageBtn"  href="${prevUrl }" ><img src="/resources/images/user/previous.png" style="width: 13px;"></a></li>&nbsp;
 					            </c:if>
 					         
 					            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
@@ -168,8 +159,12 @@
 										<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
 										<c:param name="uId" value="${sessionScope.uId}"></c:param>
 									</c:url>
-									&nbsp;<li class="boardLi"><a class="page-link" id="pageBtn" href="${pageUrl }">${p }</a></li>&nbsp;
-					            </c:forEach>
+										<c:if test="${ aInfo.currentPage ne p }">
+						            	<li class="boardLi"><a class="page-link" id="pageBtn"  href="${pageUrl }">${p }</a></li>
+										</c:if>
+										<c:if test="${ aInfo.currentPage eq p }">
+						            	<li class="boardLi"><a class="page-link" id="pageBtnSelect"  href="${pageUrl }">${p }</a></li>
+										</c:if>						            </c:forEach>
 					            <c:if test="${aInfo.endNavi != aInfo.naviTotalCount }">
 									<c:url var="nextUrl" value="/user/uSupport.pet"> 
 										<c:param name="page" value="${aInfo.endNavi + 1 }"></c:param>
@@ -177,7 +172,7 @@
 										<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
 										<c:param name="uId" value="${sessionScope.uId}"></c:param>
 									</c:url>
-						            &nbsp;<li class="boardLi"><a class="page-link"  href="${nextUrl }"><img src="/resources/images/user/next.png" style="width: 13px;"></a></li>
+						            &nbsp;<li class="boardLi"><a class="page-link" id="pageBtn"   href="${nextUrl }"><img src="/resources/images/user/next.png" style="width: 13px;"></a></li>
 					            </c:if>
 				            </ul>
 				           </div> 

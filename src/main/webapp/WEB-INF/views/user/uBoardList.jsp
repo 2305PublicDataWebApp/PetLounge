@@ -104,7 +104,19 @@
 										</c:url>
 										 <tr onclick="window.location.href='${detailUrl}'" id="tr"  style="cursor: pointer;">
 											<td>${i.count }</td>
-											<td>${bList.fTitle }</td>
+<%-- 											<td>${bList.fTitle }</td> --%>
+											<c:set var="inputString" value="${bList.fTitle}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
+											<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
+											    <c:choose>
+											        <c:when test="${fn:length(inputString) > 3}"> <!-- 만약 문자열 길이가 5를 초과한다면 -->
+											            <c:set var="truncatedString" value="${fn:substring(inputString, 0, 12)}..." /> <!-- 문자열을 자르고 "..."을 추가하여 truncatedString 변수에 저장 -->
+											            <c:out value="${truncatedString}" /> <!-- truncatedString을 출력 -->
+											        </c:when>
+											        <c:otherwise>
+											            <c:out value="${inputString}" /> <!-- 그렇지 않으면 원래 문자열을 출력 -->
+											        </c:otherwise>
+											    </c:choose>
+											</td>
 <%-- 											<td>${bList.uId}</td> --%>
 											<c:set var="formattedDate" value="${fn:split(bList.fCreate, '-')}" />
 											<td>${formattedDate[0]}.${formattedDate[1]}.${formattedDate[2]}</td>
@@ -126,7 +138,7 @@
 					            <div></div>
 					          	<ul style="display: flex; justify-content: center;">
 						         	<c:if test="${aInfo.startNavi != 1 }">
-										<li class="boardLi"><a class="page-link" href="${prevUrl }" ><img src="/resources/images/user/previous.png" style="width: 13px;"></a></li>&nbsp;
+										<li class="boardLi"><a class="page-link" id="pageBtn" href="${prevUrl }" ><img src="/resources/images/user/previous.png" style="width: 13px;"></a></li>&nbsp;
 						            </c:if>
 					            
 						            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
@@ -136,8 +148,12 @@
 											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
 											<c:param name="uId" value="${sessionScope.uId}"></c:param>
 										</c:url>
-						            	&nbsp;<li class="boardLi"><a class="page-link" id="pageBtn" href="${pageUrl }">${p }</a></li>&nbsp;
-						            </c:forEach>
+										<c:if test="${ aInfo.currentPage ne p }">
+						            	<li class="boardLi"><a class="page-link" id="pageBtn"  href="${pageUrl }">${p }</a></li>
+										</c:if>
+										<c:if test="${ aInfo.currentPage eq p }">
+						            	<li class="boardLi"><a class="page-link" id="pageBtnSelect"  href="${pageUrl }">${p }</a></li>
+										</c:if>							            </c:forEach>
 					            
 						            <c:if test="${aInfo.endNavi != aInfo.naviTotalCount }">
 										<c:url var="nextUrl" value="/user/Board.pet"> 
@@ -146,7 +162,7 @@
 											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
 											<c:param name="uId" value="${sessionScope.uId}"></c:param>
 										</c:url>
-						            	&nbsp;<li class="boardLi"><a class="page-link" href="${nextUrl }"><img src="/resources/images/user/next.png" style="width: 13px;"></a></li>
+						            	&nbsp;<li class="boardLi"><a class="page-link" id="pageBtn" href="${nextUrl }"><img src="/resources/images/user/next.png" style="width: 13px;"></a></li>
 						            </c:if>
 					            </ul>
 					        </div> 
