@@ -374,37 +374,6 @@
 		<!-- 후기 -->
 		<script>
 			// 후기 등록 
-		    $('#review-create-content').addEventListener('keydown', function(event) {
-		        if (event.keyCode === 13) { // 엔터 키의 keyCode는 13
-		            event.preventDefault(); // 기본 엔터 동작을 막음
-		            const hRContent = $("#review-create-content").val();
-		            $.ajax({
-		                url: '/hReview/insert.pet',
-		                type: 'POST',
-		                data: {
-		                    hNo: hNo,
-		                    hRContent: hRContent
-		                },
-		                success: function(data) {
-		                    if (data == "success") {
-		                        $("#review-create-content").val("");
-		                        getReviewList();
-		                    } else if (data == "loginFail") {
-		                        alert("로그인이 필요한 서비스입니다.");
-		                        location.href = "/user/login.pet";
-		                    } else if (data == "empty") {
-		                        alert("후기 내용은 비워둘 수 없습니다.");
-		                    } else {
-		                        alert("동물병원 후기 등록 실패");
-		                    }
-		                },
-		                error: function() {
-		                    alert("동물병원 후기 작성 오류. 관리자에게 문의 바랍니다.");
-		                }
-		            });
-		        }
-		    });
-
 			function hohReviewInsert(hNo) {
 				const hRContent = $("#review-create-content").val();
 				$.ajax({
