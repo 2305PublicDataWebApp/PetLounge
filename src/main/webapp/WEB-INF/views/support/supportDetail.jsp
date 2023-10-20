@@ -63,7 +63,9 @@
                         <span><h3 class="h3">${support.sTitle }</h3></span>
                     </div>
                     <div class="s-content">
-                        <img src="${support.sImageUrl }" style="width:80%;">
+                    	<div class="image-div">
+	                        <img src="${support.sImageUrl }" style="width:80%;">
+                    	</div>
                         
                         ${support.sContent }
                     </div>
@@ -165,7 +167,10 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="modify-user-info-div">
-                                            <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%; margin-right: 20px;"></div>
+                                            <div style="width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%; margin-right: 20px;">
+                                            	<img src="" class="profile-img modify-user-image" style="width: 50px; height: 50px" 
+                                            		onerror="this.src='../resources/userUploadFiles/profile.png'">
+                                            </div>
                                             <span class="user-nickname modify-user-nickname">
                                                 동숲주민
                                             </span>
@@ -229,7 +234,7 @@
 		
 		<jsp:include page="../include/footer.jsp"></jsp:include>
 		<script>
-			// 댓글 등록 
+			// 댓글 등록 - 엔터
 			$("#reply-create-content").on("keydown", function(event) {
 			    if (event.keyCode === 13) { // 엔터 키의 keyCode는 13
 			        event.preventDefault(); // 기본 엔터 동작을 막음 
@@ -259,7 +264,7 @@
 			        }
 			    }
 			});
-			
+			// 댓글 등록 - 클릭 
 			$("#reply-create-btn").on("click", function() {
 				const sRContent = $("#reply-create-content").val();
 				const sNo = ${support.sNo };
@@ -286,7 +291,8 @@
 			});
 			
 			// 댓글 수정창 보이기 
-			const openModifyView = (sRNo, sRWriter, sRContent) => {
+			const openModifyView = (sRNo, sRWriter, sRContent, uFilePath) => {
+				document.querySelector('.modify-user-image').src = uFilePath;
 				document.querySelector('.s-r-no').value = sRNo;
 				document.querySelector('.modify-user-nickname').innerText = sRWriter;
 				document.querySelector('.reply-modify-content').value = sRContent;
@@ -398,7 +404,7 @@
 								if(sessionId === sRList[i].uId || sessionId === "admin") {
 									right = $("<td class='td'>").html(
 											"<a href='javascript:void(0)' class='reply-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal' "
-											+ "onclick='openModifyView("+sRList[i].sRNo+",\""+sRList[i].sRWriter+"\",\""+sRList[i].sRContent+"\");'>수정</a>"
+											+ "onclick='openModifyView("+sRList[i].sRNo+",\""+sRList[i].sRWriter+"\",\""+sRList[i].sRContent+"\",\""+sRList[i].uFilePath+"\");'>수정</a>"
 											+ "<a href='javascript:void(0)' class='reply-delete-btn' onclick='checkDeleteReply("+sRList[i].sRNo+");'>삭제</a>"); 
 								} else {
 									right = $("<td class='td'>").html("");
@@ -422,7 +428,6 @@
 					}
 				});
 			}
-			
 			// 댓글 페이지 만들기 
 			const createReplyPagination = (totalReplyPages) => {
 			    const replyPaginationUl = $("#reply-pagination");

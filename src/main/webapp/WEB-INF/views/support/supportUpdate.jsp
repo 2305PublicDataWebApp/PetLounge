@@ -236,7 +236,6 @@
                     lang: "ko-KR",				// 한글 설정
                     placeholder: '후원 상세 내용을 적어주세요.',	//placeholder 설정
                     toolbar: [
-                        ['style', ['style']],
                         ['fontname', ['fontname']],
                         ['fontsize', ['fontsize']],
                         ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],

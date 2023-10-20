@@ -142,6 +142,18 @@ public class SupportStoreLogic implements SupportStore{
 		return result;
 	}
 
+	@Override
+	public List<UserSupport> selectReplyList(SqlSession sqlSession) {
+		List<UserSupport> sRList = sqlSession.selectList("SReplyMapper.selectReplyList");
+		return sRList;
+	}
+
+	@Override
+	public int getReplyListCount(SqlSession sqlSession) {
+		int result = sqlSession.selectOne("SReplyMapper.getReplyListCount");
+		return result;
+	}
+
 	
 
 }

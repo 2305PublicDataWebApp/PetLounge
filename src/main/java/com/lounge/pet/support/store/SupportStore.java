@@ -175,5 +175,17 @@ public interface SupportStore {
 	 */
 	int getHistoryListCount(SqlSession sqlSession);
 
+	/**
+	 * 후원댓글 조회 Service
+	 * @return List
+	 */
+	List<UserSupport> selectReplyList(SqlSession sqlSession);
+
+	/**
+	 * 후원댓글 갯수 조회 Service
+	 * @return int
+	 */
+	int getReplyListCount(SqlSession sqlSession);
+
 
 }

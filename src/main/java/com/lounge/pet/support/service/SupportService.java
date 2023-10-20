@@ -153,6 +153,18 @@ public interface SupportService {
 	 * @return int
 	 */
 	int getHistoryListCount();
+
+	/**
+	 * 후원댓글 조회 Service
+	 * @return List
+	 */
+	List<UserSupport> selectReplyList();
+
+	/**
+	 * 후원댓글 갯수 조회 Service
+	 * @return int
+	 */
+	int getReplyListCount();
 	
 
 }

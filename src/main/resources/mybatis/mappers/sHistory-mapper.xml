@@ -6,7 +6,10 @@
 	
 	<!-- 후원내역 등록 -->
 	<insert id="insertHistory">
-		INSERT INTO S_HISTORY_TBL VALUES(S_SEQ_NO.NEXTVAL, #{sNo}, #{uId}, #{sHName}, #{sHAmount}, DEFAULT, #{sHPaytype}, #{sHType}) 
+		INSERT INTO 
+			S_HISTORY_TBL 
+		VALUES
+			(S_SEQ_NO.NEXTVAL, #{sNo}, #{uId}, #{sHName}, #{sHAmount}, DEFAULT, #{sHPaytype}, #{sHType}) 
 	</insert>
 	
 	<!-- 후원내역 후원글별 갯수 조회 -->
@@ -63,7 +66,8 @@
 			* 
 		FROM 
 			S_HISTORY_TBL H
-		JOIN SUPPORT_TBL S ON S.S_NO = H.S_NO
+		JOIN 
+			SUPPORT_TBL S ON S.S_NO = H.S_NO
 		ORDER BY 
 			S_H_NO DESC
 	</select>

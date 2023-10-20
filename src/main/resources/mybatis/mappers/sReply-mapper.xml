@@ -4,29 +4,76 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="SReplyMapper">
 	
+	<!-- 후원댓글 등록 -->
 	<insert id="insertReply">
-		INSERT INTO S_REPLY_TBL 
-		VALUES(S_SEQ_NO.NEXTVAL, #{sNo}, #{uId}, #{sRContent}, DEFAULT, DEFAULT, DEFAULT)
+		INSERT INTO 
+			S_REPLY_TBL 
+		VALUES
+			(S_SEQ_NO.NEXTVAL, #{sNo}, #{uId}, #{sRContent}, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	
+	<!-- 후원댓글 수정 -->
 	<update id="updateReply">
-		UPDATE S_REPLY_TBL 
-		SET S_R_CONTENT = #{sRContent}, S_R_UPDATE = DEFAULT WHERE S_R_NO = #{sRNo} 
+		UPDATE 
+			S_REPLY_TBL 
+		SET 
+			S_R_CONTENT = #{sRContent}, S_R_UPDATE = DEFAULT 
+		WHERE 
+			S_R_NO = #{sRNo} 
 	</update>
 	
+	<!-- 후원댓글 삭제 -->
 	<update id="deleteReply">
-		UPDATE S_REPLY_TBL 
-		SET S_R_UPDATE = DEFAULT, S_R_STATUS = 'N' WHERE S_R_NO = #{sRNo} 
+		UPDATE 
+			S_REPLY_TBL 
+		SET 
+			S_R_UPDATE = DEFAULT, S_R_STATUS = 'N' 
+		WHERE 
+			S_R_NO = #{sRNo} 
 	</update>
 	
-	
+	<!-- 후원댓글 후원글별 갯수 조회 -->
 	<select id="getTotalCount" resultType="_int">
-		SELECT COUNT(*) FROM S_REPLY_TBL 
-		WHERE S_NO = #{sNo} AND S_R_STATUS = 'Y'
+		SELECT 
+			COUNT(*) 
+		FROM 
+			S_REPLY_TBL 
+		WHERE 
+			S_NO = #{sNo} AND S_R_STATUS = 'Y'
 	</select>
+	<!-- 후원댓글 후원글별 조회 -->
 	<select id="selectSReplyList" resultType="SupportReply">
-		SELECT * FROM S_REPLY_TBL 
-		WHERE S_NO = #{sNo} AND S_R_STATUS = 'Y' ORDER BY S_R_NO DESC
+		SELECT 
+			* 
+		FROM 
+			S_REPLY_TBL 
+		WHERE 
+			S_NO = #{sNo} AND S_R_STATUS = 'Y' ORDER BY S_R_NO DESC
+	</select>
+	
+	<!-- 후원댓글 전체 갯수 조회 -->
+	<select id="getReplyListCount" resultType="_int">
+		SELECT 
+			COUNT(*) 
+		FROM 
+			S_REPLY_TBL 
+		WHERE 
+			S_R_STATUS = 'Y'
+	</select>
+	<!-- 후원댓글 전체 조회 -->
+	<select id="selectReplyList" resultType="UserSupport">
+		SELECT 
+			* 
+		FROM 
+			S_REPLY_TBL R
+		JOIN 
+			SUPPORT_TBL S ON S.S_NO = R.S_NO
+		JOIN 
+			USER_TBL U ON R.U_ID = U.U_ID
+		WHERE 
+			S_R_STATUS = 'Y' 
+		ORDER BY 
+			S_R_NO DESC
 	</select>
 	
 
