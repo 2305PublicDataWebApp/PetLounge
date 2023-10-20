@@ -6,18 +6,43 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <jsp:include page="../include/importSource.jsp"></jsp:include>
+        
+		<link rel="stylesheet" href="/resources/css/reset.css">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/resources/css/include/header.css">
+		<link rel="stylesheet" href="/resources/css/include/footer.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" />
+        
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        
         <link rel="stylesheet" href="/resources/css/faq/list.css">
-        <link rel="stylesheet" href="/resources/css/reset.css">
-        <link rel="stylesheet" href="/resources/css/font.css">
-        <title>FAQ</title>
         <style>
+        	@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@400;700&display=swap');
+			@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+			@font-face {
+			    font-family: 'GmarketSansMedium';
+			    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+			    font-weight: normal;
+			    font-style: normal;
+			}
+	        *:not(.faq-item *) {
+			    font-family: 'GmarketSansMedium';
+			    font-size: 1em;
+			    color: #3d3d3d;
+			}
         	.edit-icon {
 			    position: relative;
 			    top: 5px;
 			    left: 685px;
 			    cursor: pointer;
+			}
+						#nav-pet-lounge {
+				font-size: 20px;
 			}
 			
         	.delete-icon {
@@ -36,6 +61,8 @@
 			  'opsz' 24
 			}
         </style>
+        
+        <title>FAQ</title>
     </head>
     <body>
     	<!-- header -->

@@ -306,27 +306,30 @@
 	                    <ul>
 	                    	<li>
 			                    <div class="day-temp" id="day-temp-one">
-			                    	<span id="today">오늘 </span>
-			                    	강수 확률 : <span id="today-rain"></span><br>
+			                    	<span id="today">오늘</span>
+			                    	강수 확률 : 
+			                    	<span class="day-text">오전</span> <span id="today-rain-am" class="today-rain"></span> 
+			                    	<span class="day-text">오후</span> <span id="today-rain-pm" class="today-rain"></span><br>
 			                    	최저 기온 : <span id="today-temp-min"></span> 최고 기온: <span id="today-temp-max"></span>
 			                    </div>
-		                        <img class="day-dog1" src="/resources/images/weather/day-dog1.png">
 	                    	</li>
 	                    	<li>
 			                    <div class="day-temp" id="day-temp-two">
-			                    	<span id="tomorrow">내일 </span>
-			                    	강수 확률 : <span id="tomorrow-rain"></span><br>
+			                    	<span id="tomorrow">내일</span>
+			                    	강수 확률 : 
+			                    	<span class="day-text">오전</span> <span id="tomorrow-rain-am" class="tomorrow-rain"></span> 
+			                    	<span class="day-text">오후</span> <span id="tomorrow-rain-pm" class="tomorrow-rain"></span><br>
 			                    	최저 기온 : <span id="tomorrow-temp-min"></span> 최고 기온: <span id="tomorrow-temp-max"></span>
 			                    </div>
-			                    <img class="day-dog2" src="/resources/images/weather/day-dog2.png">
 	                    	</li>
 	                    	<li>
 			                    <div class="day-temp" id="day-temp-three">
-			                    	<span id="aft-tomorrow">모레 </span>
-			                    	강수 확률 : <span id="aft-tomorrow-rain"></span><br>
+									<span id="aft-tomorrow"></span>
+			                    	강수 확률 :
+			                    	<span class="day-text">오전</span> <span id="aft-tomorrow-am" class="aft-tomorrow"></span> 
+			                    	<span class="day-text">오후</span> <span id="aft-tomorrow-pm"  class="aft-tomorrow"></span><br>
 			                    	최저 기온 : <span id="aft-tomorrow-temp-min"></span> 최고 기온: <span id="aft-tomorrow-temp-max"></span>
 			                    </div>
-			                    <img class="day-dog3" src="/resources/images/weather/day-dog3.png">
 	                    	</li>
 	                    </ul>
                     </div>
@@ -392,8 +395,7 @@
 			    const now = new Date();										// 현재 시간
 			    const hours = String(now.getHours()).padStart(2, '0');		// 왼쪽에 0을 채워넣어 2자리 문자열로 변환(시간)
 			    const minutes = String(now.getMinutes()).padStart(2, '0');	// 왼쪽에 0을 채워넣어 2자리 문자열로 변환(분)
-			    console.log("ft : " + hours + minutes);						// 현재 시간
-			    return hours + minutes;
+			    return hours + minutes;										// 현재 시간
 			}
 			
 			// api 발표시간 오차로 60분 빼기
@@ -455,8 +457,7 @@
 				base_time="0200";
 				
 				// 0시 ~ 2시 비는 시간은 전날 23시 예보 출력
-				formattedTime = getFormattedTime(); // 현재 시간
-// 				formattedTime = "0020"; // 현재 시간
+				let formattedTime = getFormattedTime(); // 현재 시간
 				
 				if(formattedTime >= "0000" && formattedTime < "0300") {
 			        base_date = initDate - 1;
@@ -465,55 +466,49 @@
          		
 	         	apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
 				
-				let fcstTime = getFormattedTime(); // 현재 시간(이걸로 배열 가져와야 함)
-// 				let fcstTime = "0200"; // 현재 시간(이걸로 배열 가져와야 함)
+				let fcstTime = getFormattedTime(); // 예보 시간(이걸로 배열 가져와야 함)
 				fcstTime = fcstTime.substring(0, 2) + "00";
-				let fcstValue = "";
-				
-				console.log("fcstTime : " + fcstTime);
 				
 	         	url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-	         	console.log(url);
 	         	
 				$.getJSON (url, function(data){
 					const percentage = "%";
-					console.log("formattedTime : " + formattedTime);
+					let fcstValue = "";
 					
+					// 기상청 api 배열이 중간에 해당 시간대에만 출력되는 예보가 있어서 반복문 사용을 못했음.
 					if(formattedTime >= "0000" && formattedTime < "0300") {
-						console.log("fcstTime" + fcstTime);
+
 						switch(fcstTime) {
 							case '0000': fcstValue = data.response.body.items.item[7].fcstValue; break;
 							case '0100': fcstValue = data.response.body.items.item[19].fcstValue; break;
 							case '0200': fcstValue = data.response.body.items.item[31].fcstValue; break;
 						}
-					} else {
-						console.log("fcstTime" + fcstTime);
+					} else if(formattedTime >= "0300" && formattedTime < "2400") {
+						
 						switch(fcstTime) {
-							case '0300': fcstValue = data.response.body.items.item[8].fcstValue; break;
-							case '0400': fcstValue = data.response.body.items.item[20].fcstValue; break;
-							case '0500': fcstValue = data.response.body.items.item[32].fcstValue; break;
-							case '0600': fcstValue = data.response.body.items.item[44].fcstValue; break;
-							case '0700': fcstValue = data.response.body.items.item[57].fcstValue; break;
-							case '0800': fcstValue = data.response.body.items.item[69].fcstValue; break;
-							case '0900': fcstValue = data.response.body.items.item[81].fcstValue; break;
-							case '1000': fcstValue = data.response.body.items.item[93].fcstValue; break;
-							case '1100': fcstValue = data.response.body.items.item[105].fcstValue; break;
-							case '1200': fcstValue = data.response.body.items.item[117].fcstValue; break;
-							case '1300': fcstValue = data.response.body.items.item[129].fcstValue; break;
-							case '1400': fcstValue = data.response.body.items.item[141].fcstValue; break;
-							case '1500': fcstValue = data.response.body.items.item[153].fcstValue; break;
-							case '1600': fcstValue = data.response.body.items.item[166].fcstValue; break;
-							case '1700': fcstValue = data.response.body.items.item[178].fcstValue; break;
-							case '1800': fcstValue = data.response.body.items.item[190].fcstValue; break;
-							case '1900': fcstValue = data.response.body.items.item[202].fcstValue; break;
-							case '2000': fcstValue = data.response.body.items.item[214].fcstValue; break;
-							case '2100': fcstValue = data.response.body.items.item[226].fcstValue; break;
-							case '2200': fcstValue = data.response.body.items.item[238].fcstValue; break;
-							case '2300': fcstValue = data.response.body.items.item[250].fcstValue; break;
+							case '0300': fcstValue = data.response.body.items.item[7].fcstValue; break;
+							case '0400': fcstValue = data.response.body.items.item[19].fcstValue; break;
+							case '0500': fcstValue = data.response.body.items.item[31].fcstValue; break;
+							case '0600': fcstValue = data.response.body.items.item[43].fcstValue; break;
+							case '0700': fcstValue = data.response.body.items.item[56].fcstValue; break;
+							case '0800': fcstValue = data.response.body.items.item[68].fcstValue; break;
+							case '0900': fcstValue = data.response.body.items.item[80].fcstValue; break;
+							case '1000': fcstValue = data.response.body.items.item[92].fcstValue; break;
+							case '1100': fcstValue = data.response.body.items.item[104].fcstValue; break;
+							case '1200': fcstValue = data.response.body.items.item[116].fcstValue; break;
+							case '1300': fcstValue = data.response.body.items.item[128].fcstValue; break;
+							case '1400': fcstValue = data.response.body.items.item[140].fcstValue; break;
+							case '1500': fcstValue = data.response.body.items.item[152].fcstValue; break;
+							case '1600': fcstValue = data.response.body.items.item[165].fcstValue; break;
+							case '1700': fcstValue = data.response.body.items.item[177].fcstValue; break;
+							case '1800': fcstValue = data.response.body.items.item[189].fcstValue; break;
+							case '1900': fcstValue = data.response.body.items.item[201].fcstValue; break;
+							case '2000': fcstValue = data.response.body.items.item[213].fcstValue; break;
+							case '2100': fcstValue = data.response.body.items.item[225].fcstValue; break;
+							case '2200': fcstValue = data.response.body.items.item[237].fcstValue; break;
+							case '2300': fcstValue = data.response.body.items.item[249].fcstValue; break;
 						}
 					}
-					
-					console.log(data.response.body.items.item[178]);
 					$('.pro-rain').empty().append(fcstValue).append(percentage); // 강수 확률
 				});
          	}
@@ -560,17 +555,14 @@
 			}
 			
 			// ************************************************ 초단기 예보(일 시간별 기온) ************************************************//
+			
 			function weatherTime(nx, ny) {
-// 				const formattedTime = getFormattedTime(); // 현재 시간을 가져옴
-				base_time = "0030"
-// 	         	console.log("일 시간별 / 기준시간:" + base_time);
-	         	
-				base_date = initDate
 				
+				base_time = "0030"
+				base_date = initDate
 				apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
 				
 				url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-// 				console.log("일 시간별 / url:" + url);
 				
 				$.getJSON (url, function(data){
 					const celsius = "℃";
@@ -612,7 +604,7 @@
 					$('#time-12').empty().append(tempTwe).append(celsius);
 				});
 				
-				base_time = "0730"
+				base_time = "1230"
 				apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
 				url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
 				
@@ -661,6 +653,7 @@
 			
 			// ************************************************ 단기 예보(일별 기온) ************************************************//
 			function weatherDay(nx, ny) {
+				
 				// 오늘 날짜 출력
 	            const $now = new Date($.now());
 	           	const $aftTomorrow =($now.getMonth() + 1) +'월 ' + ($now.getDate()+2) +'일 ';
@@ -673,11 +666,26 @@
 				$.getJSON (url, function(data){ // 오후 3시 기준	
 					const percentage = "%";
 					const celsius = "℃";
-				
-				
-					const todayRain = data.response.body.items.item[152].fcstValue    		 // 오늘 강수량
-					const tomorrowRain = data.response.body.items.item[442].fcstValue		 // 내일 강수량
-					const afterTomorrowRain = data.response.body.items.item[732].fcstValue   // 모레 강수량
+					
+					const fcstTimeAm = "0900"; // 오전
+					const fcstTimePm = "1800"; // 오후
+					
+					// 오전/오후 강수량만 가져오는 배열
+					let weathers = new Array();
+					data.response.body.items.item.map(function(weatherData) {
+						if(weatherData.category === "POP" 
+							&& (weatherData.fcstTime === "0900" || weatherData.fcstTime === "1800")) {
+							weathers.push(weatherData);
+						}
+					});
+					
+					const todayRainAm = weathers[0].fcstValue		// 오늘 오전 강수확률
+					const todayRainPw = weathers[1].fcstValue		// 오늘 강수확률
+					const tomorrowRainAm = weathers[2].fcstValue	// 내일 강수확률
+					const tomorrowRainPm = weathers[3].fcstValue	// 모레 강수확률
+					const aftTomorrowRainAm = weathers[4].fcstValue // 모레 강수확률
+					const aftTomorrowRainPm = weathers[5].fcstValue // 모레 강수확률
+					
 					const todayTempN = data.response.body.items.item[48].fcstValue   		 
 					const todayTempMin = Math.round(todayTempN);							 // 오늘 최저기온
 					const todayTempM = data.response.body.items.item[157].fcstValue   		 
@@ -691,15 +699,19 @@
 					const aftTomorrowTempM = data.response.body.items.item[737].fcstValue   		 
 					const aftTomorrowTempMax = Math.round(aftTomorrowTempM);				 // 모레 최고기온
 					
-					$('#today-rain').empty().append(todayRain).append(percentage);
-					$('#tomorrow-rain').empty().append(tomorrowRain).append(percentage);
-					$('#aft-tomorrow-rain').empty().append(afterTomorrowRain).append(percentage);
-					$('#today-temp-min').empty().append(todayTempMin).append(celsius);
-					$('#today-temp-max').empty().append(todayTempMax).append(celsius);
-					$('#tomorrow-temp-min').empty().append(tomorrowTempMin).append(celsius);
-					$('#tomorrow-temp-max').empty().append(tomorrowTempMax).append(celsius);
-					$('#aft-tomorrow-temp-min').empty().append(aftTomorrowTempMin).append(celsius);
-					$('#aft-tomorrow-temp-max').empty().append(aftTomorrowTempMax).append(celsius);
+					$('#today-rain-am').empty().append(todayRainAm).append(percentage);				// 오늘 오전 강수확률
+					$('#today-rain-pm').empty().append(todayRainPw).append(percentage);				// 오늘 오전 강수확률
+					$('#tomorrow-rain-am').empty().append(tomorrowRainAm).append(percentage);			// 내일 오전 강수확률
+					$('#tomorrow-rain-pm').empty().append(tomorrowRainPm).append(percentage);			// 내일 오후 강수확률
+					$('#aft-tomorrow-am').empty().append(aftTomorrowRainAm).append(percentage);		// 모레 오전 강수확률
+					$('#aft-tomorrow-pm').empty().append(aftTomorrowRainPm).append(percentage); 	// 모레 오후 강수확률
+					
+					$('#today-temp-min').empty().append(todayTempMin).append(celsius);				// 오늘 최저기온
+					$('#today-temp-max').empty().append(todayTempMax).append(celsius);				// 오늘 최고기온
+					$('#tomorrow-temp-min').empty().append(tomorrowTempMin).append(celsius);		// 내일 최저기온
+					$('#tomorrow-temp-max').empty().append(tomorrowTempMax).append(celsius);		// 내일 최고기온
+					$('#aft-tomorrow-temp-min').empty().append(aftTomorrowTempMin).append(celsius); // 모레 최저기온
+					$('#aft-tomorrow-temp-max').empty().append(aftTomorrowTempMax).append(celsius); // 모레 최고기온
 				});
 			}
         </script>
