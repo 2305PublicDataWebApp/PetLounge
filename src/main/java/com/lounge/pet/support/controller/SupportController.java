@@ -65,7 +65,7 @@ public class SupportController {
 	, method = RequestMethod.GET)
 	public String showSupportList(Integer currentPage, String category, String sort) {
 		Integer recordCountPerPage =  11;
-		System.out.println(currentPage + ", dlskjf:" + recordCountPerPage  + ", sort :" + sort);
+		System.out.println("currentPage:" +currentPage + ", recordCountPerPage:" + recordCountPerPage  + ", sort :" + sort);
 		if (category == null || category.isEmpty()) {
 			category = "all"; // 기본값으로 전체 카테고리 설정
 		}
@@ -144,9 +144,8 @@ public class SupportController {
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", "관리자에게 문의하세요.");
-			mv.addObject("error", e.getMessage());
 			mv.addObject("url", "/support/list.pet");
-			mv.setViewName("common/errorPage");
+			mv.setViewName("common/message");
 		}
 		return mv;
 	}
@@ -169,9 +168,8 @@ public class SupportController {
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", "관리자에게 문의하세요.");
-			mv.addObject("error", e.getMessage());
 			mv.addObject("url", "/support/list.pet");
-			mv.setViewName("common/errorPage");
+			mv.setViewName("common/message");
 		}
 		return mv;
 	}
@@ -196,9 +194,8 @@ public class SupportController {
 			}				
 		} catch (Exception e) {
 			mv.addObject("msg", "관리자에게 문의하세요.");
-			mv.addObject("error", e.getMessage());
 			mv.addObject("url", "/support/detail.pet?sNo="+sNo);
-			mv.setViewName("common/errorPage");
+			mv.setViewName("common/message");
 		}
 		return mv;
 		
@@ -254,9 +251,8 @@ public class SupportController {
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", "관리자에게 문의하세요.");
-			mv.addObject("error", e.getMessage());
 			mv.addObject("url", "/support/insert.pet");
-			mv.setViewName("common/errorPage");
+			mv.setViewName("common/message");
 		}
 		return mv;
 	}
@@ -280,13 +276,8 @@ public class SupportController {
 			} 
 		} catch (Exception e) {
 			mv.addObject("msg", "관리자에게 문의하세요.");
-			mv.addObject("error", e.getMessage());
 			mv.addObject("url", "/support/update.pet?sNo="+support.getsNo());
-			mv.setViewName("common/errorPage");
-			
-//			mv.addObject("msg", "관리자에게 문의하세요.");
-//			mv.addObject("url", "/support/update.pet?sNo="+support.getsNo());
-//			mv.setViewName("common/message");
+			mv.setViewName("common/message");
 		}
 		return mv;
 	}
@@ -312,9 +303,8 @@ public class SupportController {
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", "관리자에게 문의하세요.");
-			mv.addObject("error", e.getMessage());
 			mv.addObject("url", "/support/detail.pet?sNo="+sNo);
-			mv.setViewName("common/errorPage");
+			mv.setViewName("common/message");
 		}
 		return mv;
 	}

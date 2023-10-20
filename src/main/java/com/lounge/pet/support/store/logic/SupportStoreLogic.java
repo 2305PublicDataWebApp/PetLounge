@@ -10,6 +10,7 @@ import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.support.store.SupportStore;
+import com.lounge.pet.user.domain.UserSupport;
 
 @Repository
 public class SupportStoreLogic implements SupportStore{
@@ -115,6 +116,30 @@ public class SupportStoreLogic implements SupportStore{
 	public SupportHistory selectTodaySupport(SqlSession sqlSession) {
 		SupportHistory sHistory = sqlSession.selectOne("SHistoryMapper.selectTodaySupport");
 		return sHistory;
+	}
+
+	@Override
+	public List<Support> selectSupportListByStatus(SqlSession sqlSession, String status) {
+		List<Support> sList = sqlSession.selectList("SupportMapper.selectSupportListByStatus", status);
+		return sList;
+	}
+
+	@Override
+	public int getSupportListCountByStatus(SqlSession sqlSession, String status) {
+		int result = sqlSession.selectOne("SupportMapper.getSupportListCountByStatus", status);
+		return result;
+	}
+
+	@Override
+	public List<UserSupport> selectHistoryList(SqlSession sqlSession) {
+		List<UserSupport> sHList = sqlSession.selectList("SHistoryMapper.selectHistoryList");
+		return sHList;
+	}
+
+	@Override
+	public int getHistoryListCount(SqlSession sqlSession) {
+		int result = sqlSession.selectOne("SHistoryMapper.getHistoryListCount");
+		return result;
 	}
 
 	

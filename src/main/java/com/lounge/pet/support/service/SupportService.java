@@ -6,6 +6,7 @@ import java.util.Map;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
+import com.lounge.pet.user.domain.UserSupport;
 
 public interface SupportService {
 
@@ -31,7 +32,7 @@ public interface SupportService {
 	int updateSupport(Support support);
 
 	/**
-	 * 후원 내역 갯수 조회 Service
+	 * 후원내역 글번호로 갯수 조회 Service
 	 * @param sNo
 	 * @return int
 	 */
@@ -93,7 +94,7 @@ public interface SupportService {
 	int getSearchCount(Map<String, String> sMap);
 
 	/**
-	 * 후원 내역 등록 Service
+	 * 후원내역 등록 Service
 	 * @param sHistory
 	 * @return int
 	 */
@@ -114,7 +115,7 @@ public interface SupportService {
 	int getCountSHistory(SupportHistory sHistory);
 
 	/**
-	 * 후원 내역 조회 Service
+	 * 후원내역 글번호로 조회 Service
 	 * @param sNo
 	 * @return List
 	 */
@@ -122,12 +123,36 @@ public interface SupportService {
 
 
 	/**
-	 * 오늘 후원 내역 조회 Service
+	 * 오늘 후원내역 조회 Service
 	 * @return SupportHistory
 	 */
 	SupportHistory selectTodaySupport();
 
+	/**
+	 * 후원글 상태로 조회 Service
+	 * @param funding
+	 * @return
+	 */
+	List<Support> selectSupportListByStatus(String status);
 
+	/**
+	 * 후원글 갯수 상태로 조회 Service
+	 * @param keyword
+	 * @return
+	 */
+	int getSupportListCountByStatus(String status);
+
+	/**
+	 * 후원내역 조회 Service
+	 * @return List
+	 */
+	List<UserSupport> selectHistoryList();
+	
+	/**
+	 * 후원내역 갯수 조회 Service
+	 * @return int
+	 */
+	int getHistoryListCount();
 	
 
 }

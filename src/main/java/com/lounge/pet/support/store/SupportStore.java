@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
+import com.lounge.pet.user.domain.UserSupport;
 
 public interface SupportStore {
 
@@ -143,6 +144,36 @@ public interface SupportStore {
 	 * @return SupportHistory
 	 */
 	SupportHistory selectTodaySupport(SqlSession sqlSession);
+
+	/**
+	 * 후원글 상태로 조회 Store
+	 * @param sqlSession
+	 * @param status
+	 * @return List
+	 */
+	List<Support> selectSupportListByStatus(SqlSession sqlSession, String status);
+
+	/**
+	 * 후원글 갯수 상태로 조회 Store
+	 * @param sqlSession
+	 * @param status 
+	 * @return int
+	 */
+	int getSupportListCountByStatus(SqlSession sqlSession, String status);
+
+	/**
+	 * 후원내역 조회 Store
+	 * @param sqlSession
+	 * @return List
+	 */
+	List<UserSupport> selectHistoryList(SqlSession sqlSession);
+
+	/**
+	 * 후원내역 갯수 조회 Store
+	 * @param sqlSession
+	 * @return int
+	 */
+	int getHistoryListCount(SqlSession sqlSession);
 
 
 }

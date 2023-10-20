@@ -12,6 +12,7 @@ import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.support.service.SupportService;
 import com.lounge.pet.support.store.SupportStore;
+import com.lounge.pet.user.domain.UserSupport;
 
 @Service
 public class SupportServiceImpl implements SupportService{
@@ -123,6 +124,30 @@ public class SupportServiceImpl implements SupportService{
 	public SupportHistory selectTodaySupport() {
 		SupportHistory sHistory = sStore.selectTodaySupport(sqlSession);
 		return sHistory;
+	}
+
+	@Override
+	public List<Support> selectSupportListByStatus(String status) {
+		List<Support> sList = sStore.selectSupportListByStatus(sqlSession, status);
+		return sList;
+	}
+
+	@Override
+	public int getSupportListCountByStatus(String status) {
+		int result = sStore.getSupportListCountByStatus(sqlSession, status);
+		return result;
+	}
+
+	@Override
+	public List<UserSupport> selectHistoryList() {
+		List<UserSupport> sHList = sStore.selectHistoryList(sqlSession);
+		return sHList;
+	}
+
+	@Override
+	public int getHistoryListCount() {
+		int result = sStore.getHistoryListCount(sqlSession);
+		return result;
 	}
 
 

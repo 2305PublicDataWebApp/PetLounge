@@ -517,7 +517,7 @@
 						let center;
 						let right;
 						
-						const sHList = resultMap.sHList; // 댓글 리스트 
+						const sHList = resultMap.sHList; // 후원내역 리스트 
 						totalHistoryPages = resultMap.totalPages; // 총 페이지 수
 				        
 						if(sHList.length > 0) {
@@ -629,7 +629,7 @@
 			    const numGroups = Math.ceil(totalHistoryPages / naviCountPerPage);
 			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
 			    if (currentGroup < numGroups) {
-			        changeGroup(currentGroup + 1);
+			    	changeHistoryGroup(currentGroup + 1);
 			    }
 			}
 			
@@ -657,9 +657,11 @@
 		    	// daysDiff가 0보다 작으면 D-가 아니라 D+로 나오게 하기 
 		    	document.getElementById('d-day').innerText = "D+" + Math.abs(daysDiff); // Math.abs 절대값 구하는 함수 
 		    }
-		    // 후원버튼도 이걸로 비교해서 0보다 작으면 없어지고 모금 종료 뜨도록 하기 
+		    // 후원버튼도 이걸로 비교해서 0보다 작으면 없어지고 모금 종료 뜨도록 하기, 배경색 변경 
 		    if(daysDiff < 0) {
 		    	$(".section-btn").html('<span style="font-size:1.5em;">종료된 모금입니다.</span>');
+		    	$("#content").css('background-color', '#f1f1f1');
+		    	$(".tabs").css('background-color', '#f1f1f1');
 		    }
 			<!-- 목표 금액 불러온 숫자 사이에 , 넣어주기  -->
 	        let sTargetAmount = (${support.sTargetAmount }).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

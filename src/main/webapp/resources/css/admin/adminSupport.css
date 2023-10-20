@@ -120,9 +120,14 @@ ul {
 	td {
 		padding: 12px 5px 12px 5px;
 		font-size: 14.4px;
+/* 		vertical-align: center; */
 	}
     .table-left {
         text-align: left;
+        padding-left: 10px;
+    }
+    .table-right {
+        text-align: right;
         padding-left: 10px;
     }
 
@@ -138,7 +143,7 @@ ul {
 	
 	
 	
-.funding-wrap {
+.status-wrap {
     margin : 30px 70px 20px 0px;
     width: 95%;
     height: 100%;
@@ -146,7 +151,7 @@ ul {
     justify-content: flex-end;
 }
 
-.funding {
+.status {
     position: relative;
     width: 120px;
     height: 25px;
@@ -156,7 +161,7 @@ ul {
     background-size: 15px;
     cursor: pointer;
 }
-.funding:after {
+.status:after {
     content: '';
     display: block; 
     width: 2px;
@@ -166,7 +171,7 @@ ul {
         right: 35px;
     background: #ccc;
 }
-.funding .funding-label {
+.status .status-label {
     display: flex;
     align-items: center;
     width: inherit;
@@ -178,7 +183,7 @@ ul {
     cursor: pointer;
     font-size: 14px;
 } 
-.funding .optionList {
+.status .optionList {
     position: absolute; 
     z-index: 10;
     top: 23px;
@@ -193,27 +198,60 @@ ul {
     max-height: 0;
     --transition: .3s ease-in;
 }
-.funding.active .optionList {
+.status.active .optionList {
     max-height: 500px;
     border: 1px solid #ccc;
 }
-.funding .optionItem {
+.status .optionItem {
     padding: 5px 5px 5px;
     transition: .1s;
     font-size: 14px;
 }
 
-.funding .optionItem:hover {
+.status .optionItem:hover {
     background: #c1c1c1;
     color : #ffffff;
 }
 
-.funding .optionItem:last-child {
+.status .optionItem:last-child {
     border-bottom: 0 none;
 }
 
 /*  스크롤 커스텀 */
-.funding .optionList::-webkit-scrollbar {width: 6px;}
-.funding .optionList::-webkit-scrollbar-track {background: transparent; }
-.funding .optionList::-webkit-scrollbar-thumb {background: #303030; border-radius: 45px;}
-.funding .optionList::-webkit-scrollbar-thumb:hover {background: #303030;}
+.status .optionList::-webkit-scrollbar {width: 6px;}
+.status .optionList::-webkit-scrollbar-track {background: transparent; }
+.status .optionList::-webkit-scrollbar-thumb {background: #303030; border-radius: 45px;}
+.status .optionList::-webkit-scrollbar-thumb:hover {background: #303030;}
+
+/* 페이징 */
+.page-link {
+  color: #000; 
+  background-color: #fff;
+  border: 1px solid #ffffff; 
+}
+
+.page-item.active .page-link {
+ z-index: 1;
+ color: #fff;
+ font-weight:bold;
+ background-color: #FFD370;
+ border-color: #ffffff;
+ 
+}
+
+.page-link:focus, .page-link:hover {
+  color: #000;
+  background-color: #ececec; 
+  border-color: #ffffff;
+}
+
+
+.tr:hover {
+    background-color: rgba(255, 212, 112, 0.14);
+	transition: background-color 0.5s ease;
+	cursor: pointer;
+  }
+
+
+
+
