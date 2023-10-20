@@ -34,87 +34,87 @@
                         </div>
                             <ul class="region-list">
                                 <li>
-                                    <button class="button-item active" onclick="handleButtonClick('60', '127')">
+                                    <button class="button-item active" onclick="handleButtonClick('60', '127', 'Seoul')">
                                         서울
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('66', '103')">
+                                    <button class="button-item" onclick="handleButtonClick('66', '103', 'Sejong')">
                                         세종
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('51', '67')">
+                                    <button class="button-item" onclick="handleButtonClick('51', '67', 'Jeollanam-do')">
                                         전남
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('89', '91')">
+                                    <button class="button-item" onclick="handleButtonClick('89', '91', 'Gyeongsangbuk-do')">
                                         경북
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('91', '77')">
+                                    <button class="button-item" onclick="handleButtonClick('91', '77', 'Gyeongsangnam-do')">
                                         경남
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('60', '120')">
+                                    <button class="button-item" onclick="handleButtonClick('60', '120', 'Gyeonggi-do')">
                                         경기
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('68', '100')">
+                                    <button class="button-item" onclick="handleButtonClick('68', '100', 'Chungcheongnam-do')">
                                         충남
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('63', '89')">
+                                    <button class="button-item" onclick="handleButtonClick('63', '89', 'Jeollabuk-do')">
                                         전북
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('98', '76')">
+                                    <button class="button-item" onclick="handleButtonClick('98', '76', 'Busan')">
                                         부산
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('73', '134')">
+                                    <button class="button-item" onclick="handleButtonClick('73', '134', 'Gangwon-do')">
                                         강원
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('55', '124')">
+                                    <button class="button-item" onclick="handleButtonClick('55', '124', 'Incheon')">
                                         인천
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('69', '107')">
+                                    <button class="button-item" onclick="handleButtonClick('69', '107', 'Chungcheongbuk-do')">
                                         충북
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('89', '90')">
+                                    <button class="button-item" onclick="handleButtonClick('89', '90'. 'Daegu')">
                                         대구
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('102', '84')">
+                                    <button class="button-item" onclick="handleButtonClick('102', '84', 'Ulsan')">
                                         울산
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('52', '38')">
+                                    <button class="button-item" onclick="handleButtonClick('52', '38', 'Jeju')">
                                         제주
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('67', '100')">
+                                    <button class="button-item" onclick="handleButtonClick('67', '100', 'Daejeon')">
                                         대전
                                     </button>
                                 </li>
                                 <li>
-                                    <button class="button-item" onclick="handleButtonClick('58', '74')">
+                                    <button class="button-item" onclick="handleButtonClick('58', '74', 'Gwangju')">
                                         광주
                                     </button>
                                 </li>
@@ -145,7 +145,8 @@
                         <div class="today-weather-Temperature">
                         
                         	<!-- 날씨 아이콘 동적으로 수정 예정 -->
-                        	<img class="weather-icon" src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg">
+                        	<img id="weather-icon" src="" alt="날씨 아이콘">
+							<div id="tIcon"></div>
                             <span class="tTemp"></span>
                         </div>
                         <div class="img-area">
@@ -380,6 +381,9 @@
 	        let day2 = day.substr(-2);
 	        let initDate = year + month2 + day2;    // 오늘 날짜
 	        
+	        // 아이콘 출력을 위해 강수확률 값 저장할 변수 선언
+	        let rainValue = "";
+	        
 	        // API url, serviceKey, parameter 기본값
 	        let apiUrl = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst";
             const serviceKey = "4pYTUL0IAyNldYcuL1CFGcJpGrgPllaY%2BkD8xcBEHAbaLSA8xraNMsfHFO%2BXhGJmos%2FBszyn6LH7HoSBORAAhQ%3D%3D";
@@ -398,25 +402,22 @@
 			    return hours + minutes;										// 현재 시간
 			}
 			
-			// api 발표시간 오차로 60분 빼기
-			function calculateBaseTime(formattedTime, subtractMinutes) {
-			    let base_time = "0" + (formattedTime - subtractMinutes); // 구한 시간 앞에 0 추가
-			    console.log("bt : " +base_time.slice(-4));				 // 현재시간 - 1시간
-			    return base_time.slice(-4);								 // 0을 포함한 시간을 뒤에서 부터 4자리 반환
-			}
+// 			// api 발표시간 오차로 60분 빼기
+// 			function calculateBaseTime(formattedTime, subtractMinutes) {
+// 			    let base_time = "0" + (formattedTime - subtractMinutes); // 구한 시간 앞에 0 추가
+// // 			    console.log("bt : " +base_time.slice(-4));				 // 현재시간 - 1시간
+// 			    return base_time.slice(-4);								 // 0을 포함한 시간을 뒤에서 부터 4자리 반환
+// 			}
 
             
 			// 지역 선택(버튼 클릭)
-			function handleButtonClick (nxValue, nyValue) {
-				// 버튼 클릭 시 전달된 nxValue와 nyValue 값을 사용
-		        console.log('버튼이 클릭되었습니다.');
-		        console.log('nx:', nxValue);
-		        console.log('ny:', nyValue);
+			function handleButtonClick (nxValue, nyValue, city) {
 		        
 		        nx = nxValue; // 버튼 누른 지역의 nx 값
 		        ny = nyValue; // 버튼 누른 지역의 ny 값
+		        city = city
 		        
-		        weatherTemp(nx, ny);		// 현재 온도
+		        weatherTemp(nx, ny, city);	// 현재 온도
 		        weatherRain(nx, ny);		// 오늘 강수량
 		        weatherTempMinMax(nx, ny);	// 오늘 최저/최대 온도
 		        weatherTime(nx, ny);		// 오늘 시간별 기온
@@ -424,45 +425,46 @@
 			}
 
 			// api 출력 메소드 위치 기본값 세팅(서울)
-        	weatherTemp('60', '127');
-        	weatherRain('60', '127');
-        	weatherTempMinMax('60', '127');
+        	weatherTemp('60', '127', 'Seoul');
+        	//weatherRain('60', '127');
+        	//weatherTempMinMax('60', '127');
         	weatherTime('60', '127');
         	weatherDay('60', '127');
             
             // ************************************************ 초단기 실황(현재 온도) ************************************************//
-            function weatherTemp(nx, ny) {
-            	apiUrl = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst";
-            	
-// 			    const formattedTime = getFormattedTime(); // 현재 시간을 가져옴
-//    				base_time = calculateBaseTime(formattedTime, 60); // -60분
+            // openweathermap.api
+            function weatherTemp(nx, ny, city) {
+            	apiUrl = "https://api.openweathermap.org/data/2.5/weather";
+            	const apiKey = "a5d1dc2dfcf28e0c9a351c9a21ef186f";
+	            const url = apiUrl + "?q=" +  city + "&appid=" + apiKey + "&units=metric";
 
-				base_time = getFormattedTime();
-				
-	            const url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-	          	
 	            $.getJSON (url, function(data){
 	            	const celsius = "℃";
 	            	
-		            const temp = data.response.body.items.item[3].obsrValue; // 현재 온도 api 배열
+	            	let iconUrl;
+	            	formattedTime = getFormattedTime();
+	            	
+		            const $temp = data.main.temp; // 현재 온도 api 배열
+		            const reounderTemp = Math.round($temp * 10) / 10;
 		            
-		            $('.tTemp').empty().append(temp).append(celsius); // 현재 온도
+		            $('.tTemp').empty().append(reounderTemp).append(celsius); // 현재 온도
 		        });
             }
+
 			
 			// ************************************************ 단기 예보(강수확률) ************************************************//
          	function weatherRain(nx, ny) {
 				
-         		base_date = initDate;
+//          		base_date = initDate;
 				base_time="0200";
 				
 				// 0시 ~ 2시 비는 시간은 전날 23시 예보 출력
-				let formattedTime = getFormattedTime(); // 현재 시간
+// 				let formattedTime = getFormattedTime(); // 현재 시간
 				
-				if(formattedTime >= "0000" && formattedTime < "0300") {
-			        base_date = initDate - 1;
-			        base_time = "2300";
-				}
+// 				if(formattedTime >= "0000" && formattedTime < "0300") {
+// 			        base_date = initDate - 1;
+// 			        base_time = "2300";
+// 				}
          		
 	         	apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
 				
@@ -470,20 +472,20 @@
 				fcstTime = fcstTime.substring(0, 2) + "00";
 				
 	         	url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-	         	
+	         	console.log("단기 예보(강수확률) : " + url);
 				$.getJSON (url, function(data){
 					const percentage = "%";
 					let fcstValue = "";
 					
 					// 기상청 api 배열이 중간에 해당 시간대에만 출력되는 예보가 있어서 반복문 사용을 못했음.
-					if(formattedTime >= "0000" && formattedTime < "0300") {
+// 					if(formattedTime >= "0000" && formattedTime < "0300") {
 
-						switch(fcstTime) {
-							case '0000': fcstValue = data.response.body.items.item[7].fcstValue; break;
-							case '0100': fcstValue = data.response.body.items.item[19].fcstValue; break;
-							case '0200': fcstValue = data.response.body.items.item[31].fcstValue; break;
-						}
-					} else if(formattedTime >= "0300" && formattedTime < "2400") {
+// 						switch(fcstTime) {
+// 							case '0000': fcstValue = data.response.body.items.item[7].fcstValue; break;
+// 							case '0100': fcstValue = data.response.body.items.item[19].fcstValue; break;
+// 							case '0200': fcstValue = data.response.body.items.item[31].fcstValue; break;
+// 						}
+// 					} else if(formattedTime >= "0300" && formattedTime < "2400") {
 						
 						switch(fcstTime) {
 							case '0300': fcstValue = data.response.body.items.item[7].fcstValue; break;
@@ -508,8 +510,12 @@
 							case '2200': fcstValue = data.response.body.items.item[237].fcstValue; break;
 							case '2300': fcstValue = data.response.body.items.item[249].fcstValue; break;
 						}
-					}
+// 					}
+					rainValue = fcstValue; // 강수량 저장
+					console.log(rainValue);
 					$('.pro-rain').empty().append(fcstValue).append(percentage); // 강수 확률
+					
+					weatherIcon();
 				});
          	}
 			
@@ -520,11 +526,11 @@
 				base_time = "0200";
 				
 				// 0시 ~ 2시 비는 시간은 전날 23시 예보 출력
-				formattedTime = getFormattedTime(); // 현재 시간
-				if(formattedTime >= "0000" && formattedTime < "0300") {
-			        base_date = initDate - 1;
-			        base_time = "2300";
-				}
+// 				formattedTime = getFormattedTime(); // 현재 시간
+// 				if(formattedTime >= "0000" && formattedTime < "0300") {
+// 			        base_date = initDate - 1;
+// 			        base_time = "2300";
+// 				}
 				
 				apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
 				url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
@@ -537,12 +543,12 @@
 					let roundedTempMin;
 					
 					//  0시 ~ 2시 일 경우
-					if(formattedTime >= "0000" && formattedTime < "0200") {
-						tempMax = data.response.body.items.item[193].fcstValue;
-						tempMin = data.response.body.items.item[84].fcstValue;
-						roundedTempMax = Math.round(tempMax);
-						roundedTempMin = Math.round(tempMin);
-					}
+// 					if(formattedTime >= "0000" && formattedTime < "0200") {
+// 						tempMax = data.response.body.items.item[193].fcstValue;
+// 						tempMin = data.response.body.items.item[84].fcstValue;
+// 						roundedTempMax = Math.round(tempMax);
+// 						roundedTempMin = Math.round(tempMin);
+// 					}
 					
 					tempMax = data.response.body.items.item[157].fcstValue;
 					tempMin = data.response.body.items.item[48].fcstValue;
@@ -550,7 +556,7 @@
 					roundedTempMin = Math.round(tempMin);
 					
 					$('.temp-max').empty().append(roundedTempMax).append(celsius); // 최고 기온
-					$('.temp-min').empty().append(roundedTempMin).append(celsius); // 최고 기온
+					$('.temp-min').empty().append(roundedTempMin).append(celsius); // 최저 기온
 				});
 			}
 			
@@ -651,7 +657,7 @@
 			
 			// 시간대별 온도 추가해야함.
 			
-			// ************************************************ 단기 예보(일별 기온) ************************************************//
+			// ************************************************ 단기 예보(일별 기온/강수량) ************************************************//
 			function weatherDay(nx, ny) {
 				
 				// 오늘 날짜 출력
@@ -670,50 +676,106 @@
 					const fcstTimeAm = "0900"; // 오전
 					const fcstTimePm = "1800"; // 오후
 					
+// 					formattedTime = getFormattedTime(); // 현재 시간
+// 					let fcstTime = formattedTime.slice(0, -2) + "00"; // 예보 시간
+// 					console.log(fcstTime);
+					
 					// 오전/오후 강수량만 가져오는 배열
-					let weathers = new Array();
+					let popData = new Array();
+					let tmxData = new Array();
+					let tmnData = new Array();
 					data.response.body.items.item.map(function(weatherData) {
-						if(weatherData.category === "POP" 
-							&& (weatherData.fcstTime === "0900" || weatherData.fcstTime === "1800")) {
-							weathers.push(weatherData);
+						if(weatherData.category === "POP") {
+							popData.push(weatherData);
+						}else if(weatherData.category === "TMX") {
+							tmxData.push(weatherData);
+						}else if(weatherData.category === "TMN") {
+							tmnData.push(weatherData);
 						}
 					});
 					
-					const todayRainAm = weathers[0].fcstValue		// 오늘 오전 강수확률
-					const todayRainPw = weathers[1].fcstValue		// 오늘 강수확률
-					const tomorrowRainAm = weathers[2].fcstValue	// 내일 강수확률
-					const tomorrowRainPm = weathers[3].fcstValue	// 모레 강수확률
-					const aftTomorrowRainAm = weathers[4].fcstValue // 모레 강수확률
-					const aftTomorrowRainPm = weathers[5].fcstValue // 모레 강수확률
+					// 최고 기온
+					const nowTempMax = Math.round(tmxData[0].fcstValue);	// 오늘 최고 기온
+					const tmoTempMax = Math.round(tmxData[1].fcstValue);	// 내일 최고 기온
+					const aftTempMax = Math.round(tmxData[2].fcstValue);	// 모레 최고 기온
 					
-					const todayTempN = data.response.body.items.item[48].fcstValue   		 
-					const todayTempMin = Math.round(todayTempN);							 // 오늘 최저기온
-					const todayTempM = data.response.body.items.item[157].fcstValue   		 
-					const todayTempMax = Math.round(todayTempM);							 // 오늘 최고기온
-					const tomorrowTempN = data.response.body.items.item[338].fcstValue   		 
-					const tomorrowTempMin = Math.round(tomorrowTempN);						 // 내일 최저기온
-					const tomorrowTempM = data.response.body.items.item[447].fcstValue   		 
-					const tomorrowTempMax = Math.round(tomorrowTempM);						 // 내일 최고기온
-					const aftTomorrowTempN = data.response.body.items.item[628].fcstValue   		 
-					const aftTomorrowTempMin = Math.round(aftTomorrowTempN);				 // 모레 최저기온
-					const aftTomorrowTempM = data.response.body.items.item[737].fcstValue   		 
-					const aftTomorrowTempMax = Math.round(aftTomorrowTempM);				 // 모레 최고기온
+					$('.temp-max').empty().append(nowTempMax).append(celsius); 						// 오늘 최고 기온(지금 날씨)
+					$('#today-temp-max').empty().append(nowTempMax).append(celsius);				// 오늘 최고 기온(일별)
+					$('#tomorrow-temp-max').empty().append(tmoTempMax).append(celsius);				// 내일 최고 기온(일별)
+					$('#aft-tomorrow-temp-max').empty().append(aftTempMax).append(celsius);			// 모레 최고 기온(일별)
 					
-					$('#today-rain-am').empty().append(todayRainAm).append(percentage);				// 오늘 오전 강수확률
-					$('#today-rain-pm').empty().append(todayRainPw).append(percentage);				// 오늘 오전 강수확률
-					$('#tomorrow-rain-am').empty().append(tomorrowRainAm).append(percentage);			// 내일 오전 강수확률
-					$('#tomorrow-rain-pm').empty().append(tomorrowRainPm).append(percentage);			// 내일 오후 강수확률
-					$('#aft-tomorrow-am').empty().append(aftTomorrowRainAm).append(percentage);		// 모레 오전 강수확률
-					$('#aft-tomorrow-pm').empty().append(aftTomorrowRainPm).append(percentage); 	// 모레 오후 강수확률
+					// 최저 기온
+					const nowTempMin = Math.round(tmnData[0].fcstValue);
+					const tmoTempMin = Math.round(tmnData[1].fcstValue);
+					const aftTempMin = Math.round(tmnData[2].fcstValue);
 					
-					$('#today-temp-min').empty().append(todayTempMin).append(celsius);				// 오늘 최저기온
-					$('#today-temp-max').empty().append(todayTempMax).append(celsius);				// 오늘 최고기온
-					$('#tomorrow-temp-min').empty().append(tomorrowTempMin).append(celsius);		// 내일 최저기온
-					$('#tomorrow-temp-max').empty().append(tomorrowTempMax).append(celsius);		// 내일 최고기온
-					$('#aft-tomorrow-temp-min').empty().append(aftTomorrowTempMin).append(celsius); // 모레 최저기온
-					$('#aft-tomorrow-temp-max').empty().append(aftTomorrowTempMax).append(celsius); // 모레 최고기온
+					$('.temp-min').empty().append(nowTempMin).append(celsius); // 오늘 최저 기온
+					
+					
+					
+					
+// 					const todayRainAm = weathers[0].fcstValue		// 오늘 오전 강수확률
+// 					const todayRainPw = weathers[1].fcstValue		// 오늘 강수확률
+// 					const tomorrowRainAm = weathers[2].fcstValue	// 내일 강수확률
+// 					const tomorrowRainPm = weathers[3].fcstValue	// 모레 강수확률
+// 					const aftTomorrowRainAm = weathers[4].fcstValue // 모레 강수확률
+// 					const aftTomorrowRainPm = weathers[5].fcstValue // 모레 강수확률
+					
+// 					const todayTempN = data.response.body.items.item[48].fcstValue   		 
+// 					const todayTempMin = Math.round(todayTempN);							 // 오늘 최저기온
+// 					const todayTempM = data.response.body.items.item[157].fcstValue   		 
+// 					const todayTempMax = Math.round(todayTempM);							 // 오늘 최고기온
+// 					const tomorrowTempN = data.response.body.items.item[338].fcstValue   		 
+// 					const tomorrowTempMin = Math.round(tomorrowTempN);						 // 내일 최저기온
+// 					const tomorrowTempM = data.response.body.items.item[447].fcstValue   		 
+// 					const tomorrowTempMax = Math.round(tomorrowTempM);						 // 내일 최고기온
+// 					const aftTomorrowTempN = data.response.body.items.item[628].fcstValue   		 
+// 					const aftTomorrowTempMin = Math.round(aftTomorrowTempN);				 // 모레 최저기온
+// 					const aftTomorrowTempM = data.response.body.items.item[737].fcstValue   		 
+// 					const aftTomorrowTempMax = Math.round(aftTomorrowTempM);				 // 모레 최고기온
+					
+// 					$('#today-rain-am').empty().append(todayRainAm).append(percentage);				// 오늘 오전 강수확률
+// 					$('#today-rain-pm').empty().append(todayRainPw).append(percentage);				// 오늘 오전 강수확률
+// 					$('#tomorrow-rain-am').empty().append(tomorrowRainAm).append(percentage);		// 내일 오전 강수확률
+// 					$('#tomorrow-rain-pm').empty().append(tomorrowRainPm).append(percentage);		// 내일 오후 강수확률
+// 					$('#aft-tomorrow-am').empty().append(aftTomorrowRainAm).append(percentage);		// 모레 오전 강수확률
+// 					$('#aft-tomorrow-pm').empty().append(aftTomorrowRainPm).append(percentage); 	// 모레 오후 강수확률
+					
+// 					$('#today-temp-min').empty().append(todayTempMin).append(celsius);				// 오늘 최저기온
+// 					$('#today-temp-max').empty().append(todayTempMax).append(celsius);				// 오늘 최고기온
+// 					$('#tomorrow-temp-min').empty().append(tomorrowTempMin).append(celsius);		// 내일 최저기온
+// 					$('#tomorrow-temp-max').empty().append(tomorrowTempMax).append(celsius);		// 내일 최고기온
+// 					$('#aft-tomorrow-temp-min').empty().append(aftTomorrowTempMin).append(celsius); // 모레 최저기온
+// 					$('#aft-tomorrow-temp-max').empty().append(aftTomorrowTempMax).append(celsius); // 모레 최고기온
 				});
+				
+//             	let iconUrl;
+//             	formattedTime = getFormattedTime();	// 현재 시간
 			}
+			// 아이콘 출력
+			function weatherIcon() {
+				console.log("rainValue : "+rainValue);
+				
+				let iconUrl;
+				formattedTime = getFormattedTime(); // 현재 시간
+				console.log("formattedTime : " + formattedTime);
+				
+				if (rainValue == "0") {
+					// 오전 7시부터 오후 5시까지는 해 이미지
+					if(formattedTime >= "0700" && formattedTime <"1800") {
+						iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg";
+					// 오후 6시부터 다음 날 아침 6시까지는 달 이미지
+					} else {
+						iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-night.svg";
+					}
+				} else if (rainValue > "0") {
+					iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/rain.svg";
+				}
+				
+				const weatherIcon = document.getElementById("weather-icon");
+				weatherIcon.src = iconUrl;
+			}
+			
         </script>
         <script type="text/javascript" src="../resources/js/weather/tmi.js"></script>
     </body>

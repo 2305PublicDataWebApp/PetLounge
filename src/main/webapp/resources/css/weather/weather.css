@@ -269,9 +269,10 @@ label {
 }
 
 /* 날씨 아이콘 */
-.weather-icon {
+#weather-icon {
 	position: relative;
-	bottom: 28px;
+	bottom: 26px;
+/* 	right: 20px; */
 	width: 70px;
 	height: 70px;
 	margin: 0 5px;
