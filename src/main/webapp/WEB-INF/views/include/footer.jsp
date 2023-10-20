@@ -22,6 +22,7 @@
                     <h6 class="footer-heading text-uppercase text-white">Resources</h6>
                     <ul class="list-unstyled footer-link mt-4">
                         <li><a href="https://apis.map.kakao.com/" target="_blank">Kakao Maps API</a></li>
+                        <li><a href="https://openweathermap.org/" target="_blank">Open Weather Map API</a></li>
                         <li><a href="https://www.data.go.kr/" target="_blank">Public Data Portal API</a></li>
                         <li><a href="https://portone.io/korea/ko" target="_blank">PortOne API</a></li>
                         <li><a href="https://codepen.io/" target="_blank">CodePen</a></li>
