@@ -136,9 +136,9 @@
 	                                    <colgroup>
 	                                        <col width="40%">
 	                                        <col width="15%">
+	                                        <col width="17%">
 	                                        <col width="15%">
-	                                        <col width="15%">
-	                                        <col width="15%">
+	                                        <col width="13%">
 	                                    </colgroup>
 	                                    <thead>
 	                                        <tr>
@@ -169,38 +169,33 @@
 	                                <p class="content-title-name">펫 라운지 모금함 : 후원 댓글 조회</p>
 	                                <div class="line"></div>
 	                            </div>
-	                            <div id="notice">
+	                            <div id="s-reply-list">
 	                                <table id="reply-table">
 	                                    <colgroup>
-	                                        <col width="30%">
-	                                        <col width="45%">
-	                                        <col width="25%">
+	                                        <col width="35%">
+	                                        <col width="35%">
+	                                        <col width="15%">
+	                                        <col width="15%">
 	                                    </colgroup>
 	                                    <thead>
 	                                        <tr>
 	                                            <th class="table-border">모금함 제목</th>
 	                                            <th class="table-border">댓글 내용</th>
+	                                            <th class="table-border">작성자</th>
 	                                            <th class="table-border">작성일</th>
 	                                        </tr>
 	                                    </thead>
 	                                    <tbody>
 	                                        <tr>
-	                                            <td class="table-border table-left">협회 구조묘들의 건강한...</td>
-	                                            <td class="table-border">댓글 내용 입니다.</td>
-	                                            <td class="table-border">2023.10.20 10:30</td>
+	                                            <td class="table-border table-left"></td>
+	                                            <td class="table-border table-left"></td>
+	                                            <td class="table-border"></td>
+	                                            <td class="table-border"></td>
 	                                        </tr>
 	                                    </tbody>
 	                                </table>
 	                                <div class="page-navigation">
-	                                    <ul id="reply-pagination" class="pagination pagination-sm">
-		                                    <li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>
-		                                    <li class="page-item"><a class="page-link" href="javascript:void(0)">1</a></li>
-		                                    <li class="page-item"><a class="page-link" href="javascript:void(0)">2</a></li>
-		                                    <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-		                                    <li class="page-item"><a class="page-link" href="javascript:void(0)"">4</a></li>
-		                                    <li class="page-item"><a class="page-link" href="javascript:void(0)">5</a></li>
-		                                    <li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>
-		                                </ul>
+	                                    <ul id="reply-pagination" class="pagination pagination-sm"></ul>
                                 	</div>
 	                            </div>
 	                        </div>
@@ -226,7 +221,6 @@
 			
 			// 후원글 리스트를 불러오는 ajax Function 
 			const getSupportList = (currentPage, status) => {
-// 				console.log("getSupportList status :" + status);
 				$.ajax({
 					url : "/admin/sList.pet",
 					data : { currentPage : currentPage, status : status}, // 현재 페이지와 후원 상태 전달 
@@ -246,6 +240,8 @@
 						
 						if(sList.length > 0) {
 							for(let i in sList) {
+								
+								// 카테고리 한글로 넣어주기  
 								let sCategory = '';
 								switch(sList[i].sCategory) {
 								case 'residence' : 
@@ -262,7 +258,7 @@
 									break;
 								}
 								
-								<!-- Date타입 날짜 형식 변환 -->
+								// Date타입 날짜 형식 변환 
 								function formatDate(dataString) {
 									const dateParts = dataString.match(/(\d{1,2})월 (\d{1,2}), (\d{4})/);
 									if (dateParts) {
@@ -279,13 +275,17 @@
 							      		console.error("날짜를 파싱하지 못했습니다.");
 									}
 						        }
+								
+								// 후원글 제목 길이 잘라주기 
+								let title = sList[i].sTitle;
+								let truncatedTitle = title.length > 30 ? title.substring(0, 29) + '...' : title;
 						        
 								tr = $("<tr onclick='window.location.href=\"/support/detail.pet?sNo="+sList[i].sNo+"\"' class='tr'>");
 								category = $("<td class='table-border'>").html(""+sCategory+""); 
-								title = $("<td class='table-border table-left'>").html(""+sList[i].sTitle+""); 
+								title = $("<td class='table-border table-left'>").html(""+truncatedTitle+""); 
 								group = $("<td class='table-border'>").html(""+sList[i].sGroup+""); 
 								term = $("<td class='table-border'>").html(""+formatDate(sList[i].sStart)+"<br> ~ "+formatDate(sList[i].sEnd)+""); 
-								amounts = $("<td class='table-border'>").html(""+sList[i].sFundAmount.toLocaleString()+" / <br>"+sList[i].sTargetAmount.toLocaleString()+" 원"); 
+								amounts = $("<td class='table-border table-right'>").html(""+sList[i].sFundAmount.toLocaleString()+" / <br>"+sList[i].sTargetAmount.toLocaleString()+" 원"); 
 								
 				
 								tr.append(category);
@@ -384,23 +384,15 @@
 			
 			
 			<!-- Timestamp타입 날짜 형식 변환 -->
-// 			const getFormattedTimestamp = (dateString) => {
-// 			    const options = { year: 'numeric', month: '2-digit', day: '2-digit'};
-// 			    const formattedDate = new Date(dateString).toLocaleDateString('ko-KR', options);
-// 			    return formattedDate;
-// 			};
 			const getFormattedTimestamp = (dateString) => {
-	
 				// Date 객체를 생성
 				const date = new Date(dateString);
-	
 				// 년, 월, 일 추출
 				const year = date.getFullYear();
 				const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 +1을 하고 두 자리로 포맷팅
 				const day = date.getDate().toString().padStart(2, '0');
-
 				// 최종 결과를 출력
-				const formattedDate = `${year}.${month}.${day}`;
+				const formattedDate = year + '.' + month + '.' + day;
 				return formattedDate;
 			}
 			
@@ -426,25 +418,29 @@
 				        
 						if(sHList.length > 0) {
 							for(let i in sHList) {
+								// 닉네임, 숨은천사 
 								let sHName = sHList[i].sHName;
 								if(sHList[i].sHType == 'A') {
 									sHName = '숨은천사';
 								}
 								
-								let sHPaytype = sHList[i].sHPaytype;
-								switch(sHPaytype) {
-								case 'kakaopay' : sHPaytype = '카카오페이'; break;
-								case 'creditcard' : sHPaytype = '신용카드'; break;
+								// 결제방법 이미지 넣어주기
+								let sHPaytypeImage = '';
+								switch(sHList[i].sHPaytype) {
+								case 'kakaopay' : sHPaytypeImage = '/resources/images/user/kakaoLogo2.png'; break;
+								case 'creditcard' : sHPaytypeImage = '/resources/images/user/card_credit.png'; break;
 								}
 								
-								console.log(sHList[i].sHPaydate);
+								// 후원글 제목 길이 잘라주기 
+								let sTitle = sHList[i].sTitle;
+								let truncatedTitle = sTitle.length > 21 ? sTitle.substring(0, 20) + '...' : sTitle;
 								
 								tr = $("<tr onclick='window.location.href=\"/support/detail.pet?sNo="+sHList[i].sNo+"\"' class='tr'>");
-								title = $("<td class='table-border table-left'>").html(""+sHList[i].sTitle+""); 
+								title = $("<td class='table-border table-left'>").html(""+truncatedTitle+""); 
 								nickname = $("<td class='table-border'>").html(""+sHName+""); 
-								amount = $("<td class='table-border table-right'>").html(""+sHList[i].sHAmount.toLocaleString()+" 원"); 
+								amount = $("<td class='table-border table-right'>").html(""+sHList[i].sHAmount.toLocaleString()+"원"); 
 								paydate = $("<td class='table-border'>").html(""+getFormattedTimestamp(sHList[i].sHPaydate)+""); 
-								paytype = $("<td class='table-border'>").html(""+sHPaytype+""); 
+								paytype = $("<td class='table-border'>").html("<img src='"+sHPaytypeImage+"' style='width: 25px; height: 25px'>"); 
 								
 				
 								tr.append(title);
@@ -546,7 +542,137 @@
 			
 			
 			
+			// 댓글 리스트를 불러오는 ajax Function 
+			const getReplyList = () => {
+				$.ajax({
+					url : "/admin/sRList.pet",
+					data : { currentPage: currentPage }, // 현재 페이지와 페이지당 댓글 수 전달
+					type : "GET",
+					success : function(resultMap) {
+						const tableBody = $("#reply-table tbody");
+						tableBody.html('');
+						let tr;
+						let title;
+						let content;
+						let nickname;
+						let date;
+						
+						const sRList = resultMap.sRList; // 댓글 리스트 
+						totalReplyPages = resultMap.totalPages; // 총 페이지 수
+						
+						if(sRList.length > 0) {
+							for(let i in sRList) {
+								
+								
+								let sRDate = getFormattedTimestamp(sRList[i].sRCreate);
+								if(sRList[i].sRCreate != sRList[i].sRUpdate) {
+									sRDate = getFormattedTimestamp(sRList[i].sRUpdate);
+								}
+								// 후원글 제목 길이 잘라주기 
+								let sTitle = sRList[i].sTitle;
+								let truncatedTitle = sTitle.length > 18 ? sTitle.substring(0, 17) + '...' : sTitle;
+								
+								tr = $("<tr onclick='window.location.href=\"/support/detail.pet?sNo="+sRList[i].sNo+"\"' class='tr'>");
+								title = $("<td class='table-border table-left'>").html(""+truncatedTitle+""); 
+								content = $("<td class='table-border table-left'>").html(""+sRList[i].sRContent+""); 
+								nickname = $("<td class='table-border'>").html(""+sRList[i].uNickName+""); 
+								date = $("<td class='table-border'>").html(""+sRDate+""); 
+								
+								
+								tr.append(title);
+								tr.append(content);	
+								tr.append(nickname); 
+								tr.append(date); 
+								tableBody.append(tr); 
+								
+								// 결과를 받은 후에 페이징을 업데이트
+					            createReplyPagination(totalReplyPages);
+							}
+						} else {
+							tr = $("<tr class='td'><td class='td'colspan='3'style='width:725px;'><div width='100%' style='color: lightgray;'>등록된 댓글이 없습니다.</div></td></tr>");
+							tableBody.append(tr);
+						}
+					},
+					error : function() {
+						alert("Ajax 오류! 관리자에게 문의하세요.");
+					}
+				});
+			}
 			
+			// 댓글 페이지 만들기 
+			const createReplyPagination = (totalReplyPages) => {
+			    const replyPaginationUl = $("#reply-pagination");
+			    replyPaginationUl.empty(); // 이전의 페이징 링크를 지움
+			    
+			    const naviCountPerPage = 5; // 한 그룹당 페이지 수
+			    const numGroups = Math.ceil(totalReplyPages / naviCountPerPage); // 총 그룹 수
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage); // 현재 페이지가 속한 그룹
+
+			    let startPage = (currentGroup - 1) * naviCountPerPage + 1;
+			    let endPage = Math.min(currentGroup * naviCountPerPage, totalReplyPages);
+			    
+			 	// "이전" 버튼 추가
+			    if (currentGroup > 1) {
+			        const prevLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>');
+			        prevLi.click(() => {
+			            goToPreviousGroup();
+			        });
+			        replyPaginationUl.append(prevLi);
+			    }
+			 	// 페이지 링크 추가
+			    for (let i = startPage; i <= endPage; i++) {
+			        const li = $('<li class="page-item" data-page="${i}"><a class="page-link" href="javascript:void(0)">'+i+'</a></li>');
+			        
+			     	// 현재 페이지에 해당하는 경우 클래스 추가
+			        if (i === currentPage) {
+			            li.addClass('active');
+			        }
+			     
+			        li.click(() => {
+			        	changeReplyPage(i);
+			        });
+			        replyPaginationUl.append(li);
+			    }
+			 	
+				// "다음" 버튼 추가
+			    if (currentGroup < numGroups) {
+			        const nextLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>');
+			        nextLi.click(() => {
+			            goToNextGroup();
+			        });
+			        replyPaginationUl.append(nextLi);
+			    }
+			}
+			
+			// 댓글 페이지 변경 시 호출되는 함수
+			const changeReplyPage = (newPage) => {
+			    currentPage = newPage;
+			    getReplyList(currentPage);
+			}
+			
+			// 댓글 그룹 변경 시 호출되는 함수
+			const changeGroup = (newGroup) => {
+			    currentPage = (newGroup - 1) * naviCountPerPage + 1;
+			    getReplyList(currentPage);
+			}
+
+			// 댓글 이전 그룹으로 이동할 때 호출 
+			const goToPreviousGroup = () => {
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup > 1) {
+			        const lastPageOfPreviousGroup = (currentGroup - 1) * naviCountPerPage;
+			        changeReplyPage(lastPageOfPreviousGroup);
+			    }
+			}
+
+			// 댓글 다음 그룹으로 이동할 때 호출
+			const goToNextGroup = () => {
+			    const numGroups = Math.ceil(totalReplyPages / naviCountPerPage);
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup < numGroups) {
+			        changeGroup(currentGroup + 1);
+			    }
+			}
 			
 			
 			
@@ -555,7 +681,7 @@
 			$(function(){
 				getSupportList(currentPage, status);
 				getHistoryList();
-// 				getReplyList();
+				getReplyList();
 			})
 			
 			
@@ -569,7 +695,6 @@
 	        status = item.getAttribute('data-status');
 	        label.innerHTML = item.textContent;
 		    currentPage = 1; 
-// 		    console.log(status);
 			getSupportList(currentPage, status);
 	        }
 	        

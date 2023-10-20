@@ -150,5 +150,17 @@ public class SupportServiceImpl implements SupportService{
 		return result;
 	}
 
+	@Override
+	public List<UserSupport> selectReplyList() {
+		List<UserSupport> sRList = sStore.selectReplyList(sqlSession);
+		return sRList;
+	}
+
+	@Override
+	public int getReplyListCount() {
+		int result = sStore.getReplyListCount(sqlSession);
+		return result;
+	}
+
 
 }

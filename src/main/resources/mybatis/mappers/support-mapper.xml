@@ -4,94 +4,127 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="SupportMapper">
 
-	
+	<!-- 후원글 등록 -->
 	<insert id="insertSupport">
-		INSERT INTO SUPPORT_TBL 
-		VALUES(S_SEQ_NO.NEXTVAL, #{sCategory}, #{sTitle}, #{sContent}, #{sGroup}, DEFAULT, DEFAULT, 
-		#{sStart}, #{sEnd}, #{sTargetAmount}, DEFAULT, DEFAULT, DEFAULT, #{sImageUrl})
+		INSERT INTO 
+			SUPPORT_TBL 
+		VALUES
+			(S_SEQ_NO.NEXTVAL, #{sCategory}, #{sTitle}, #{sContent}, #{sGroup}, DEFAULT, DEFAULT, 
+			#{sStart}, #{sEnd}, #{sTargetAmount}, DEFAULT, DEFAULT, DEFAULT, #{sImageUrl})
 	</insert>
 	
+	<!-- 후원글 수정 -->
 	<update id="updateSupport">
-		UPDATE SUPPORT_TBL 
-		SET S_CATEGORY = #{sCategory}, S_TITLE = #{sTitle}, S_CONTENT = #{sContent}, S_GROUP = #{sGroup}, 
-		S_UPDATE = DEFAULT, S_START = #{sStart}, S_END = #{sEnd}, S_TARGET_AMOUNT = #{sTargetAmount}, S_IMAGE_URL = #{sImageUrl} 
-		WHERE S_NO = #{sNo} 
+		UPDATE 
+			SUPPORT_TBL 
+		SET 
+			S_CATEGORY = #{sCategory}, S_TITLE = #{sTitle}, S_CONTENT = #{sContent}, S_GROUP = #{sGroup}, 
+			S_UPDATE = DEFAULT, S_START = #{sStart}, S_END = #{sEnd}, S_TARGET_AMOUNT = #{sTargetAmount}, S_IMAGE_URL = #{sImageUrl} 
+		WHERE 
+			S_NO = #{sNo} 
 	</update>
 	
-	<update id="endSupport">
-		UPDATE SUPPORT_TBL 
-		SET S_UPDATE = DEFAULT, S_STATUS = 'E' WHERE S_NO = #{sNo} 
-	</update>
-	
+	<!-- 후원글 삭제 -->
 	<update id="deleteSupport">
-		UPDATE SUPPORT_TBL 
-		SET S_UPDATE = DEFAULT, S_STATUS = 'N' WHERE S_NO = #{sNo}
+		UPDATE 
+			SUPPORT_TBL 
+		SET 
+			S_UPDATE = DEFAULT, S_STATUS = 'N' 
+		WHERE 
+			S_NO = #{sNo}
 	</update>
 	
-	
+	<!-- 후원글 상세 조회 -->
 	<select id="selectSupportByNo" resultType="Support">
-		SELECT * FROM SUPPORT_TBL 
-		WHERE S_NO = #{sNo}
+		SELECT 
+			* 
+		FROM 
+			SUPPORT_TBL 
+		WHERE 
+			S_NO = #{sNo}
 	</select>
 	
-
+	<!-- 후원글 목록 갯수 조회 -->
 	<select id="getSearchCount" resultType="_int">
-		SELECT COUNT(*) FROM SUPPORT_TBL 
+		SELECT 
+			COUNT(*) FROM SUPPORT_TBL 
 		<if test="category != 'all'">
-		WHERE S_STATUS = 'Y' AND TO_CHAR(SYSDATE, 'yyyy-mm-dd') <![CDATA[<=]]> TO_CHAR(S_END, 'yyyy-mm-dd') AND S_CATEGORY = #{category}
+		WHERE 
+			S_STATUS = 'Y' AND TO_CHAR(SYSDATE, 'yyyy-mm-dd') <![CDATA[<=]]> TO_CHAR(S_END, 'yyyy-mm-dd') AND S_CATEGORY = #{category}
 		</if>
 		<if test="category == 'all'">
-		WHERE S_STATUS = 'Y' AND TO_CHAR(SYSDATE, 'yyyy-mm-dd') <![CDATA[<=]]> TO_CHAR(S_END, 'yyyy-mm-dd')
+		WHERE 
+			S_STATUS = 'Y' AND TO_CHAR(SYSDATE, 'yyyy-mm-dd') <![CDATA[<=]]> TO_CHAR(S_END, 'yyyy-mm-dd')
 		</if>
 	</select>
 	
+	<!-- 후원글 목록 조회 -->
 	<select id="selectSupportList" resultType="Support">
-		SELECT * FROM SUPPORT_TBL 
+		SELECT 
+			* 
+		FROM 
+			SUPPORT_TBL 
 		<if test="category != 'all'">
-		WHERE S_STATUS = 'Y' AND TO_CHAR(SYSDATE, 'yyyy-mm-dd') <![CDATA[<=]]> TO_CHAR(S_END, 'yyyy-mm-dd') AND S_CATEGORY = #{category} 
+		WHERE 
+			S_STATUS = 'Y' AND TO_CHAR(SYSDATE, 'yyyy-mm-dd') <![CDATA[<=]]> TO_CHAR(S_END, 'yyyy-mm-dd') AND S_CATEGORY = #{category} 
 			<if test="sort == 'latest'">
-				ORDER BY S_NO DESC
+				ORDER BY 
+					S_NO DESC
 			</if>
 			<if test="sort == 'mostFunded'">
-				ORDER BY S_FUND_AMOUNT DESC
+				ORDER BY 
+					S_FUND_AMOUNT DESC
 			</if>
 			<if test="sort == 'leastFunded'">
-				ORDER BY S_FUND_AMOUNT
+				ORDER BY 
+					S_FUND_AMOUNT
 			</if>
 			<if test="sort == 'highestFunded'">
-				ORDER BY (S_FUND_AMOUNT/S_TARGET_AMOUNT) DESC
+				ORDER BY 
+					(S_FUND_AMOUNT/S_TARGET_AMOUNT) DESC
 			</if>
 			<if test="sort == 'endingSoonest'">
-				ORDER BY (S_END - SYSDATE)
+				ORDER BY 
+					(S_END - SYSDATE)
 			</if>
 		</if>
 		<if test="category == 'all'">
-		WHERE S_STATUS = 'Y' AND TO_CHAR(SYSDATE, 'yyyy-mm-dd') <![CDATA[<=]]> TO_CHAR(S_END, 'yyyy-mm-dd')
+		WHERE 
+			S_STATUS = 'Y' AND TO_CHAR(SYSDATE, 'yyyy-mm-dd') <![CDATA[<=]]> TO_CHAR(S_END, 'yyyy-mm-dd')
 			<if test="sort == 'latest'">
-				ORDER BY S_NO DESC
+				ORDER BY 
+					S_NO DESC
 			</if>
 			<if test="sort == 'mostFunded'">
-				ORDER BY S_FUND_AMOUNT DESC
+				ORDER BY 
+					S_FUND_AMOUNT DESC
 			</if>
 			<if test="sort == 'leastFunded'">
-				ORDER BY S_FUND_AMOUNT
+				ORDER BY 
+					S_FUND_AMOUNT
 			</if>
 			<if test="sort == 'highestFunded'">
-				ORDER BY (S_FUND_AMOUNT/S_TARGET_AMOUNT) DESC
+				ORDER BY 
+					(S_FUND_AMOUNT/S_TARGET_AMOUNT) DESC
 			</if>
 			<if test="sort == 'endingSoonest'">
-				ORDER BY (S_END - SYSDATE)
+				ORDER BY 
+					(S_END - SYSDATE)
 			</if>
 		</if>
 	</select>
 	
+	<!-- 결제 후 후원글 모금금액, 모금인원 추가 -->
 	<update id="updateSupportFund">
-		UPDATE SUPPORT_TBL 
-		SET S_FUND_AMOUNT = S_FUND_AMOUNT + #{sFundAmount}, S_COUNT = S_COUNT + 1
-		WHERE S_NO = #{sNo} 
+		UPDATE 
+			SUPPORT_TBL 
+		SET 
+			S_FUND_AMOUNT = S_FUND_AMOUNT + #{sFundAmount}, S_COUNT = S_COUNT + 1
+		WHERE 
+			S_NO = #{sNo} 
 	</update>
 	
-	<!-- 관리자페이지에 필요한 상태별 후원글 리스트 -->
+	<!-- 관리자페이지에 필요한 상태별 후원글 갯수 -->
 	<select id="getSupportListCountByStatus" resultType="_int">
 		SELECT COUNT(*) FROM SUPPORT_TBL 
 		<if test="status == 'all'">
@@ -105,6 +138,7 @@
 		</if>
 	</select>
 	
+	<!-- 관리자페이지에 필요한 상태별 후원글 리스트 -->
 	<select id="selectSupportListByStatus" resultType="Support">
 		SELECT * FROM SUPPORT_TBL 
 		<if test="status == 'all'">

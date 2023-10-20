@@ -96,7 +96,7 @@ public class AdminController {
 	@RequestMapping(value = "/sHList.pet"
 	, produces = "application/json; charset=utf-8"
 	, method = RequestMethod.GET)
-	public String showHistoryList(Integer currentPage) {
+	public String showSupportHistoryList(Integer currentPage) {
 		Integer recordCountPerPage =  5;
 		// 페이징을 적용하여 댓글 데이터를 가져오도록 구현 
 		int start = (currentPage - 1) * recordCountPerPage;
@@ -107,7 +107,7 @@ public class AdminController {
 		// 범위 체크를 통해 부분 리스트 추출
 		if (start < sHList.size()) {
 			end = Math.min(end, sHList.size());
-			// 범위에 해당하는 부분 리스트를 추출하여 sList에 대입
+			// 범위에 해당하는 부분 리스트를 추출하여 sHList에 대입
 			sHList  = sHList.subList(start, end);
 		} else {
 			sHList  = Collections.emptyList();
@@ -126,5 +126,40 @@ public class AdminController {
 		return gson.toJson(resultMap);
 	}
 	
+	
+	// 관리자페이지 후원관리페이지 댓글 조회
+		@ResponseBody
+		@RequestMapping(value = "/sRList.pet"
+		, produces = "application/json; charset=utf-8"
+		, method = RequestMethod.GET)
+		public String showSupportReplyList(Integer currentPage) {
+			Integer recordCountPerPage =  5;
+			// 페이징을 적용하여 댓글 데이터를 가져오도록 구현 
+			int start = (currentPage - 1) * recordCountPerPage;
+			int end = start + recordCountPerPage;
+			
+			List<UserSupport> sRList = sService.selectReplyList();
+			
+			// 범위 체크를 통해 부분 리스트 추출
+			if (start < sRList.size()) {
+				end = Math.min(end, sRList.size());
+				// 범위에 해당하는 부분 리스트를 추출하여 sRList에 대입
+				sRList  = sRList.subList(start, end);
+			} else {
+				sRList  = Collections.emptyList();
+			}
+			
+			// 전체 페이지 수 계산 (후원내역의 총 갯수를 페이지당 글 갯수로 나눠서 계산) 
+			int totalRecords = sService.getReplyListCount(); // 후원글 댓글의 총 갯수 
+			int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 전체 페이지 수 
+			
+			// 후원내역 리스트와 전체 페이지 수를 Map에 담아서 보냄 
+			Map<String, Object> resultMap = new HashMap<>();
+			resultMap.put("sRList", sRList);
+			resultMap.put("totalPages", totalPages);
+			
+			Gson gson = new Gson();
+			return gson.toJson(resultMap);
+		}
 	
 }
