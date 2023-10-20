@@ -92,7 +92,7 @@
 									<tr>
 										<th style="border-bottom: 1px solid #dee2e6;">No</th>
 										<th style="border-bottom: 1px solid #dee2e6;  width: 235px;">제목</th>
-										<th style="border-bottom: 1px solid #dee2e6;">작성자</th>
+<!-- 										<th style="border-bottom: 1px solid #dee2e6;">작성자</th> -->
 										<th style="border-bottom: 1px solid #dee2e6;">작성일</th>
 										<th style="border-bottom: 1px solid #dee2e6;">조회수</th>
 									</tr>
@@ -105,7 +105,7 @@
 										 <tr onclick="window.location.href='${detailUrl}'" id="tr"  style="cursor: pointer;">
 											<td>${i.count }</td>
 											<td>${bList.fTitle }</td>
-											<td>${bList.uId}</td>
+<%-- 											<td>${bList.uId}</td> --%>
 											<c:set var="formattedDate" value="${fn:split(bList.fCreate, '-')}" />
 											<td>${formattedDate[0]}.${formattedDate[1]}.${formattedDate[2]}</td>
 <%-- 											<td>${bList.fCreate}</td> --%>
@@ -113,7 +113,7 @@
 										</tr>
 									</c:forEach>
 								</tbody>
-							</table><br>
+							</table><br><br>
 							
 							<div aria-label="Page navigation example" class="page">
 							
@@ -126,7 +126,7 @@
 					            <div></div>
 					          	<ul style="display: flex; justify-content: center;">
 						         	<c:if test="${aInfo.startNavi != 1 }">
-										<li><a href="${prevUrl }" ><img src="/resources/images/user/previous.png" style="width: 13px;"></a></li>&nbsp;
+										<li class="boardLi"><a class="page-link" href="${prevUrl }" ><img src="/resources/images/user/previous.png" style="width: 13px;"></a></li>&nbsp;
 						            </c:if>
 					            
 						            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
@@ -136,7 +136,7 @@
 											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
 											<c:param name="uId" value="${sessionScope.uId}"></c:param>
 										</c:url>
-						            	&nbsp;&nbsp;&nbsp;<li><a href="${pageUrl }">${p }</a></li>&nbsp;&nbsp;&nbsp;
+						            	&nbsp;<li class="boardLi"><a class="page-link" id="pageBtn" href="${pageUrl }">${p }</a></li>&nbsp;
 						            </c:forEach>
 					            
 						            <c:if test="${aInfo.endNavi != aInfo.naviTotalCount }">
@@ -146,7 +146,7 @@
 											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
 											<c:param name="uId" value="${sessionScope.uId}"></c:param>
 										</c:url>
-						            	&nbsp;<li><a href="${nextUrl }"><img src="/resources/images/user/next.png" style="width: 13px;"></a></li>
+						            	&nbsp;<li class="boardLi"><a class="page-link" href="${nextUrl }"><img src="/resources/images/user/next.png" style="width: 13px;"></a></li>
 						            </c:if>
 					            </ul>
 					        </div> 

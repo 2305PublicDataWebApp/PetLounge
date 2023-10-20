@@ -114,7 +114,7 @@
 									</c:forEach>
 
 								</tbody>
-							</table><br>
+							</table><br><br>
 							
 								<div aria-label="Page navigation example" class="page">
 							
@@ -127,7 +127,7 @@
 					            <div></div>
 					          	<ul style="display: flex; justify-content: center;">
 						         	<c:if test="${aInfo.startNavi != 1 }">
-										<li><a href="${prevUrl }" ><img src="/resources/images/user/previous.png" style="width: 13px;"></a></li>&nbsp;
+										<li class="boardLi"><a class="page-link" href="${prevUrl }" ><img src="/resources/images/user/previous.png" style="width: 13px;"></a></li>&nbsp;
 						            </c:if>
 					            
 						            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
@@ -137,7 +137,7 @@
 											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
 											<c:param name="uId" value="${sessionScope.uId}"></c:param>
 										</c:url>
-						            	&nbsp;&nbsp;&nbsp;<li><a href="${pageUrl }">${p }</a></li>&nbsp;&nbsp;&nbsp;
+						            	&nbsp;<li class="boardLi"><a class="page-link" id="pageBtn"  href="${pageUrl }">${p }</a></li>&nbsp;
 						            </c:forEach>
 					            
 						            <c:if test="${aInfo.endNavi != aInfo.naviTotalCount }">
@@ -147,7 +147,7 @@
 											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
 											<c:param name="uId" value="${sessionScope.uId}"></c:param>
 										</c:url>
-						            	&nbsp;<li><a href="${nextUrl }"><img src="/resources/images/user/next.png" style="width: 13px;"></a></li>
+						            	&nbsp;<li class="boardLi"><a class="page-link" href="${nextUrl }"><img src="/resources/images/user/next.png" style="width: 13px;"></a></li>
 						            </c:if>
 					            </ul>
 					        </div> 
