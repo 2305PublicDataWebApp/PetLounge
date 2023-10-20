@@ -7,17 +7,45 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <jsp:include page="../include/importSource.jsp"></jsp:include>
+        
         <link rel="stylesheet" href="/resources/css/faq/insert.css">
-        <link rel="stylesheet" href="/resources/css/reset.css">
-        <link rel="stylesheet" href="/resources/css/font.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css">
-        <title>FAQ 등록</title>
+        <link rel="stylesheet" href="/resources/css/reset.css">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/resources/css/include/header.css">
+		<link rel="stylesheet" href="/resources/css/include/footer.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/summernote/lang/summernote-ko-KR.js"></script>
+        
+		<style type="text/css">
+        	@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:wght@400;700&display=swap');
+			@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+			@font-face {
+			    font-family: 'GmarketSansMedium';
+			    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+			    font-weight: normal;
+			    font-style: normal;
+			}
+	        *:not(.note-editing-area *) {
+			    font-family: 'GmarketSansMedium';
+			    font-size: 1em;
+			    color: #3d3d3d;
+			}
+			#nav-pet-lounge {
+				font-size: 20px;
+			}
+        </style>
+        
+        <title>FAQ 등록</title>
     </head>
     <body>
         <jsp:include page="../include/header.jsp"></jsp:include>
@@ -33,23 +61,17 @@
 
                 <!-- 게시글 등록 -->
                 <div id="board-title">
-<!--                     <form action="/faq/insert.pet" method="post"> -->
-                        <div id="faq-borad">
-                            <label for="faq-title" id="title">제목</label>
-                            <div id="content">
-                                <input type="text" name="faqTitle" id="faq-title" placeholder="제목을 입력해 주세요.">
-                            </div>
-                        </div>
-<!--                         <div id="summernote"> -->
-                      	<textarea name="faqContent" id="summernote" style="display: none;"></textarea>
-
-<!--                         </div> -->
-		                <div id="btn">
-<!-- 		                    <input id="register-sub" type="submit" value="등록하기"> -->
-		                    <button id="register-sub" type="button">등록하기</button>
-		                    <a class="btn-list" href="/faq/list.pet" >목록으로</a>
-		                </div>
-<!--                     </form> -->
+					<div id="faq-borad">
+					    <label for="faq-title" id="title">제목</label>
+					    <div id="content">
+					        <input type="text" name="faqTitle" id="faq-title" placeholder="제목을 입력해 주세요.">
+					    </div>
+					</div>
+					<textarea name="faqContent" id="summernote" style="display: none;"></textarea>
+					<div id="btn">
+					    <button id="register-sub" type="button">등록하기</button>
+					    <a class="btn-list" href="/faq/list.pet" >목록으로</a>
+					</div>
                 </div>
             </div>
         </main>
