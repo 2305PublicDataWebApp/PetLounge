@@ -95,7 +95,7 @@
 			                <c:param name="page" value="${pInfo.endNavi +1 }"></c:param>
 	    	            </c:url>
 	                	<a class="next" href="${nextUrl }">
-	                		<i class="bi bi-caret-right-fill"></i>
+	                		<i class="bi bi-caret-right-fill" id="right-fill"></i>
 	                	</a>
 	                </c:if>
                 </div>	

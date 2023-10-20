@@ -8,8 +8,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<jsp:include page="../include/importSource.jsp"></jsp:include>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" href="/resources/css/notice/noticeList.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
         <title>공지사항</title>
     </head>
     <body>
@@ -113,7 +115,8 @@
 <!-- 									<option value="date">작성일</option> -->
 								</select>
 		                    <input type="text" name="searchKeyword" id="search" class="search-input" style="margin-right : 5px;">
-		                    <input type="submit" class="search-button" value="검색">
+<!-- 		                    <input type="submit" class="search-button" value="검색"> -->
+		                    <i class="bi bi-search" id="searchIcon"></i>
 	                    </form>
 	                </div>
 	                <div class="sub">
@@ -134,7 +137,8 @@
 <%-- 									<option value="date" <c:if test="${searchCondition == 'date' 		}"	>selected</c:if>>작성일</option> --%>
 								</select>
 		                    <input type="text" name="searchKeyword" id="search" class="search-input" style="margin-right : 5px;">
-		                    <input type="submit" class="search-button" value="검색">
+<!-- 		                    <input type="submit" class="search-button" value="검색"> -->
+		                    <i class="bi bi-search" id="searchIcon"></i>
 	                    </form>
 	                </div>
 	            </div>		

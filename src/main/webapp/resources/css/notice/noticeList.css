@@ -349,3 +349,34 @@ td.right1 a:hover {
 .bi bi-search {
     cursor: pointer;
 }
+.bi::before {
+	cursor: pointer;
+	font-size: 25px;
+	color: #FFD370; 
+}
+
+i {
+	vertical-align: -6px;
+}
+
+#right-fill {
+    color: black;
+}
+.bi-caret-right-fill::before {
+    color: black;
+    font-size: 18px;
+}
+.bi-caret-right-fill {
+	margin: 0px;
+	padding: 0px;
+	height: 16px;
+}
+.bi-caret-left-fill::before {
+    color: black;
+    font-size: 18px;
+}
+.bi-caret-left-fill {
+	margin: 0px;
+	padding: 0px;
+	height: 16px;
+}

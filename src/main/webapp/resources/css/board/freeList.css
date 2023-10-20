@@ -267,3 +267,11 @@ td.right1 a {
 td.right1 a:hover {
     color: #FFD370; /* hover 시 텍스트 색상 변경 */
 }
+
+.bi::before {
+	cursor: pointer;
+}
+
+
+
+
