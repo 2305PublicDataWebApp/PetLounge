@@ -93,7 +93,7 @@
 								<thead>
 									<tr>
 										<th style="border-bottom: 1px solid #dee2e6;">No</th>
-										<th style="border-bottom: 1px solid #dee2e6; width: 260px">제목</th>
+										<th style="border-bottom: 1px solid #dee2e6;">제목</th>
 										<th style="border-bottom: 1px solid #dee2e6;">후원금액</th>
 										<th style="border-bottom: 1px solid #dee2e6;">후원일</th>
 										<th style="border-bottom: 1px solid #dee2e6;">결제방법</th>
@@ -105,17 +105,27 @@
 								            <c:param name="sNo" value="${sList.sNo}"></c:param>
 								        </c:url>
 								    <tr onclick="window.location.href='${detailUrl}'" id="tr">
-								        <td>${i.count}</td>
-								        <td>${sList.sTitle}</td>
-								        <td><fmt:formatNumber value="${sList.sHAmount}" pattern="#,###" /></td>
+								        <td>${i.count}</td>        
+								        <c:set var="inputString" value="${sList.sTitle}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
+											<c:choose>
+											    <c:when test="${fn:length(inputString) > 5}"> <!-- 만약 문자열 길이가 5를 초과한다면 -->
+											        <c:set var="truncatedString" value="${fn:substring(inputString, 0, 12)}..." /> <!-- 문자열을 자르고 "..."을 추가하여 truncatedString 변수에 저장 -->
+											        <td>${truncatedString}</td> <!-- truncatedString을 <td> 태그 안에 출력 -->
+											    </c:when>
+											    <c:otherwise>
+											        <td>${inputString}</td> <!-- 그렇지 않으면 원래 문자열을 <td> 태그 안에 출력 -->
+											    </c:otherwise>
+											</c:choose>
+<%-- 								        <td>${sList.sTitle}</td> --%>
+								        <td style="text-align: right;"><fmt:formatNumber value="${sList.sHAmount}" pattern="#,###" />원</td>
 <%-- 								        <td>${sList.sHAmount}</td> --%>
 								        <c:set var="formattedDate" value="${fn:split(sList.sHPaydate, ' ')}" />
 										<c:set var="dateParts" value="${fn:split(formattedDate[0], '-')}"/>
 										<td>${dateParts[0]}.${dateParts[1]}.${dateParts[2]}</td>
 										<td>
 										  <c:choose>
-										    <c:when test="${sList.sHPaytype == 'kakaopay'}"><img src="/resources/images/user/kakaoLogo2.png" style="width: 30px; height: 30px"></c:when>
-										    <c:when test="${sList.sHPaytype == 'creditcard'}"><img src="/resources/images/user/card_credit.png" style="width: 30px; height: 30px"></c:when>
+										    <c:when test="${sList.sHPaytype == 'kakaopay'}"><img src="/resources/images/user/kakaoLogo2.png" style="width: 25px; height: 25px"></c:when>
+										    <c:when test="${sList.sHPaytype == 'creditcard'}"><img src="/resources/images/user/card_credit.png" style="width: 25px; height: 25px"></c:when>
 										    <c:otherwise>${sList.sHPaytype}</c:otherwise>
 										  </c:choose>
 										</td>
@@ -136,7 +146,7 @@
 <!-- 										</tr> -->
 <%-- 									</c:forEach> --%>
 								</tbody>
-							</table><br>
+							</table><br><br>
 							<div aria-label="Page navigation example" class="page">
 							
 							<c:url var="prevUrl" value="/user/uSupport.pet">
@@ -148,7 +158,7 @@
 							<div></div>
 				            <ul style="display: flex; justify-content: center;">
 					         	<c:if test="${aInfo.startNavi != 1 }">
-						            <li class="page-item"  ><a class="page-link" href="${prevUrl }" ><img src="/resources/images/user/previous.png" style="width: 13px;"></a></li>&nbsp;
+						            <li class="boardLi" ><a class="page-link"  href="${prevUrl }" ><img src="/resources/images/user/previous.png" style="width: 13px;"></a></li>&nbsp;
 					            </c:if>
 					         
 					            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
@@ -158,7 +168,7 @@
 										<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
 										<c:param name="uId" value="${sessionScope.uId}"></c:param>
 									</c:url>
-									&nbsp;&nbsp;&nbsp;<li><a href="${pageUrl }">${p }</a></li>&nbsp;&nbsp;&nbsp;
+									&nbsp;<li class="boardLi"><a class="page-link" id="pageBtn" href="${pageUrl }">${p }</a></li>&nbsp;
 					            </c:forEach>
 					            <c:if test="${aInfo.endNavi != aInfo.naviTotalCount }">
 									<c:url var="nextUrl" value="/user/uSupport.pet"> 
@@ -167,7 +177,7 @@
 										<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
 										<c:param name="uId" value="${sessionScope.uId}"></c:param>
 									</c:url>
-						            &nbsp;<li><a href="${nextUrl }"><img src="/resources/images/user/next.png" style="width: 13px;"></a></li>
+						            &nbsp;<li class="boardLi"><a class="page-link"  href="${nextUrl }"><img src="/resources/images/user/next.png" style="width: 13px;"></a></li>
 					            </c:if>
 				            </ul>
 				           </div> 
@@ -194,6 +204,7 @@
 	            $(".subMenu").not(subMenu).slideUp();
 	        });
 	
+	      
 	    </script>
 	</body>
 </html>

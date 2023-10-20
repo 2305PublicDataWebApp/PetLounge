@@ -240,10 +240,12 @@ section[id^="content"]:target {
 									</select> 
 									<input type="hidden" name="uEmail" id="uEmail" value="">
 										<span id="duplEmailResult" style="font-size: 0.8em; width: 200px;"></span>
-									<button id="" class="dupl" style="margin-bottom: 17px; height: 20px;">메일인증</button>
+									<button id="sendMailBtn" class="dupl" style="margin-bottom: 17px; height: 20px;">메일인증</button>
 									
-									<input type="text" placeholder="인증번호를 입력하세요" style="width: 58.4%;;" required>
-									<button type="button" id="mailCheck">확인</button><br><br>
+<!-- 									컨트롤러에서 인증번호 받아온 값 저장 -> 입력된 인증번호와 비교 -->
+									<input type="hidden" id="send-certification-num">
+									<input type="text" id="user-email-check" placeholder="인증번호를 입력하세요" style="width: 58.4%;;" required>
+									<button type="button" id="mailCheck" onclick="confirmNumber();">확인</button><br><br>
 									
 									<input type="tel" name="uPhone"  id="uPhone"  placeholder="예) 01012341375" required><br>
 										<span id="duplPhoneResult" style="font-size: 0.8em; width: 100%;"></span><br>
@@ -585,7 +587,7 @@ section[id^="content"]:target {
                     },
                     success: function(data) {
                         var result = JSON.parse(data);
-
+ 
                         if (result[0] === "Valid" && result[1] === "Unique") {
                             $("#duplResult").removeClass("error").addClass("success");
                             $("#duplResult").text("사용 가능한 아이디입니다.");
@@ -736,8 +738,50 @@ section[id^="content"]:target {
             });
         });
         
-            
         
+        
+            
+    	// 이메일 인증 ajax
+        $(document).ready(function() {
+         $("#sendMailBtn").on("click",function(){
+            var emailVal = $("#uEmail").val();
+            if(emailVal == null || emailVal == ""){
+               alert("이메일을 먼저 입력해주세요.");
+            }
+//             if($("#user-ck-email").val() === "false"){
+//                alert("사용할 수 없는 이메일입니다.")
+//             } else {
+               alert("인증번호가 발송되었습니다. 이메일을 확인해주세요.");
+               
+               $.ajax({
+                  url : "/user/sendMail.pet",
+                  type : "POST",
+                  data : { mail : emailVal },
+                  success : function(data) {
+                     $("#send-certification-num").attr("value", data);
+                  },
+                  error : function() {
+                     alert:("ajax 오류, 관리자에게 문의 바랍니다.");
+                  }
+               });
+//             }
+         });
+      });
+        
+        function confirmNumber(){
+           var num1 = $("#user-email-check").val();
+           var num2 = $("#send-certification-num").val();
+           if(num1 == num2) {
+              alert("인증이 완료되었습니다.");
+              //일치할 때 유효성 체크 여부 확인을 위해서 값을 true로 넣어줌
+              $("#check-certification-num").attr("value", "true");
+              $("#duplEmailResult").text("인증 완료").removeClass("error").addClass("success");
+           } else {
+              alert("작성한 인증번호가 다릅니다.");
+              $("#check-certification-num").attr("value", "false");
+              $("#duplEmailResult").text("인증 실패").removeClass("success").addClass("error");
+           }
+        }
         
         
         
