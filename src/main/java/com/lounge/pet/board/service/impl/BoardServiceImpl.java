@@ -77,4 +77,11 @@ public class BoardServiceImpl implements BoardService {
 		return result;
 	}
 
+
+	@Override
+	public int getSearchCount() {
+		int result = bStore.getSearchCount(session);
+		return result;
+	}
+
 }

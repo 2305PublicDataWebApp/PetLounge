@@ -39,6 +39,24 @@
 			    font-size: 1em;
 			    color: #3d3d3d;
 			}
+ 			*:not(.note-editing-area) h1 {
+			    font-family: 'GmarketSansMedium';
+			    font-size: 2.5em;
+			    font-weight: bold;
+			} 
+			*:not(.note-editing-area) .submit {
+			    font-family: Pretendard;
+			    color: #ffffff;
+			    font-size: 13px;
+			    font-weight: bold;
+			} 
+			*:not(.note-editing-area) .backtolist2 {
+			    font-family: Pretendard;
+			    border-color: #ffffff;
+			    color: #ffd370;
+			    font-size: 13px;
+			    font-weight: bold;
+			} 
         </style>
         
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css" />

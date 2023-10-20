@@ -63,5 +63,11 @@ public interface BoardService {
 	 */
 	int freeBoardDelete(int fNo);
 
+	/**
+	 * 자유게시판 등록된 총 게시물 수 
+	 * @return
+	 */
+	int getSearchCount();
+
 
 }

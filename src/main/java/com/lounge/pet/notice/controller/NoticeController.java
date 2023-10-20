@@ -88,6 +88,7 @@ public class NoticeController {
 			, @RequestParam(value="page", required=false, defaultValue="1") int currentPage) {
 		try {
 			int totalCount = nService.getListCount2();
+			mv.addObject("totalCount", totalCount);
 			PageInfo pInfo = this.getPageInfo(currentPage, totalCount);
 			List<Notice> nList = nService.selectNoticeList(pInfo); // 페이지 정보를 'pInfo' 매개변수로 전달
 			mv.addObject("nList", nList).addObject("pInfo", pInfo).setViewName("notice/noticeList");
@@ -205,10 +206,11 @@ public class NoticeController {
 			mv.setViewName("notice/noticeSearch");
 		}
 		else {
-			mv.addObject("msg", "데이터 조회가 완료되지 않았습니다.");
-			mv.addObject("error", "공지사항 제목으로 조회 실패");
-			mv.addObject("url", "/noticeList.pet");
-			mv.setViewName("common/errorPage");
+//			mv.addObject("msg", "데이터 조회가 완료되지 않았습니다.");
+//			mv.addObject("error", "공지사항 제목으로 조회 실패");
+//			mv.addObject("url", "/noticeList.pet");
+//			mv.setViewName("common/errorPage");
+			mv.setViewName("notice/noticeSearch");
 		}
 		return mv;
 	}

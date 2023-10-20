@@ -39,7 +39,7 @@
                                 <span>
                                 <fmt:formatDate pattern="yyyy.MM.dd" value="${board.fCreate }" />                                
                                 </span>
-                                <span>조회수 ${board.fViewCount }</span>
+                                <span>조회수 ${board.fViewCount +1}</span>
                             </div>
                         </div> 
                     </li>

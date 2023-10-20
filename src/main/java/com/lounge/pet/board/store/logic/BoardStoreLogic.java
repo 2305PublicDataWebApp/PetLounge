@@ -60,4 +60,10 @@ public class BoardStoreLogic implements BoardStore {
 		return result;
 	}
 
+	@Override
+	public int getSearchCount(SqlSession session) {
+		int result = session.selectOne("BoardMapper.getSearchCount");
+		return result;
+	}
+
 }
