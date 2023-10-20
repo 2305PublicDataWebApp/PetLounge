@@ -1,13 +1,12 @@
-//package com.lounge.pet.controller;
-//
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.servlet.ModelAndView;
-//
-//
-//@Controller
-//public class ExceptionHandlingController {
-//
+package com.lounge.pet.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+@Controller
+public class ExceptionHandlingController {
+
 //	@GetMapping("/error")
 //    public ModelAndView handleError()
 //    {
@@ -15,4 +14,9 @@
 //        modelAndView.setViewName("error");
 //        return modelAndView;
 //    }
-//}
+	
+	@ExceptionHandler(Exception.class)
+	public String except(Exception e, Model model) {
+		return "error";
+	}
+}
