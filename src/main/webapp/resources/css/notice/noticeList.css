@@ -129,6 +129,7 @@ ul {
     padding: 3px;
     font-size: 15px;
     border-radius: 15px;
+    outline: none;
 }
 
 .search-select {
@@ -138,6 +139,7 @@ ul {
     font-size: 15px;
     color: #ffd370;
     border-radius: 10px;
+    outline: none;
 }
     
 .search-button {
@@ -352,7 +354,7 @@ td.right1 a:hover {
 .bi::before {
 	cursor: pointer;
 	font-size: 25px;
-	color: #FFD370; 
+/* 	color: #FFD370;  */
 }
 
 i {
@@ -379,4 +381,20 @@ i {
 	margin: 0px;
 	padding: 0px;
 	height: 16px;
+}
+
+#none {
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 100px;
+}
+
+#fail {
+	color: red;
+	vertical-align: -2px;
+	margin-right: 5px;
+}
+
+#searchIcon {
+	color: #FFD370;
 }

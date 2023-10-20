@@ -45,8 +45,14 @@
                         	<c:choose>
                         		<c:when test="${empty nList }">
                         			<tr>
-                        				<td class="right1" colspan="5">검색결과가 없습니다!</td>
+                        				<td class="right1" id="none" colspan="5"><i class="bi bi-file-earmark-x" id="fail"></i>검색결과가 없습니다!</td>
                         			</tr>
+                   			        <script>
+							            // 검색 결과가 없을 때, pagination 숨기기
+							            $(document).ready(function () {
+							                $(".pagination").hide();
+							            });
+							        </script>
                         		</c:when>
                         		<c:otherwise>
 		                        	<c:forEach var="notice" items="${nList }" varStatus="i">
@@ -81,7 +87,9 @@
 						<c:url var="prevUrl" value="/notice/noticeList.pet">
 		                	<c:param name="page" value="${pInfo.startNavi -1 }"></c:param>
 	    	            </c:url>
-	                	<a class="prev" href="${prevUrl }">이전</a>
+	                	<a class="prev" href="${prevUrl }">
+	                		<i class="bi bi-caret-left-fill"></i>	                	
+	                	</a>
 	                </c:if>	       
 		             <c:forEach begin="${pInfo.startNavi }" end="${pInfo.endNavi }" var="p">
 						<c:url var="pageUrl" value="/notice/noticeList.pet">
@@ -100,7 +108,9 @@
 						<c:url var="nextUrl" value="/notice/noticeList.pet">
 			                <c:param name="page" value="${pInfo.endNavi +1 }"></c:param>
 	    	            </c:url>
-	                	<a class="next" href="${nextUrl }">다음</a>
+	                	<a class="next" href="${nextUrl }">
+	                		<i class="bi bi-caret-right-fill" id="right-fill"></i>
+	                	</a>
 	                </c:if>
                 </div>	
         </div>
