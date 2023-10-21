@@ -166,4 +166,8 @@ a:hover {
     border-radius: 5px;
 }
 
+/* 썸머노트 필요없는 드롭 삭제*/
 
+.note-icon-caret {
+	display: none;
+}
