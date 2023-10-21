@@ -54,10 +54,10 @@
 			AND F_NO = #{fNo }
 	</select>
 	
-	<select id="insertFBook">
+	<insert id="insertFBook">
 		INSERT INTO F_BOOKMARK_TBL
 			VALUES(#{uId }, #{fNo })
-	</select>
+	</insert>
 	
 	<delete id="deleteFBook">
 		DELETE FROM F_BOOKMARK_TBL

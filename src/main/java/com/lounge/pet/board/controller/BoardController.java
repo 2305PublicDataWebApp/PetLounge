@@ -135,8 +135,7 @@ public class BoardController {
 			FBookmark fBook = new FBookmark(sessionId, fNo); 
 			int fBookmark = bService.selectFBook(fBook);
 			mv.addObject("bOne", bOne)
-			.addObject("fBookmark", fBookmark)
-			.setViewName("/board/freeDetail");
+			.addObject("fBookmark", fBookmark);
 			
 			int result = bService.updateViewCount(bOne); 
 			if(bOne != null) {
@@ -342,8 +341,8 @@ public class BoardController {
 	 * @return
 	 */
 	@ResponseBody
-	@PostMapping("/board/addToFBookmark.pet")
-	public String addToBookmark(int fNo
+	@PostMapping("/addToFBookmark.pet")
+	public String addToFBookmark(int fNo
 								, HttpSession session) {
 		String sessionId = (String) session.getAttribute("uId");	// 사용자의 세션ID 가져옴, 이 ID는 로그인한 사용자의 고유 식별자
 		

@@ -57,9 +57,9 @@
         <link rel="stylesheet" href="/resources/css/board/freeDetail.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css" />
         <title>자유게시판</title>
-    <script>
-        history.replaceState({}, null, location.pathname);
-    </script>
+<!--     <script> -->
+<!--     history.replaceState({}, null, location.pathname); -->
+<!--     </script> -->
     </head>
     <body>
         <jsp:include page="../include/header.jsp"></jsp:include>
@@ -71,7 +71,7 @@
             <div id="line"></div>
         </section>
 
-		<div class="bmark">
+<!-- 		<div class="bmark"> -->
 			<div class="sub-bmark">
 	          	<c:if test="${ fBookmark eq 1 }">
 				    <span id="bookmark-icon" class="material-symbols-outlined bookmark-icon-fill" data-tooltip-text="북마크" style="color: #FFD370;" onclick="fBookmark(${ bOne.fNo });">
@@ -84,14 +84,14 @@
 				    </span>
 				</c:if>
 			</div>
-		</div>
+<!-- 		</div> -->
         <div class="square-container">
             <div id="notice">
                 <ul>
                     <li><input type="text" class="notice-title" value="${board.fTitle }" readonly></li>
                     <li class="user-info">
                         <div class="user-img">
-                            <img alt="유저 프로필 이미지" src="../../resources/userUploadFiles/profile.png">
+                            <img alt="유저 프로필 이미지" src="/../resources/userUploadFiles/profile.png">
                             <span>${uNickname}</span>
                         </div>
                         <div class="menu">
@@ -182,7 +182,24 @@
                             <tr>
                                 <td class="right2">
                                     <div class="user-img">
-                                        <img alt="유저 프로필 이미지" src="../../resources/userUploadFiles/profile.png">
+                                        <img alt="유저 프로필 이미지" src="/../resources/userUploadFiles/profile.png">
+                                    </div>
+                                </td>
+                                <td class="right1" style="text-align: left;">
+                                    <span>동숲주민</span><span> 2023.10.01</span><span> 답글</span><br>
+                                    <span>리뷰 내용</span>
+                                </td>
+                                <td class="right2">
+                                    <span>수정</span><span> 삭제</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5"><hr class="line3"></td>
+                            </tr>
+                            <tr>
+                                <td class="right2">
+                                    <div class="user-img">
+                                        <img alt="유저 프로필 이미지" src="/../resources/img/board/user_sample.png">
                                     </div>
                                 </td>
                                 <td class="right1" style="text-align: left;">
@@ -216,7 +233,7 @@
                             <tr>
                                 <td class="right2">
                                     <div class="user-img">
-                                        <img alt="유저 프로필 이미지" src="../../resources/img/board/user_sample.png">
+                                        <img alt="유저 프로필 이미지" src="/../resources/img/board/user_sample.png">
                                     </div>
                                 </td>
                                 <td class="right1" style="text-align: left;">
@@ -233,24 +250,7 @@
                             <tr>
                                 <td class="right2">
                                     <div class="user-img">
-                                        <img alt="유저 프로필 이미지" src="../../resources/img/board/user_sample.png">
-                                    </div>
-                                </td>
-                                <td class="right1" style="text-align: left;">
-                                    <span>동숲주민</span><span> 2023.10.01</span><span> 답글</span><br>
-                                    <span>리뷰 내용</span>
-                                </td>
-                                <td class="right2">
-                                    <span>수정</span><span> 삭제</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="5"><hr class="line3"></td>
-                            </tr>
-                            <tr>
-                                <td class="right2">
-                                    <div class="user-img">
-                                        <img alt="유저 프로필 이미지" src="../../resources/img/board/user_sample.png">
+                                        <img alt="유저 프로필 이미지" src="/../resources/img/board/user_sample.png">
                                     </div>
                                 </td>
                                 <td class="right1" style="text-align: left;">
@@ -285,6 +285,7 @@
 		<!-- 즐겨찾기 -->
 		<script>
 		    function fBookmark(bookmarkfNo) {
+		    	console.log(bookmarkfNo);	
 		        var bookmark = document.getElementById('bookmark-icon');
 		
 		        $.ajax({
@@ -295,11 +296,11 @@
 		            },
 		            success: function (data) {		// success 함수: Ajax 요청이 성공할 경우 실행되는 함수
 		                if (data == "insert") {
-		                    bookmark.classList.remove('bookmark-icon-none');
-		                    bookmark.classList.add('bookmark-icon-fill');
+		                    bookmark.classList.remove('bi-bookmark');
+		                    bookmark.classList.add('bi-bookmark-heart-fill');
 		                } else if (data == "delete") {
-		                    bookmark.classList.remove('bookmark-icon-fill');
-		                    bookmark.classList.add('bookmark-icon-none');
+		                    bookmark.classList.remove('bi-bookmark-heart-fill');
+		                    bookmark.classList.add('bi-bookmark');
 		                } else if (data == "loginFail") {
 		                    alert("로그인이 필요한 서비스입니다.");
 		                    location.href="/user/login.pet";

@@ -444,15 +444,23 @@ hr {
 
 .bmark {
 	max-width: 700px;
-/* 	display: flex; */
-	margin-left: 890px;
+	display: flex;
+	justify-content: center;
 }
 
 .sub-bmark {
-	display: flex;
+	display: inline-block;
+	padding: 10px;
 	justify-content: flex-end;
 }  
 
-#empty {
+/* #empty { */
+/* 	font-size: 25px; */
+/* } */
+
+.bi-bookmark-heart-fill::before {
+	font-size: 25px;
+}
+.bi-bookmark::before {
 	font-size: 25px;
 }
