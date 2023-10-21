@@ -563,83 +563,10 @@
 				});
 			}
 			
-			// 후기 검색결과 리스트를 불러오는 ajax Function
-			function searchHReview(currentPage) {
-				var hRSearchKeyword = document.getElementById('h-r-search-keyword').value.trim();
-				let sessionId = '${ sessionScope.uId }';
-				
-				$.ajax ({
-					url: "/hReview/search.pet",
-					type: "POST",
-					dataType: "json",
-					data: {
-						hNo: ${ hOne.hNo },
-						hRSearchKeyword: hRSearchKeyword,
-						currentPage: currentPage, 
-						recordCountPerPage: recordCountPerPage 
-					},
-					success: function(data) {
-						const tableBody = $("#review-table tbody");
-						tableBody.html('');
-						let tr;
-						let left;
-						let center;
-						let right;
-						
-						const hRList = data.hRList; // 후기 리스트 
-				        totalPages = data.totalPages; // 총 페이지 수
-						
-						if(hRList.length > 0) {
-							th = $("<th colspan='3' style='text-align: left; font-size: 1.2em;'><span style='color: #FFD370;'>" + hRSearchKeyword + "</span> 검색 결과</th>");
-							tableBody.append(th);
-							for(let i in hRList) {
 
-								tr = $("<tr>"); // <tr></tr>
-								left = $("<td class='td'>").html("<img src='" + hRList[i].hRProfileImg + "' width='50px' height='50px' style='border-radius: 100%; border: 2px solid #FFD370;'>");
-
-								if(hRList[i].hRCreate === hRList[i].hRUpdate) {
-									center = $("<td class='td'>").html(
-											"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
-											+ ""+getFormattedDate(hRList[i].hRCreate)+"</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>"); 
-								} else {
-									center = $("<td class='td'>").html(
-											"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
-											+ ""+getFormattedDate(hRList[i].hRUpdate)+"&nbsp;(수정됨)</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>");
-								}
-										
-								if(sessionId === hRList[i].uId || sessionId === 'admin') {
-									right = $("<td class='td'>").html(
-											"<a href='javascript:void(0)' class='review-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal' "
-											+ "onclick='openModifyView("+hRList[i].hRNo+",\""+hRList[i].hRNickName+"\",\""+hRList[i].hRContent+"\",\"" + hRList[i].hRProfileImg + "\");'>수정</a>"
-											+ "<a href='javascript:void(0)' class='review-delete-btn' onclick='checkDeleteReview("+hRList[i].hRNo+");'>삭제</a>"); 
-								} else {
-									right = $("<td class='td'>").html("");
-								}
-								
-								tr.append(left);
-								tr.append(center);
-								tr.append(right); 
-								tableBody.append(tr); 
-								
-								// 결과를 받은 후에 페이징을 업데이트
-					            createPagination(data.totalPages);
-							}
-						} else {
-							th = $("<th colspan='3' style='text-align: left; font-size: 1.2em;'><span style='color: #FFD370;'>" + hRSearchKeyword + "</span> 검색 결과</th>");
-							tr = $("<tr class='td'><td class='td'colspan='3'><div style='color: lightgray;'>등록된 후기가 없습니다</div></td></tr>");
-							tableBody.append(th);
-							tableBody.append(tr);
-							$("#pagination").html('');
-						}
-					}, 
-					error: function() {
-						alert("${ hOne.hName} 후기 검색 오류. 관리자에게 문의 바랍니다.");
-					}
-				});
-			}
-			
-			// 페이지 만들기 
+			// 후기 리스트 페이지 만들기 
 			const createPagination = (totalPages) => {
+				var hRSearchKeyword = document.getElementById('h-r-search-keyword').value.trim();
 			    const paginationUl = $("#pagination");
 			    paginationUl.empty(); // 이전의 페이징 링크를 지움
 			    
@@ -709,6 +636,156 @@
 			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
 			    if (currentGroup < numGroups) {
 			        changeGroup(currentGroup + 1);
+			    }
+			}
+			
+			// 후기 검색결과 리스트를 불러오는 ajax Function
+			function searchHReview(currentPage) {
+				var hRSearchKeyword = document.getElementById('h-r-search-keyword').value.trim();
+				let sessionId = '${ sessionScope.uId }';
+				
+				$.ajax ({
+					url: "/hReview/search.pet",
+					type: "POST",
+					dataType: "json",
+					data: {
+						hNo: ${ hOne.hNo },
+						hRSearchKeyword: hRSearchKeyword,
+						currentPage: currentPage, 
+						recordCountPerPage: recordCountPerPage 
+					},
+					success: function(data) {
+						const tableBody = $("#review-table tbody");
+						tableBody.html('');
+						let tr;
+						let left;
+						let center;
+						let right;
+						
+						const hRList = data.hRList; // 후기 리스트 
+				        totalPages = data.totalPages; // 총 페이지 수
+						
+						if(hRList.length > 0) {
+							th = $("<th colspan='3' style='text-align: left; font-size: 1.2em;'><span style='color: #FFD370;'>" + hRSearchKeyword + "</span> 검색 결과</th>");
+							tableBody.append(th);
+							for(let i in hRList) {
+
+								tr = $("<tr>"); // <tr></tr>
+								left = $("<td class='td'>").html("<img src='" + hRList[i].hRProfileImg + "' width='50px' height='50px' style='border-radius: 100%; border: 2px solid #FFD370;'>");
+
+								if(hRList[i].hRCreate === hRList[i].hRUpdate) {
+									center = $("<td class='td'>").html(
+											"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
+											+ ""+getFormattedDate(hRList[i].hRCreate)+"</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>"); 
+								} else {
+									center = $("<td class='td'>").html(
+											"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
+											+ ""+getFormattedDate(hRList[i].hRUpdate)+"&nbsp;(수정됨)</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>");
+								}
+										
+								if(sessionId === hRList[i].uId || sessionId === 'admin') {
+									right = $("<td class='td'>").html(
+											"<a href='javascript:void(0)' class='review-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal' "
+											+ "onclick='openModifyView("+hRList[i].hRNo+",\""+hRList[i].hRNickName+"\",\""+hRList[i].hRContent+"\",\"" + hRList[i].hRProfileImg + "\");'>수정</a>"
+											+ "<a href='javascript:void(0)' class='review-delete-btn' onclick='checkDeleteReview("+hRList[i].hRNo+");'>삭제</a>"); 
+								} else {
+									right = $("<td class='td'>").html("");
+								}
+								
+								tr.append(left);
+								tr.append(center);
+								tr.append(right); 
+								tableBody.append(tr); 
+								
+								// 결과를 받은 후에 페이징을 업데이트
+					            rCreatePagination(data.totalPages);
+							}
+						} else {
+							th = $("<th colspan='3' style='text-align: left; font-size: 1.2em;'><span style='color: #FFD370;'>" + hRSearchKeyword + "</span> 검색 결과</th>");
+							tr = $("<tr class='td'><td class='td'colspan='3'><div style='color: lightgray;'>등록된 후기가 없습니다</div></td></tr>");
+							tableBody.append(th);
+							tableBody.append(tr);
+							$("#pagination").html('');
+						}
+					}, 
+					error: function() {
+						alert("${ hOne.hName} 후기 검색 오류. 관리자에게 문의 바랍니다.");
+					}
+				});
+			}
+			
+			// 후기 검색결과 페이지 만들기 
+			const rCreatePagination = (totalPages) => {
+				var hRSearchKeyword = document.getElementById('h-r-search-keyword').value.trim();
+			    const paginationUl = $("#pagination");
+			    paginationUl.empty(); // 이전의 페이징 링크를 지움
+			    
+			    const naviCountPerPage = 5; // 한 그룹당 페이지 수
+			    const numGroups = Math.ceil(totalPages / naviCountPerPage); // 총 그룹 수
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage); // 현재 페이지가 속한 그룹
+	
+			    let startPage = (currentGroup - 1) * naviCountPerPage + 1;
+			    let endPage = Math.min(currentGroup * naviCountPerPage, totalPages);
+			    
+			 	// "이전" 버튼 추가
+			    if (currentGroup > 1) {
+			        const prevLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>');
+			        prevLi.click(() => {
+			        	rGoToPreviousGroup();
+			        });
+			        paginationUl.append(prevLi);
+			    }
+			 	// 페이지 링크 추가
+			    for (let i = startPage; i <= endPage; i++) {
+			        const li = $('<li class="page-item" data-page="${i}"><a class="page-link" href="javascript:void(0)">'+i+'</a></li>');
+			        
+			     	// 현재 페이지에 해당하는 경우 클래스 추가
+			        if (i === currentPage) {
+			            li.addClass('active');
+			        }
+			     
+			        li.click(() => {
+			        	rChangePage(i);
+			        });
+			        paginationUl.append(li);
+			    }
+				// "다음" 버튼 추가
+			    if (currentGroup < numGroups) {
+			        const nextLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>');
+			        nextLi.click(() => {
+			        	rGoToNextGroup();
+			        });
+			        paginationUl.append(nextLi);
+			    }
+			}
+			
+			// 페이지 변경 시 호출되는 함수
+			const rChangePage = (newPage) => {
+			    currentPage = newPage;
+			    searchHReview(currentPage);
+			}
+			
+			// 그룹 변경 시 호출되는 함수
+			const rChangeGroup = (newGroup) => {
+			    currentPage = (newGroup - 1) * naviCountPerPage + 1;
+			    searchHReview(currentPage);
+			}
+	
+			// 이전 그룹으로 이동할 때 호출 
+			const rGoToPreviousGroup = () => {
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup > 1) {
+			        const lastPageOfPreviousGroup = (currentGroup - 1) * naviCountPerPage;
+			        rChangePage(lastPageOfPreviousGroup);
+			    }
+			}
+	
+			// 다음 그룹으로 이동할 때 호출
+			const rGoToNextGroup = () => {
+			    const numGroups = Math.ceil(totalPages / naviCountPerPage);
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup < numGroups) {
+			    	rChangeGroup(currentGroup + 1);
 			    }
 			}
 			
