@@ -105,4 +105,18 @@ public interface HospitalService {
 	 */
 	int getHSearchTotalCount(String hSearchKeyword);
 
+	/**
+	 * 특정 동물병원의 후기에 대한 검색 Service
+	 * @param searchKey
+	 * @return
+	 */
+	List<HReview> selectHReviewSearch(HReview searchKey);
+
+	/**
+	 * 특정 동물병원의 후기에 대한 검색 총 개수 Service
+	 * @param searchKey
+	 * @return
+	 */
+	int getHReviewSearchTotalCount(HReview searchKey);
+
 }

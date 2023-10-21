@@ -12,7 +12,16 @@ public class HReview {
 	private String hRStatus;
 	private String hRNickName;
 	private String hRProfileImg;
+	private String hRSearchKeyword;
 	
+	public HReview() {}
+	
+	public HReview(int hNo, String hRSearchKeyword) {
+		super();
+		this.hNo = hNo;
+		this.hRSearchKeyword = hRSearchKeyword;
+	}
+
 	public int gethRNo() {
 		return hRNo;
 	}
@@ -67,7 +76,13 @@ public class HReview {
 	public void sethRProfileImg(String hRProfileImg) {
 		this.hRProfileImg = hRProfileImg;
 	}
-	
+	public String gethRSearchKeyword() {
+		return hRSearchKeyword;
+	}
+	public void sethRSearchKeyword(String hRSearchKeyword) {
+		this.hRSearchKeyword = hRSearchKeyword;
+	}
+
 	@Override
 	public String toString() {
 		return "병원리뷰 [리뷰번호=" + hRNo + ", 병원번호=" + hNo + ", 작성자=" + uId + ", 내용=" + hRContent + ", 작성일="

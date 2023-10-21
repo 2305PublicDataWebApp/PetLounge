@@ -121,7 +121,9 @@
 				            <col style="width: 50%;">
 				        </colgroup>
 				        <thead>
-				            <th colspan="5">내 주변 동물병원</th>
+				        	<tr>
+					            <th colspan="5">내 주변 동물병원</th>
+				        	</tr>
 				        </thead>
 				        <tbody id="hospital-list-body">
 				        </tbody>

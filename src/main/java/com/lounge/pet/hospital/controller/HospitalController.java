@@ -112,20 +112,6 @@ public class HospitalController {
 	}
 			
 	// 동물병원 검색 기능
-//	@ResponseBody
-//	@GetMapping("/hospital/search.pet")
-//	public String hospitalSearch(@RequestParam("latitude") Double latitude
-//								, @RequestParam("longitude") Double longitude
-//								, @RequestParam("hSearchKeyword") String hSearchKeyword
-//								, HttpSession session) {
-//		
-//		String sessionId = (String) session.getAttribute("uId");
-//		Hospital userSearchLocation = new Hospital(latitude, longitude, sessionId, hSearchKeyword);
-//		List<Hospital> hList = hService.selectFiveByKeyword(userSearchLocation);
-//		Gson gson = new Gson();
-//		return gson.toJson(hList);
-//	}
-	
 	@ResponseBody
 	@GetMapping("/hospital/search.pet")
 	public String hospitalSearch(@RequestParam("latitude") Double latitude
@@ -304,6 +290,50 @@ public class HospitalController {
 		} else {
 			return "loginFail";
 		}
+	}
+	
+	// 동물병원 후기 검색 기능
+	@ResponseBody
+	@PostMapping("/hReview/search.pet")
+	public String hSearchKeyword(@RequestParam("hNo") int hNo
+								, @RequestParam("hRSearchKeyword") String hRSearchKeyword
+								, @RequestParam("currentPage") int currentPage
+								, @RequestParam("recordCountPerPage") int recordCountPerPage) {
+		
+		// 페이징을 적용하여 검색결과 데이터를 가져오도록 구현 
+	    int start = (currentPage - 1) * recordCountPerPage;
+	    int end = start + recordCountPerPage;
+	    
+	    HReview searchKey = new HReview(hNo, hRSearchKeyword);
+		List<HReview> hRList = hService.selectHReviewSearch(searchKey);
+		
+		// 범위 체크를 통해 부분 리스트 추출
+	    if (start < hRList.size()) {
+	        end = Math.min(end, hRList.size());
+	        hRList  = hRList.subList(start, end);
+	    } else {
+	    	hRList  = Collections.emptyList();
+	    }
+	    
+	    // 후기 정보에 작성자 닉네임 담아줌 
+ 		for (HReview hReview : hRList) {
+ 	        User user = uService.selectOneById(hReview.getuId()); 
+ 	        hReview.sethRNickName(user.getuNickName());
+ 	        hReview.sethRProfileImg(user.getuFilePath());
+ 	    }
+    
+	    // 전체 페이지 수 계산 (검색결과의 총 갯수를 페이지당 후기 갯수로 나눠서 계산)
+	    int totalRecords = hService.getHReviewSearchTotalCount(searchKey); // 검색결과의- 총 갯수 
+	    int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 전체 페이지 수 
+	    
+	    // 검색결과 리스트와 전체 페이지 수를 Map에 담아서 보냄 
+	    Map<String, Object> resultMap = new HashMap<>();
+	    resultMap.put("hRList", hRList);
+	    resultMap.put("totalPages", totalPages);
+	    resultMap.put("hRSearchKeyword", hRSearchKeyword);
+	    
+		Gson gson = new Gson();
+		return gson.toJson(resultMap);
 	}
 	
 	// 좌표 이동

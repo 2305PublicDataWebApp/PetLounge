@@ -134,4 +134,20 @@
 	        OR H_ADDR LIKE '%' || #{ hSearchKeyword } || '%' 
 	        OR H_ROAD_ADDR LIKE '%' || #{ hSearchKeyword } || '%' )
 	</select>
+	
+	<select id="selectHReviewSearch" resultType="HReview">
+		SELECT *
+		  FROM H_REVIEW_TBL
+		 WHERE H_NO = #{ hNo } 
+		   AND H_R_STATUS = 'Y'
+		   AND H_R_CONTENT LIKE '%' || #{ hRSearchKeyword } || '%'
+	</select>
+	
+	<select id="getHReviewSearchTotalCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM H_REVIEW_TBL
+		 WHERE H_NO = #{ hNo }
+		   AND H_R_STATUS = 'Y'
+		   AND H_R_CONTENT LIKE '%' || #{ hRSearchKeyword } || '%'
+	</select>
 </mapper>

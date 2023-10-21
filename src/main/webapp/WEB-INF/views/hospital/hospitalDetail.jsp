@@ -14,7 +14,7 @@
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9674da3ceea3cb3a1acdb7044a416e8&libraries=services,clusterer"></script>
         <title>${ hOne.hName } 상세 안내</title>
         <style>
-            .call-icon, .location-icon, .home-icon, .search-icon {
+            .call-icon, .location-icon, .home-icon {
                 margin-right: 10px;
                 font-size: 20px;
                 font-variation-settings:
@@ -163,9 +163,20 @@
 					        <td></td>
 					    </tr>
 					</table>
-						<div id="page-navigation">
-						    <ul id="pagination" class="pagination pagination-sm"></ul>
-						</div>
+					<div id="search-div">
+						<c:if test="${ hRSearchKeyword ne null }">
+						<input type="search" value="${ hRSearchKeyword }" name="hRSearchKeyword" id="h-r-search-keyword" class="search-input" placeholder="${ hOne.hName } 후기 검색">                     	
+						</c:if>
+						<c:if test="${ hRSearchKeyword eq null }">
+							<input type="search" name="hRSearchKeyword" id="h-r-search-keyword" class="search-input" placeholder="${ hOne.hName } 후기 검색">                     	
+						</c:if>
+						<span class="material-symbols-outlined search-icon" id="search-icon" style="font-size: 2em; color: #FFD370; cursor: pointer; margin-left: 10px;">
+				        	search
+				    	</span>
+					</div>
+					<div id="page-navigation">
+					    <ul id="pagination" class="pagination pagination-sm"></ul>
+					</div>
                 </div>
             </section>
             
@@ -375,7 +386,7 @@
 		<script>
 			// 후기 등록 
 			function hohReviewInsert(hNo) {
-				const hRContent = $("#review-create-content").val();
+				const hRContent = $("#review-create-content").val().trim();
 				$.ajax({
 					url : '/hReview/insert.pet',
 					type : 'POST',
@@ -412,14 +423,12 @@
 // 				modifyButton.addEventListener('click', function() {
 // 					modifyReview();
 // 				});	
-
-				console.log(hRProfileImg);
 			}
 			
 			// 후기 수정 
 			function modifyReview() {
 				let hRNo = document.querySelector('.h-r-no').value;
-				let hRContent = document.querySelector('.review-modify-content').value;
+				let hRContent = document.querySelector('.review-modify-content').value.trim();
 				$.ajax({
 					url : '/hReview/update.pet',
 					type : 'POST',
@@ -514,16 +523,8 @@
 						if(hRList.length > 0) {
 							for(let i in hRList) {
 								tr = $("<tr>"); // <tr></tr>
-								if(hRList[i].hRProfileImg == null){ // ********************** 프로필 이미지 추후 수정 필요 ******************
-// 									left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-color: #FFD370; border-radius: 100%;'></div>"); 
-									left = $("<td class='td'>").html("<img src='../resources/userUploadFiles/profile.png' width='50px' height='50px' style='border-radius: 100%; border: 2px solid #FFD370;'>");
-								} else {
-// 									left = $("<td class='td'>").html("<div style='width: 50px; height: 50px; background-img: url(" + hRList[i].hRProfileImg + "); border-radius: 100%;'></div>");
-									left = $("<td class='td'>").html("<img src='" + hRList[i].hRProfileImg + "' width='50px' height='50px' style='border-radius: 100%; border: 2px solid #FFD370;'>");
-								}
-// 								center = $("<td class='td'>").html(
-// 										"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
-// 										+ ""+getFormattedDate(hRList[i].hRCreate)+"</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>"); 
+								left = $("<td class='td'>").html("<img src='" + hRList[i].hRProfileImg + "' width='50px' height='50px' style='border-radius: 100%; border: 2px solid #FFD370;'>");
+								
 								if(hRList[i].hRCreate === hRList[i].hRUpdate) {
 									center = $("<td class='td'>").html(
 											"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
@@ -552,12 +553,87 @@
 					            createPagination(data.totalPages);
 							}
 						} else {
-							tr = $("<tr class='td'><td class='td'colspan='3'><div style='color: lightgray;'>등록된 후기가 없습니다.</div></td></tr>");
+							tr = $("<tr class='td'><td class='td'colspan='3'><div style='color: lightgray;'>등록된 후기가 없습니다</div></td></tr>");
 							tableBody.append(tr);
 						}
 					},
 					error : function() {
 						alert("동물병원 후기 리스트 호출 오류. 관리자에게 문의 바랍니다.");
+					}
+				});
+			}
+			
+			// 후기 검색결과 리스트를 불러오는 ajax Function
+			function searchHReview(currentPage) {
+				var hRSearchKeyword = document.getElementById('h-r-search-keyword').value.trim();
+				let sessionId = '${ sessionScope.uId }';
+				
+				$.ajax ({
+					url: "/hReview/search.pet",
+					type: "POST",
+					dataType: "json",
+					data: {
+						hNo: ${ hOne.hNo },
+						hRSearchKeyword: hRSearchKeyword,
+						currentPage: currentPage, 
+						recordCountPerPage: recordCountPerPage 
+					},
+					success: function(data) {
+						const tableBody = $("#review-table tbody");
+						tableBody.html('');
+						let tr;
+						let left;
+						let center;
+						let right;
+						
+						const hRList = data.hRList; // 후기 리스트 
+				        totalPages = data.totalPages; // 총 페이지 수
+						
+						if(hRList.length > 0) {
+							th = $("<th colspan='3' style='text-align: left; font-size: 1.2em;'><span style='color: #FFD370;'>" + hRSearchKeyword + "</span> 검색 결과</th>");
+							tableBody.append(th);
+							for(let i in hRList) {
+
+								tr = $("<tr>"); // <tr></tr>
+								left = $("<td class='td'>").html("<img src='" + hRList[i].hRProfileImg + "' width='50px' height='50px' style='border-radius: 100%; border: 2px solid #FFD370;'>");
+
+								if(hRList[i].hRCreate === hRList[i].hRUpdate) {
+									center = $("<td class='td'>").html(
+											"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
+											+ ""+getFormattedDate(hRList[i].hRCreate)+"</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>"); 
+								} else {
+									center = $("<td class='td'>").html(
+											"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
+											+ ""+getFormattedDate(hRList[i].hRUpdate)+"&nbsp;(수정됨)</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>");
+								}
+										
+								if(sessionId === hRList[i].uId || sessionId === 'admin') {
+									right = $("<td class='td'>").html(
+											"<a href='javascript:void(0)' class='review-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal' "
+											+ "onclick='openModifyView("+hRList[i].hRNo+",\""+hRList[i].hRNickName+"\",\""+hRList[i].hRContent+"\",\"" + hRList[i].hRProfileImg + "\");'>수정</a>"
+											+ "<a href='javascript:void(0)' class='review-delete-btn' onclick='checkDeleteReview("+hRList[i].hRNo+");'>삭제</a>"); 
+								} else {
+									right = $("<td class='td'>").html("");
+								}
+								
+								tr.append(left);
+								tr.append(center);
+								tr.append(right); 
+								tableBody.append(tr); 
+								
+								// 결과를 받은 후에 페이징을 업데이트
+					            createPagination(data.totalPages);
+							}
+						} else {
+							th = $("<th colspan='3' style='text-align: left; font-size: 1.2em;'><span style='color: #FFD370;'>" + hRSearchKeyword + "</span> 검색 결과</th>");
+							tr = $("<tr class='td'><td class='td'colspan='3'><div style='color: lightgray;'>등록된 후기가 없습니다</div></td></tr>");
+							tableBody.append(th);
+							tableBody.append(tr);
+							$("#pagination").html('');
+						}
+					}, 
+					error: function() {
+						alert("${ hOne.hName} 후기 검색 오류. 관리자에게 문의 바랍니다.");
 					}
 				});
 			}
@@ -646,5 +722,19 @@
 				window.history.back();
 			}
 		</script>
+		<!-- 동물병원 후기 검색 (input search) -->
+		<script>
+			document.getElementById('h-r-search-keyword').addEventListener('keypress', function (event) {
+			    if (event.key === 'Enter') {
+			    	currentPage = 1;
+				    searchHReview(currentPage);
+			    }
+			});
+			
+			document.getElementById("search-icon").addEventListener("click", function() {
+				currentPage = 1;
+				searchHReview(currentPage);
+			});
+        </script>
     </body>
 </html>
