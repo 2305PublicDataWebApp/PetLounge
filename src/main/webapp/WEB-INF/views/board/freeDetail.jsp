@@ -71,6 +71,20 @@
             <div id="line"></div>
         </section>
 
+		<div class="bmark">
+			<div class="sub-bmark">
+	          	<c:if test="${ fBookmark eq 1 }">
+				    <span id="bookmark-icon" class="material-symbols-outlined bookmark-icon-fill" data-tooltip-text="북마크" style="color: #FFD370;" onclick="fBookmark(${ bOne.fNo });">
+				        <i class="bi bi-bookmark-heart-fill"></i>
+				    </span>
+				</c:if>
+				<c:if test="${ fBookmark eq 0 }">
+				    <span id="bookmark-icon" class="material-symbols-outlined bookmark-icon-none" data-tooltip-text="북마크" style="color: #FFD370;" onclick="fBookmark(${ bOne.fNo });">
+				        <i class="bi bi-bookmark" id="empty"></i>
+				    </span>
+				</c:if>
+			</div>
+		</div>
         <div class="square-container">
             <div id="notice">
                 <ul>
@@ -266,6 +280,36 @@
 					location.href = "/board/fdelete.pet?fNo=" + fNo;
 				}
 			}
+		</script>
+		
+		<!-- 즐겨찾기 -->
+		<script>
+		    function fBookmark(bookmarkfNo) {
+		        var bookmark = document.getElementById('bookmark-icon');
+		
+		        $.ajax({
+		            url: '/board/addToFBookmark.pet',
+		            type: 'POST',
+		            data: {
+		                fNo: bookmarkfNo
+		            },
+		            success: function (data) {		// success 함수: Ajax 요청이 성공할 경우 실행되는 함수
+		                if (data == "insert") {
+		                    bookmark.classList.remove('bookmark-icon-none');
+		                    bookmark.classList.add('bookmark-icon-fill');
+		                } else if (data == "delete") {
+		                    bookmark.classList.remove('bookmark-icon-fill');
+		                    bookmark.classList.add('bookmark-icon-none');
+		                } else if (data == "loginFail") {
+		                    alert("로그인이 필요한 서비스입니다.");
+		                    location.href="/user/login.pet";
+		                } 
+		            },
+		            error: function () {
+		            	alert("게시글 북마크 오류. 관리자에게 문의 바랍니다.");
+		            }
+		        });
+		    }
 		</script>		     
     </body>
     </html>

@@ -112,7 +112,9 @@
 								</select>
 		                    <input type="text" name="searchKeyword" id="search" class="search-input" style="margin-right : 5px;">
 <!-- 		                    <input type="submit" class="search-button" value="검색"> -->
-		                    <i class="bi bi-search" id="searchIcon"></i>
+		                    <button type="submit" class="none1">
+		                    	<i class="bi bi-search" id="searchIcon" ></i>
+		                    </button>
 	                    </form>
 	                </div>
 	                <div class="sub">
@@ -125,16 +127,16 @@
 	                <div>
 	                </div>
 	                <div class="sub">
-  	                    <form  id="searchForm" action="/notice/noticeSearch.pet" method="get">
+  	                    <form id="searchForm" action="/notice/noticeSearch.pet" method="get">
       	                        <select name="searchCondition" id="selec" class="search-select">
 									<option value="all">전체</option>
 									<option value="no">글번호</option>
 									<option value="title">제목</option>
-<!-- 									<option value="date">작성일</option> -->
 								</select>
 		                    <input type="text" name="searchKeyword" id="search" class="search-input" style="margin-right : 5px;">
-<!-- 		                    <input type="submit" class="search-button" value="검색"> -->
-		                    <i class="bi bi-search" id="searchIcon"></i>
+		                    <button type="submit" class="none1">
+		                    	<i class="bi bi-search" id="searchIcon" ></i>
+		                    </button>
 	                    </form>
 	                </div>
 	            </div>		

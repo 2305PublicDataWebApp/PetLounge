@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.lounge.pet.board.domain.Board;
+import com.lounge.pet.board.domain.FBookmark;
 import com.lounge.pet.board.store.BoardStore;
 
 @Repository
@@ -63,6 +64,24 @@ public class BoardStoreLogic implements BoardStore {
 	@Override
 	public int getSearchCount(SqlSession session) {
 		int result = session.selectOne("BoardMapper.getSearchCount");
+		return result;
+	}
+
+	@Override
+	public int selectFBook(SqlSession session, FBookmark fBook) {
+		int fBOne = session.selectOne("BoardMapper.selectFBook", fBook);
+		return fBOne;
+	}
+
+	@Override
+	public int insertFBook(SqlSession session, FBookmark fBook) {
+		int result = session.insert("BoardMapper.insertFBook", fBook);
+		return result;
+	}
+
+	@Override
+	public int deleteFBook(SqlSession session, FBookmark fBook) {
+		int result = session.delete("BoardMapper.deleteFBook", fBook);
 		return result;
 	}
 

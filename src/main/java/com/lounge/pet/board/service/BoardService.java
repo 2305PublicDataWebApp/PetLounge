@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.lounge.pet.board.domain.Board;
+import com.lounge.pet.board.domain.FBookmark;
 
 public interface BoardService {
 
@@ -68,6 +69,29 @@ public interface BoardService {
 	 * @return
 	 */
 	int getSearchCount();
+
+	/**
+	 * 회원 아이디, 게시글 번호로 북마크 목록 조회
+	 * @param fBook
+	 * @return
+	 */
+	int selectFBook(FBookmark fBook);
+
+	/**
+	 * 북마크 등록
+	 * @param fBook
+	 * @return
+	 */
+	int insertFBook(FBookmark fBook);
+
+	/**
+	 * 북마크 삭제
+	 * @param fBook
+	 * @return
+	 */
+	int deleteFBook(FBookmark fBook);
+
+
 
 
 }

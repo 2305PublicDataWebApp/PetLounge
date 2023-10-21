@@ -187,31 +187,37 @@ public class NoticeController {
 			, @RequestParam("searchKeyword") String searchKeyword
 			, @RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage
 			, ModelAndView mv) {
-		// 동적 쿼리
-		// 2개의 값을 하나의 변수로 다루는 방법
-		// HashMap 사용하기
-		Map<String, String> nParamMap = new HashMap<String, String>();
-		// put()메소드를 사용해서 key-value 설정을 하는데 key값(파란색 글씨)이 mapper.xml에서 사용 됨
-		nParamMap.put("searchCondition", searchCondition);
-		nParamMap.put("searchKeyword", searchKeyword);
-		int totalCount = nService.getListCount(nParamMap);
-		PageInfo pInfo = this.getPageInfo(currentPage, totalCount);
-		List<Notice> nList = new ArrayList<Notice>();
-		nList = nService.searchByKeyword(pInfo, nParamMap);
-		if(!nList.isEmpty()) {
-			mv.addObject("nList", nList);
-			mv.addObject("pInfo", pInfo);
-			mv.addObject("searchCondition", searchCondition);
-			mv.addObject("searchKeyword", searchKeyword);
+		try {
+			// 동적 쿼리
+			// 2개의 값을 하나의 변수로 다루는 방법
+			// HashMap 사용하기
+			Map<String, String> nParamMap = new HashMap<String, String>();
+			// put()메소드를 사용해서 key-value 설정을 하는데 key값(파란색 글씨)이 mapper.xml에서 사용 됨
+			nParamMap.put("searchCondition", searchCondition);
+			nParamMap.put("searchKeyword", searchKeyword);
+			int totalCount = nService.getListCount(nParamMap);
+			PageInfo pInfo = this.getPageInfo(currentPage, totalCount);
+			List<Notice> nList = new ArrayList<Notice>();
+			nList = nService.searchByKeyword(pInfo, nParamMap);
+			if(!nList.isEmpty()) {
+				mv.addObject("nList", nList);
+				mv.addObject("pInfo", pInfo);
+				mv.addObject("searchCondition", searchCondition);
+				mv.addObject("searchKeyword", searchKeyword);
+				mv.setViewName("notice/noticeSearch");
+			}
+			else {
+				// 에러가 발생하지 않고 검색 결과가 비어 있는 경우에도 동일한 뷰 페이지를 표시
+				mv.addObject("nList", new ArrayList<Notice>()); // 빈 결과 목록을 추가
+				mv.addObject("pInfo", new PageInfo()); // 빈 페이지 정보를 추가
+				mv.addObject("searchCondition", searchCondition);
+				mv.addObject("searchKeyword", searchKeyword);
+				mv.setViewName("notice/noticeSearch");
+			}			
+		} catch (Exception e) {
+	        // 예외 처리: 에러가 발생했을 때 처리
 			mv.setViewName("notice/noticeSearch");
-		}
-		else {
-//			mv.addObject("msg", "데이터 조회가 완료되지 않았습니다.");
-//			mv.addObject("error", "공지사항 제목으로 조회 실패");
-//			mv.addObject("url", "/noticeList.pet");
-//			mv.setViewName("common/errorPage");
-			mv.setViewName("notice/noticeSearch");
-		}
+	    }
 		return mv;
 	}
 	
