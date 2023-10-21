@@ -192,6 +192,12 @@ public class UserServiceImpl implements UserService{
 		return sList;
 	}
 
+	@Override
+	public User userCheckEmail(String uEmail) {
+		User uOne = uStore.userCheckEmail(session, uEmail);
+		return uOne;
+	}
+
 
 
 

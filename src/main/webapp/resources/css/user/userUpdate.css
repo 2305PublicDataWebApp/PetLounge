@@ -444,3 +444,19 @@ section[id^="content"] {
     text-align: center !important;
     text-decoration: none !important;
 }
+
+#mailCheckBox {
+    display: flex;
+    align-items: center;
+}
+
+#duplEmailResult {
+    font-size: 0.8em;
+    width: 200px;
+    white-space: nowrap; /* 텍스트를 한 줄로 표시하도록 설정 */
+}
+
+#sendMailBtn {
+    margin-bottom: 17px;
+    height: 20px;
+}

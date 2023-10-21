@@ -216,6 +216,13 @@ public interface UserService {
 	 */
 	List<UserSupport> searchSupportReplyByKeyword(UPageInfo aInfo, Map<String, String> paramMap);
 
+	/**
+	 * 이메일 중복체크
+	 * @param uEmail
+	 * @return
+	 */
+	User userCheckEmail(String uEmail);
+
 	
 
 	

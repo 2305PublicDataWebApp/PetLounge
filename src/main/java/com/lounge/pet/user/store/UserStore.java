@@ -243,6 +243,14 @@ public interface UserStore {
 	 */
 	List<UserSupport> searchSupportReplyByKeyword(SqlSession session, UPageInfo aInfo, Map<String, String> paramMap);
 
+	/**
+	 * 이메일 중복체크
+	 * @param session
+	 * @param uEmail
+	 * @return
+	 */
+	User userCheckEmail(SqlSession session, String uEmail);
+
 	
 
 	

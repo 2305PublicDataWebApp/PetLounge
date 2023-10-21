@@ -228,6 +228,12 @@ public class UserStoreLogic implements UserStore{
 		return searchList;
 	}
 
+	@Override
+	public User userCheckEmail(SqlSession session, String uEmail) {
+		User uOne = session.selectOne("UserMapper.userCheckEmail", uEmail);
+		return uOne;
+	}
+
 
 
 	

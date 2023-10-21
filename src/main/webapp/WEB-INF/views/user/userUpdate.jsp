@@ -142,10 +142,16 @@
 														${fn:contains(user.uEmail, 'nate.com') ? 'selected' : ''}>nate.com</option>
 												</select> 
 												<input type="hidden" name="uEmail" id="uEmail" value="${user.uEmail}">
-												<button class="중복확인버튼" style="width: 60px; height: 8px; margin-left: 291px;">메일인증</button>
+												<div id="mailCheckBox">
+												<span id="duplEmailResult" style="font-size: 0.8em; width: 200px; padding-left: 5px;"></span>
+												<button class="중복확인버튼" id="sendMailBtn" style="height: 8px; margin: 0; padding-bottom: 23px; margin-left: 100px;">메일인증</button>
+												</div>
+													
 												
-												<input type="text" placeholder="인증번호를 입력하세요" style="width: 58.4%;;" required>
-												<button type="button" id="mailCheck">확인</button><br><br>
+												<!-- 컨트롤러에서 인증번호 받아온 값 저장 -> 입력된 인증번호와 비교 -->
+												<input type="hidden" id="send-certification-num">
+												<input type="text" id="user-email-check" placeholder="인증번호를 입력하세요" style="width: 58.4%;;" required>
+												<button type="button" id="mailCheck" onclick="confirmNumber();">확인</button><br><br>
 												
 												<input type="tel" name="uPhone"  id="uPhone" value="${user.uPhone }"><br> 
 													<span id="duplPhoneResult" style="font-size: 0.8em; width: 100%;"></span><br>
@@ -157,26 +163,6 @@
 												<input type="address" name="uAddr" id="userAddr" value="${user.uAddr }" required><br><br>
 											</div>
 										</div>
-										
-<!-- 										<div class="join2"> -->
-<!-- 											<h5></h5> -->
-<!-- 											<div style="margin-top: 7px;"> -->
-<!-- 												<div> -->
-<!-- 													<p>주소</p> -->
-<!-- 												</div> -->
-
-<!-- 												<div> -->
-<%-- 													<input type="address" id="userZipcode" value="${user.uAddrNo }" name="uAddrNo" --%>
-<!-- 														required> -->
-<!-- 													<button id="addrsearch" onclick="sample4_exeDaumPostcode()">주소검색</button> -->
-<!-- 													<br> <input type="address" name="uAddr" id="userAddr" -->
-<%-- 														value="${user.uAddr }" required><br> --%>
-<!-- 													<br> -->
-<!-- 												</div> -->
-<!-- 											</div> -->
-<!-- 										</div> -->
-
-
 
 
 										<button id="join2" style="cursor: pointer !important;">수정하기</button>
@@ -220,6 +206,9 @@
 						}
 					}).open();
 		}
+		
+		
+		
 
 		//이메일 합치기
 		function combineEmail() {
@@ -232,6 +221,9 @@
 			document.getElementById("uEmail").value = combinedEmail;
 		}
 
+		
+		
+		
 		// 주소 API 열기
 		function sample4_execDaumPostcode() {
 			new daum.Postcode(
@@ -334,6 +326,43 @@
             });
         });
         
+      
+      //이메일 중복확인 및 유효성 검사
+        $(document).ready(function() {
+            $("#uEmailPrefix").on("change", function() {
+                var uEmailPrefix = $("#uEmailPrefix").val();
+				var uEmailSuffix = $("#uEmailSuffix").val();
+				var uEmail = uEmailPrefix +"@"+ uEmailSuffix;
+				
+                $.ajax({
+                    url: "/user/checkEmail.pet",
+                    type: "POST",
+                    data: {
+                        "uEmail": uEmail
+                    },
+                    success: function(data) {
+                        var result = JSON.parse(data);
+
+                        if (result[0] === "Valid" && result[1] === "Unique") {
+                            $("#duplEmailResult").removeClass("error").addClass("success").css("color", "green");;
+                            $("#duplEmailResult").text("사용 가능한 이메일입니다.");
+                        } else if (result[0] === "Valid" && result[1] === "NotUnique") {
+                            $("#duplEmailResult").removeClass("success").addClass("error");
+                            $("#duplEmailResult").text("중복된 이메일입니다.");
+                        } else if (result[0] === "Invalid" && result[1] === "Unique") {
+                            $("#duplEmailResult").removeClass("success").addClass("error");
+                            $("#duplEmailResult").text("이메일은 한글 문자 또는 영문자 5자 이하 입니다.");
+                        }  else {
+                            $("#duplEmailResult").text("ajax 오류 관리자 문의 바람");
+                        }
+                    },
+                    error: function() {
+                        alert("ajax 오류, 큰일");
+                    }
+                });
+            });
+        });
+        
         
         
         //비밀번호 유효성 검사
@@ -415,7 +444,7 @@
                     success: function(data) {
 
                         if (data === "Valid") {
-                            $("#duplPhoneResult").removeClass("error").addClass("success").css("color", "green");;
+                            $("#duplPhoneResult").removeClass("error").addClass("success").css("color", "green");
                             $("#duplPhoneResult").text("사용 가능한 전화번호입니다.");
                         } else if (data === "Invalid") {
                             $("#duplPhoneResult").removeClass("success").addClass("error");
@@ -440,11 +469,14 @@
             var emailVal = $("#uEmail").val();
             if(emailVal == null || emailVal == ""){
                alert("이메일을 먼저 입력해주세요.");
+               return;
+            } else {
+            	alert("인증번호가 발송되었습니다. 이메일을 확인해주세요.");
             }
 //             if($("#user-ck-email").val() === "false"){
 //                alert("사용할 수 없는 이메일입니다.")
 //             } else {
-               alert("인증번호가 발송되었습니다. 이메일을 확인해주세요.");
+               
                
                $.ajax({
                   url : "/user/sendMail.pet",
@@ -464,18 +496,24 @@
         function confirmNumber(){
            var num1 = $("#user-email-check").val();
            var num2 = $("#send-certification-num").val();
-           if(num1 == num2) {
-              alert("인증이 완료되었습니다.");
-              //일치할 때 유효성 체크 여부 확인을 위해서 값을 true로 넣어줌
-              $("#check-certification-num").attr("value", "true");
-              $("#duplEmailResult").text("인증 완료").removeClass("error").addClass("success");
+           if(num1 == "" || num2 == "") {
+        	   alert("인증번호 전송 버튼을 눌러주세요.");
            } else {
-              alert("작성한 인증번호가 다릅니다.");
-              $("#check-certification-num").attr("value", "false");
-              $("#duplEmailResult").text("인증 실패").removeClass("success").addClass("error");
+        	   if(num1 == num2) {
+                   alert("인증이 완료되었습니다.");
+                   //일치할 때 유효성 체크 여부 확인을 위해서 값을 true로 넣어줌
+                   $("#check-certification-num").attr("value", "true");
+                   $("#user-email-check").attr("readonly", "true");
+                   $("#duplEmailResult").text("인증 완료").removeClass("error").addClass("success").css("color", "green");
+                } else {
+                   alert("작성한 인증번호가 다릅니다.");
+                   $("#check-certification-num").attr("value", "false");
+                   $("#duplEmailResult").text("인증 실패").removeClass("success").addClass("error");
+                }
            }
+           
         }
-        
+     
         
             
 	</script>
