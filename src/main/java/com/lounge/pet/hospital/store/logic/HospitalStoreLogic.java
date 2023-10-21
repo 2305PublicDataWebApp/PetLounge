@@ -97,4 +97,17 @@ public class HospitalStoreLogic implements HospitalStore {
 		return count;
 	}
 
+	@Override
+	public List<HReview> selectHReviewSearch(SqlSession session, HReview searchKey) {
+		List<HReview> hRList = session.selectList("HosMapper.selectHReviewSearch", searchKey);
+		return hRList;
+	}
+
+	@Override
+	public int getHReviewSearchTotalCount(SqlSession session, HReview searchKey) {
+		int count = session.selectOne("HosMapper.getHReviewSearchTotalCount", searchKey);
+		return count;
+	}
+
 }
+ 

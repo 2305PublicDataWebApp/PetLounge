@@ -180,9 +180,29 @@ main {
 	                .review-modify-btn:hover, .review-delete-btn:hover {
 	                    color: #FFD370;
 	                }
+	                
+			#search-div {
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				margin-top: 20px;
+			}
+			
+				.search-input {
+					border: 2px solid #CCCCCC;
+				    border-radius: 50px;
+				    padding: 5px 20px;
+				    outline: none;
+	                transition: border-color 0.3s;
+	            }
+	
+	            .search-input:hover,
+	            .search-input:focus {
+	                border-color: #FFD370;
+	            }
         
         #page-navigation {
-            margin-top: 50px;
+            margin-top: 30px;
             display: flex;
     		justify-content: center;
         }

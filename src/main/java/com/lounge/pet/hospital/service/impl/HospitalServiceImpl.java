@@ -104,4 +104,16 @@ public class HospitalServiceImpl implements HospitalService {
 		return count;
 	}
 
+	@Override
+	public List<HReview> selectHReviewSearch(HReview searchKey) {
+		List<HReview> hRList = hStore.selectHReviewSearch(session, searchKey);
+		return hRList;
+	}
+
+	@Override
+	public int getHReviewSearchTotalCount(HReview searchKey) {
+		int count = hStore.getHReviewSearchTotalCount(session, searchKey);
+		return count;
+	}
+
 }
