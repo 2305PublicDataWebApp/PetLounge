@@ -184,8 +184,7 @@ section[id^="content"]:target {
 						<button id="next1">다음으로</button>
 					</section>
 
-					<form action="/user/register.pet" method="post"
-						enctype="multipart/form-data" id="registration-form">
+					<form id="registration-form">
 						<section id="content3">
 							<h5 style="margin-bottom: 25px; margin-top: 70px;"></h5>
 
@@ -241,7 +240,7 @@ section[id^="content"]:target {
 									<input type="hidden" name="uEmail" id="uEmail" value="">
 									<div id="mailCheckBox">
 									<span id="duplEmailResult" style="font-size: 0.8em; width: 200px; padding-bottom: 14px; padding-left: 3px;"></span>
-									<button id="sendMailBtn" class="dupl" style="margin-bottom: 17px; height: 20px;">메일인증</button>
+									<button id="sendMailBtn" class="dupl" style="margin-bottom: 17px; height: 20px; margin: 0; padding-bottom: 10px; margin-right: 10px; margin-top: -16px;">메일인증</button>
 									</div>
 									
 									<!-- 컨트롤러에서 인증번호 받아온 값 저장 -> 입력된 인증번호와 비교 -->
@@ -253,12 +252,12 @@ section[id^="content"]:target {
 										<span id="duplPhoneResult" style="font-size: 0.8em; width: 100%;"></span><br>
 										
 										<div>
-										<input type="text" id="userZipcode" name="uAddrNo" placeholder="우편번호" style="width: 58.4%;;" required>
+										<input type="text" id="userZipcode" name="uAddrNo" placeholder="우편번호" style="width: 58.4%;;" readonly="readonly" required>
 										<button type="button" id="addrsearch" onclick="sample4_exeDaumPostcode()">주소검색</button>
 <!-- 										<input type="address" id="userZipcode" name="uAddrNo" placeholder="우편번호" style="width: 58.4%" required> -->
 <!-- 										<button class="dupl" id="addrsearch" onclick="sample4_exeDaumPostcode()">주소검색</button><br>  -->
 										</div>
-											<input type="address" name="uAddr" id="userAddr" placeholder="도로명주소" required><br>
+											<input type="address" name="uAddr" id="userAddr" placeholder="도로명주소" readonly="readonly" required><br>
 										
 								</div>
 							</div>
@@ -282,7 +281,7 @@ section[id^="content"]:target {
 
 
 
-							<button type="submit" id="join2" style="width: 345px; margin-left: 139px;">가입하기</button>
+							<button type="button" id="join2" style="width: 345px; margin-left: 139px;">가입하기</button>
 						</section>
 
 
@@ -309,6 +308,18 @@ section[id^="content"]:target {
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
+	
+	
+	let idMsg;
+	let passMsg;
+	let rePassMsg;
+	let nickMsg;
+	let emailMsg;
+	let conNumMsg;
+	let phoneMsg;
+	let addrMsg;
+	
+	
 	
 		document.addEventListener("DOMContentLoaded", function () {
 		    // 모든 탭을 숨기고 content1만 표시
@@ -337,16 +348,7 @@ section[id^="content"]:target {
 		    join2.addEventListener('click', (event) => {
 		      event.preventDefault(); // 기본 폼 제출 동작 방지
 
-		      // join2 버튼 클릭 시 content4로 전환
-		      contents.forEach(content => {
-		        content.style.display = 'none';
-		      });
-		      document.getElementById('content4').style.display = 'block';
-
-		      // 탭 버튼도 변경
-		      const tabs = document.querySelectorAll('input[name="tabs"]');
-		      tabs.forEach(tab => (tab.checked = false));
-		      document.getElementById('tab4').checked = true;
+		     
 		    });
 		
 		    
@@ -449,8 +451,10 @@ section[id^="content"]:target {
 				oncomplete: function(data) {
 					document.querySelector("#userZipcode").value = data.zonecode;
 					document.querySelector("#userAddr").value = data.roadAddress;
+					addrMsg = "success";
 				}
 			}).open();
+			
 		}
         
         
@@ -510,44 +514,7 @@ section[id^="content"]:target {
 
 
 
-     // "join2" 버튼 클릭 이벤트 처리
-        const join2 = document.getElementById('join2');
-        join2.addEventListener('click', (event) => {
-            event.preventDefault(); // 기본 폼 제출 동작 방지
-
-            // 폼 데이터 수집
-            const formData = new FormData(document.getElementById('registration-form'));
-
-            // AJAX 요청 생성
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "/user/register.pet", true);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        // 서버 응답이 성공인 경우
-                        const response = JSON.parse(xhr.responseText);
-                        if (response.success) {
-                            // 가입완료 탭으로 변경
-                            const tabs = document.querySelectorAll('input[name="tabs"]');
-                            tabs.forEach(tab => (tab.checked = false));
-                            document.getElementById("tab4").checked = true;
-
-                            // URL에 #tab4를 추가하여 탭이 열리도록 함
-                            window.location.hash = "tab4";
-                        } else {
-                            alert("회원가입에 실패했습니다. 다시 시도해주세요.");
-                        }
-                    } else {
-                        alert("서버 오류로 인해 회원가입에 실패했습니다. 다시 시도해주세요.");
-                    }
-                }
-            };
-
-            // AJAX 요청 전송
-            xhr.send(formData);
-        });
-
-        
+     
         
      // 주소 API 열기
         function sample4_execDaumPostcode() {
@@ -593,6 +560,7 @@ section[id^="content"]:target {
                         if (result[0] === "Valid" && result[1] === "Unique") {
                             $("#duplResult").removeClass("error").addClass("success");
                             $("#duplResult").text("사용 가능한 아이디입니다.");
+                            idMsg = "success";
                         } else if (result[0] === "Valid" && result[1] === "NotUnique") {
                             $("#duplResult").removeClass("success").addClass("error");
                             $("#duplResult").text("중복된 아이디입니다.");
@@ -610,8 +578,10 @@ section[id^="content"]:target {
             });
         });
         
+        
+        
       //닉네임 중복확인 및 유효성 검사
-        $(document).ready(function() {
+//         $(document).ready(function() {
             $("#uNickName").on("change", function() {
                 var uNickName = $("#uNickName").val();
 
@@ -627,9 +597,12 @@ section[id^="content"]:target {
                         if (result[0] === "Valid" && result[1] === "Unique") {
                             $("#duplNickResult").removeClass("error").addClass("success");
                             $("#duplNickResult").text("사용 가능한 닉네임입니다.");
+                            nickMsg = "success";
+                          
                         } else if (result[0] === "Valid" && result[1] === "NotUnique") {
                             $("#duplNickResult").removeClass("success").addClass("error");
                             $("#duplNickResult").text("중복된 닉네임입니다.");
+                    
                         } else if (result[0] === "Invalid" && result[1] === "Unique") {
                             $("#duplNickResult").removeClass("success").addClass("error");
                             $("#duplNickResult").text("닉네임은 한글 문자 5자 이하 또는 영문자 5자 이하여야 합니다.");
@@ -642,8 +615,49 @@ section[id^="content"]:target {
                     }
                 });
             });
+//         });
+        
+      
+      
+      //이메일 중복확인 및 유효성 검사
+        $(document).ready(function() {
+            $("#uEmailPrefix").on("change", function() {
+                var uEmailPrefix = $("#uEmailPrefix").val();
+				var uEmailSuffix = $("#uEmailSuffix").val();
+				var uEmail = uEmailPrefix +"@"+ uEmailSuffix;
+				
+                $.ajax({
+                    url: "/user/checkEmail.pet",
+                    type: "POST",
+                    data: {
+                        "uEmail": uEmail
+                    },
+                    success: function(data) {
+                        var result = JSON.parse(data);
+
+                        if (result[0] === "Valid" && result[1] === "Unique") {
+                            $("#duplEmailResult").removeClass("error").addClass("success").css("color", "green");;
+                            $("#duplEmailResult").text("사용 가능한 이메일입니다.");
+                            emailMsg = "success";
+                        } else if (result[0] === "Valid" && result[1] === "NotUnique") {
+                            $("#duplEmailResult").removeClass("success").addClass("error").css("color", "red");;
+                            $("#duplEmailResult").text("중복된 이메일입니다.");
+                        } else if (result[0] === "Invalid" && result[1] === "Unique") {
+                            $("#duplEmailResult").removeClass("success").addClass("error").css("color", "red");;
+                            $("#duplEmailResult").text("이메일은 한글 문자 또는 영문자 5자 이하 입니다.");
+                        }  else {
+                            $("#duplEmailResult").text("ajax 오류 관리자 문의 바람");
+                        }
+                    },
+                    error: function() {
+                        alert("ajax 오류, 큰일");
+                    }
+                });
+            });
         });
         
+      
+      
         
         
         //비밀번호 유효성 검사
@@ -662,6 +676,7 @@ section[id^="content"]:target {
                         if (data === "Valid") {
                             $("#duplPwResult").removeClass("error").addClass("success");
                             $("#duplPwResult").text("사용 가능한 비밀번호입니다.");
+                            passMsg = "success";
                         } else if (data === "Invalid") {
                             $("#duplPwResult").removeClass("success").addClass("error");
                             $("#duplPwResult").text("비밀번호는 영문과 숫자 조합이어야 하며, 1~10자여야 합니다.");
@@ -695,6 +710,7 @@ section[id^="content"]:target {
                         if (data === "success") {
                             $("#duplPwReResult").removeClass("error").addClass("success");
                             $("#duplPwReResult").text("비밀번호 일치");
+                            rePassMsg = "success";
                         } else if (data === "error") {
                             $("#duplPwReResult").removeClass("success").addClass("error");
                             $("#duplPwReResult").text("비밀번호가 일치하지 않습니다.");
@@ -726,6 +742,7 @@ section[id^="content"]:target {
                         if (data === "Valid") {
                             $("#duplPhoneResult").removeClass("error").addClass("success");
                             $("#duplPhoneResult").text("사용 가능한 전화번호입니다.");
+                            phoneMsg = "success";
                         } else if (data === "Invalid") {
                             $("#duplPhoneResult").removeClass("success").addClass("error");
                             $("#duplPhoneResult").text("전화번호는 숫자 11자리여야 합니다.");
@@ -750,9 +767,13 @@ section[id^="content"]:target {
             if(emailVal == null || emailVal == ""){
                alert("이메일을 먼저 입력해주세요.");
                return;
+            }else if(emailMsg === "success") {
+            	alert("인증번호가 발송되었습니다. 이메일을 확인해주세요.");
             } else {
-            	 alert("인증번호가 발송되었습니다. 이메일을 확인해주세요.");
+            	alert("이메일 사용 여부를 확인해주세요.");
             }
+            	 
+            
 //             if($("#user-ck-email").val() === "false"){
 //                alert("사용할 수 없는 이메일입니다.")
 //             } else {
@@ -785,6 +806,7 @@ section[id^="content"]:target {
                    $("#check-certification-num").attr("value", "true");
                    $("#user-email-check").attr("readonly", "true");
                    $("#duplEmailResult").text("인증완료").removeClass("error").addClass("success");
+                   conNumMsg = "success";
                 } else {
                    alert("작성한 인증번호가 다릅니다.");
                    $("#check-certification-num").attr("value", "false");
@@ -795,6 +817,119 @@ section[id^="content"]:target {
         }
         
         
+        
+        
+        $(document).ready(function() {
+            $("#join2").on("click", function(event) {
+
+                // 모든 유효성 검사가 success인 경우에만 가입 처리
+                if (idMsg === "success" && passMsg === "success" && rePassMsg === "success" && nickMsg === "success" &&
+                    emailMsg === "success" && conNumMsg === "success" && phoneMsg === "success" && addrMsg === "success") {
+                    // 여기에서 가입 처리 로직을 실행
+                    
+                	  event.preventDefault(); // 기본 폼 제출 동작 방지
+
+                      // 폼 데이터 수집
+                      const formData = new FormData(document.getElementById('registration-form'));
+
+                      // AJAX 요청 생성
+                      const xhr = new XMLHttpRequest();
+                      xhr.open("POST", "/user/register.pet", true);
+                      xhr.onreadystatechange = function () {
+                          if (xhr.readyState === 4) {
+                              if (xhr.status === 200) {
+                                  // 서버 응답이 성공인 경우
+                                  const response = JSON.parse(xhr.responseText);
+                                  if (response.success) {
+                                      // 가입완료 탭으로 변경
+                                      const tabs = document.querySelectorAll('input[name="tabs"]');
+                                      tabs.forEach(tab => (tab.checked = false));
+                                      document.getElementById("tab4").checked = true;
+
+                                      // URL에 #tab4를 추가하여 탭이 열리도록 함
+                                      window.location.hash = "tab4";
+                                  } 
+                          		}
+                      		}
+                      }
+
+                      
+                      // AJAX 요청 전송
+                      xhr.send(formData);
+                      // join2 버튼 클릭 시 content4로 전환
+                      const contents = document.querySelectorAll('section[id^="content"]');
+        		      contents.forEach(content => {
+        		        content.style.display = 'none';
+        		      });
+        		      document.getElementById('content4').style.display = 'block';
+
+        		      // 탭 버튼도 변경
+        		      const tabs = document.querySelectorAll('input[name="tabs"]');
+        		      tabs.forEach(tab => (tab.checked = false));
+        		      document.getElementById('tab4').checked = true;
+                } else {
+                    // 하나라도 유효성 검사에서 실패한 경우 메시지를 표시하고 넘어가지 않음
+                    event.preventDefault(); // 폼 제출을 막음
+//                     displayErrorMessage(idMsg, "idErrorMsg"); // 아이디 에러 메시지 표시
+//                     displayErrorMessage(passMsg, "passErrorMsg"); // 비밀번호 에러 메시지 표시
+//                     displayErrorMessage(rePassMsg, "rePassErrorMsg"); // 비밀번호 확인 에러 메시지 표시
+//                     displayErrorMessage(nickMsg, "nickErrorMsg"); // 닉네임 에러 메시지 표시
+//                     displayErrorMessage(emailMsg, "emailErrorMsg"); // 이메일 에러 메시지 표시
+//                     displayErrorMessage(conNumMsg, "conNumErrorMsg"); // 인증 번호 에러 메시지 표시
+//                     displayErrorMessage(phone, "phoneErrorMsg"); // 전화번호 에러 메시지 표시
+//                     displayErrorMessage(addr, "addrErrorMsg"); // 주소 에러 메시지 표시
+                    alert("전부 기입해주세요.")
+                }
+            });
+        });
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+     // "join2" 버튼 클릭 이벤트 처리
+//         const join2 = document.getElementById('join2');
+//         join2.addEventListener('click', (event) => {
+//             event.preventDefault(); // 기본 폼 제출 동작 방지
+
+//             // 폼 데이터 수집
+//             const formData = new FormData(document.getElementById('registration-form'));
+
+//             // AJAX 요청 생성
+//             const xhr = new XMLHttpRequest();
+//             xhr.open("POST", "/user/register.pet", true);
+//             xhr.onreadystatechange = function () {
+//                 if (xhr.readyState === 4) {
+//                     if (xhr.status === 200) {
+//                         // 서버 응답이 성공인 경우
+//                         const response = JSON.parse(xhr.responseText);
+//                         if (response.success) {
+//                             // 가입완료 탭으로 변경
+//                             const tabs = document.querySelectorAll('input[name="tabs"]');
+//                             tabs.forEach(tab => (tab.checked = false));
+//                             document.getElementById("tab4").checked = true;
+
+//                             // URL에 #tab4를 추가하여 탭이 열리도록 함
+//                             window.location.hash = "tab4";
+//                         } else {
+//                             alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+//                         }
+//                     } else {
+//                         alert("서버 오류로 인해 회원가입에 실패했습니다. 다시 시도해주세요.");
+//                     }
+//                 }
+//             };
+
+//             // AJAX 요청 전송
+//             xhr.send(formData);
+//         });
         
 	    </script>
 

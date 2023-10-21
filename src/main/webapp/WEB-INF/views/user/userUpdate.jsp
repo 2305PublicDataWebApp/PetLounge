@@ -327,7 +327,7 @@
         });
         
       
-      //이메일 중복확인 및 유효성 검사
+      	//이메일 중복확인 및 유효성 검사
         $(document).ready(function() {
             $("#uEmailPrefix").on("change", function() {
                 var uEmailPrefix = $("#uEmailPrefix").val();
@@ -344,7 +344,7 @@
                         var result = JSON.parse(data);
 
                         if (result[0] === "Valid" && result[1] === "Unique") {
-                            $("#duplEmailResult").removeClass("error").addClass("success").css("color", "green");;
+                            $("#duplEmailResult").removeClass("error").addClass("success").css("color", "green");
                             $("#duplEmailResult").text("사용 가능한 이메일입니다.");
                         } else if (result[0] === "Valid" && result[1] === "NotUnique") {
                             $("#duplEmailResult").removeClass("success").addClass("error");
