@@ -178,122 +178,122 @@
                     	<ul>
                     		<li>
                     			<div class="time" id="time-01"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-01-icon" src="" alt="날씨 아이콘">
                     			<span class="time">1시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-02"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-02-icon" src="" alt="날씨 아이콘">
                     			<span class="time">2시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-03"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-03-icon" src="" alt="날씨 아이콘">
                     			<span class="time">3시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-04"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-04-icon" src="" alt="날씨 아이콘">
                     			<span class="time">4시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-05"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-05-icon" src="" alt="날씨 아이콘">
                     			<span class="time">5시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-06"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-06-icon" src="" alt="날씨 아이콘">
                     			<span class="time">6시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-07"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-07-icon" src="" alt="날씨 아이콘">
                     			<span class="time">7시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-08"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-08-icon" src="" alt="날씨 아이콘">
                     			<span class="time">8시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-09"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-09-icon" src="" alt="날씨 아이콘">
                     			<span class="time">9시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-10"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-10-icon" src="" alt="날씨 아이콘">
                     			<span class="time">10시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-11"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-11-icon" src="" alt="날씨 아이콘">
                     			<span class="time">11시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-12"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-12-icon" src="" alt="날씨 아이콘">
                     			<span class="time">12시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-13"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-13-icon" src="" alt="날씨 아이콘">
                     			<span class="time">13시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-14"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-14-icon" src="" alt="날씨 아이콘">
                     			<span class="time">14시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-15"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-15-icon" src="" alt="날씨 아이콘">
                     			<span class="time">15시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-16"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-16-icon" src="" alt="날씨 아이콘">
                     			<span class="time">16시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-17"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-17-icon" src="" alt="날씨 아이콘">
                     			<span class="time">17시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-18"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-18-icon" src="" alt="날씨 아이콘">
                     			<span class="time">18시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-19"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-19-icon" src="" alt="날씨 아이콘">
                     			<span class="time">19시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-20"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-20-icon" src="" alt="날씨 아이콘">
                     			<span class="time">20시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-21"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-21-icon" src="" alt="날씨 아이콘">
                     			<span class="time">21시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-22"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-22-icon" src="" alt="날씨 아이콘">
                     			<span class="time">22시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-23"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-23-icon" src="" alt="날씨 아이콘">
                     			<span class="time">23시</span>
                     		</li>
                     		<li>
                     			<div class="time" id="time-24"></div>
-                    			<div class="time">^^</div>
+                    			<img id="time-24-icon" src="" alt="날씨 아이콘">
                     			<span class="time">0시</span>
                     		</li>
                     	</ul>
@@ -418,8 +418,8 @@
 		        city = city
 		        
 		        weatherTemp(nx, ny, city);	// 현재 온도
-		        weatherRain(nx, ny);		// 오늘 강수량
-		        weatherTempMinMax(nx, ny);	// 오늘 최저/최대 온도
+// 		        weatherRain(nx, ny);		// 오늘 강수량
+// 		        weatherTempMinMax(nx, ny);	// 오늘 최저/최대 온도
 		        weatherTime(nx, ny);		// 오늘 시간별 기온
 		        weatherDay(nx, ny);			// 일별 강수량/최저, 최대 온도
 			}
@@ -451,115 +451,6 @@
 		        });
             }
 
-			
-			// ************************************************ 단기 예보(강수확률) ************************************************//
-         	function weatherRain(nx, ny) {
-				
-//          		base_date = initDate;
-				base_time="0200";
-				
-				// 0시 ~ 2시 비는 시간은 전날 23시 예보 출력
-// 				let formattedTime = getFormattedTime(); // 현재 시간
-				
-// 				if(formattedTime >= "0000" && formattedTime < "0300") {
-// 			        base_date = initDate - 1;
-// 			        base_time = "2300";
-// 				}
-         		
-	         	apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
-				
-				let fcstTime = getFormattedTime(); // 예보 시간(이걸로 배열 가져와야 함)
-				fcstTime = fcstTime.substring(0, 2) + "00";
-				
-	         	url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-	         	console.log("단기 예보(강수확률) : " + url);
-				$.getJSON (url, function(data){
-					const percentage = "%";
-					let fcstValue = "";
-					
-					// 기상청 api 배열이 중간에 해당 시간대에만 출력되는 예보가 있어서 반복문 사용을 못했음.
-// 					if(formattedTime >= "0000" && formattedTime < "0300") {
-
-// 						switch(fcstTime) {
-// 							case '0000': fcstValue = data.response.body.items.item[7].fcstValue; break;
-// 							case '0100': fcstValue = data.response.body.items.item[19].fcstValue; break;
-// 							case '0200': fcstValue = data.response.body.items.item[31].fcstValue; break;
-// 						}
-// 					} else if(formattedTime >= "0300" && formattedTime < "2400") {
-						
-						switch(fcstTime) {
-							case '0300': fcstValue = data.response.body.items.item[7].fcstValue; break;
-							case '0400': fcstValue = data.response.body.items.item[19].fcstValue; break;
-							case '0500': fcstValue = data.response.body.items.item[31].fcstValue; break;
-							case '0600': fcstValue = data.response.body.items.item[43].fcstValue; break;
-							case '0700': fcstValue = data.response.body.items.item[56].fcstValue; break;
-							case '0800': fcstValue = data.response.body.items.item[68].fcstValue; break;
-							case '0900': fcstValue = data.response.body.items.item[80].fcstValue; break;
-							case '1000': fcstValue = data.response.body.items.item[92].fcstValue; break;
-							case '1100': fcstValue = data.response.body.items.item[104].fcstValue; break;
-							case '1200': fcstValue = data.response.body.items.item[116].fcstValue; break;
-							case '1300': fcstValue = data.response.body.items.item[128].fcstValue; break;
-							case '1400': fcstValue = data.response.body.items.item[140].fcstValue; break;
-							case '1500': fcstValue = data.response.body.items.item[152].fcstValue; break;
-							case '1600': fcstValue = data.response.body.items.item[165].fcstValue; break;
-							case '1700': fcstValue = data.response.body.items.item[177].fcstValue; break;
-							case '1800': fcstValue = data.response.body.items.item[189].fcstValue; break;
-							case '1900': fcstValue = data.response.body.items.item[201].fcstValue; break;
-							case '2000': fcstValue = data.response.body.items.item[213].fcstValue; break;
-							case '2100': fcstValue = data.response.body.items.item[225].fcstValue; break;
-							case '2200': fcstValue = data.response.body.items.item[237].fcstValue; break;
-							case '2300': fcstValue = data.response.body.items.item[249].fcstValue; break;
-						}
-// 					}
-					rainValue = fcstValue; // 강수량 저장
-					console.log(rainValue);
-					$('.pro-rain').empty().append(fcstValue).append(percentage); // 강수 확률
-					
-					weatherIcon();
-				});
-         	}
-			
-			// ************************************************ 단기 예보(최고/최저 기온) ************************************************//
-			function weatherTempMinMax(nx, ny) {
-				
-				base_date = initDate;
-				base_time = "0200";
-				
-				// 0시 ~ 2시 비는 시간은 전날 23시 예보 출력
-// 				formattedTime = getFormattedTime(); // 현재 시간
-// 				if(formattedTime >= "0000" && formattedTime < "0300") {
-// 			        base_date = initDate - 1;
-// 			        base_time = "2300";
-// 				}
-				
-				apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
-				url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-				
-				$.getJSON (url, function(data){
-					const celsius = "℃";
-					let tempMax;
-					let tempMin;
-					let roundedTempMax;
-					let roundedTempMin;
-					
-					//  0시 ~ 2시 일 경우
-// 					if(formattedTime >= "0000" && formattedTime < "0200") {
-// 						tempMax = data.response.body.items.item[193].fcstValue;
-// 						tempMin = data.response.body.items.item[84].fcstValue;
-// 						roundedTempMax = Math.round(tempMax);
-// 						roundedTempMin = Math.round(tempMin);
-// 					}
-					
-					tempMax = data.response.body.items.item[157].fcstValue;
-					tempMin = data.response.body.items.item[48].fcstValue;
-					roundedTempMax = Math.round(tempMax);
-					roundedTempMin = Math.round(tempMin);
-					
-					$('.temp-max').empty().append(roundedTempMax).append(celsius); // 최고 기온
-					$('.temp-min').empty().append(roundedTempMin).append(celsius); // 최저 기온
-				});
-			}
-			
 			// ************************************************ 초단기 예보(일 시간별 기온) ************************************************//
 			
 			function weatherTime(nx, ny) {
@@ -653,11 +544,13 @@
 					$('#time-23').empty().append(tempTwentyThr).append(celsius);
 					$('#time-24').empty().append(tempTwentyFour).append(celsius);
 				});
+				
+				timeIcon() // 시간별 아이콘 메소드
 			}
 			
 			// 시간대별 온도 추가해야함.
 			
-			// ************************************************ 단기 예보(일별 기온/강수량) ************************************************//
+			// ************************************************ 단기 예보(최고/최저기온, 강수량) ************************************************//
 			function weatherDay(nx, ny) {
 				
 				// 오늘 날짜 출력
@@ -673,12 +566,10 @@
 					const percentage = "%";
 					const celsius = "℃";
 					
-					const fcstTimeAm = "0900"; // 오전
-					const fcstTimePm = "1800"; // 오후
+// 					const fcstTimeAm = "0900"; // 오전
+// 					const fcstTimePm = "1800"; // 오후
 					
-// 					formattedTime = getFormattedTime(); // 현재 시간
-// 					let fcstTime = formattedTime.slice(0, -2) + "00"; // 예보 시간
-// 					console.log(fcstTime);
+
 					
 					// 오전/오후 강수량만 가져오는 배열
 					let popData = new Array();
@@ -699,66 +590,62 @@
 					const tmoTempMax = Math.round(tmxData[1].fcstValue);	// 내일 최고 기온
 					const aftTempMax = Math.round(tmxData[2].fcstValue);	// 모레 최고 기온
 					
-					$('.temp-max').empty().append(nowTempMax).append(celsius); 						// 오늘 최고 기온(지금 날씨)
-					$('#today-temp-max').empty().append(nowTempMax).append(celsius);				// 오늘 최고 기온(일별)
-					$('#tomorrow-temp-max').empty().append(tmoTempMax).append(celsius);				// 내일 최고 기온(일별)
-					$('#aft-tomorrow-temp-max').empty().append(aftTempMax).append(celsius);			// 모레 최고 기온(일별)
+					$('.temp-max').empty().append(nowTempMax).append(celsius); 				// 오늘 최고 기온(지금 날씨)
+					$('#today-temp-max').empty().append(nowTempMax).append(celsius);		// 오늘 최고 기온(일별)
+					$('#tomorrow-temp-max').empty().append(tmoTempMax).append(celsius);		// 내일 최고 기온(일별)
+					$('#aft-tomorrow-temp-max').empty().append(aftTempMax).append(celsius);	// 모레 최고 기온(일별)
 					
 					// 최저 기온
-					const nowTempMin = Math.round(tmnData[0].fcstValue);
-					const tmoTempMin = Math.round(tmnData[1].fcstValue);
-					const aftTempMin = Math.round(tmnData[2].fcstValue);
+					const nowTempMin = Math.round(tmnData[0].fcstValue);	// 오늘 최저 기온
+					const tmoTempMin = Math.round(tmnData[1].fcstValue);	// 내일 최저 기온
+					const aftTempMin = Math.round(tmnData[2].fcstValue);	// 모레 최저 기온
 					
-					$('.temp-min').empty().append(nowTempMin).append(celsius); // 오늘 최저 기온
+					$('.temp-min').empty().append(nowTempMin).append(celsius); 				// 오늘 최저 기온(지금 날씨)
+					$('#today-temp-min').empty().append(nowTempMin).append(celsius);		// 오늘 최저 기온(일별)
+					$('#tomorrow-temp-min').empty().append(tmoTempMin).append(celsius);		// 내일 최저 기온(일별)
+					$('#aft-tomorrow-temp-min').empty().append(aftTempMin).append(celsius);	// 모레 최저 기온(일별)
+					
+					// 강수 확률
+					formattedTime = getFormattedTime(); // 현재 시간
+					let fcstTime = formattedTime.slice(0, -2) + "00"; // 예보 시간
+// 					let fcstTime = "0300"; // 예보 시간
+					
+					const fcstTimes = ['0300', '0400', '0500', '0600', '0700', '0800', '0900', '1000', '1100', '1200', '1300', '1400', '1500', '1600', '1700', '1800', '1900', '2000', '2100', '2200', '2300', '2400'];
+
+					for (let i = 0; i < fcstTimes.length; i++) {
+					  if (fcstTime === fcstTimes[i]) {
+					    rainValue = popData[i].fcstValue;	// 현재 강수량
+					    break; // 일치하는 시간대를 찾으면 반복문을 종료
+					  }
+					}
+					
+					const todayRainAm = popData[4].fcstValue;		// 오늘 오전 7시 강수확률
+					const todayRainPm = popData[15].fcstValue;		// 오늘 오후 6시 강수확률
+					const tomorrowRainAm = popData[28].fcstValue;	// 내일 오전 7시 강수확률
+					const tomorrowRainPm = popData[39].fcstValue;	// 내일 오후 6시 강수확률
+					const aftRainAm = popData[52].fcstValue;	// 모레 오전 7시 강수확률
+					const aftRainPm = popData[63].fcstValue;	// 모레 오후 6시 강수확률
 					
 					
+					$('.pro-rain').empty().append(rainValue).append(percentage); 		// 지금 강수확률
+					$('#today-rain-am').empty().append(todayRainAm).append(percentage);	// 오늘 오전 강수확률
+					$('#today-rain-pm').empty().append(todayRainPm).append(percentage);	// 오늘 오후 강수확률
+					$('#tomorrow-rain-am').empty().append(tomorrowRainAm).append(percentage);		// 내일 오전 강수확률
+					$('#tomorrow-rain-pm').empty().append(tomorrowRainPm).append(percentage);		// 내일 오후 강수확률
+					$('#aft-tomorrow-am').empty().append(aftRainAm).append(percentage);		// 모레 오전 강수확률
+					$('#aft-tomorrow-pm').empty().append(aftRainPm).append(percentage); 	// 모레 오후 강수확률
 					
-					
-// 					const todayRainAm = weathers[0].fcstValue		// 오늘 오전 강수확률
-// 					const todayRainPw = weathers[1].fcstValue		// 오늘 강수확률
-// 					const tomorrowRainAm = weathers[2].fcstValue	// 내일 강수확률
-// 					const tomorrowRainPm = weathers[3].fcstValue	// 모레 강수확률
-// 					const aftTomorrowRainAm = weathers[4].fcstValue // 모레 강수확률
-// 					const aftTomorrowRainPm = weathers[5].fcstValue // 모레 강수확률
-					
-// 					const todayTempN = data.response.body.items.item[48].fcstValue   		 
-// 					const todayTempMin = Math.round(todayTempN);							 // 오늘 최저기온
-// 					const todayTempM = data.response.body.items.item[157].fcstValue   		 
-// 					const todayTempMax = Math.round(todayTempM);							 // 오늘 최고기온
-// 					const tomorrowTempN = data.response.body.items.item[338].fcstValue   		 
-// 					const tomorrowTempMin = Math.round(tomorrowTempN);						 // 내일 최저기온
-// 					const tomorrowTempM = data.response.body.items.item[447].fcstValue   		 
-// 					const tomorrowTempMax = Math.round(tomorrowTempM);						 // 내일 최고기온
-// 					const aftTomorrowTempN = data.response.body.items.item[628].fcstValue   		 
-// 					const aftTomorrowTempMin = Math.round(aftTomorrowTempN);				 // 모레 최저기온
-// 					const aftTomorrowTempM = data.response.body.items.item[737].fcstValue   		 
-// 					const aftTomorrowTempMax = Math.round(aftTomorrowTempM);				 // 모레 최고기온
-					
-// 					$('#today-rain-am').empty().append(todayRainAm).append(percentage);				// 오늘 오전 강수확률
-// 					$('#today-rain-pm').empty().append(todayRainPw).append(percentage);				// 오늘 오전 강수확률
-// 					$('#tomorrow-rain-am').empty().append(tomorrowRainAm).append(percentage);		// 내일 오전 강수확률
-// 					$('#tomorrow-rain-pm').empty().append(tomorrowRainPm).append(percentage);		// 내일 오후 강수확률
-// 					$('#aft-tomorrow-am').empty().append(aftTomorrowRainAm).append(percentage);		// 모레 오전 강수확률
-// 					$('#aft-tomorrow-pm').empty().append(aftTomorrowRainPm).append(percentage); 	// 모레 오후 강수확률
-					
-// 					$('#today-temp-min').empty().append(todayTempMin).append(celsius);				// 오늘 최저기온
-// 					$('#today-temp-max').empty().append(todayTempMax).append(celsius);				// 오늘 최고기온
-// 					$('#tomorrow-temp-min').empty().append(tomorrowTempMin).append(celsius);		// 내일 최저기온
-// 					$('#tomorrow-temp-max').empty().append(tomorrowTempMax).append(celsius);		// 내일 최고기온
-// 					$('#aft-tomorrow-temp-min').empty().append(aftTomorrowTempMin).append(celsius); // 모레 최저기온
-// 					$('#aft-tomorrow-temp-max').empty().append(aftTomorrowTempMax).append(celsius); // 모레 최고기온
+					weatherIcon(); // 날씨 아이콘 메소드
+					timeIcon()	   // 시간별 아이콘 메소드
 				});
 				
-//             	let iconUrl;
-//             	formattedTime = getFormattedTime();	// 현재 시간
 			}
-			// 아이콘 출력
+			
+			// 현재 날씨 아이콘 출력
 			function weatherIcon() {
-				console.log("rainValue : "+rainValue);
 				
 				let iconUrl;
 				formattedTime = getFormattedTime(); // 현재 시간
-				console.log("formattedTime : " + formattedTime);
 				
 				if (rainValue == "0") {
 					// 오전 7시부터 오후 5시까지는 해 이미지
@@ -774,6 +661,15 @@
 				
 				const weatherIcon = document.getElementById("weather-icon");
 				weatherIcon.src = iconUrl;
+			}
+			
+			// 시간별 아이콘 출력
+			function timeIcon() {
+				console.log("시간별 아이콘 강수량 : "+rainValue);
+				
+				let iconUrl;
+				formattedTime = getFormattedTime(); // 현재 시간
+				
 			}
 			
         </script>

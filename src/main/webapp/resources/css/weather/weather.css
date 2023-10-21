@@ -316,10 +316,12 @@ label {
 
 .temp-max {
 	padding-left: 10px;
+	color: red;
 }
 
 .temp-min {
 	margin-left: 10px;
+	color: skyblue;
 }
 
 .today-precipitation {
