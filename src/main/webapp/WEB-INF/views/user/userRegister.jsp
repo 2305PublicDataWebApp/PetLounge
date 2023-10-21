@@ -239,10 +239,12 @@ section[id^="content"]:target {
 										<option>nate.com</option>
 									</select> 
 									<input type="hidden" name="uEmail" id="uEmail" value="">
-										<span id="duplEmailResult" style="font-size: 0.8em; width: 200px;"></span>
+									<div id="mailCheckBox">
+									<span id="duplEmailResult" style="font-size: 0.8em; width: 200px; padding-bottom: 14px; padding-left: 3px;"></span>
 									<button id="sendMailBtn" class="dupl" style="margin-bottom: 17px; height: 20px;">메일인증</button>
+									</div>
 									
-<!-- 									컨트롤러에서 인증번호 받아온 값 저장 -> 입력된 인증번호와 비교 -->
+									<!-- 컨트롤러에서 인증번호 받아온 값 저장 -> 입력된 인증번호와 비교 -->
 									<input type="hidden" id="send-certification-num">
 									<input type="text" id="user-email-check" placeholder="인증번호를 입력하세요" style="width: 58.4%;;" required>
 									<button type="button" id="mailCheck" onclick="confirmNumber();">확인</button><br><br>
@@ -747,11 +749,14 @@ section[id^="content"]:target {
             var emailVal = $("#uEmail").val();
             if(emailVal == null || emailVal == ""){
                alert("이메일을 먼저 입력해주세요.");
+               return;
+            } else {
+            	 alert("인증번호가 발송되었습니다. 이메일을 확인해주세요.");
             }
 //             if($("#user-ck-email").val() === "false"){
 //                alert("사용할 수 없는 이메일입니다.")
 //             } else {
-               alert("인증번호가 발송되었습니다. 이메일을 확인해주세요.");
+              
                
                $.ajax({
                   url : "/user/sendMail.pet",
@@ -771,16 +776,22 @@ section[id^="content"]:target {
         function confirmNumber(){
            var num1 = $("#user-email-check").val();
            var num2 = $("#send-certification-num").val();
-           if(num1 == num2) {
-              alert("인증이 완료되었습니다.");
-              //일치할 때 유효성 체크 여부 확인을 위해서 값을 true로 넣어줌
-              $("#check-certification-num").attr("value", "true");
-              $("#duplEmailResult").text("인증 완료").removeClass("error").addClass("success");
+           if(num1 == "" || num2 == "") {
+        	   alert("인증번호 전송 버튼을 눌러주세요.");
            } else {
-              alert("작성한 인증번호가 다릅니다.");
-              $("#check-certification-num").attr("value", "false");
-              $("#duplEmailResult").text("인증 실패").removeClass("success").addClass("error");
+        	   if(num1 == num2) {
+                   alert("인증이 완료되었습니다.");
+                   //일치할 때 유효성 체크 여부 확인을 위해서 값을 true로 넣어줌
+                   $("#check-certification-num").attr("value", "true");
+                   $("#user-email-check").attr("readonly", "true");
+                   $("#duplEmailResult").text("인증완료").removeClass("error").addClass("success");
+                } else {
+                   alert("작성한 인증번호가 다릅니다.");
+                   $("#check-certification-num").attr("value", "false");
+                   $("#duplEmailResult").text("인증실패").removeClass("success").addClass("error");
+                }
            }
+           
         }
         
         

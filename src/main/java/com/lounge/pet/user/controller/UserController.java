@@ -39,8 +39,6 @@ public class UserController {
 
 	@Autowired
 	private UserService uService;
-	
-
 
 	// 비밀번호 재확인 페이지 user/checkPw.pet
 	@RequestMapping(value = "/user/checkPw.pet", method = RequestMethod.GET)
@@ -428,6 +426,34 @@ public class UserController {
 		}
 	}
 
+	// 닉네임 중복체크 및 유효성 검사
+	@ResponseBody
+	@RequestMapping(value = "/user/checkEmail.pet", method = RequestMethod.POST)
+	public String userCheckEmail(@RequestParam("uEmail") String uEmail) {
+		User uOne = null;
+
+		if (validateUserEmail(uEmail)) {
+			uOne = uService.userCheckEmail(uEmail);
+			if (uOne == null) {
+				return "[\"Valid\", \"Unique\"]";
+			} else {
+				return "[\"Valid\", \"NotUnique\"]";
+			}
+		} else {
+			uOne = uService.userCheckEmail(uEmail);
+			if (uOne == null) {
+				return "[\"Invalid\", \"Unique\"]";
+			} else {
+				return "[\"Invalid\", \"NotUnique\"]";
+			}
+		}
+	}
+
+	private boolean validateUserEmail(String uEmail) {
+		String regex = "^([0-9a-zA-Z_-]{1,10})@([0-9a-zA-Z_-]+)(\\.[0-9a-zA-Z_-]+){1,2}$";
+		return uEmail.matches(regex);
+	}
+
 	private boolean validateUserNick(String uNickName) {
 		String regex = "^[가-힣a-zA-Z]{1,5}$";
 		return uNickName.matches(regex);
@@ -440,7 +466,7 @@ public class UserController {
 
 		if (validateUserPw(uPw)) {
 			return "Valid";
-			
+
 		} else {
 			return "Invalid";
 		}
@@ -450,66 +476,60 @@ public class UserController {
 		String regex = "^[a-zA-Z0-9]{1,10}$";
 		return uPw.matches(regex);
 	}
-	
-	
-	
+
 	// 비밀번호 일치 확인
-		@ResponseBody
-		@RequestMapping(value = "/user/checkRePw.pet", method = RequestMethod.POST)
-		public String usercheckRePw(@RequestParam("uPw") String uPw, @RequestParam("uPwRe") String uPwRe) {
-			if (uPwRe.equals(uPw)) {
-				return "success";
-				
-			} else {
-				return "error";
-			}
-		}
-		
-		
-		// 전화번호 유효성 검사
-		@ResponseBody
-		@RequestMapping(value = "/user/checkPhone.pet", method = RequestMethod.POST)
-		public String usercheckPhone(@RequestParam("uPhone") String uPhone) {
+	@ResponseBody
+	@RequestMapping(value = "/user/checkRePw.pet", method = RequestMethod.POST)
+	public String usercheckRePw(@RequestParam("uPw") String uPw, @RequestParam("uPwRe") String uPwRe) {
+		if (uPwRe.equals(uPw)) {
+			return "success";
 
-			if (validateUserPhone(uPhone)) {
-				return "Valid";
-				
-			} else {
-				return "Invalid";
-			}
+		} else {
+			return "error";
 		}
+	}
 
-		private boolean validateUserPhone(String uPhone) {
-			String regex = "^[0-9]{11}$";
-			return uPhone.matches(regex);
+	// 전화번호 유효성 검사
+	@ResponseBody
+	@RequestMapping(value = "/user/checkPhone.pet", method = RequestMethod.POST)
+	public String usercheckPhone(@RequestParam("uPhone") String uPhone) {
+
+		if (validateUserPhone(uPhone)) {
+			return "Valid";
+
+		} else {
+			return "Invalid";
 		}
-		
-		
-		
+	}
+
+	private boolean validateUserPhone(String uPhone) {
+		String regex = "^[0-9]{11}$";
+		return uPhone.matches(regex);
+	}
 
 	// 나의 게시글 페이지 user/Board.pet
 	@RequestMapping(value = "/user/Board.pet", method = RequestMethod.GET)
-	public ModelAndView userBoardPage(ModelAndView mv, HttpSession session
-			,@RequestParam(value = "page", required=false, defaultValue = "1") Integer currentPage) {
-		
+	public ModelAndView userBoardPage(ModelAndView mv, HttpSession session,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
+
 		try {
 			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
-			
+
 			if (sessionId != "" && sessionId != null) {
 				User user = uService.selectOneById(sessionId);
-				
+
 				if (user != null) {
-					
+
 					Integer totalCount = uService.getBoardListCount(sessionId);
 					UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
-			
+
 					List<Board> bList = uService.selectBoard(sessionId, aInfo);
-					
+
 					mv.addObject("aInfo", aInfo);
 					mv.addObject("bList", bList);
 					mv.addObject("user", user);
 					mv.setViewName("/user/uBoardList");
-					
+
 				} else {
 					mv.addObject("msg", "게시글 조회 실패");
 					mv.addObject("url", "/home.pet");
@@ -528,41 +548,37 @@ public class UserController {
 		}
 		return mv;
 	}
-	
-	
-	// 나의 게시글 검색 페이지 user/searchBoard.pet
-		@RequestMapping(value = "/user/searchBoard.pet", method = RequestMethod.GET)
-		public String userSearchBoardPage(
-				@RequestParam("searchCondition") String searchCondition
-				, @ RequestParam("searchKeyword") String searchKeyword
-				, @ RequestParam(value="page", required=false, defaultValue="1") Integer currentPage
-				, Model model, HttpSession session) {
-			
-				String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
 
-				Map<String, String> paramMap = new HashMap<String, String>();
-				paramMap.put("searchCondition", searchCondition);
-				paramMap.put("searchKeyword", searchKeyword);
-				paramMap.put("uId", sessionId);
-				
-				int totalCount = uService.getBoardSearchListCount(paramMap);
-				UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
-				
-				List<Board> bList = uService.searchBoardByKeyword(aInfo, paramMap);
-				
-				if(!bList.isEmpty()) {
-					model.addAttribute("paramMap", paramMap);
-					model.addAttribute("aInfo", aInfo);
-					model.addAttribute("bList", bList);
-					return "/user/uBoardSearchList";
-				} else {
-					model.addAttribute("msg", "서비스 실패");
-					model.addAttribute("url", "/user/uHospital.pet");
-					return "common/errorPage";
-				}
+	// 나의 게시글 검색 페이지 user/searchBoard.pet
+	@RequestMapping(value = "/user/searchBoard.pet", method = RequestMethod.GET)
+	public String userSearchBoardPage(@RequestParam("searchCondition") String searchCondition,
+			@RequestParam("searchKeyword") String searchKeyword,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage, Model model,
+			HttpSession session) {
+
+		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("searchCondition", searchCondition);
+		paramMap.put("searchKeyword", searchKeyword);
+		paramMap.put("uId", sessionId);
+
+		int totalCount = uService.getBoardSearchListCount(paramMap);
+		UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+
+		List<Board> bList = uService.searchBoardByKeyword(aInfo, paramMap);
+
+		if (!bList.isEmpty()) {
+			model.addAttribute("paramMap", paramMap);
+			model.addAttribute("aInfo", aInfo);
+			model.addAttribute("bList", bList);
+			return "/user/uBoardSearchList";
+		} else {
+			model.addAttribute("msg", "서비스 실패");
+			model.addAttribute("url", "/user/uHospital.pet");
+			return "common/errorPage";
 		}
-		
-		
+	}
 
 	// 나의 북마크 페이지 user/searchBoardMark.pet
 	@RequestMapping(value = "/user/searchBoardMark.pet", method = RequestMethod.GET)
@@ -624,24 +640,24 @@ public class UserController {
 
 	// 나의 즐겨찾는 병원 페이지 user/uHospital.pet
 	@RequestMapping(value = "/user/uHospital.pet", method = RequestMethod.GET)
-	public ModelAndView userHospitalPage(ModelAndView mv, HttpSession session
-			,@RequestParam(value = "page", required=false, defaultValue = "1") Integer currentPage) {
+	public ModelAndView userHospitalPage(ModelAndView mv, HttpSession session,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
 		try {
 			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
 			if (sessionId != "" && sessionId != null) {
 				User user = uService.selectOneById(sessionId);
 				if (user != null) {
-					
-						Integer totalCount = uService.getListCount(sessionId);
-						UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
-				
-						List<Hospital> hList = uService.selectHos(sessionId, aInfo);
-						
-						mv.addObject("aInfo", aInfo);
-						mv.addObject("hList", hList);
-						mv.addObject("user", user);
-						mv.setViewName("/user/uHospitalList");
-						
+
+					Integer totalCount = uService.getListCount(sessionId);
+					UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+
+					List<Hospital> hList = uService.selectHos(sessionId, aInfo);
+
+					mv.addObject("aInfo", aInfo);
+					mv.addObject("hList", hList);
+					mv.addObject("user", user);
+					mv.setViewName("/user/uHospitalList");
+
 				} else {
 					mv.addObject("msg", "병원목록 조회 실패");
 					mv.addObject("url", "/home.pet");
@@ -660,29 +676,26 @@ public class UserController {
 		}
 		return mv;
 	}
-	
-	
-	
-	//즐겨찾는 병원 검색
+
+	// 즐겨찾는 병원 검색
 	@RequestMapping(value = "/user/searchHospital.pet", method = RequestMethod.GET)
-	public String userHospitalSearchPage(
-			@RequestParam("searchCondition") String searchCondition
-			, @ RequestParam("searchKeyword") String searchKeyword
-			, @ RequestParam(value="page", required=false, defaultValue="1") Integer currentPage
-			, Model model, HttpSession session) {
+	public String userHospitalSearchPage(@RequestParam("searchCondition") String searchCondition,
+			@RequestParam("searchKeyword") String searchKeyword,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage, Model model,
+			HttpSession session) {
 
 		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("searchCondition", searchCondition);
 		paramMap.put("searchKeyword", searchKeyword);
 		paramMap.put("uId", sessionId);
-		
+
 		int totalCount = uService.getListCount(paramMap);
 		UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
-		
+
 		List<Hospital> hList = uService.searchHosByKeyword(aInfo, paramMap);
-		
-		if(!hList.isEmpty()) {
+
+		if (!hList.isEmpty()) {
 //			model.addAttribute("searchCondition", searchCondition); paramMap으로 써도 됨
 //			model.addAttribute("searchKeyword", searchKeyword);
 			model.addAttribute("paramMap", paramMap);
@@ -695,33 +708,29 @@ public class UserController {
 			return "common/errorPage";
 		}
 	}
-	
-	
-	
-	
+
 	// 나의 병원 리뷰 페이지 user/uHosReview.pet
 	@RequestMapping(value = "/user/uHosReview.pet", method = RequestMethod.GET)
-	public ModelAndView userHosReviewPage(ModelAndView mv, HttpSession session
-			,@RequestParam(value = "page", required=false, defaultValue = "1") Integer currentPage) {
+	public ModelAndView userHosReviewPage(ModelAndView mv, HttpSession session,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
 		try {
 			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
-			
+
 			if (sessionId != "" && sessionId != null) {
-				
+
 				User user = uService.selectOneById(sessionId);
 				if (user != null) {
-					
+
 					Integer totalCount = uService.getHosReListCount(sessionId);
 					UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
-			
+
 					List<Hospital> hRList = uService.selectHosRe(sessionId, aInfo);
-					
+
 					mv.addObject("aInfo", aInfo);
 					mv.addObject("hRList", hRList);
 					mv.addObject("user", user);
 					mv.setViewName("/user/uHospitalReviewList");
-					
-					
+
 				} else {
 					mv.addObject("msg", "병원리뷰 조회 실패");
 					mv.addObject("url", "/home.pet");
@@ -740,104 +749,99 @@ public class UserController {
 		}
 		return mv;
 	}
-	
-	
-		// 나의 병원 리뷰 검색 페이지 user/searchHospitalReview.pet
-		@RequestMapping(value = "/user/searchHospitalReview.pet", method = RequestMethod.GET)
-		public String userHosReviewSearchPage(
-				@RequestParam("searchCondition") String searchCondition
-				, @ RequestParam("searchKeyword") String searchKeyword
-				, @ RequestParam(value="page", required=false, defaultValue="1") Integer currentPage
-				, Model model, HttpSession session) {
-			
-			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
-			Map<String, String> paramMap = new HashMap<String, String>();
-			paramMap.put("searchCondition", searchCondition);
-			paramMap.put("searchKeyword", searchKeyword);
-			paramMap.put("uId", sessionId);
-			
-			int totalCount = uService.getHosReviewSearchListCount(paramMap);
-			UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
-			
-			List<UserHosRe> hRList = uService.searchHosReviewByKeyword(aInfo, paramMap);
-			
-			if(!hRList.isEmpty()) {
-				model.addAttribute("paramMap", paramMap);
-				model.addAttribute("aInfo", aInfo);
-				model.addAttribute("hRList", hRList);
-				return "/user/uHospitalReviewSearchList";
-			} else {
-				model.addAttribute("msg", "서비스 실패");
-				model.addAttribute("url", "/user/uHospital.pet");
-				return "common/errorPage";
-			}	
-			
-		}
-		
-		
-		// 나의 후원목록 페이지 user/uSupport.pet
-		@RequestMapping(value = "/user/uSupport.pet", method = RequestMethod.GET)
-		public ModelAndView userSupport(ModelAndView mv, HttpSession session
-				,@RequestParam(value = "page", required=false, defaultValue = "1") Integer currentPage) {
-			
-			try {
-				String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
-				
-				if (sessionId != "" && sessionId != null) {
-					User user = uService.selectOneById(sessionId);
-					
-					if (user != null) {
-						
-						Integer totalCount = uService.getSupportListCount(sessionId);
-						UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
-				
-						List<SupportReply> sList = uService.selectSupport(sessionId, aInfo);
-						
-						mv.addObject("aInfo", aInfo);
-						mv.addObject("sList", sList);
-						mv.addObject("user", user);
-						mv.setViewName("/user/uSupportList");
-						
-					} else {
-						mv.addObject("msg", "후원목록 조회 실패");
-						mv.addObject("url", "/home.pet");
-						mv.setViewName("common/errorPage");
-					}
-				} else {
-					mv.addObject("msg", "로그인 후 이용 바랍니다.");
-					mv.addObject("url", "/user/login.pet");
-					mv.setViewName("common/errorPage");
-				}
-			} catch (Exception e) {
-				mv.addObject("msg", "관리자에게 문의바랍니다.");
-				mv.addObject("error", e.getMessage());
-				mv.addObject("url", "/home.pet");
-				mv.setViewName("common/errorPage");
-			}
-			return mv;
-		}
-		
 
-	// 나의 후원목록 검색 페이지 user/searchSupport.pet
-	@RequestMapping(value = "/user/searchSupport.pet", method = RequestMethod.GET)
-	public String userSearchSupport(
-			@RequestParam("searchCondition") String searchCondition
-			, @ RequestParam("searchKeyword") String searchKeyword
-			, @ RequestParam(value="page", required=false, defaultValue="1") Integer currentPage
-			, Model model, HttpSession session) {
-		
+	// 나의 병원 리뷰 검색 페이지 user/searchHospitalReview.pet
+	@RequestMapping(value = "/user/searchHospitalReview.pet", method = RequestMethod.GET)
+	public String userHosReviewSearchPage(@RequestParam("searchCondition") String searchCondition,
+			@RequestParam("searchKeyword") String searchKeyword,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage, Model model,
+			HttpSession session) {
+
 		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("searchCondition", searchCondition);
 		paramMap.put("searchKeyword", searchKeyword);
 		paramMap.put("uId", sessionId);
-		
+
+		int totalCount = uService.getHosReviewSearchListCount(paramMap);
+		UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+
+		List<UserHosRe> hRList = uService.searchHosReviewByKeyword(aInfo, paramMap);
+
+		if (!hRList.isEmpty()) {
+			model.addAttribute("paramMap", paramMap);
+			model.addAttribute("aInfo", aInfo);
+			model.addAttribute("hRList", hRList);
+			return "/user/uHospitalReviewSearchList";
+		} else {
+			model.addAttribute("msg", "서비스 실패");
+			model.addAttribute("url", "/user/uHospital.pet");
+			return "common/errorPage";
+		}
+
+	}
+
+	// 나의 후원목록 페이지 user/uSupport.pet
+	@RequestMapping(value = "/user/uSupport.pet", method = RequestMethod.GET)
+	public ModelAndView userSupport(ModelAndView mv, HttpSession session,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
+
+		try {
+			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+
+			if (sessionId != "" && sessionId != null) {
+				User user = uService.selectOneById(sessionId);
+
+				if (user != null) {
+
+					Integer totalCount = uService.getSupportListCount(sessionId);
+					UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+
+					List<SupportReply> sList = uService.selectSupport(sessionId, aInfo);
+
+					mv.addObject("aInfo", aInfo);
+					mv.addObject("sList", sList);
+					mv.addObject("user", user);
+					mv.setViewName("/user/uSupportList");
+
+				} else {
+					mv.addObject("msg", "후원목록 조회 실패");
+					mv.addObject("url", "/home.pet");
+					mv.setViewName("common/errorPage");
+				}
+			} else {
+				mv.addObject("msg", "로그인 후 이용 바랍니다.");
+				mv.addObject("url", "/user/login.pet");
+				mv.setViewName("common/errorPage");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의바랍니다.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/home.pet");
+			mv.setViewName("common/errorPage");
+		}
+		return mv;
+	}
+
+	// 나의 후원목록 검색 페이지 user/searchSupport.pet
+	@RequestMapping(value = "/user/searchSupport.pet", method = RequestMethod.GET)
+	public String userSearchSupport(@RequestParam("searchCondition") String searchCondition,
+			@RequestParam("searchKeyword") String searchKeyword,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage, Model model,
+			HttpSession session) {
+
+		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("searchCondition", searchCondition);
+		paramMap.put("searchKeyword", searchKeyword);
+		paramMap.put("uId", sessionId);
+
 		int totalCount = uService.getSupportSearchListCount(paramMap);
 		UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
-		
+
 		List<UserSupport> sList = uService.searchSupportByKeyword(aInfo, paramMap);
-		
-		if(!sList.isEmpty()) {
+
+		if (!sList.isEmpty()) {
 			model.addAttribute("paramMap", paramMap);
 			model.addAttribute("aInfo", aInfo);
 			model.addAttribute("sList", sList);
@@ -846,87 +850,77 @@ public class UserController {
 			model.addAttribute("msg", "서비스 실패");
 			model.addAttribute("url", "/user/uHospital.pet");
 			return "common/errorPage";
-		}	
-		
+		}
+
 	}
-	
-	
-	
-	
-	
+
 	// 나의 후원댓글 페이지 user/searchSupportReply.pet
-		@RequestMapping(value = "/user/uSupportReply.pet", method = RequestMethod.GET)
-		public ModelAndView userSupportReplyPage(ModelAndView mv, HttpSession session
-				,@RequestParam(value = "page", required=false, defaultValue = "1") Integer currentPage) {
-			try {
-				String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
-				if (sessionId != "" && sessionId != null) {
-					User user = uService.selectOneById(sessionId);
-					if (user != null) {
-						Integer totalCount = uService.getSupportReplyListCount(sessionId);
-						UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
-				
-						List<UserSupport> sRList = uService.selectSupportReply(sessionId, aInfo);
-						
-						mv.addObject("aInfo", aInfo);
-						mv.addObject("sRList", sRList);
-						mv.addObject("user", user);
-						mv.setViewName("/user/uSupportReplyList");
-						
-					} else {
-						mv.addObject("msg", "후원댓글 조회 실패");
-						mv.addObject("url", "/home.pet");
-						mv.setViewName("common/errorPage");
-					}
+	@RequestMapping(value = "/user/uSupportReply.pet", method = RequestMethod.GET)
+	public ModelAndView userSupportReplyPage(ModelAndView mv, HttpSession session,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
+		try {
+			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+			if (sessionId != "" && sessionId != null) {
+				User user = uService.selectOneById(sessionId);
+				if (user != null) {
+					Integer totalCount = uService.getSupportReplyListCount(sessionId);
+					UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+
+					List<UserSupport> sRList = uService.selectSupportReply(sessionId, aInfo);
+
+					mv.addObject("aInfo", aInfo);
+					mv.addObject("sRList", sRList);
+					mv.addObject("user", user);
+					mv.setViewName("/user/uSupportReplyList");
+
 				} else {
-					mv.addObject("msg", "로그인 후 이용 바랍니다.");
-					mv.addObject("url", "/user/login.pet");
+					mv.addObject("msg", "후원댓글 조회 실패");
+					mv.addObject("url", "/home.pet");
 					mv.setViewName("common/errorPage");
 				}
-			} catch (Exception e) {
-				mv.addObject("msg", "관리자에게 문의바랍니다.");
-				mv.addObject("error", e.getMessage());
-				mv.addObject("url", "/home.pet");
+			} else {
+				mv.addObject("msg", "로그인 후 이용 바랍니다.");
+				mv.addObject("url", "/user/login.pet");
 				mv.setViewName("common/errorPage");
 			}
-			return mv;
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의바랍니다.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/home.pet");
+			mv.setViewName("common/errorPage");
 		}
-		
-		
+		return mv;
+	}
 
 	// 나의 후원댓글 검색 페이지 user/searchSupportReply.pet
 	@RequestMapping(value = "/user/searchSupportReply.pet", method = RequestMethod.GET)
-	public String userSupportReplySearchPage(
-			@RequestParam("searchCondition") String searchCondition
-			, @ RequestParam("searchKeyword") String searchKeyword
-			, @ RequestParam(value="page", required=false, defaultValue="1") Integer currentPage
-			, Model model, HttpSession session) {
-		
-			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
-			Map<String, String> paramMap = new HashMap<String, String>();
-			paramMap.put("searchCondition", searchCondition);
-			paramMap.put("searchKeyword", searchKeyword);
-			paramMap.put("uId", sessionId);
-			
-			int totalCount = uService.getSupportReplySearchlistCount(paramMap);
-			UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
-			
-			List<UserSupport> sRList = uService.searchSupportReplyByKeyword(aInfo, paramMap);
-			
-			if(!sRList.isEmpty()) {
-				model.addAttribute("paramMap", paramMap);
-				model.addAttribute("aInfo", aInfo);
-				model.addAttribute("sRList", sRList);
-				return "/user/uSupportReplySearchList";
-			} else {
-				model.addAttribute("msg", "서비스 실패");
-				model.addAttribute("url", "/user/uHospital.pet");
-				return "common/errorPage";
-			}	
+	public String userSupportReplySearchPage(@RequestParam("searchCondition") String searchCondition,
+			@RequestParam("searchKeyword") String searchKeyword,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage, Model model,
+			HttpSession session) {
+
+		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("searchCondition", searchCondition);
+		paramMap.put("searchKeyword", searchKeyword);
+		paramMap.put("uId", sessionId);
+
+		int totalCount = uService.getSupportReplySearchlistCount(paramMap);
+		UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+
+		List<UserSupport> sRList = uService.searchSupportReplyByKeyword(aInfo, paramMap);
+
+		if (!sRList.isEmpty()) {
+			model.addAttribute("paramMap", paramMap);
+			model.addAttribute("aInfo", aInfo);
+			model.addAttribute("sRList", sRList);
+			return "/user/uSupportReplySearchList";
+		} else {
+			model.addAttribute("msg", "서비스 실패");
+			model.addAttribute("url", "/user/uHospital.pet");
+			return "common/errorPage";
+		}
 	}
-	
-	
-	
 
 	private Map<String, Object> saveFile(HttpServletRequest request, MultipartFile uploadFile) throws Exception {
 
@@ -978,27 +972,26 @@ public class UserController {
 			file.delete();
 		}
 	}
-	
-	
-	//페이징
+
+	// 페이징
 	private UPageInfo getPageInfo(Integer currentPage, Integer totalCount) {
 		int recordCountPerPage = 5;
 		int naviCountPerPage = 5;
-		
+
 		int naviTotalCount;
-		naviTotalCount 
-			= (int)Math.ceil((double)totalCount/recordCountPerPage);   //6.2 -> 7 올림해주는 식
-		
-		int startNavi = ((int)((double)currentPage/naviCountPerPage+0.9)-1)*naviCountPerPage+1;  //이거뭐냐...
-		
+		naviTotalCount = (int) Math.ceil((double) totalCount / recordCountPerPage); // 6.2 -> 7 올림해주는 식
+
+		int startNavi = ((int) ((double) currentPage / naviCountPerPage + 0.9) - 1) * naviCountPerPage + 1; // 이거뭐냐...
+
 		int endNavi = startNavi + naviCountPerPage - 1;
-		
-		if(endNavi > naviTotalCount) {
+
+		if (endNavi > naviTotalCount) {
 			endNavi = naviTotalCount;
 		}
-			
-		UPageInfo aInfo = new UPageInfo(currentPage, totalCount, naviTotalCount, recordCountPerPage, naviCountPerPage, startNavi, endNavi);
-		
+
+		UPageInfo aInfo = new UPageInfo(currentPage, totalCount, naviTotalCount, recordCountPerPage, naviCountPerPage,
+				startNavi, endNavi);
+
 		return aInfo;
 	}
 

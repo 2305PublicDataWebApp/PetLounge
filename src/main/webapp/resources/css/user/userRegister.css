@@ -234,13 +234,13 @@ button:hover {
   border-radius: 20px;
 }
 
-#content3 button:hover{
+--#content3 button:hover{
   --background:#222;
-  border-radius: 20px;
+  --border-radius: 20px;
     cursor: pointer;
-    background: white;
-    color: #FFD370;
-    border: 2px solid #FFD370;
+    --background: white;
+    --color: #FFD370;
+    --border: 2px solid #FFD370;
 }
 
 #content3>:nth-child(2)>:nth-child(1)>:nth-child(2) {
@@ -426,14 +426,19 @@ button:not(.중복확인버튼):not(.나머지중복확인버튼):hover {
     /* margin: 0 0 1rem 10rem; */
     /* text-align: right; */
     text-decoration: underline !important;
-    border-radius: 20px !important;
+    --border-radius: 20px !important;
     /* width: 70px; */
     /* display: flex; */
     /* text-align: center; */
-    display: flex !important;
-    margin-left: 288px !important;
+    --display: flex !important;
+    --margin-left: 288px !important;
     cursor: pointer !important;
-    width: auto;
+    --width: auto;
+  
+}
+
+.dupl:hover {
+	  border: none;
 }
 .success {
 	color : green;
@@ -465,4 +470,20 @@ button:not(.중복확인버튼):not(.나머지중복확인버튼):hover {
     margin-bottom: 0 !important;
     text-align: center !important;
     text-decoration: none !important;
+}
+
+#mailCheckBox {
+    display: flex;
+    align-items: center;
+}
+
+#duplEmailResult {
+    font-size: 0.8em;
+    width: 200px;
+    white-space: nowrap; /* 텍스트를 한 줄로 표시하도록 설정 */
+}
+
+#sendMailBtn {
+    margin-bottom: 17px;
+    height: 20px;
 }
