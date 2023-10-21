@@ -167,6 +167,12 @@ public interface SupportService {
 	 */
 	int getReplyListCount();
 
+	/** 
+	 * 메인페이지 후원 목록 조회 Service
+	 * @return List
+	 */
+	List<Support> selectMainSupportList();
+
 	
 	
 

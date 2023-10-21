@@ -150,8 +150,20 @@
 		<if test="status == 'closed'">
 			WHERE S_STATUS = 'Y' AND TO_CHAR(SYSDATE, 'yyyy-mm-dd') <![CDATA[>]]> TO_CHAR(S_END, 'yyyy-mm-dd')
 		</if>
-		ORDER BY S_NO DESC
+		ORDER BY 
+			S_NO DESC
 	</select>
 	
+	<!-- 메인페이지 후원글 리스트 -->
+	<select id="selectMainSupportList" resultType="Support">
+		SELECT 
+				* 
+		FROM 
+			SUPPORT_TBL 
+		WHERE 
+			S_STATUS = 'Y' AND TO_CHAR(SYSDATE, 'yyyy-mm-dd') <![CDATA[<=]]> TO_CHAR(S_END, 'yyyy-mm-dd')
+		ORDER BY 
+			S_NO DESC 
+	</select>
 	
 </mapper>

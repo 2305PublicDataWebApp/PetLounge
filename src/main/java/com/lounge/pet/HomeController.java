@@ -28,14 +28,9 @@ public class HomeController {
 	public ModelAndView home(ModelAndView mv) {
 
 		// 후원 내역
-		String category = "all";
-		String sort = "latest";
-		Map<String, String> sMap = new HashMap();
-		sMap.put("category", category);
-		sMap.put("sort", sort);
-//		List<Support> sList = sService.selectSupportList(sMap);
-//		sList = sList.subList(0, 3);
-//		mv.addObject("sList", sList);
+		List<Support> sList = sService.selectMainSupportList();
+		sList = sList.subList(0, 3);
+		mv.addObject("sList", sList);
 		mv.setViewName("home");
 		return mv;
 	}

@@ -25,56 +25,56 @@
 				<a href="javascript:void(0)" class="category-links"
 					data-category="all">
 					<div class="category" 
-						<c:if test="${sMap.category == 'all' }">style="color: #ffd370;"</c:if>
-						<c:if test="${sMap.category != 'all' }">style="color: #F2F2F2;"</c:if>>
+						<c:if test="${sMap.category == 'all' }">style="background-color: #ffd370;"</c:if>
+						<c:if test="${sMap.category != 'all' }">style="background-color: #F2F2F2;"</c:if>>
 						<div>
 							<p class="category-p" 
-							<c:if test="${sMap.category == 'all' }">style="color: black;"</c:if>
-							<c:if test="${sMap.category != 'all' }">style="color: white;"</c:if>>전체</p>
+							<c:if test="${sMap.category != 'all' }">style="color: black;"</c:if>
+							<c:if test="${sMap.category == 'all' }">style="color: white;"</c:if>>전체</p>
 						</div>
 					</div>
 				</a> <a href="javascript:void(0)" class="category-links"
 					data-category="residence">
 					<div class="category"
-						<c:if test="${sMap.category == 'residence' }">style="color: #ffd370;"</c:if>
-						<c:if test="${sMap.category != 'residence' }">style="color: #F2F2F2;"</c:if>>
+						<c:if test="${sMap.category == 'residence' }">style="background-color: #ffd370;"</c:if>
+						<c:if test="${sMap.category != 'residence' }">style="background-color: #F2F2F2;"</c:if>>
 						<div>
 							<p class="category-p" 
-							<c:if test="${sMap.category == 'residence' }">style="color: black;"</c:if>
-							<c:if test="${sMap.category != 'residence' }">style="color: white;"</c:if>>주거</p>
+							<c:if test="${sMap.category != 'residence' }">style="color: black;"</c:if>
+							<c:if test="${sMap.category == 'residence' }">style="color: white;"</c:if>>주거</p>
 						</div>
 					</div>
 				</a> <a href="javascript:void(0)" class="category-links"
 					data-category="living">
 					<div class="category"
-						<c:if test="${sMap.category == 'living' }">style="color: #ffd370;"</c:if>
-						<c:if test="${sMap.category != 'living' }">style="color: #F2F2F2;"</c:if>>
+						<c:if test="${sMap.category == 'living' }">style="background-color: #ffd370;"</c:if>
+						<c:if test="${sMap.category != 'living' }">style="background-color: #F2F2F2;"</c:if>>
 						<div>
 							<p class="category-p"
-							<c:if test="${sMap.category == 'living' }">style="color: black;"</c:if>
-							<c:if test="${sMap.category != 'living' }">style="color: white;"</c:if>>생계</p>
+							<c:if test="${sMap.category != 'living' }">style="color: black;"</c:if>
+							<c:if test="${sMap.category == 'living' }">style="color: white;"</c:if>>생계</p>
 						</div>
 					</div>
 				</a> <a href="javascript:void(0)" class="category-links"
 					data-category="health">
-					<div class="category"
-						<c:if test="${sMap.category == 'health' }">style="color: #ffd370;"</c:if>
-						<c:if test="${sMap.category != 'health' }">style="color: #F2F2F2;"</c:if>>
+					<div class="category" s
+						<c:if test="${sMap.category == 'health' }">style="background-color: #ffd370;"</c:if>
+						<c:if test="${sMap.category != 'health' }">style="background-color: #F2F2F2;"</c:if>>
 						<div>
 							<p class="category-p"
-							<c:if test="${sMap.category == 'health' }">style="color: black;"</c:if>
-							<c:if test="${sMap.category != 'health' }">style="color: white;"</c:if>>건강</p>
+							<c:if test="${sMap.category != 'health' }">style="color: black;"</c:if>
+							<c:if test="${sMap.category == 'health' }">style="color: white;"</c:if>>건강</p>
 						</div>
 					</div>
 				</a> <a href="javascript:void(0)" class="category-links"
 					data-category="improvement">
 					<div class="category"
-						<c:if test="${sMap.category == 'improvement' }">style="color: #ffd370;"</c:if>
-						<c:if test="${sMap.category != 'improvement' }">style="color: #F2F2F2;"</c:if>>
+						<c:if test="${sMap.category == 'improvement' }">style="background-color: #ffd370;"</c:if>
+						<c:if test="${sMap.category != 'improvement' }">style="background-color: #F2F2F2;"</c:if>>
 						<div>
 							<p class="category-p"
-							<c:if test="${sMap.category == 'improvement' }">style="color: black;"</c:if>
-							<c:if test="${sMap.category != 'improvement' }">style="color: white;"</c:if>>개선</p>
+							<c:if test="${sMap.category != 'improvement' }">style="color: black;"</c:if>
+							<c:if test="${sMap.category == 'improvement' }">style="color: white;"</c:if>>개선</p>
 						</div>
 					</div>
 				</a>
@@ -87,7 +87,13 @@
 			<!-- 정렬 -->
 			<div class="sorting-wrap">
 				<div class="sorting" style="">
-					<button name="" id="sorting-label" class="sorting-label">최신순</button>
+					<button name="" id="sorting-label" class="sorting-label">
+						<c:if test="${sMap.sort == 'latest' }">최신순</c:if>
+						<c:if test="${sMap.sort == 'mostFunded' }">모금액 많은 순</c:if>
+						<c:if test="${sMap.sort == 'leastFunded' }">모금액 적은 순</c:if>
+						<c:if test="${sMap.sort == 'highestFunded' }">모금률 높은 순</c:if>
+						<c:if test="${sMap.sort == 'endingSoonest' }">종료임박 순</c:if>
+					</button>
 					<ul class="optionList">
 						<li class="optionItem" data-sort="latest">최신순</li>
 						<li class="optionItem" data-sort="mostFunded">모금액 많은 순</li>
@@ -108,7 +114,9 @@
 								<br> <strong style="font-size: 20px;">오늘 함께한 기부금</strong>
 								<div class="hr"></div>
 								<div class="today-text">
-									<strong>${sHistory.todayCount }명</strong>이 <br> <strong>${sHistory.todayAmount }원</strong>을<br>
+									<fmt:formatNumber var="todayCount" value="${sHistory.todayCount }" pattern="#,###"></fmt:formatNumber>
+									<fmt:formatNumber var="todayAmount" value="${sHistory.todayAmount }" pattern="#,###"></fmt:formatNumber>
+									<strong>${todayCount }명</strong>이 <br> <strong>${todayAmount }원</strong>을<br>
 									기부하였습니다.
 								</div>
 							</div>
@@ -175,7 +183,7 @@
 								</c:url>
 								<li class="page-item">
 									<a class="page-link" href="${prevUrl }" class="first">
-										<i class="bi bi-chevron-left"></i>
+										<i class="bi bi-caret-left-fill"></i>
 									</a>
 								</li>
 							</c:if>
@@ -204,7 +212,7 @@
 								</c:url>
 								<li class="page-item">
 									<a class="page-link" href="${nextUrl }" class="last">
-										<i class="bi bi-chevron-right"></i>
+										<i class="bi bi-caret-right-fill"></i>
 									</a>
 								</li>
 							</c:if>
@@ -216,31 +224,75 @@
 	
 		<jsp:include page="../include/footer.jsp"></jsp:include>
 		<script>
-            <!-- 정렬바 -->
-            const label = document.querySelector('.sorting-label');
-            const options = document.querySelectorAll('.optionItem');
-
-            // 클릭한 옵션의 텍스트를 라벨 안에 넣음
-            const handleSelect = (item) => {
-            label.parentNode.classList.remove('active');
-            const sort = item.getAttribute('data-sort');
-            label.innerHTML = item.textContent;
-            
-            }
-            
-            // 옵션 클릭시 클릭한 옵션을 넘김
-            options.forEach(option => {
-                option.addEventListener('click', () => handleSelect(option))
-            })
-
-            // 라벨을 클릭시 옵션 목록이 열림/닫힘
-            label.addEventListener('click', () => {
-            if(label.parentNode.classList.contains('active')) {
-                label.parentNode.classList.remove('active');
-            } else {
-                label.parentNode.classList.add('active');
-            }
-            })
+			<!-- 정렬바 -->
+	        const label = document.querySelector('.sorting-label');
+	        const options = document.querySelectorAll('.optionItem');
+	
+	        // 클릭한 옵션의 텍스트를 라벨 안에 넣음
+	        const handleSelect = (item) => {
+	        label.parentNode.classList.remove('active');
+	        const sort = item.getAttribute('data-sort');
+	        label.innerHTML = item.textContent;
+	        
+	        }
+	        
+	        // 옵션 클릭시 클릭한 옵션을 넘김
+	        options.forEach(option => {
+	            option.addEventListener('click', () => handleSelect(option))
+	        })
+	
+	        // 라벨을 클릭시 옵션 목록이 열림/닫힘
+	        label.addEventListener('click', () => {
+	        if(label.parentNode.classList.contains('active')) {
+	            label.parentNode.classList.remove('active');
+	        } else {
+	            label.parentNode.classList.add('active');
+	        }
+	        })
+	        
+	        <!-- 카테고리, 정렬 선택 시 이동  -->
+			$(".category-links, .optionItem").click(function() {
+				// 선택한 category와 sort 값을 가져오기
+			    var selectedCategory = $(this).data("category");
+			    var selectedSort = $(this).data("sort");
+			    
+			    // 현재 URL 가져오기
+			    var currentURL = window.location.href;
+			    
+			    // 현재 URL에서 기존의 "category" 및 "sort" 매개변수 값을 추출
+			    var url = new URL(currentURL);
+			    var existingCategory = url.searchParams.get("category");
+			    var existingSort = url.searchParams.get("sort");
+			    
+			    // category 또는 sort 값이 변경되었는지 확인
+			    var categoryChanged = existingCategory !== selectedCategory;
+			    var sortChanged = existingSort !== selectedSort;
+				
+			    if(!selectedCategory) {
+			    	selectedCategory = existingCategory;
+			    }
+			    if(!selectedSort) {
+			    	selectedSort = existingSort;
+			    }
+			    
+			    
+				// 새로운 URL을 구성
+				if (categoryChanged || sortChanged) {
+				     var newURL = "/support/sList.pet?page=1&";
+				     if (categoryChanged) {
+				         newURL += "category=" + selectedCategory + "&";
+				     } else {
+				    	 newURL += "category=" + existingCategory + "&";
+				     }
+				     if (sortChanged) {
+				         newURL += "sort=" + selectedSort;
+				     } else {
+				    	 newURL += "sort=" + existingSort;
+				     }
+				     // 새로운 URL로 이동
+				     window.location.href = newURL;
+				}
+			});
         </script>
 	</body>
 </html>

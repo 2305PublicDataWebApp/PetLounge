@@ -1,5 +1,10 @@
 package com.lounge.pet.mail.service.impl;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -8,6 +13,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.lounge.pet.mail.service.MailService;
+import com.lounge.pet.support.domain.SupportHistory;
+import com.lounge.pet.user.domain.User;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -47,4 +54,61 @@ public class MailServiceImpl implements MailService {
 		return number;
 	}
 
+	// 후원내역 이메일 보내기 
+	public MimeMessage CreateSupportHistoryMail(SupportHistory sHistory, User user) {
+		MimeMessage message = javaMailSender.createMimeMessage();
+		String mail = user.getuEmail();
+		try {
+			message.setFrom("PetLounge7@gmail.com");
+			message.setRecipients(MimeMessage.RecipientType.TO, mail);
+			message.setSubject("PetLounge 후원내역"); // 메일 제목 
+			
+			String nickname = user.getuNickName();
+			
+			
+			// 결제일자 분까지만 끊어주기 
+			Timestamp payDate = sHistory.getsHPaydate();
+			// 분까지만 포맷팅할 패턴을 정의
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			// Timestamp를 Date로 변환
+			Date date = new Date(payDate.getTime());
+			// Date를 원하는 포맷으로 변환
+			String formattedDate = sdf.format(date);
+			
+			// 결제방법 한글로 만들어주기 
+			String payTypeEng = sHistory.getsHPaytype();
+			String payTypeKor = "";
+			if(payTypeEng == "kakaopay") {
+				payTypeKor = "카카오페이";
+			} else {
+				payTypeKor = "신용카드";
+			}
+			
+			// 결제금액에 , 넣어주기 
+			DecimalFormat decimalFormat = new DecimalFormat("#,###");
+			int amount = sHistory.getsHAmount();
+			String formattedAmount = decimalFormat.format(amount);
+			
+			System.out.println("결제일자 : " + formattedDate + ", 결제방법 : " + payTypeKor + ", 금액 : " + formattedAmount);
+			
+			String body = "";
+			body += "<h1>" + nickname + "님의 후원에 감사드립니다.</h1>";
+			body += "<h3>" + nickname + " 후원자님 안녕하세요.</h3>";
+			body += "<h3>" + nickname + "님은 " + formattedDate + "에 " + payTypeKor + "로 " + formattedAmount + "원을 후원해주셨습니다.</h3>";
+			body += "<h3>후원내역은 마이페이지 > 후원관리 > 후원내역에서도 확인 가능합니다.</h3>";
+			body += "<h3>동물들에게 소중한 나눔을 실천해주신 후원자님께 다시 한번 감사드립니다.</h3>";
+			message.setText(body, "UTF-8", "html");
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		
+		return message;
+	}
+	
+	// 후원 내역 보내기 
+	public String sendMail(SupportHistory sHistory, User user) {
+		MimeMessage message = CreateSupportHistoryMail(sHistory, user);
+		javaMailSender.send(message);
+		return "success";
+	}
 }

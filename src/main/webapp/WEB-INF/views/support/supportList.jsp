@@ -87,7 +87,9 @@
 								<br> <strong style="font-size: 20px;">오늘 함께한 기부금</strong>
 								<div class="hr"></div>
 								<div class="today-text">
-									<strong>${sHistory.todayCount }명</strong>이 <br> <strong>${sHistory.todayAmount }원</strong>을<br>
+									<fmt:formatNumber var="todayCount" value="${sHistory.todayCount }" pattern="#,###"></fmt:formatNumber>
+									<fmt:formatNumber var="todayAmount" value="${sHistory.todayAmount }" pattern="#,###"></fmt:formatNumber>
+									<strong>${todayCount }명</strong>이 <br> <strong>${todayAmount }원</strong>을<br>
 									기부하였습니다.
 								</div>
 							</div>
@@ -149,12 +151,10 @@
 							<c:if test="${sPInfo.startNavi ne '1' }">
 								<c:url var="prevUrl" value="/support/list.pet">
 									<c:param name="page" value="${sPInfo.startNavi-1 }"></c:param>
-									<c:param name="category" value="${sMap.category }"></c:param>
-									<c:param name="sort" value="${sMap.sort }"></c:param>
 								</c:url>
 								<li class="page-item">
 									<a class="page-link" href="${prevUrl }" class="first">
-										<i class="bi bi-chevron-left"></i>
+										<i class="bi bi-caret-left-fill"></i>
 									</a>
 								</li>
 							</c:if>
@@ -162,8 +162,6 @@
 							<c:forEach begin="${sPInfo.startNavi }" end="${sPInfo.endNavi }" var="p">
 								<c:url var="pageUrl" value="/support/list.pet">
 									<c:param name="page" value="${p }"></c:param>
-									<c:param name="category" value="${sMap.category }"></c:param>
-									<c:param name="sort" value="${sMap.sort }"></c:param>
 								</c:url>
 								<c:choose>
 									<c:when test="${p == sPInfo.currentPage}">
@@ -178,12 +176,10 @@
 							<c:if test="${sPInfo.endNavi ne sPInfo.naviTotalCount }">
 								<c:url var="nextUrl" value="/support/list.pet">
 									<c:param name="page" value="${sPInfo.endNavi+1 }"></c:param>
-									<c:param name="category" value="${sMap.category }"></c:param>
-									<c:param name="sort" value="${sMap.sort }"></c:param>
 								</c:url>
 								<li class="page-item">
 									<a class="page-link" href="${nextUrl }" class="last">
-										<i class="bi bi-chevron-right"></i>
+										<i class="bi bi-caret-right-fill"></i>
 									</a>
 								</li>
 							</c:if>
@@ -220,6 +216,44 @@
                 label.parentNode.classList.add('active');
             }
             })
+            
+            <!-- 카테고리, 정렬 선택 시 이동  -->
+			$(".category-links, .optionItem").click(function() {
+			    // 현재 URL 가져오기
+			    var currentURL = window.location.href;
+			    
+			    // 현재 URL에서 기존의 "category" 및 "sort" 매개변수 값을 추출
+			    var url = new URL(currentURL);
+			    var existingCategory = url.searchParams.get("category");
+			    var existingSort = url.searchParams.get("sort");
+			
+			    // 선택한 category와 sort 값을 가져오기
+			    var selectedCategory = $(this).data("category");
+			    var selectedSort = $(this).data("sort");
+			    
+			    // category 또는 sort 값이 변경되었는지 확인
+			    var categoryChanged = existingCategory !== selectedCategory;
+			    var sortChanged = existingSort !== selectedSort;
+				
+			    if(!selectedCategory) {
+			    	selectedCategory = 'all';
+			    }	
+			    if(!selectedSort) {
+			    	selectedSort = 'latest';
+			    } 
+			    
+			    // 새로운 URL을 구성
+			    var newURL = "/support/sList.pet?page=1&"; // 여기에 적절한 서치 페이지 URL을 입력
+			    if (categoryChanged) {
+			        newURL += "category=" + selectedCategory + "&";
+			    } 
+			    if (sortChanged) {
+			        newURL += "sort=" + selectedSort;
+			    } 
+			
+			    // 새로운 URL로 이동
+			    window.location.href = newURL;
+			});
         </script>
 	</body>
 </html>

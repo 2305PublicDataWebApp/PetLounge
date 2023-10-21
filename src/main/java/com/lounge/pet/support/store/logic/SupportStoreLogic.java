@@ -24,20 +24,14 @@ public class SupportStoreLogic implements SupportStore{
 	}
 
 	@Override
-	public Support selectSupportByNo(SqlSession sqlSession, int sNo) {
-		Support support = sqlSession.selectOne("SupportMapper.selectSupportByNo", sNo);
-		return support;
-	}
-
-	@Override
 	public int updateSupport(SqlSession sqlSession, Support support) {
 		int result = sqlSession.update("SupportMapper.updateSupport", support);
 		return result;
 	}
 
 	@Override
-	public int getHistoryCount(SqlSession sqlSession, int sNo) {
-		int result = sqlSession.selectOne("SHistoryMapper.getHistoryCount", sNo);
+	public int updateSupportFund(SqlSession sqlSession, Support sOne) {
+		int result = sqlSession.update("SupportMapper.updateSupportFund", sOne);
 		return result;
 	}
 
@@ -48,8 +42,44 @@ public class SupportStoreLogic implements SupportStore{
 	}
 
 	@Override
+	public Support selectSupportByNo(SqlSession sqlSession, int sNo) {
+		Support support = sqlSession.selectOne("SupportMapper.selectSupportByNo", sNo);
+		return support;
+	}
+
+	@Override
+	public int insertHistory(SqlSession sqlSession, SupportHistory sHistory) {
+		int result = sqlSession.insert("SHistoryMapper.insertHistory", sHistory);
+		return result;
+	}
+
+	@Override
+	public int getHistoryCount(SqlSession sqlSession, int sNo) {
+		int result = sqlSession.selectOne("SHistoryMapper.getHistoryCount", sNo);
+		return result;
+	}
+
+	@Override
+	public int getCountSHistory(SqlSession sqlSession, SupportHistory sHistory) {
+		int result = sqlSession.selectOne("SHistoryMapper.getCountSHistory", sHistory);
+		return result;
+	}
+
+	@Override
 	public int insertReply(SqlSession sqlSession, SupportReply sReply) {
 		int result = sqlSession.insert("SReplyMapper.insertReply", sReply);
+		return result;
+	}
+
+	@Override
+	public int updateReply(SqlSession sqlSession, SupportReply sReply) {
+		int result = sqlSession.delete("SReplyMapper.updateReply", sReply);
+		return result;
+	}
+
+	@Override
+	public int deleteReply(SqlSession sqlSession, int sRNo) {
+		int result = sqlSession.delete("SReplyMapper.deleteReply", sRNo);
 		return result;
 	}
 
@@ -66,18 +96,6 @@ public class SupportStoreLogic implements SupportStore{
 	}
 
 	@Override
-	public int deleteReply(SqlSession sqlSession, int sRNo) {
-		int result = sqlSession.delete("SReplyMapper.deleteReply", sRNo);
-		return result;
-	}
-
-	@Override
-	public int updateReply(SqlSession sqlSession, SupportReply sReply) {
-		int result = sqlSession.delete("SReplyMapper.updateReply", sReply);
-		return result;
-	}
-
-	@Override
 	public List<Support> selectSupportList(SqlSession sqlSession, Map<String, String> sMap, SPageInfo sPInfo) {
 		int limit = sPInfo.getRecordCountPerPage();
 		int offset = (sPInfo.getCurrentPage()-1)*limit;
@@ -89,24 +107,6 @@ public class SupportStoreLogic implements SupportStore{
 	@Override
 	public int getListCount(SqlSession sqlSession, Map<String, String> sMap) {
 		int result = sqlSession.selectOne("SupportMapper.getListCount", sMap);
-		return result;
-	}
-
-	@Override
-	public int insertHistory(SqlSession sqlSession, SupportHistory sHistory) {
-		int result = sqlSession.insert("SHistoryMapper.insertHistory", sHistory);
-		return result;
-	}
-
-	@Override
-	public int updateSupportFund(SqlSession sqlSession, Support sOne) {
-		int result = sqlSession.update("SupportMapper.updateSupportFund", sOne);
-		return result;
-	}
-
-	@Override
-	public int getCountSHistory(SqlSession sqlSession, SupportHistory sHistory) {
-		int result = sqlSession.selectOne("SHistoryMapper.getCountSHistory", sHistory);
 		return result;
 	}
 
@@ -157,6 +157,12 @@ public class SupportStoreLogic implements SupportStore{
 	public int getReplyListCount(SqlSession sqlSession) {
 		int result = sqlSession.selectOne("SReplyMapper.getReplyListCount");
 		return result;
+	}
+
+	@Override
+	public List<Support> selectMainSupportList(SqlSession sqlSession) {
+		List<Support> sList = sqlSession.selectList("SupportMapper.selectMainSupportList");
+		return sList;
 	}
 
 	

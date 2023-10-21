@@ -163,5 +163,11 @@ public class SupportServiceImpl implements SupportService{
 		return result;
 	}
 
+	@Override
+	public List<Support> selectMainSupportList() {
+		List<Support> sList = sStore.selectMainSupportList(sqlSession);
+		return sList;
+	}
+
 
 }
