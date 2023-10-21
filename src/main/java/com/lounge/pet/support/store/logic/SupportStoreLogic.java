@@ -3,9 +3,11 @@ package com.lounge.pet.support.store.logic;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.lounge.pet.support.domain.SPageInfo;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
@@ -76,14 +78,17 @@ public class SupportStoreLogic implements SupportStore{
 	}
 
 	@Override
-	public List<Support> selectSupportList(SqlSession sqlSession, Map<String, String> sMap) {
-		List<Support> searchList = sqlSession.selectList("SupportMapper.selectSupportList", sMap);
-		return searchList;
+	public List<Support> selectSupportList(SqlSession sqlSession, Map<String, String> sMap, SPageInfo sPInfo) {
+		int limit = sPInfo.getRecordCountPerPage();
+		int offset = (sPInfo.getCurrentPage()-1)*limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<Support> sList = sqlSession.selectList("SupportMapper.selectSupportList", sMap, rowBounds);
+		return sList;
 	}
 
 	@Override
-	public int getSearchCount(SqlSession sqlSession, Map<String, String> sMap) {
-		int result = sqlSession.selectOne("SupportMapper.getSearchCount", sMap);
+	public int getListCount(SqlSession sqlSession, Map<String, String> sMap) {
+		int result = sqlSession.selectOne("SupportMapper.getListCount", sMap);
 		return result;
 	}
 

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lounge.pet.support.domain.SPageInfo;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
@@ -84,14 +85,14 @@ public class SupportServiceImpl implements SupportService{
 	}
 
 	@Override
-	public List<Support> selectSupportList(Map<String, String> sMap) {
-		List<Support> searchList = sStore.selectSupportList(sqlSession, sMap);
-		return searchList;
+	public List<Support> selectSupportList(Map<String, String> sMap, SPageInfo sPInfo) {
+		List<Support> sList = sStore.selectSupportList(sqlSession, sMap, sPInfo);
+		return sList;
 	}
 	
 	@Override
-	public int getSearchCount(Map<String, String> sMap) {
-		int result = sStore.getSearchCount(sqlSession, sMap);
+	public int getListCount(Map<String, String> sMap) {
+		int result = sStore.getListCount(sqlSession, sMap);
 		return result;
 	}
 

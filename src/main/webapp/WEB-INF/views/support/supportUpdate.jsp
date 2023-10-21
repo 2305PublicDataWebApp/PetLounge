@@ -118,7 +118,7 @@
 	                </div>
 	            </section>
 	            <section id="button" style="margin-bottom: 100px;">
-	                <button class="btn-update" type="submit">수정하기</button>
+	                <button class="btn-update" type="submit" onClick="return insertCheck()">수정하기</button>
 	                <button class="btn-cancel" type="button" onClick="location.href='/support/detail.pet?sNo=${support.sNo }'">돌아가기</button>
 	            </section>
             </form>
@@ -126,6 +126,53 @@
 		
 		<jsp:include page="../include/footer.jsp"></jsp:include>
 		<script>
+			<!-- 후원글 수정 유효성 체크 -->
+	    	function insertCheck() {
+	    		// 사진, 카테고리, 제목, 모금 시작일, 종료일, 목표금액, 모금단체, 내용
+	    		const sImageUrl = $("#s-image-url");
+	    		const sCategory = $("#s-category");
+	    		const sTitle = $("#s-title");
+	    		const sStart = $("#s-start");
+	    		const sEnd = $("#s-end");
+	    		const sTargetAmount = $("#s-target-amount-input");
+	    		const sGroup = $("#s-group");
+	    		const sContent = $("#summernote");
+	    		
+	    		if (!sImageUrl.val()) {
+	    			alert('이미지를 첨부해주세요.');
+	    			return false;
+	   	        } else if (!sCategory.val()) {
+	    			alert('카테고리를 선택해주세요.');
+	    			sCategory.focus();
+	    			return false;
+	   	        } else if (!sTitle.val().trim()) {
+	    			alert('제목을 입력해주세요.');
+	    			sTitle.focus();
+	    			return false;
+	   	        } else if (!sStart.val()	) {
+	    			alert('모금 시작일을 선택해주세요.');
+	    			sStart.focus();
+	    			return false;
+	   	        } else if (!sEnd.val()) {
+	    			alert('모금 종료일을 선택해주세요.');
+	    			sEnd.focus();
+	    			return false;
+	   	        } else if (!sTargetAmount.val()) {
+	    			alert('목표 금액을 입력해주세요.');
+	    			sTargetAmount.focus();
+	    			return false;
+	   	        } else if (!sGroup.val().trim()) {
+	    			alert('모금 단체를 입력해주세요.');
+	    			sGroup.focus();
+	    			return false;
+	   	        } else if (!sContent.val()) {
+	    			alert('내용을 입력해주세요.');
+	    			sContent.focus();
+	    			return false;
+	   	        } else {
+	   	        	return true;
+	   	        }
+	    	};
             <!-- 이미지 div 선택시 파일 업로드 -->
             const realUpload = document.querySelector('.real-upload');
             const upload = document.querySelector('#thumbnail');

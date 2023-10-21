@@ -3,6 +3,7 @@ package com.lounge.pet.support.service;
 import java.util.List;
 import java.util.Map;
 
+import com.lounge.pet.support.domain.SPageInfo;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
@@ -84,14 +85,14 @@ public interface SupportService {
 	 * @param keyword
 	 * @return List 
 	 */
-	List<Support> selectSupportList(Map<String, String> sMap);
+	List<Support> selectSupportList(Map<String, String> sMap, SPageInfo sPInfo);
 
 	/**
-	 * 후원글 검색 갯수 조회 Service
+	 * 후원글 갯수 조회 Service  !!!! 
 	 * @param keyword
 	 * @return
 	 */
-	int getSearchCount(Map<String, String> sMap);
+	int getListCount(Map<String, String> sMap);
 
 	/**
 	 * 후원내역 등록 Service
@@ -165,6 +166,8 @@ public interface SupportService {
 	 * @return int
 	 */
 	int getReplyListCount();
+
+	
 	
 
 }
