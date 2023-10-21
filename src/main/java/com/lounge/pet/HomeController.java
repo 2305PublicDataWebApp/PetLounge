@@ -33,9 +33,9 @@ public class HomeController {
 		Map<String, String> sMap = new HashMap();
 		sMap.put("category", category);
 		sMap.put("sort", sort);
-		List<Support> sList = sService.selectSupportList(sMap);
-		sList = sList.subList(0, 3);
-		mv.addObject("sList", sList);
+//		List<Support> sList = sService.selectSupportList(sMap);
+//		sList = sList.subList(0, 3);
+//		mv.addObject("sList", sList);
 		mv.setViewName("home");
 		return mv;
 	}
