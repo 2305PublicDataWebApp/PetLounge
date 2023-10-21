@@ -242,7 +242,7 @@
 			        const sRContent = $("#reply-create-content").val();
 			        const sNo = ${support.sNo };
 			
-			        if (!sRContent) {
+			        if (!sRContent.trim()) {
 			            alert("댓글 내용을 입력해주세요.");
 			        } else {
 			            $.ajax({
@@ -268,7 +268,7 @@
 			$("#reply-create-btn").on("click", function() {
 				const sRContent = $("#reply-create-content").val();
 				const sNo = ${support.sNo };
-				if(!sRContent) {
+				if(!sRContent.trim()) {
 					alert("댓글 내용을 입력해주세요.");
 				} else {
 					$.ajax({
@@ -299,11 +299,41 @@
 				let modifyButton = document.querySelector('.modal-modify-btn');
 			}
 			
-			// 댓글 수정 
+			// 댓글 수정 - 엔터
+			$(".reply-modify-content").on("keydown", function(event) {
+			    if (event.keyCode === 13) { // 엔터 키의 keyCode는 13
+			        event.preventDefault(); // 기본 엔터 동작을 막음 
+			
+			        let sRNo = $('.s-r-no').val();
+			        let sRContent = $('.reply-modify-content').val();
+			
+			        if (!sRContent.trim()) {
+			            alert("댓글 내용을 입력해주세요.");
+			        } else {
+			        	$.ajax({
+							url : "/sReply/update.pet",
+							data : { sRNo : sRNo, sRContent : sRContent},
+							type : "POST",
+							success : function(data) {
+								if(data == "success") {
+									document.querySelector('[data-bs-dismiss="modal"]').click(); // 모달 닫는 버튼이 클릭되어서 닫히게 함 
+									getReplyList(); // 댓글 목록 새로고침 
+								} else {
+									alert("댓글 수정 실패!");
+								}
+							},
+							error : function() {
+								alert("Ajax 오류! 관리자에게 문의하세요.");
+							}
+						});
+			        }
+			    }
+			});
+			// 댓글 수정 - 클릭 
 			const modifyReply = () => {
-				let sRNo = document.querySelector('.s-r-no').value;
-				let sRContent = document.querySelector('.reply-modify-content').value;
-				if(!sRContent) {
+				let sRNo = $('.s-r-no').val();
+				let sRContent = $('.reply-modify-content').val();
+				if(!sRContent.trim()) {
 					alert("댓글 내용을 입력해주세요.");
 				} else {
 					$.ajax({

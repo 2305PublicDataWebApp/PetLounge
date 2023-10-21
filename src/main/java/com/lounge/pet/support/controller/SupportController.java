@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.lounge.pet.support.domain.SPageInfo;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
@@ -51,70 +52,151 @@ public class SupportController {
 	}
 
 	// 후원 목록 페이지
-	@RequestMapping(value="/support/list.pet", method = RequestMethod.GET)
-	public ModelAndView supportListPage(ModelAndView mv) {
-		mv.setViewName("/support/supportList");
+//	@RequestMapping(value="/support/list.pet", method = RequestMethod.GET)
+//	public ModelAndView supportListPage(ModelAndView mv) {
+//		mv.setViewName("/support/supportList");
+//		return mv;
+//	}
+	
+	
+	// 게시글 목록 조회( 카테고리, 정렬, today ) - ajax
+//	@ResponseBody
+//	@RequestMapping(value = "/support/sList.pet"
+//	, produces = "application/json; charset=utf-8"
+//	, method = RequestMethod.GET)
+//	public String showSupportList(Integer currentPage, String category, String sort) {
+//		Integer recordCountPerPage =  11;
+//		System.out.println("currentPage:" +currentPage + ", recordCountPerPage:" + recordCountPerPage  + ", sort :" + sort);
+//		if (category == null || category.isEmpty()) {
+//			category = "all"; // 기본값으로 전체 카테고리 설정
+//		}
+//		if(sort == null || sort.isEmpty()) { // 기본값으로 최신순 정렬 설정
+//			sort = "latest";
+//		}
+//		
+//		// currentPage와 recordCountPerPage를 이용하여 페이징 처리
+//		// 페이징을 적용하여 댓글 데이터를 가져오도록 구현 
+//		int start = (currentPage - 1) * recordCountPerPage;
+//		int end = start + recordCountPerPage;
+//		System.out.println(category + sort);
+//		
+//		Map<String, String> sMap = new HashMap();
+//		sMap.put("category", category);
+//		sMap.put("sort", sort);
+//		
+//		// 카테고리별 후원글 리스트 불러옴 
+//		List<Support> searchList = sService.selectSupportList(sMap);
+//		
+//		// 범위 체크를 통해 부분 리스트 추출
+//		if (start < searchList.size()) {
+//			end = Math.min(end, searchList.size());
+//			// 범위에 해당하는 부분 리스트를 추출하여 sList에 대입
+//			searchList  = searchList.subList(start, end);
+//		} else {
+//			searchList  = Collections.emptyList();
+//		}
+//		
+//		// 전체 페이지 수 계산 (후원글의 총 갯수를 페이지당 글 갯수로 나눠서 계산) 
+//		int totalSearchRecords = sService.getSearchCount(sMap); // 카테고리별 후원글의 총 갯수 
+//		int totalSearchPages = (int) Math.ceil((double) totalSearchRecords / recordCountPerPage); // 전체 페이지 수 
+//		
+//		System.out.println("currentPage: " + currentPage + ", recordCountPerPage: " + recordCountPerPage);
+//		System.out.println("searchList size: " + searchList.size() + ", totalSearchRecords: " + totalSearchRecords + ", totalSearchPages: " + totalSearchPages);
+//
+//		// 오늘 후원 받아오기 
+//		SupportHistory sHistory = sService.selectTodaySupport();
+//		int todayCount = sHistory.getTodayCount();
+//		int todayAmount = sHistory.getTodayAmount();
+//		// 후원글 리스트와 전체 페이지 수를 Map에 담아서 보냄 
+//		Map<String, Object> resultMap = new HashMap<>();
+//		resultMap.put("searchList", searchList);
+//		resultMap.put("totalSearchPages", totalSearchPages);
+//		resultMap.put("todayCount", todayCount);
+//		resultMap.put("todayAmount", todayAmount);
+//		
+//		Gson gson = new Gson();
+//		return gson.toJson(resultMap);
+//	}
+	
+	// 후원글 목록 조회
+	@RequestMapping(value = "/support/list.pet", method = RequestMethod.GET)
+	public ModelAndView showSupportList(ModelAndView mv
+			, @RequestParam(value = "page", required=false, defaultValue = "1") Integer currentPage
+			, @RequestParam(value = "category", required=false, defaultValue = "all") String category
+			, @RequestParam(value = "sort", required=false, defaultValue = "latest") String sort ) {
+		try {
+			//
+			Map<String, String> sMap = new HashMap();
+			sMap.put("category", category);
+			sMap.put("sort", sort);
+			
+			Integer totalCount = sService.getListCount(sMap);
+			SPageInfo sPInfo = this.getPageInfo(currentPage, totalCount);			
+			List<Support> sList = sService.selectSupportList(sMap, sPInfo);
+			
+			// 오늘 후원 받아오기 
+			SupportHistory sHistory = sService.selectTodaySupport();
+			
+			if(!sList.isEmpty()) {
+				mv.addObject("sPInfo", sPInfo).addObject("sList", sList).addObject("sHistory", sHistory).addObject("sMap", sMap).setViewName("support/supportList");
+			} else {
+				mv.addObject("msg", "게시글 목록 조회가 완료되지 않았습니다.");
+				mv.addObject("url", "/index.jsp");
+				mv.setViewName("common/message");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의하세요.");
+			mv.addObject("url", "/index.jsp");
+			mv.setViewName("common/message");
+		}
 		return mv;
 	}
 	
+	// 후원글 목록 조회 - 카테고리, 정렬 
+	@RequestMapping(value = "/support/sList.pet", method = RequestMethod.GET)
+	public ModelAndView showSupportSerachList(ModelAndView mv
+			, @RequestParam(value = "page", required=false, defaultValue = "1") Integer currentPage
+			, @RequestParam(value = "category", required=false, defaultValue = "all") String category
+			, @RequestParam(value = "sort", required=false, defaultValue = "latest") String sort ) {
+		try {
+			//
+			Map<String, String> sMap = new HashMap();
+			sMap.put("category", category);
+			sMap.put("sort", sort);
+			
+			Integer totalCount = sService.getListCount(sMap);
+			SPageInfo sPInfo = this.getPageInfo(currentPage, totalCount);			
+			List<Support> sList = sService.selectSupportList(sMap, sPInfo);
+			
+			// 오늘 후원 받아오기 
+			SupportHistory sHistory = sService.selectTodaySupport();
+			
+			if(!sList.isEmpty()) {
+				mv.addObject("sPInfo", sPInfo).addObject("sList", sList).addObject("sHistory", sHistory).addObject("sMap", sMap).setViewName("support/supportSearchList");
+			} else {
+				mv.addObject("msg", "게시글 목록 조회가 완료되지 않았습니다.");
+				mv.addObject("url", "/index.jsp");
+				mv.setViewName("common/message");
+			}
+		} catch (Exception e) {
+			mv.addObject("msg", "관리자에게 문의하세요.");
+			mv.addObject("url", "/index.jsp");
+			mv.setViewName("common/message");
+		}
+		return mv;
+	}
 	
-	// 게시글 목록 조회( 카테고리, 정렬, today ) 
-	@ResponseBody
-	@RequestMapping(value = "/support/sList.pet"
-	, produces = "application/json; charset=utf-8"
-	, method = RequestMethod.GET)
-	public String showSupportList(Integer currentPage, String category, String sort) {
-		Integer recordCountPerPage =  11;
-		System.out.println("currentPage:" +currentPage + ", recordCountPerPage:" + recordCountPerPage  + ", sort :" + sort);
-		if (category == null || category.isEmpty()) {
-			category = "all"; // 기본값으로 전체 카테고리 설정
+	private SPageInfo getPageInfo(Integer currentPage, Integer totalCount) {
+		int recordCountPerPage = 11;
+		int naviCountPerPage = 5;
+		int naviTotalCount = (int)Math.ceil((double)totalCount / recordCountPerPage);
+		int startNavi = ((int)((double)currentPage/naviCountPerPage+0.9)-1)*naviCountPerPage+1;
+		int endNavi = startNavi + naviCountPerPage - 1;
+		if(endNavi > naviTotalCount) {
+			endNavi = naviTotalCount;
 		}
-		if(sort == null || sort.isEmpty()) { // 기본값으로 최신순 정렬 설정
-			sort = "latest";
-		}
-		
-		// currentPage와 recordCountPerPage를 이용하여 페이징 처리
-		// 페이징을 적용하여 댓글 데이터를 가져오도록 구현 
-		int start = (currentPage - 1) * recordCountPerPage;
-		int end = start + recordCountPerPage;
-		System.out.println(category + sort);
-		
-		Map<String, String> sMap = new HashMap();
-		sMap.put("category", category);
-		sMap.put("sort", sort);
-		
-		// 카테고리별 후원글 리스트 불러옴 
-		List<Support> searchList = sService.selectSupportList(sMap);
-		
-		// 범위 체크를 통해 부분 리스트 추출
-		if (start < searchList.size()) {
-			end = Math.min(end, searchList.size());
-			// 범위에 해당하는 부분 리스트를 추출하여 sList에 대입
-			searchList  = searchList.subList(start, end);
-		} else {
-			searchList  = Collections.emptyList();
-		}
-		
-		// 전체 페이지 수 계산 (후원글의 총 갯수를 페이지당 글 갯수로 나눠서 계산) 
-		int totalSearchRecords = sService.getSearchCount(sMap); // 카테고리별 후원글의 총 갯수 
-		int totalSearchPages = (int) Math.ceil((double) totalSearchRecords / recordCountPerPage); // 전체 페이지 수 
-		
-		System.out.println("currentPage: " + currentPage + ", recordCountPerPage: " + recordCountPerPage);
-		System.out.println("searchList size: " + searchList.size() + ", totalSearchRecords: " + totalSearchRecords + ", totalSearchPages: " + totalSearchPages);
-
-		// 오늘 후원 받아오기 
-		SupportHistory sHistory = sService.selectTodaySupport();
-		int todayCount = sHistory.getTodayCount();
-		int todayAmount = sHistory.getTodayAmount();
-		// 후원글 리스트와 전체 페이지 수를 Map에 담아서 보냄 
-		Map<String, Object> resultMap = new HashMap<>();
-		resultMap.put("searchList", searchList);
-		resultMap.put("totalSearchPages", totalSearchPages);
-		resultMap.put("todayCount", todayCount);
-		resultMap.put("todayAmount", todayAmount);
-		
-		Gson gson = new Gson();
-		return gson.toJson(resultMap);
+		SPageInfo pInfo = new SPageInfo(currentPage, totalCount, naviTotalCount, recordCountPerPage, naviCountPerPage, startNavi, endNavi);
+		return pInfo;
 	}
 	
 	

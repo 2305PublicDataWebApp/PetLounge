@@ -45,7 +45,7 @@
 	</select>
 	
 	<!-- 후원글 목록 갯수 조회 -->
-	<select id="getSearchCount" resultType="_int">
+	<select id="getListCount" resultType="_int">
 		SELECT 
 			COUNT(*) FROM SUPPORT_TBL 
 		<if test="category != 'all'">
