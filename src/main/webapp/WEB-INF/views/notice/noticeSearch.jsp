@@ -124,9 +124,11 @@
 									<option value="title">제목</option>
 <!-- 									<option value="date">작성일</option> -->
 								</select>
-		                    <input type="text" name="searchKeyword" id="search" class="search-input" style="margin-right : 5px;">
+		                    <input type="text" name="searchKeyword" id="search" class="search-input" value="${searchKeyword }" style="margin-right : 5px;">
 <!-- 		                    <input type="submit" class="search-button" value="검색"> -->
-		                    <i class="bi bi-search" id="searchIcon"></i>
+		                    <button type="submit" class="none1">
+		                    	<i class="bi bi-search" id="searchIcon" ></i>
+		                    </button>
 	                    </form>
 	                </div>
 	                <div class="sub">
@@ -146,9 +148,11 @@
 									<option value="title" <c:if test="${searchCondition == 'title' 		}"	>selected</c:if>>제목</option>
 <%-- 									<option value="date" <c:if test="${searchCondition == 'date' 		}"	>selected</c:if>>작성일</option> --%>
 								</select>
-		                    <input type="text" name="searchKeyword" id="search" class="search-input" style="margin-right : 5px;">
+		                    <input type="text" name="searchKeyword" id="search" class="search-input" value="${searchKeyword}" style="margin-right : 5px;">
 <!-- 		                    <input type="submit" class="search-button" value="검색"> -->
-		                    <i class="bi bi-search" id="searchIcon"></i>
+		                    <button type="submit" class="none1">
+		                    	<i class="bi bi-search" id="searchIcon" ></i>
+		                    </button>
 	                    </form>
 	                </div>
 	            </div>		

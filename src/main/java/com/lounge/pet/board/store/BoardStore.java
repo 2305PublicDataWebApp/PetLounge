@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 
 import com.lounge.pet.board.domain.Board;
+import com.lounge.pet.board.domain.FBookmark;
 
 public interface BoardStore {
 
@@ -78,6 +79,30 @@ public interface BoardStore {
 	 * @return
 	 */
 	int getSearchCount(SqlSession session);
+
+	/**
+	 * 회원 아이디, 게시글 번호로 북마크 목록 조회
+	 * @param session
+	 * @param fBook
+	 * @return
+	 */
+	int selectFBook(SqlSession session, FBookmark fBook);
+
+	/**
+	 * 북마크 등록
+	 * @param session
+	 * @param fBook
+	 * @return
+	 */
+	int insertFBook(SqlSession session, FBookmark fBook);
+
+	/**
+	 * 북마크 삭제
+	 * @param session
+	 * @param fBook
+	 * @return
+	 */
+	int deleteFBook(SqlSession session, FBookmark fBook);
 
 
 

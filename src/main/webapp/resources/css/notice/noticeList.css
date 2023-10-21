@@ -209,6 +209,7 @@ hr {
 
 .pagination a.next {
     background-color: #FAFAFA;
+    border: none;
     font-size: 12px;
     align-items: center;
     display: flex;
@@ -397,4 +398,10 @@ i {
 
 #searchIcon {
 	color: #FFD370;
+}
+
+.none1 {
+	border: none;
+	background-color: #FAFAFA;
+	padding: 0; 
 }

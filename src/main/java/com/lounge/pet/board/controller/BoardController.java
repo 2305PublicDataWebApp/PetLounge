@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.lounge.pet.board.domain.Board;
+import com.lounge.pet.board.domain.FBookmark;
 import com.lounge.pet.board.service.BoardService;
+import com.lounge.pet.hospital.domain.HBookmark;
 import com.lounge.pet.notice.domain.Notice;
 import com.lounge.pet.user.domain.User;
 import com.lounge.pet.user.service.UserService;
@@ -127,7 +130,14 @@ public class BoardController {
 			, @RequestParam("fNo") int fNo
 			, HttpSession session) {
 		try { 
+			String sessionId = (String) session.getAttribute("uId");
 			Board bOne = bService.selectFreeBoardByNo(fNo);
+			FBookmark fBook = new FBookmark(sessionId, fNo); 
+			int fBookmark = bService.selectFBook(fBook);
+			mv.addObject("bOne", bOne)
+			.addObject("fBookmark", fBookmark)
+			.setViewName("/board/freeDetail");
+			
 			int result = bService.updateViewCount(bOne); 
 			if(bOne != null) {
 				mv.addObject("board", bOne);
@@ -323,5 +333,43 @@ public class BoardController {
 	}	
 	
 	
+	/**
+	 * 자유게시판 북마크 기능
+	 * (게시글을 북마크 목록에 추가하거나 삭제할 수 있는 엔드포인트 제공)
+	 * 결과는 문자열로 반환되고 클라이언트에게 전송됨
+	 * @param fNo
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("/board/addToFBookmark.pet")
+	public String addToBookmark(int fNo
+								, HttpSession session) {
+		String sessionId = (String) session.getAttribute("uId");	// 사용자의 세션ID 가져옴, 이 ID는 로그인한 사용자의 고유 식별자
+		
+		if(sessionId != null) {
+			FBookmark fBook = new FBookmark(sessionId, fNo);	// 이 객체는 사용자가 특정 자유게시글을 북마크 목록에 추가하거나 삭제하는 데 사용	
+			int fBOne = bService.selectFBook(fBook);	// 사용자의 북마크 목록에서 해당 게시글('fNo')를 찾아서 'fBOne' 변수에 결과를 저장
+			if(fBOne == 0) {	// fBOne이 0인 경우-> 해당 게시글이 북마크 목록에 없는 경우 새로운 레코드를 추가
+				// 없으면 insert
+				int result = bService.insertFBook(fBook);	// 게시글을 북마크 목록에 추가
+				if(result > 0) {
+					return "insert";	// (결과가 1 이상이면 추가 성공을 의미하고 "insert"를 반환)
+				} else {
+					return "fail";
+				}
+			} else {
+				// 있으면 delete
+				int result = bService.deleteFBook(fBook);	// 'hBOne != 0' 인 경우, 해당 게시글이 북마크 목록에 이미 있는 경우, 해당 레코드를 삭제함
+				if(result > 0) {
+					return "delete";	// (결과가 1 이상이면 삭제 성공을 의미하고 "return"를 반환)
+				} else {
+					return "fail";
+				}
+			}
+		} else {
+			return "loginFail";		// 사용자가 로그인하지 않은 경우 "loginFail"을 반환하여 클라이언트에게 로그인이 필요하다고 알림
+		}
+	}
    
 }

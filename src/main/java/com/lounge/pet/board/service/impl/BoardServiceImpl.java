@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lounge.pet.board.domain.Board;
+import com.lounge.pet.board.domain.FBookmark;
 import com.lounge.pet.board.service.BoardService;
 import com.lounge.pet.board.store.BoardStore;
 
@@ -81,6 +82,27 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int getSearchCount() {
 		int result = bStore.getSearchCount(session);
+		return result;
+	}
+
+
+	@Override
+	public int selectFBook(FBookmark fBook) {
+		int fBOne = bStore.selectFBook(session, fBook);
+		return fBOne;
+	}
+
+
+	@Override
+	public int insertFBook(FBookmark fBook) {
+		int result = bStore.insertFBook(session, fBook);
+		return result;
+	}
+
+
+	@Override
+	public int deleteFBook(FBookmark fBook) {
+		int result = bStore.deleteFBook(session, fBook);
 		return result;
 	}
 
