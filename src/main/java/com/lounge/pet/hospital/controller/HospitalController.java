@@ -128,7 +128,7 @@ public class HospitalController {
 	    int end = start + recordCountPerPage;
 		
 		Hospital userSearchLocation = new Hospital(latitude, longitude, sessionId, hSearchKeyword);
-		List<Hospital> hList = hService.selectFiveByKeyword(userSearchLocation);
+		List<Hospital> hList = hService.selectHosListByKeyword(userSearchLocation);
 		
 		// 범위 체크를 통해 부분 리스트 추출
 	    if (start < hList.size()) {

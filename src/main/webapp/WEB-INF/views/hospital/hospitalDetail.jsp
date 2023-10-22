@@ -146,7 +146,10 @@
                 </div>
                 <!-- 등록 -->
                 <div id="review-create-div">
-                    <input type="text" name="hRContent" id="review-create-content" placeholder="후기 내용을 작성해주세요" required>
+                    <input type="text" name="hRContent" id="review-create-content" onkeyup="fn_checkByte(this);" placeholder="후기 내용을 작성해주세요" required>
+                    <div id="review-create-byte">
+                    	<sup><span id="nowByte">0</span>/600bytes</sup>
+                    </div>
                     <button id="review-create-btn" onclick="hohReviewInsert(${ hOne.hNo });">등록</button>
                 </div>
                 <!-- 리스트 -->
@@ -197,7 +200,10 @@
                                 </div>
                                 <div id="review-modify-div">
                                    	<input type="hidden" name="hRNo" class="h-r-no">
-                                    <input type="text" name="hRContent" class="review-modify-content" placeholder="후기 내용을 수정해 주세요">
+                                    <input type="text" name="hRContent" class="review-modify-content" onkeyup="fn_checkByte_modify(this);" placeholder="후기 내용을 수정해 주세요">
+				                    <div id="review-modify-byte">
+				                    	<sup><span id="modify-nowByte">0</span>/600bytes</sup>
+				                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -386,31 +392,38 @@
 		<script>
 			// 후기 등록 
 			function hohReviewInsert(hNo) {
-				const hRContent = $("#review-create-content").val().trim();
-				$.ajax({
-					url : '/hReview/insert.pet',
-					type : 'POST',
-					data : { 
-						hNo : hNo,
-						hRContent : hRContent 
-					},
-					success : function(data) {
-						if(data == "success") {
-							$("#review-create-content").val("");
-							getReviewList();
-						} else if(data == "loginFail") {
-							alert("로그인이 필요한 서비스입니다."); 
-							location.href="/user/login.pet";
-						} else if (data == "empty") {
-		                	alert("후기 내용은 비워둘 수 없습니다.");
-		                } else {
-							alert("동물병원 후기 등록 실패");
+				let hRContent = $("#review-create-content").val();
+				
+				if(new TextEncoder().encode(hRContent).length <= 600) {
+					hRContent = hRContent.trim();
+					$.ajax({
+						url : '/hReview/insert.pet',
+						type : 'POST',
+						data : { 
+							hNo : hNo,
+							hRContent : hRContent 
+						},
+						success : function(data) {
+							if(data == "success") {
+								$("#review-create-content").val("");
+								document.getElementById("nowByte").innerText = "0";
+								getReviewList();
+							} else if(data == "loginFail") {
+								alert("로그인이 필요한 서비스입니다."); 
+								location.href="/user/login.pet";
+							} else if (data == "empty") {
+			                	alert("후기 내용은 비워둘 수 없습니다.");
+			                } else {
+								alert("동물병원 후기 등록 실패");
+							}
+						},
+						error : function() {
+							alert("동물병원 후기 작성 오류. 관리자에게 문의 바랍니다.");
 						}
-					},
-					error : function() {
-						alert("동물병원 후기 작성 오류. 관리자에게 문의 바랍니다.");
-					}
-				});
+					});
+				} else {
+					alert('작성 가능한 최대 글자 수를 초과하였습니다.');
+				}
 			}
 			
 			// 후기 수정창 보이기 
@@ -420,6 +433,10 @@
 				document.querySelector('.review-modify-content').value = hRContent;
 				document.querySelector('.review-modify-profile-img').src = hRProfileImg;
 				let modifyButton = document.querySelector('.modal-modify-btn');
+				
+				// 글자수 관련 체크
+				document.getElementById("modify-nowByte").innerText = new TextEncoder().encode(hRContent).length;
+			    document.getElementById("modify-nowByte").style.color = "inherit";
 // 				modifyButton.addEventListener('click', function() {
 // 					modifyReview();
 // 				});	
@@ -428,31 +445,38 @@
 			// 후기 수정 
 			function modifyReview() {
 				let hRNo = document.querySelector('.h-r-no').value;
-				let hRContent = document.querySelector('.review-modify-content').value.trim();
-				$.ajax({
-					url : '/hReview/update.pet',
-					type : 'POST',
-					data : { 
-						hRNo : hRNo,
-						hRContent : hRContent 
-					},
-					success : function(data) {
-						if(data == "success") {
-							document.querySelector('[data-bs-dismiss="modal"]').click(); // 모달 닫는 버튼이 클릭되어서 닫히게 함 
-							getReviewList(); // 후기 목록 새로고침 
-						} else if(data == "loginFail") {
-							alert("로그인이 필요한 서비스입니다."); 
-							location.href="/user/login.pet";
-						} else if (data == "empty") {
-		                	alert("후기 내용은 비워둘 수 없습니다.");
-		                } else {
-							alert("동물병원 후기 수정 실패");
+				let hRContent = document.querySelector('.review-modify-content').value;
+				
+				if(new TextEncoder().encode(hRContent).length <= 600) {
+					hRContent = hRContent.trim();
+					
+					$.ajax({
+						url : '/hReview/update.pet',
+						type : 'POST',
+						data : { 
+							hRNo : hRNo,
+							hRContent : hRContent 
+						},
+						success : function(data) {
+							if(data == "success") {
+								document.querySelector('[data-bs-dismiss="modal"]').click(); // 모달 닫는 버튼이 클릭되어서 닫히게 함 
+								getReviewList(); // 후기 목록 새로고침 
+							} else if(data == "loginFail") {
+								alert("로그인이 필요한 서비스입니다."); 
+								location.href="/user/login.pet";
+							} else if (data == "empty") {
+			                	alert("후기 내용은 비워둘 수 없습니다.");
+			                } else {
+								alert("동물병원 후기 수정 실패");
+							}
+						},
+						error : function() {
+							alert("동물병원 후기 수정 오류. 관리자에게 문의 바랍니다.");
 						}
-					},
-					error : function() {
-						alert("동물병원 후기 수정 오류. 관리자에게 문의 바랍니다.");
-					}
-				});
+					});
+				} else {
+					alert('작성 가능한 최대 글자 수를 초과하였습니다.');
+				}
 			}
 			
 			// 후기 삭제 체크 
@@ -644,74 +668,79 @@
 				var hRSearchKeyword = document.getElementById('h-r-search-keyword').value.trim();
 				let sessionId = '${ sessionScope.uId }';
 				
-				$.ajax ({
-					url: "/hReview/search.pet",
-					type: "POST",
-					dataType: "json",
-					data: {
-						hNo: ${ hOne.hNo },
-						hRSearchKeyword: hRSearchKeyword,
-						currentPage: currentPage, 
-						recordCountPerPage: recordCountPerPage 
-					},
-					success: function(data) {
-						const tableBody = $("#review-table tbody");
-						tableBody.html('');
-						let tr;
-						let left;
-						let center;
-						let right;
-						
-						const hRList = data.hRList; // 후기 리스트 
-				        totalPages = data.totalPages; // 총 페이지 수
-						
-						if(hRList.length > 0) {
-							th = $("<th colspan='3' style='text-align: left; font-size: 1.2em;'><span style='color: #FFD370;'>" + hRSearchKeyword + "</span> 검색 결과</th>");
-							tableBody.append(th);
-							for(let i in hRList) {
-
-								tr = $("<tr>"); // <tr></tr>
-								left = $("<td class='td'>").html("<img src='" + hRList[i].hRProfileImg + "' width='50px' height='50px' style='border-radius: 100%; border: 2px solid #FFD370;'>");
-
-								if(hRList[i].hRCreate === hRList[i].hRUpdate) {
-									center = $("<td class='td'>").html(
-											"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
-											+ ""+getFormattedDate(hRList[i].hRCreate)+"</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>"); 
-								} else {
-									center = $("<td class='td'>").html(
-											"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
-											+ ""+getFormattedDate(hRList[i].hRUpdate)+"&nbsp;(수정됨)</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>");
+				if(hRSearchKeyword !== '') {
+					$.ajax ({
+						url: "/hReview/search.pet",
+						type: "POST",
+						dataType: "json",
+						data: {
+							hNo: ${ hOne.hNo },
+							hRSearchKeyword: hRSearchKeyword,
+							currentPage: currentPage, 
+							recordCountPerPage: recordCountPerPage 
+						},
+						success: function(data) {
+							const tableBody = $("#review-table tbody");
+							tableBody.html('');
+							let tr;
+							let left;
+							let center;
+							let right;
+							
+							const hRList = data.hRList; // 후기 리스트 
+					        totalPages = data.totalPages; // 총 페이지 수
+							
+							if(hRList.length > 0) {
+								th = $("<th colspan='3' style='text-align: left; font-size: 1.2em;'><span style='color: #FFD370;'>" + hRSearchKeyword + "</span> 검색 결과</th>");
+								tableBody.append(th);
+								for(let i in hRList) {
+	
+									tr = $("<tr>"); // <tr></tr>
+									left = $("<td class='td'>").html("<img src='" + hRList[i].hRProfileImg + "' width='50px' height='50px' style='border-radius: 100%; border: 2px solid #FFD370;'>");
+	
+									if(hRList[i].hRCreate === hRList[i].hRUpdate) {
+										center = $("<td class='td'>").html(
+												"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
+												+ ""+getFormattedDate(hRList[i].hRCreate)+"</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>"); 
+									} else {
+										center = $("<td class='td'>").html(
+												"<div class='user-info-div'><span class='user-nickname'>"+hRList[i].hRNickName+"</span><span class='review-create-date'>"
+												+ ""+getFormattedDate(hRList[i].hRUpdate)+"&nbsp;(수정됨)</span></div><div class='review-content'>"+hRList[i].hRContent+"</div>");
+									}
+											
+									if(sessionId === hRList[i].uId || sessionId === 'admin') {
+										right = $("<td class='td'>").html(
+												"<a href='javascript:void(0)' class='review-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal' "
+												+ "onclick='openModifyView("+hRList[i].hRNo+",\""+hRList[i].hRNickName+"\",\""+hRList[i].hRContent+"\",\"" + hRList[i].hRProfileImg + "\");'>수정</a>"
+												+ "<a href='javascript:void(0)' class='review-delete-btn' onclick='checkDeleteReview("+hRList[i].hRNo+");'>삭제</a>"); 
+									} else {
+										right = $("<td class='td'>").html("");
+									}
+									
+									tr.append(left);
+									tr.append(center);
+									tr.append(right); 
+									tableBody.append(tr); 
+									
+									// 결과를 받은 후에 페이징을 업데이트
+						            rCreatePagination(data.totalPages);
 								}
-										
-								if(sessionId === hRList[i].uId || sessionId === 'admin') {
-									right = $("<td class='td'>").html(
-											"<a href='javascript:void(0)' class='review-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal' "
-											+ "onclick='openModifyView("+hRList[i].hRNo+",\""+hRList[i].hRNickName+"\",\""+hRList[i].hRContent+"\",\"" + hRList[i].hRProfileImg + "\");'>수정</a>"
-											+ "<a href='javascript:void(0)' class='review-delete-btn' onclick='checkDeleteReview("+hRList[i].hRNo+");'>삭제</a>"); 
-								} else {
-									right = $("<td class='td'>").html("");
-								}
-								
-								tr.append(left);
-								tr.append(center);
-								tr.append(right); 
-								tableBody.append(tr); 
-								
-								// 결과를 받은 후에 페이징을 업데이트
-					            rCreatePagination(data.totalPages);
+							} else {
+								th = $("<th colspan='3' style='text-align: left; font-size: 1.2em;'><span style='color: #FFD370;'>" + hRSearchKeyword + "</span> 검색 결과</th>");
+								tr = $("<tr class='td'><td class='td'colspan='3'><div style='color: lightgray;'>등록된 후기가 없습니다</div></td></tr>");
+								tableBody.append(th);
+								tableBody.append(tr);
+								$("#pagination").html('');
 							}
-						} else {
-							th = $("<th colspan='3' style='text-align: left; font-size: 1.2em;'><span style='color: #FFD370;'>" + hRSearchKeyword + "</span> 검색 결과</th>");
-							tr = $("<tr class='td'><td class='td'colspan='3'><div style='color: lightgray;'>등록된 후기가 없습니다</div></td></tr>");
-							tableBody.append(th);
-							tableBody.append(tr);
-							$("#pagination").html('');
+						}, 
+						error: function() {
+							alert("${ hOne.hName} 후기 검색 오류. 관리자에게 문의 바랍니다.");
 						}
-					}, 
-					error: function() {
-						alert("${ hOne.hName} 후기 검색 오류. 관리자에게 문의 바랍니다.");
-					}
-				});
+					});
+				} else {
+					getReviewList();
+					$("#pagination").html('');
+				}
 			}
 			
 			// 후기 검색결과 페이지 만들기 
@@ -812,6 +841,64 @@
 				currentPage = 1;
 				searchHReview(currentPage);
 			});
+        </script>
+        <!-- 후기 글자수 제한 -->
+        <script>
+        	// 작성
+	        function fn_checkByte(obj){
+	            const maxByte = 600; //최대 600바이트
+	            const text_val = obj.value; //입력한 문자
+	            const text_len = text_val.length; //입력한 문자수
+	            
+	            let totalByte=0;
+	            for(let i=0; i<text_len; i++){
+	            	const each_char = text_val.charAt(i);
+	                const uni_char = escape(each_char); //유니코드 형식으로 변환
+	                if(uni_char.length > 4){
+	                	// 한글 : 3Byte
+	                    totalByte += 3;
+	                }else{
+	                	// 영문,숫자,특수문자 : 1Byte
+	                    totalByte += 1;
+	                }
+	            }
+	            
+	            if(totalByte>maxByte){
+                	document.getElementById("nowByte").innerText = totalByte;
+                    document.getElementById("nowByte").style.color = "#FF7070";
+                } else{
+                	document.getElementById("nowByte").innerText = totalByte;
+                	document.getElementById("nowByte").style.color = "#ccc";
+                }
+	        }
+        	
+		     // 수정
+	        function fn_checkByte_modify(obj){
+	            const maxByte = 600; //최대 600바이트
+	            const text_val = obj.value; //입력한 문자
+	            const text_len = text_val.length; //입력한 문자수
+	            
+	            let totalByte=0;
+	            for(let i=0; i<text_len; i++){
+	            	const each_char = text_val.charAt(i);
+	                const uni_char = escape(each_char); //유니코드 형식으로 변환
+	                if(uni_char.length > 4){
+	                	// 한글 : 3Byte
+	                    totalByte += 3;
+	                }else{
+	                	// 영문,숫자,특수문자 : 1Byte
+	                    totalByte += 1;
+	                }
+	            }
+	            
+				if(totalByte>maxByte){
+					document.getElementById("modify-nowByte").innerText = totalByte;
+					document.getElementById("modify-nowByte").style.color = "#FF7070";
+				} else{
+					document.getElementById("modify-nowByte").innerText = totalByte;
+					document.getElementById("modify-nowByte").style.color = "#ccc";
+				}	
+	        }
         </script>
     </body>
 </html>
