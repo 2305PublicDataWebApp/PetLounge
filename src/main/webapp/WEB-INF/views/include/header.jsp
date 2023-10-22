@@ -52,7 +52,7 @@
 	                </li>
 	                <c:if test="${ sessionScope.uId eq 'admin' }">
 		                <li class="nav-item" id="adminLink">
-		                    <a class="nav-link" href="/admin/main_board.pet">관리자페이지</a>
+		                    <a class="nav-link" href="/admin/stats.pet">관리자페이지</a>
 		                </li>
 	                </c:if>
 	                <c:if test="${ sessionScope.uId ne 'admin' }">

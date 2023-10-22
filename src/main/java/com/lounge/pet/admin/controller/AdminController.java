@@ -25,29 +25,29 @@ public class AdminController {
 	@Autowired
 	private SupportService sService;
 
-	@GetMapping("/main_board.pet")
+	@GetMapping("/board.pet")
 	public String adminBoard() {
-		return "admin/main_board";
+		return "admin/adminBoard";
 	}
 	
-	@GetMapping("/main_stats.pet")
+	@GetMapping("/stats.pet")
 	public String adminStats() {
-		return "admin/main_stats";
+		return "admin/adminStats";
 	}
 	
-	@GetMapping("/main_user.pet")
+	@GetMapping("/user.pet")
 	public String adminUser() {
-		return "admin/main_user";
+		return "admin/adminUser";
 	}
 	
-	@GetMapping("/main_userdetail.pet")
+	@GetMapping("/userdetail.pet")
 	public String adminUserDetail() {
-		return "admin/main_userdetail";
+		return "admin/adminUserDetail";
 	}	
 	
-	@GetMapping("/main_useredit.pet")
+	@GetMapping("/useredit.pet")
 	public String adminUserEdit() {
-		return "admin/main_useredit";
+		return "admin/adminUserEdit";
 	}
 	
 	// 관리자페이지 후원관리페이지로 이동 

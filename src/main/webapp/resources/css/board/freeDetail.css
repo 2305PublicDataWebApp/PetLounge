@@ -73,6 +73,8 @@ padding-inline-start: 0px;
     border: none;
     margin: 0 auto;
     padding: 15px 50px 30px 50px;
+    display: flex;
+    justify-content: center;
 }
 .square-container3 {
     max-width: 600px;
@@ -86,7 +88,7 @@ padding-inline-start: 0px;
     list-style: none;
     padding: 0;
     justify-content: center;
-    padding: 20px 0 0 0;
+    padding: 35px 0 0 0;
 }
 
 .pagination li {
@@ -94,20 +96,20 @@ padding-inline-start: 0px;
     color: #505D68;
 }
 
-.pagination li:last-child {
-    background-color: #ffffff;
-    border: 2px solid #ffd370;
-    color: #ffd370;
-    padding: 2px;
-    font-size: 13px;
-}
+/* .pagination li:last-child { */
+/*     background-color: #ffffff; */
+/*     border: 2px solid #ffd370; */
+/*     color: #ffd370; */
+/*     padding: 2px; */
+/*     font-size: 13px; */
+/* } */
 
 .search-container {
     position: relative;
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    width: 500px;
+    width: 400px;
     gap: 10px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -133,8 +135,8 @@ padding-inline-start: 0px;
     gap: 10px;
     margin-top: 20px;
     margin-bottom: 20px;
-/*     margin-left: auto; */
-/*     margin-right: auto; */
+    margin-left: auto;
+    margin-right: auto;
 }
 .search-input {
     flex: 1;
@@ -149,10 +151,12 @@ padding-inline-start: 0px;
     padding: 5px 5px;
     font-size: 13px;
     border-radius: 7px;
-    width: 250px;
+    width: 140px;
     font-weight: bold;
     font-family: Pretendard;
     letter-spacing: -0.02em;   
+    margin-left: auto;
+    margin-right: auto;
 }
 .backtolist1 {
     background-color: #ffffff;
@@ -301,7 +305,7 @@ input[type="text"]::placeholder {
 .reply-container .reply-input {
     background-color: #f7f4f4;
     width: 600px;
-    height: 50px;
+    height: 70px;
     border: none;
     outline: none;
 }
@@ -315,6 +319,8 @@ input[type="text"]::placeholder {
     font-family: Pretendard;
     letter-spacing: -0.02em;    
     color:#ffffff;
+    margin-left: 7px;
+    height: 65px;
 }
 
 table {
@@ -423,7 +429,7 @@ hr {
 	padding: 7px 12px;
 	position: absolute;
 	width: auto;
-	min-width: 50px;
+	min-width: 60px;
 	max-width: 300px;
 	word-wrap: break-word;
 
@@ -446,12 +452,13 @@ hr {
 	max-width: 700px;
 	display: flex;
 	justify-content: center;
+	margin: 0 auto;
 }
 
 .sub-bmark {
 	display: inline-block;
 	padding: 10px;
-	justify-content: flex-end;
+	margin-left: auto;
 }  
 
 /* #empty { */
@@ -459,8 +466,175 @@ hr {
 /* } */
 
 .bi-bookmark-heart-fill::before {
-	font-size: 25px;
+	font-size: 30px;
+	color: #fc8e86;
+    transition: transform 0.5s ease; /* 애니메이션 지속 시간 및 타이밍 함수 설정 */
+    transform-origin: center; /* 크기 변화의 기준점 설정 (가운데) */
 }
 .bi-bookmark::before {
-	font-size: 25px;
+	font-size: 30px;
+	color: #fc8e86;
+    transition: font-size 0.5s ease; /* 애니메이션 지속 시간 및 타이밍 함수 설정 */
+    transform-origin: center; /* 크기 변화의 기준점 설정 (가운데) */
 }
+
+/* 클릭 시 아이콘 확대 */
+.bi-bookmark-heart-fill::before:hover,
+.bi-bookmark::before:hover {
+    font-size: 36px; /* 1.2배로 확대, 필요에 따라 조정 가능 */
+}
+
+.bi::before, [class^="bi-"]::before, [class*=" bi-"]::before {
+	font-weight: bold !important;
+}
+
+
+/* 페이징 */
+.page-link {
+  color: #000; 
+  background-color: #fafafa;
+  border: 1px solid #fafafa; 
+}
+
+.page-item.active .page-link {
+ z-index: 1;
+ color: #fff;
+ font-weight:bold;
+ background-color: #FFD370;
+ border-color: #fafafa;
+ 
+}
+
+.page-link:focus, .page-link:hover {
+  color: #000;
+  background-color: #ececec; 
+  border-color: #fafafa;
+}
+
+td {
+    vertical-align: top;
+    padding: 20px 10px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-nickname {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.user-info-div {
+    text-align: left;
+    display: flex;
+    align-items: flex-end;
+    margin: 3px 10px 30px 10px;
+}
+
+.reply-create-date {
+    color: lightgray;
+    font-size: 0.9em;
+}
+
+.reply-content {
+    text-align: left;
+    margin: auto 10px;
+}
+
+tr > td:nth-child(3) {
+    text-align: right;
+}
+
+.reply-modify-btn, .reply-delete-btn {
+    color: lightgray;
+    font-size: 0.9em;
+    text-decoration: none;
+    margin-right: 5px;
+    text-decoration: none !important;
+    transition: color 0.2s;
+}
+
+.reply-modify-btn:hover {
+	    color: #ffd370;
+	}
+	
+.reply-delete-btn:hover {
+	    color: #ff7070;
+	}
+	
+#reply-list-div {
+    margin-top: 50px;
+    margin-bottom: 150px;
+}
+
+#reply-create-content {
+/*     resize: none; */
+/*     width: 90%; */
+/*     height: 80px; */
+    background-color: #ffffff;
+    border: 2px solid #ffd370;
+    border-radius: 10px;
+/*     padding: 15px 20px; */
+/*     font-size: 1em; */
+/*     vertical-align: top; */
+}
+
+::placeholder {
+    color: #b3b3b3 !important; /* 텍스트 색상 설정 */
+/*     font-size: 14px; 텍스트 크기 설정 */
+/*     font-weight: bold; 텍스트 굵기 설정 */
+}
+
+
+
+        /* 수정 모달창 */
+        .modal {
+            top: 30%;
+        }
+
+            .modal-content {
+                border-radius: 25px;
+            }
+        
+                .modal-header {
+                    border-bottom: none;
+                }
+
+                    .modal-header .btn-close {
+                        padding: 0;
+                        margin: 0.5rem 0.5rem -0.5rem auto;
+                    }
+
+                .modal-body {
+                    padding: 0 35px;
+                }
+
+                    .modify-user-info-div {
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 20px;
+                    }
+
+                    .reply-modify-content {
+                        resize: none;
+                        width: 100%;
+                        height: 80px;
+                        border: 2px solid lightgray;
+                        border-radius: 10px;
+                        padding: 15px 20px;
+                        font-size: 1em;
+                    }
+                    
+                .modal-footer {
+                    border-top: none;
+                    padding: 10px 35px 20px 35px;
+                }
+
+                    .modal-modify-btn {
+                        width: 18%;
+                        height: 35px;
+                        margin: 0;
+                        background-color: #FFD370;
+                        color: white;
+                        border-radius: 8px;
+                    }
+                    

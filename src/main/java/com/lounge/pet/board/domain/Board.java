@@ -17,6 +17,7 @@ public class Board {
 	private String fStatus;
 	private String fViewCount;
 	private String fWriter;
+	private String fProfileImg;
 	
 	public int getfNo() {
 		return fNo;
@@ -95,7 +96,14 @@ public class Board {
 	}
 	public void setfWriter(String fWriter) {
 		this.fWriter = fWriter;
+	}	
+	public String getfProfileImg() {
+		return fProfileImg;
 	}
+	public void setfProfileImg(String fProfileImg) {
+		this.fProfileImg = fProfileImg;
+	}
+	
 	@Override
 	public String toString() {
 		return "자유게시판 [글번호=" + fNo + ", 아이디=" + uId + ", 제목=" + fTitle + ", 내용=" + fContent + ", 작성일="

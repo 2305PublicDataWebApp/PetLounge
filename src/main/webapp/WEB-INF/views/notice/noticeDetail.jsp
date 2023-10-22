@@ -77,8 +77,9 @@
                     <li><input type="text" class="notice-title" value="${notice.nTitle}" readonly></li>
                     <li class="user-info">
                         <div class="user-img">
-                            <img alt="유저 프로필 이미지" src="../../resources/userUploadFiles/profile.png">
-                            <span>펫 라운지</span>
+                            <img src="${profileImgUrl }" alt="유저 프로필 이미지">
+<!--                             <img alt="유저 프로필 이미지" src="../../resources/userUploadFiles/profile.png"> -->
+                            <span>${uNickname}</span>
                         </div>
                         <div class="menu">
                             <div class="info">

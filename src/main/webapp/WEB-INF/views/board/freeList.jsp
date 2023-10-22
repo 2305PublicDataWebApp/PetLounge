@@ -88,6 +88,7 @@
 							
 							if(fList.length > 0) {
 // 								for(let f in fList) {
+
 								freeBoardList += `
 						            <div id="notice">
 						                    <table>

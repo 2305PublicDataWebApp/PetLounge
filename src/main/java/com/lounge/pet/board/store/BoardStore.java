@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.lounge.pet.board.domain.Board;
 import com.lounge.pet.board.domain.FBookmark;
+import com.lounge.pet.board.domain.FReply;
 
 public interface BoardStore {
 
@@ -103,6 +104,46 @@ public interface BoardStore {
 	 * @return
 	 */
 	int deleteFBook(SqlSession session, FBookmark fBook);
+
+	/**
+	 * 자유게시판 댓글 목록
+	 * @param session
+	 * @param fNo
+	 * @return
+	 */
+	List<FReply> selectfReplyList(SqlSession session, int fNo);
+
+	/**
+	 * 자유게시판 총 댓글 수
+	 * @param session
+	 * @param fNo
+	 * @return
+	 */
+	int getfReviewTotalCount(SqlSession session, int fNo);
+
+	/**
+	 * 자유게시판 댓글 등록
+	 * @param session
+	 * @param fReply
+	 * @return
+	 */
+	int insertFreeBoardReply(SqlSession session, FReply fReply);
+
+	/**
+	 * 자유게시판 댓글 수정
+	 * @param session
+	 * @param fReply
+	 * @return
+	 */
+	int updateFreeBoardReply(SqlSession session, FReply fReply);
+
+	/**
+	 * 자유게시판 댓글 삭제
+	 * @param session
+	 * @param fReply
+	 * @return
+	 */
+	int deleteFreeBoardReply(SqlSession session, FReply fReply);
 
 
 

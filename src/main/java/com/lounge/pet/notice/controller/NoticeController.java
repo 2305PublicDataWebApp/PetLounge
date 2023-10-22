@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.lounge.pet.notice.domain.Notice;
 import com.lounge.pet.notice.domain.PageInfo;
 import com.lounge.pet.notice.service.NoticeService;
+import com.lounge.pet.user.domain.User;
+import com.lounge.pet.user.service.UserService;
 
 @Controller
 @RequestMapping("/notice")
@@ -27,6 +29,9 @@ public class NoticeController {
 
 	@Autowired
 	private NoticeService nService;
+	
+	@Autowired
+	private UserService uService;
 	
 	/**
 	 * 공지글 등록 페이지
@@ -49,7 +54,8 @@ public class NoticeController {
 	@RequestMapping(value = "/noticeSubmit.pet", method = RequestMethod.POST)
 	public ModelAndView nSubmitForm(ModelAndView mv
 			, @ModelAttribute Notice notice
-			, @RequestParam(value="uploadFile", required = false) MultipartFile uploadFile) {
+			, @RequestParam(value="uploadFile", required = false) MultipartFile uploadFile
+			, HttpSession session) {
 //		System.out.println(notice.toString());
 	    String sanitizedContent = notice.getnContent().replaceAll("<p>", "").replaceAll("</p>", "");
 	    notice.setnContent(sanitizedContent);
@@ -59,6 +65,15 @@ public class NoticeController {
 //				notice.setsImageUrl(sImageUrl);
 //				System.out.println(notice.toString());
 //			}
+	        String uId = (String) session.getAttribute("uId"); 
+	        if (uId == null) {
+				mv.addObject("msg", "글작성을 위해 로그인을 먼저 해주세요.");
+				mv.addObject("url", "/notice/noticeList.pet");
+				mv.setViewName("common/message");	        	
+	        }
+	        // 아이디 설정
+	        notice.setuId(uId);
+	        
 			int result = nService.submitNoticeForm(notice);
 			if(result > 0) {
 				mv.addObject("msg", "공지가 등록되었습니다.");
@@ -151,12 +166,36 @@ public class NoticeController {
 	 */
 	@RequestMapping(value="/noticeDetail.pet", method=RequestMethod.GET)
 	public ModelAndView showNoticeDetail(ModelAndView mv
-			, @RequestParam int nNo) {
+			, @ModelAttribute Notice notice
+			, @RequestParam int nNo
+			, HttpSession session) {
 		try {			
 			Notice nOne = nService.selectOneNoticeNo(nNo);
 			int result = nService.updateViewCount(nOne);
+//	        String uId = (String) session.getAttribute("uId"); 
+	        String uId = "admin"; 
+	        // 아이디 설정
+	        notice.setuId(uId);
+	        
 			if(result > 0) {				
 				mv.addObject("notice", nOne);
+				
+				String profileImgUrl = null;	// 프로필 이미지 URL 초기화
+				if (uId != null) {
+					User user = uService.selectOneById(uId);
+					 if (user != null) {
+		                    String writerNickname = user.getuNickName();
+		                    profileImgUrl = user.getuFilePath();
+		                    mv.addObject("uNickname", writerNickname); // 작성자의 닉네임을 추가
+		                } else {
+		                    // 사용자를 찾을 수 없을 때 처리
+		                    mv.addObject("uNickname", "UnKnown User");
+		                }
+		            } else {
+		                // U_ID가 없을 때 처리
+		                mv.addObject("uNickname", "비회원");
+		            }	
+				mv.addObject("profileImgUrl", profileImgUrl);
 				mv.setViewName("notice/noticeDetail");
 			}else {
 				mv.addObject("msg", "공지 상세페이지 이동 실패");

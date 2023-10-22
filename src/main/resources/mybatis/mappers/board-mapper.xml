@@ -65,4 +65,37 @@
 			AND F_NO = #{fNo }
 	</delete>
 	
+	<select id="selectfReplyList" resultType="FReply">
+		SELECT * 
+	      FROM F_REPLY_TBL 
+		 WHERE F_NO = #{ fNo }
+		   AND F_R_STATUS = 'Y' 
+		 ORDER BY F_R_NO DESC
+	</select>	
+	
+	<select id="getfReviewTotalCount" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM F_REPLY_TBL 
+		 WHERE F_NO = #{ fNo } 
+		   AND F_R_STATUS = 'Y'
+	</select>	
+	
+	<insert id="insertFreeBoardReply">
+		INSERT INTO F_REPLY_TBL 
+		VALUES(F_R_SEQ_NO.NEXTVAL, #{ fNo }, #{ uId }, #{ fRContent }, DEFAULT, DEFAULT, DEFAULT, #{ fRMno }, DEFAULT)
+	</insert>
+
+	<update id="updateFreeBoardReply">
+		UPDATE F_REPLY_TBL 
+		   SET F_R_CONTENT = #{ fRContent }, F_R_UPDATE = DEFAULT 
+		 WHERE F_R_NO = #{ fRNo }
+	</update>
+	
+	<!-- Y, N을 UPDATE 하는 것으로 DELETE 기능을 대신함 -->
+	<update id="deleteFreeBoardReply">
+		UPDATE F_REPLY_TBL 
+		   SET F_R_UPDATE = DEFAULT, F_R_STATUS = 'N' 
+		 WHERE F_R_NO = #{ fRNo } 
+	</update>
+	
 </mapper>

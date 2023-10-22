@@ -49,7 +49,7 @@
 	<insert id="submitNoticeForm">
 		INSERT INTO NOTICE_TBL 
 		VALUES(N_SEQ_NO.NEXTVAL, #{nTitle}, #{nContent}, DEFAULT, DEFAULT, 
-		#{nFileName}, #{nFileRename}, #{nFilePath}, #{nFileLength}, DEFAULT, DEFAULT)
+		#{nFileName}, #{nFileRename}, #{nFilePath}, #{nFileLength}, DEFAULT, DEFAULT, #{uId})
 	</insert>	
 	
 	<update id="noticeDelete">

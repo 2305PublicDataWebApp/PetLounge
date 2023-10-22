@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.lounge.pet.board.domain.Board;
 import com.lounge.pet.board.domain.FBookmark;
+import com.lounge.pet.board.domain.FReply;
 import com.lounge.pet.board.store.BoardStore;
 
 @Repository
@@ -84,5 +85,37 @@ public class BoardStoreLogic implements BoardStore {
 		int result = session.delete("BoardMapper.deleteFBook", fBook);
 		return result;
 	}
+
+	@Override
+	public List<FReply> selectfReplyList(SqlSession session, int fNo) {
+		List<FReply> fRList = session.selectList("BoardMapper.selectfReplyList", fNo);
+		return fRList;
+	}
+
+	@Override
+	public int getfReviewTotalCount(SqlSession session, int fNo) {
+		int count = session.selectOne("BoardMapper.getfReviewTotalCount", fNo);
+		return count;
+	}
+
+	@Override
+	public int insertFreeBoardReply(SqlSession session, FReply fReply) {
+		int result = session.insert("BoardMapper.insertFreeBoardReply", fReply);
+		return result;
+	}
+
+	@Override
+	public int updateFreeBoardReply(SqlSession session, FReply fReply) {
+		int result = session.update("BoardMapper.updateFreeBoardReply", fReply);
+		return result;
+	}
+
+	@Override
+	public int deleteFreeBoardReply(SqlSession session, FReply fReply) {
+		int result = session.update("BoardMapper.deleteFreeBoardReply", fReply);
+		return result;
+	}
+
+
 
 }

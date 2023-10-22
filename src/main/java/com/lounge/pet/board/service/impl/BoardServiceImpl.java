@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.lounge.pet.board.domain.Board;
 import com.lounge.pet.board.domain.FBookmark;
+import com.lounge.pet.board.domain.FReply;
 import com.lounge.pet.board.service.BoardService;
 import com.lounge.pet.board.store.BoardStore;
 
@@ -103,6 +104,41 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int deleteFBook(FBookmark fBook) {
 		int result = bStore.deleteFBook(session, fBook);
+		return result;
+	}
+
+
+	@Override
+	public List<FReply> selectfReplyList(int fNo) {
+		List<FReply> fRList = bStore.selectfReplyList(session, fNo);
+		return fRList;
+	}
+
+
+	@Override
+	public int getFReplyTotalCount(int fNo) {
+		int count = bStore.getfReviewTotalCount(session, fNo);
+		return count;
+	}
+
+
+	@Override
+	public int insertFreeBoardReply(FReply fReply) {
+		int result = bStore.insertFreeBoardReply(session, fReply);
+		return result;
+	}
+
+
+	@Override
+	public int updateFreeBoardReply(FReply fReply) {
+		int result = bStore.updateFreeBoardReply(session, fReply);
+		return result;
+	}
+
+
+	@Override
+	public int deleteFreeBoardReply(FReply fReply) {
+		int result = bStore.deleteFreeBoardReply(session, fReply);
 		return result;
 	}
 

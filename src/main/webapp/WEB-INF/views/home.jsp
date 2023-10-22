@@ -89,7 +89,7 @@
 	                            </li>
    	                            <c:if test="${ sessionScope.uId eq 'admin' }">
 	                            	<li>
-		                                <a href="/admin/main_board.pet">
+		                                <a href="/admin/stats.pet">
 		                                    <i class="fa fa-regular fa-user user-icon"></i>
 		                                    admin page
 		                                </a>

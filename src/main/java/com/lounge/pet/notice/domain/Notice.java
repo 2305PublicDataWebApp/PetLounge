@@ -15,6 +15,7 @@ public class Notice {
 	private int nFileLength;
 	private String nStatus;
 	private String nViewCount;
+	private String uId;
 	
 	
 	
@@ -38,7 +39,23 @@ public class Notice {
 	}
 
 	
-	
+	public Notice(int nNo, String nTitle, String nContent, Date nCreate, Date nUpdate, String nFileName,
+			String nFileRename, String nFilePath, int nFileLength, String nStatus, String nViewCount, String uId) {
+		super();
+		this.nNo = nNo;
+		this.nTitle = nTitle;
+		this.nContent = nContent;
+		this.nCreate = nCreate;
+		this.nUpdate = nUpdate;
+		this.nFileName = nFileName;
+		this.nFileRename = nFileRename;
+		this.nFilePath = nFilePath;
+		this.nFileLength = nFileLength;
+		this.nStatus = nStatus;
+		this.nViewCount = nViewCount;
+		this.uId = uId;
+	}
+
 	public Notice(int nNo, String nTitle, String nContent, Date nUpdate, String nStatus) {
 		super();
 		this.nNo = nNo;
@@ -114,6 +131,13 @@ public class Notice {
 	public void setnViewCount(String nViewCount) {
 		this.nViewCount = nViewCount;
 	}
+	public String getuId() {
+		return uId;
+	}
+	public void setuId(String uId) {
+		this.uId = uId;
+	}
+
 	@Override
 	public String toString() {
 		return "공지 [공지번호=" + nNo + ", 제목=" + nTitle + ", 내용=" + nContent + ", 작성일=" + nCreate

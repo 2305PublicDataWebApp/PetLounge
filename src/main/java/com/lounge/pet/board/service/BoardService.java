@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.lounge.pet.board.domain.Board;
 import com.lounge.pet.board.domain.FBookmark;
+import com.lounge.pet.board.domain.FReply;
 
 public interface BoardService {
 
@@ -90,6 +91,41 @@ public interface BoardService {
 	 * @return
 	 */
 	int deleteFBook(FBookmark fBook);
+
+	/**
+	 * 자유게시판 댓글 리스트
+	 * @param fNo
+	 * @return
+	 */
+	List<FReply> selectfReplyList(int fNo);
+
+	/**
+	 * 자유게시판 댓글 총 개수
+	 * @param fNo
+	 * @return
+	 */
+	int getFReplyTotalCount(int fNo);
+
+	/**
+	 * 자유게시판 댓글 등록
+	 * @param fReply
+	 * @return
+	 */
+	int insertFreeBoardReply(FReply fReply);
+
+	/**
+	 * 자유게시판 댓글 수정
+	 * @param fReply
+	 * @return
+	 */
+	int updateFreeBoardReply(FReply fReply);
+	
+	/**
+	 * 자유게시판 댓글 삭제
+	 * @param fReply
+	 * @return
+	 */
+	int deleteFreeBoardReply(FReply fReply);
 
 
 
