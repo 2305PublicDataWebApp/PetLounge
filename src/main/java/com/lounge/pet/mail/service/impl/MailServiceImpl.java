@@ -78,9 +78,9 @@ public class MailServiceImpl implements MailService {
 			// 결제방법 한글로 만들어주기 
 			String payTypeEng = sHistory.getsHPaytype();
 			String payTypeKor = "";
-			if(payTypeEng == "kakaopay") {
+			if(payTypeEng.equals("kakaopay")) {
 				payTypeKor = "카카오페이";
-			} else {
+			} else if(payTypeEng.equals("creditcard")){
 				payTypeKor = "신용카드";
 			}
 			
@@ -92,11 +92,11 @@ public class MailServiceImpl implements MailService {
 			System.out.println("결제일자 : " + formattedDate + ", 결제방법 : " + payTypeKor + ", 금액 : " + formattedAmount);
 			
 			String body = "";
-			body += "<h1>" + nickname + "님의 후원에 감사드립니다.</h1>";
+			body += "<h1><font color='#FFD370'>" + nickname + "</font>님의 후원에 감사드립니다.</h1>";
 			body += "<h3>" + nickname + " 후원자님 안녕하세요.</h3>";
-			body += "<h3>" + nickname + "님은 " + formattedDate + "에 " + payTypeKor + "로 " + formattedAmount + "원을 후원해주셨습니다.</h3>";
-			body += "<h3>후원내역은 마이페이지 > 후원관리 > 후원내역에서도 확인 가능합니다.</h3>";
-			body += "<h3>동물들에게 소중한 나눔을 실천해주신 후원자님께 다시 한번 감사드립니다.</h3>";
+			body += "<h2>" + nickname + "님은 " + formattedDate + "에 " + payTypeKor + "로 " + formattedAmount + "원을 후원해주셨습니다.</h2>";
+			body += "<h3>후원내역은 <font color='#FFD370'>마이페이지 > 후원관리 > 후원내역</font>에서도 확인 가능합니다.</h3>";
+			body += "<h3><font color='#FFD370'>동물들에게 소중한 나눔을 실천해주신 후원자님께 다시 한번 감사드립니다.</font></h3>";
 			message.setText(body, "UTF-8", "html");
 		} catch (MessagingException e) {
 			e.printStackTrace();
