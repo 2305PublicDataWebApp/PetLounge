@@ -40,7 +40,7 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/Board.pet">게시글 조회</a></li>
+										<li><a href="/user/uBoard.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
@@ -104,7 +104,8 @@
 											<c:param name="sNo" value="${sRList.sNo }"></c:param>
 										</c:url>
 										<tr onclick="window.location.href='${detailUrl}'" id="tr">
-											<td>${i.count }</td>
+										<td>${(totalCount - i.index) - ((aInfo.currentPage - 1) * aInfo.recordCountPerPage)}</td> 
+
 											
 <%-- 											<td>${sRList.sTitle }</td> --%>
 											<c:set var="inputString" value="${sRList.sTitle}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->

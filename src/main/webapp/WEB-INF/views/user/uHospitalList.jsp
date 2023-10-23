@@ -39,7 +39,7 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/Board.pet">게시글 조회</a></li>
+										<li><a href="/user/uBoard.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
@@ -103,7 +103,7 @@
 											<c:param name="hNo" value="${hList.hNo }"></c:param>
 										</c:url>
 										<tr onclick="window.location.href='${detailUrl}'" id="tr">
-											<td>${i.count }</td>
+										<td>${(totalCount - i.index) - ((aInfo.currentPage - 1) * aInfo.recordCountPerPage)}</td> 
 											<td>${hList.hName }</td>
 <%-- 											<td>${hList.hAddr}</td> --%>
 											<c:set var="inputString" value="${hList.hAddr}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
@@ -170,32 +170,7 @@
 						            </c:if>
 					            </ul>
 					        </div> 
-					        
-        
-<!-- 							<div class="paging" style="margin-top: 50px;"> -->
-<!-- 								<div> -->
-<%-- 									<c:if test="${aInfo.nStartNavi != 1}"> --%>
-<%-- 										<c:url var="preUrl" value="/user/uHospital.pet"> --%>
-<%-- 											<c:param name="page" value="${aInfo.startNavi -1 }" /> --%>
-<%-- 										</c:url> --%>
-<%-- 										<a href="${preUrl }">[이전]</a> --%>
-<%-- 									</c:if> --%>
-<%-- 									<c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }"var="n"> --%>
-<%-- 										<c:url var="pageUrl" value="/user/uHospital.pet"> --%>
-<%-- 											<c:param name="page" value="${n }"></c:param> --%>
-<%-- 										</c:url> --%>
-<%-- 										<a href="${pageUrl }">${n }</a>&nbsp; --%>
-<%-- 	                                </c:forEach> --%>
-<%-- 									<c:if test="${aInfo.nEndNavi != aInfo.naviTotalCount }"> --%>
-<%-- 										<c:url var="nextUrl" value="/user/uHospital.pet"> --%>
-<%-- 											<c:param name="page" value="${aInfo.endNavi +1 }" /> --%>
-<%-- 										</c:url> --%>
-<%-- 										<a href="${nextUrl }">[다음]</a> --%>
-<%-- 									</c:if> --%>
-<!-- 								</div> -->
-<!-- 							</div> -->
-							
-							
+						
 						</div>
 					</section>
 				</div>

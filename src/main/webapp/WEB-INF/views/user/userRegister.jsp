@@ -239,9 +239,9 @@ section[id^="content"]:target {
 									</select> 
 									<input type="hidden" name="uEmail" id="uEmail" value="">
 									<div id="mailCheckBox">
-									<span id="duplEmailResult" style="font-size: 0.8em; width: 200px; padding-bottom: 14px; padding-left: 3px;"></span>
-									<button id="sendMailBtn" class="dupl" style="margin-bottom: 17px; height: 20px; margin: 0; padding-bottom: 10px; margin-right: 10px; margin-top: -16px;">메일인증</button>
-									</div>
+									<span id="duplEmailResult" style="font-size: 0.8em; width: 200px; padding-left: 3px;"></span>
+									<button id="sendMailBtn" class="dupl" style=" margin: 0;">메일인증</button>
+									</div><br>
 									
 									<!-- 컨트롤러에서 인증번호 받아온 값 저장 -> 입력된 인증번호와 비교 -->
 									<input type="hidden" id="send-certification-num">

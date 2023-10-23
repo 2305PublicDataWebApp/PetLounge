@@ -79,14 +79,14 @@ public interface UserService {
 	 * 즐겨찾는 병원 페이징
 	 * @return
 	 */
-	Integer getListCount(String sessionId);
+	Integer getHosListCount(String sessionId);
 
 	/**
 	 * 즐겨찾는 병원 검색 수
 	 * @param paramMap
 	 * @return
 	 */
-	int getListCount(Map<String, String> paramMap);
+	int getHosSearchListCount(Map<String, String> paramMap);
 
 	/**
 	 * 조건에 따른 즐겨찾기 병원 검색
@@ -222,6 +222,21 @@ public interface UserService {
 	 * @return
 	 */
 	User userCheckEmail(String uEmail);
+
+	/**
+	 * 아이디 찾기
+	 * @param user
+	 * @return
+	 */
+	User selectFindId(User user);
+
+	/**
+	 * 비밀번호 찾기
+	 * @param user
+	 * @return
+	 */
+	User selectFindPw(User user);
+
 
 	
 

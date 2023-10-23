@@ -79,14 +79,14 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public Integer getListCount(String sessionId) {
-		int result = uStore.selectListCount(session, sessionId);
+	public Integer getHosListCount(String sessionId) {
+		int result = uStore.selectHosListCount(session, sessionId);
 		return result;
 	}
 
 	@Override
-	public int getListCount(Map<String, String> paramMap) {
-		int result = uStore.selectListCount(session, paramMap);
+	public int getHosSearchListCount(Map<String, String> paramMap) {
+		int result = uStore.selectHosSearchListCount(session, paramMap);
 		return result;
 	}
 
@@ -195,6 +195,20 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User userCheckEmail(String uEmail) {
 		User uOne = uStore.userCheckEmail(session, uEmail);
+		return uOne;
+	}
+
+
+
+	@Override
+	public User selectFindId(User user) {
+		User uOne = uStore.selectFindId(session,user);
+		return uOne;
+	}
+
+	@Override
+	public User selectFindPw(User user) {
+		User uOne = uStore.selectFindPw(session,user);
 		return uOne;
 	}
 

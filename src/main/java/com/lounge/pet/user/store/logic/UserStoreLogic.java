@@ -76,14 +76,14 @@ public class UserStoreLogic implements UserStore{
 	}
 
 	@Override
-	public int selectListCount(SqlSession session, String sessionId) {
-		int result = session.selectOne("UserMapper.selectListCount", sessionId);
+	public int selectHosListCount(SqlSession session, String sessionId) {
+		int result = session.selectOne("UserMapper.selectHosListCount", sessionId);
 		return result;
 	}
 
 	@Override
-	public int selectListCount(SqlSession session, Map<String, String> paramMap) {
-		int result = session.selectOne("UserMapper.selectListByKeywordCount", paramMap);
+	public int selectHosSearchListCount(SqlSession session, Map<String, String> paramMap) {
+		int result = session.selectOne("UserMapper.selectHosSearchListByKeywordCount", paramMap);
 		return result;
 	}
 
@@ -231,6 +231,22 @@ public class UserStoreLogic implements UserStore{
 	@Override
 	public User userCheckEmail(SqlSession session, String uEmail) {
 		User uOne = session.selectOne("UserMapper.userCheckEmail", uEmail);
+		return uOne;
+	}
+
+
+
+
+
+	@Override
+	public User selectFindId(SqlSession session, User user) {
+		User uOne = session.selectOne("UserMapper.selectFindId", user);
+		return uOne;
+	}
+
+	@Override
+	public User selectFindPw(SqlSession session, User user) {
+		User uOne = session.selectOne("UserMapper.selectFindPw", user);
 		return uOne;
 	}
 
