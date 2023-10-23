@@ -10,6 +10,7 @@ import com.lounge.pet.board.domain.Board;
 import com.lounge.pet.board.domain.FBookmark;
 import com.lounge.pet.board.domain.FReply;
 import com.lounge.pet.board.store.BoardStore;
+import com.lounge.pet.hospital.domain.HReview;
 
 @Repository
 public class BoardStoreLogic implements BoardStore {
@@ -114,6 +115,30 @@ public class BoardStoreLogic implements BoardStore {
 	public int deleteFreeBoardReply(SqlSession session, FReply fReply) {
 		int result = session.update("BoardMapper.deleteFreeBoardReply", fReply);
 		return result;
+	}
+
+	@Override
+	public List<FReply> selectFreeBoardReplySearch(SqlSession session, FReply searchKey) {
+		List<FReply> fRList = session.selectList("BoardMapper.selectFreeBoardReplySearch", searchKey);
+		return fRList;
+	}
+
+	@Override
+	public int getFreeBoardReplySearchTotalCount(SqlSession session, FReply searchKey) {
+		int count = session.selectOne("BoardMapper.getFreeBoardReplySearchTotalCount", searchKey);
+		return count;
+	}
+
+	@Override
+	public List<Board> selectFreeBoardSearch(SqlSession session, Board searchKey) {
+		List<Board> fList = session.selectList("BoardMapper.selectFreeBoardSearch", searchKey);
+		return fList;
+	}
+
+	@Override
+	public int getFreeBoardSearchTotalCount(SqlSession session, Board searchKey) {
+		int count = session.selectOne("BoardMapper.getFreeBoardSearchTotalCount", searchKey);
+		return count;
 	}
 
 

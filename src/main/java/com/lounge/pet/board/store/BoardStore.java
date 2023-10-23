@@ -145,6 +145,38 @@ public interface BoardStore {
 	 */
 	int deleteFreeBoardReply(SqlSession session, FReply fReply);
 
+	/**
+	 * 자유게시판 댓글에 대한 검색
+	 * @param session
+	 * @param searchKey
+	 * @return
+	 */
+	List<FReply> selectFreeBoardReplySearch(SqlSession session, FReply searchKey);
+
+	/**
+	 * 자유게시판 댓글에 대한 검색 총 개수
+	 * @param session
+	 * @param searchKey
+	 * @return
+	 */
+	int getFreeBoardReplySearchTotalCount(SqlSession session, FReply searchKey);
+
+	/**
+	 * 자유게시판 리스트 검색
+	 * @param session
+	 * @param searchKey
+	 * @return
+	 */
+	List<Board> selectFreeBoardSearch(SqlSession session, Board searchKey);
+
+	/**
+	 * 자유게시판 리스트에 대한 검색 총 개수
+	 * @param session
+	 * @param searchKey
+	 * @return
+	 */
+	int getFreeBoardSearchTotalCount(SqlSession session, Board searchKey);
+
 
 
 }

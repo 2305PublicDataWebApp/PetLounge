@@ -488,4 +488,115 @@ public class BoardController {
 	
 	
    
+	// 자유게시판 댓글 검색 기능
+		@ResponseBody
+		@PostMapping("/fReply/search.pet")
+		public String fSearchKeyword(@RequestParam("fNo") int fNo
+									, @RequestParam("fRSearchKeyword") String fRSearchKeyword
+									, @RequestParam("currentPage") int currentPage
+									, @RequestParam("recordCountPerPage") int recordCountPerPage) {
+			
+			// 페이징을 적용하여 검색결과 데이터를 가져오도록 구현 
+		    int start = (currentPage - 1) * recordCountPerPage;
+		    int end = start + recordCountPerPage;
+		    
+		    FReply searchKey = new FReply(fNo, fRSearchKeyword);
+			List<FReply> fRList = bService.selectFreeBoardReplySearch(searchKey);
+			
+			
+			// 범위 체크를 통해 부분 리스트 추출
+		    if (start < fRList.size()) {
+		        end = Math.min(end, fRList.size());
+		        fRList  = fRList.subList(start, end);
+		    } else {
+		    	fRList  = Collections.emptyList();
+		    }
+		    
+		    // 댓글 정보에 작성자 닉네임 담아줌 
+	 		for (FReply fReply : fRList) {
+	 	        User user = uService.selectOneById(fReply.getuId()); 
+	 	        fReply.setfRNickName(user.getuNickName());
+	 	        fReply.setfRProfileImg(user.getuFilePath());
+	 	    }
+	    
+		    // 전체 페이지 수 계산 (검색결과의 총 갯수를 페이지당 후기 갯수로 나눠서 계산)
+		    int totalRecords = bService.getFreeBoardReplySearchTotalCount(searchKey); // 검색결과의- 총 갯수 
+		    int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 전체 페이지 수 
+		    
+		    // 검색결과 리스트와 전체 페이지 수를 Map에 담아서 보냄 
+		    Map<String, Object> resultMap = new HashMap<>();
+		    resultMap.put("fRList", fRList);
+		    resultMap.put("totalPages", totalPages);
+		    resultMap.put("fRSearchKeyword", fRSearchKeyword);
+		    
+			Gson gson = new Gson();
+			return gson.toJson(resultMap);
+		}
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	//=========================================================================================================================
+	
+		
+		// 자유게시판 게시글 검색 기능
+		@ResponseBody
+		@PostMapping("/board/search.pet")
+		public String FBSearchKeyword(@RequestParam("fSearchKeyword") String fSearchKeyword
+									, @RequestParam("currentPage") int currentPage
+									, @RequestParam("recordCountPerPage") int recordCountPerPage) {
+			
+			// 페이징을 적용하여 검색결과 데이터를 가져오도록 구현 
+		    int start = (currentPage - 1) * recordCountPerPage;
+		    int end = start + recordCountPerPage;
+		    
+		    Board searchKey = new Board(1, fSearchKeyword);
+			// 검색 게시글 리스트 불러옴
+			List<Board> fList = bService.selectFreeBoardSearch(searchKey);
+			
+			
+			// 범위 체크를 통해 부분 리스트 추출
+		    if (start < fList.size()) {
+		        end = Math.min(end, fList.size());
+		        fList  = fList.subList(start, end);
+		    } else {
+		    	fList  = Collections.emptyList();
+		    }
+		    
+			
+	        // 각 게시글의 닉네임을 가져와 설정
+	        for (Board board : fList) {
+	            String uId = board.getuId(); // 게시글의 작성자 ID
+	            User user = uService.selectOneById(uId);
+	            if (user != null) {
+	            	board.setfWriter(user.getuNickName()); // 게시글의 작성자 닉네임 설정
+	            } else {
+	            	board.setfWriter("UnKnown User"); // 게시글의 작성자 닉네임 설정	            	
+	            }
+	        }
+		    
+		    
+		    
+		    
+		    // 전체 페이지 수 계산 (검색결과의 총 갯수를 페이지당 후기 갯수로 나눠서 계산)
+		    int totalRecords = bService.getFreeBoardSearchTotalCount(searchKey); // 검색결과의- 총 갯수 
+		    int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 전체 페이지 수 
+		    
+		    // 검색결과 리스트와 전체 페이지 수를 Map에 담아서 보냄 
+		    Map<String, Object> resultMap = new HashMap<>();
+		    resultMap.put("fList", fList);
+		    resultMap.put("totalSearchPages", totalPages);
+		    resultMap.put("fSearchKeyword", fSearchKeyword);
+		    
+			Gson gson = new Gson();
+			return gson.toJson(resultMap);
+		}
+	
+	
 }

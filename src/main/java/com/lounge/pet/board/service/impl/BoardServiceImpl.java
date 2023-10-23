@@ -12,6 +12,7 @@ import com.lounge.pet.board.domain.FBookmark;
 import com.lounge.pet.board.domain.FReply;
 import com.lounge.pet.board.service.BoardService;
 import com.lounge.pet.board.store.BoardStore;
+import com.lounge.pet.hospital.domain.HReview;
 
 
 @Service
@@ -140,6 +141,34 @@ public class BoardServiceImpl implements BoardService {
 	public int deleteFreeBoardReply(FReply fReply) {
 		int result = bStore.deleteFreeBoardReply(session, fReply);
 		return result;
+	}
+
+
+	@Override
+	public List<FReply> selectFreeBoardReplySearch(FReply searchKey) {
+		List<FReply> fRList = bStore.selectFreeBoardReplySearch(session, searchKey);
+		return fRList;
+	}
+
+
+	@Override
+	public int getFreeBoardReplySearchTotalCount(FReply searchKey) {
+		int count = bStore.getFreeBoardReplySearchTotalCount(session, searchKey);
+		return count;
+	}
+
+
+	@Override
+	public List<Board> selectFreeBoardSearch(Board searchKey) {
+		List<Board> fList = bStore.selectFreeBoardSearch(session, searchKey);
+		return fList;
+	}
+
+
+	@Override
+	public int getFreeBoardSearchTotalCount(Board searchKey) {
+		int count = bStore.getFreeBoardSearchTotalCount(session, searchKey);
+		return count;
 	}
 
 }

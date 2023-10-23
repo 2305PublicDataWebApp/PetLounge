@@ -98,4 +98,38 @@
 		 WHERE F_R_NO = #{ fRNo } 
 	</update>
 	
+	<select id="selectFreeBoardReplySearch" resultType="FReply">
+		SELECT *
+		  FROM F_REPLY_TBL
+		 WHERE F_NO = #{ fNo } 
+		   AND F_R_STATUS = 'Y'
+		   AND F_R_CONTENT LIKE '%' || #{ fRSearchKeyword } || '%'
+	     ORDER BY F_R_NO DESC
+	</select>
+	
+	<select id="getFreeBoardReplySearchTotalCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM F_REPLY_TBL
+		 WHERE F_NO = #{ fNo } 
+		   AND F_R_STATUS = 'Y'
+		   AND F_R_CONTENT LIKE '%' || #{ fRSearchKeyword } || '%'
+	</select>	
+		
+	<select id="selectFreeBoardSearch" resultType="Board">
+		SELECT *
+		  FROM FREE_TBL
+		 WHERE F_STATUS = 'Y'
+		   AND (F_TITLE LIKE '%' || #{ fSearchKeyword } || '%'
+		   OR F_CONTENT LIKE '%' || #{ fSearchKeyword } || '%')
+	     ORDER BY F_NO DESC
+	</select>
+	
+	<select id="getFreeBoardSearchTotalCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM FREE_TBL
+		 WHERE F_STATUS = 'Y'
+		   AND (F_TITLE LIKE '%' || #{ fSearchKeyword } || '%'
+		   OR F_CONTENT LIKE '%' || #{ fSearchKeyword } || '%')
+	</select>
+	
 </mapper>

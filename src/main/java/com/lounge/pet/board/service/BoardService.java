@@ -127,6 +127,34 @@ public interface BoardService {
 	 */
 	int deleteFreeBoardReply(FReply fReply);
 
+	/**
+	 * 자유게시판 댓글에 대한 검색
+	 * @param searchKey
+	 * @return
+	 */
+	List<FReply> selectFreeBoardReplySearch(FReply searchKey);
+
+	/**
+	 * 자유게시판 댓글에 대한 검색 총 개수
+	 * @param searchKey
+	 * @return
+	 */
+	int getFreeBoardReplySearchTotalCount(FReply searchKey);
+
+	/**
+	 * 자유게시판 리스트 검색 
+	 * @param searchKey
+	 * @return
+	 */
+	List<Board> selectFreeBoardSearch(Board searchKey);
+
+	/**
+	 * 자유게시판 리스트에 대한 검색 총 개수
+	 * @param searchKey
+	 * @return
+	 */
+	int getFreeBoardSearchTotalCount(Board searchKey);
+
 
 
 

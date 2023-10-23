@@ -272,6 +272,49 @@ td.right1 a:hover {
 	cursor: pointer;
 }
 
+#search-sq {
+	display: flex;
+	justify-content: center;
+	max-width: 800px;
+	margin: 0 auto;
+}
 
+               #search-div {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-top: 20px;
+                max-width: 300px;
+                margin-left: auto;
+                margin-bottom: 10px;
+			}
+			
+				.search-input {
+					border: 2px solid #CCCCCC;
+				    border-radius: 50px;
+				    padding: 5px 20px;
+				    outline: none;
+	                transition: border-color 0.3s;
+	            }
+	
+	            .search-input:hover,
+	            .search-input:focus {
+	                border-color: #FFD370;
+	            }
+        
+        #page-navigation {
+            margin-top: 30px;
+            display: flex;
+    		justify-content: center;
+        }     
+        
+    #searchIcon {
+	color: #FFD370;
+	font-size: 0.8em;
+}
 
-
+#none {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 100px;	
+}

@@ -58,7 +58,7 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css" />
         <title>자유게시판</title>
 <!--     <script> -->
-<!--     history.replaceState({}, null, location.pathname); -->
+<!--     history.replaceState({}, null, location.patuId); -->
 <!--     </script> -->
     </head>
     <body>
@@ -153,7 +153,7 @@
 		    </c:otherwise>
 		</c:choose>        
           
-            <!-- 후기 리스트 -->
+            <!-- 댓글 리스트 -->
             <div class="reply-container">
             <section id="hospital-review-section">
                 <!-- 등록 -->
@@ -175,17 +175,17 @@
 					        <td></td>
 					    </tr>
 					</table>
-<!-- 					<div id="search-div"> -->
-<%-- 						<c:if test="${ hRSearchKeyword ne null }"> --%>
-<%-- 						<input type="search" value="${ hRSearchKeyword }" name="hRSearchKeyword" id="h-r-search-keyword" class="search-input" placeholder="${ bOne.hName } 후기 검색">                     	 --%>
-<%-- 						</c:if> --%>
-<%-- 						<c:if test="${ hRSearchKeyword eq null }"> --%>
-<%-- 							<input type="search" name="hRSearchKeyword" id="h-r-search-keyword" class="search-input" placeholder="${ bOne.hName } 후기 검색">                     	 --%>
-<%-- 						</c:if> --%>
-<!-- 						<span class="material-symbols-outlined search-icon" id="search-icon" style="font-size: 2em; color: #FFD370; cursor: pointer; margin-left: 10px;"> -->
-<!-- 				        	search -->
-<!-- 				    	</span> -->
-<!-- 					</div> -->
+					<div id="search-div">
+						<c:if test="${ fRSearchKeyword ne null }">
+						<input type="search" value="${ fRSearchKeyword }" name="fRSearchKeyword" id="f-r-search-keyword" class="search-input" placeholder="${ bOne.uId } 댓글 검색">                     	
+						</c:if>
+						<c:if test="${ fRSearchKeyword eq null }">
+							<input type="search" name="fRSearchKeyword" id="f-r-search-keyword" class="search-input" placeholder="댓글 검색">                     	
+						</c:if>
+						<span class="material-symbols-outlined search-icon" id="search-icon" style="font-size: 2em; color: #FFD370; cursor: pointer; margin-left: 10px;">
+				        	<i class="bi bi-search" id="searchIcon" ></i>
+				    	</span>
+					</div>
 					<div id="page-navigation">
 					    <ul id="pagination" class="pagination pagination-sm"></ul>
 					</div>
@@ -267,7 +267,7 @@
 		
 		<!--========================================= 댓글 =========================================-->
 		<script>
-			// 후기 등록 
+			// 댓글 등록 
 			function fbReplyInsert(fNo) {
 				const fRContent = $("#reply-create-content").val().trim();
 				$.ajax({
@@ -296,7 +296,7 @@
 				});
 			}
 			
-			// 후기 수정창 보이기 
+			// 댓글 수정창 보이기 
 			function openModifyView(fRNo, fRNickName, fRContent, fRProfileImg) {
 				document.querySelector('.f-r-no').value = fRNo;
 				document.querySelector('.modify-user-nickname').innerText = fRNickName;
@@ -308,7 +308,7 @@
 // 				});	
 			}
 			
-			// 후기 수정 
+			// 댓글 수정 
 			function modifyReply() {
 				let fRNo = document.querySelector('.f-r-no').value;
 				let fRContent = document.querySelector('.reply-modify-content').value.trim();
@@ -322,7 +322,7 @@
 					success : function(data) {
 						if(data == "success") {
 							document.querySelector('[data-bs-dismiss="modal"]').click(); // 모달 닫는 버튼이 클릭되어서 닫히게 함 
-							getReplyList(); // 후기 목록 새로고침 
+							getReplyList(); // 댓글 목록 새로고침 
 						} else if(data == "loginFail") {
 							alert("로그인이 필요한 서비스입니다."); 
 							location.href="/user/login.pet";
@@ -338,14 +338,14 @@
 				});
 			}
 			
-			// 후기 삭제 체크 
+			// 댓글 삭제 체크 
 			function checkdeleteReply(fRNo) {
 				if (confirm("댓글을 삭제하시겠습니까?")) {
 					deleteReply(fRNo);
 				}
 			}
 			
-			// 후기 삭제 
+			// 댓글 삭제 
 			function deleteReply(fRNo) {
 				$.ajax({
 					url : '/fReply/delete.pet',
@@ -366,20 +366,20 @@
 				});
 			}
 			
-			// 후기 페이징 
+			// 댓글 페이징 
 			let currentPage = 1; // 현재 페이지 
-			let recordCountPerPage = 5; // 페이지당 후기 수 
+			let recordCountPerPage = 5; // 페이지당 댓글 수 
 			let naviCountPerPage = 5; // 한 그룹당 페이지 수
 			let totalPages = 0; // 총 페이지 수
 			
-			// 날짜 포맷팅 (후기 작성일에 사용)
+			// 날짜 포맷팅 (댓글 작성일에 사용)
 			function getFormattedDate(dateString) {
 			    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'};
 			    const formattedDate = new Date(dateString).toLocaleDateString('ko-KR', options);
 			    return formattedDate;
 			};
 			
-			// 후기 리스트를 불러오는 ajax Function 
+			// 댓글 리스트를 불러오는 ajax Function 
 			function getReplyList() {
 				let sessionId = '${ sessionScope.uId }';
 				const fNo = '${ bOne.fNo }';
@@ -391,7 +391,7 @@
 						fNo : fNo, 
 						currentPage: currentPage, 
 						recordCountPerPage: recordCountPerPage 
-					}, // 현재 페이지와 페이지당 후기 수 전달
+					}, // 현재 페이지와 페이지당 댓글 수 전달
 					success : function(data) {
 						const tableBody = $("#reply-table tbody");
 						tableBody.html('');
@@ -400,7 +400,7 @@
 						let center;
 						let right;
 						
-						const fRList = data.fRList; // 후기 리스트 
+						const fRList = data.fRList; // 댓글 리스트 
 				        totalPages = data.totalPages; // 총 페이지 수
 						
 						if(fRList.length > 0) {
@@ -436,7 +436,7 @@
 					            createPagination(data.totalPages);
 							}
 						} else {
-							tr = $("<tr class='td'><td class='td'colspan='3'><div style='color: lightgray;'>등록된 후기가 없습니다</div></td></tr>");
+							tr = $("<tr class='td'><td class='td'colspan='3'><div style='color: lightgray;'>등록된 댓글가 없습니다</div></td></tr>");
 							tableBody.append(tr);
 						}
 					},
@@ -523,9 +523,186 @@
 			
 			$(function(){
 				getReplyList();
-				// setInterval(getReplyList, 1000); // 1초 단위로 getReplyList가 호출되어 후기 실시간 조회
+				// setInterval(getReplyList, 1000); // 1초 단위로 getReplyList가 호출되어 댓글 실시간 조회
+			})
+			
+			
+			<!--========================================= 댓글 검색 =========================================-->
+			// 자유게시판 댓글 검색결과 리스트를 불러오는 ajax Function
+			function searchFBReply(currentPage) {
+				var fRSearchKeyword = document.getElementById('f-r-search-keyword').value.trim();
+				let sessionId = '${ sessionScope.uId }';
+				
+				if(fRSearchKeyword !== '') {
+					$.ajax ({
+						url: "/fReply/search.pet",
+						type: "POST",
+						dataType: "json",
+						data: {
+							fNo: ${ bOne.fNo },
+							fRSearchKeyword: fRSearchKeyword,
+							currentPage: currentPage, 
+							recordCountPerPage: recordCountPerPage 
+						},
+						success: function(data) {
+							const tableBody = $("#reply-table tbody");
+							tableBody.html('');
+							let tr;
+							let left;
+							let center;
+							let right;
+							
+							const fRList = data.fRList; // 댓글 리스트 
+					        totalPages = data.totalPages; // 총 페이지 수
+							
+							if(fRList.length > 0) {
+								th = $("<th colspan='3' style='text-align: left; font-size: 1.2em;'><span style='color: #FFD370;'>" + fRSearchKeyword + "</span> 검색 결과</th>");
+								tableBody.append(th);
+								for(let i in fRList) {
+	
+									tr = $("<tr>"); // <tr></tr>
+									left = $("<td class='td'>").html("<img src='" + fRList[i].fRProfileImg + "' width='50px' height='50px' style='border-radius: 100%; border: 2px solid #FFD370;'>");
+	
+									if(fRList[i].fRCreate === fRList[i].fRUpdate) {
+										center = $("<td class='td'>").html(
+												"<div class='user-info-div'><span class='user-nickname'>"+fRList[i].fRNickName+"</span><span class='reply-create-date'>"
+												+ ""+getFormattedDate(fRList[i].fRCreate)+"</span></div><div class='reply-content'>"+fRList[i].fRContent+"</div>"); 
+									} else {
+										center = $("<td class='td'>").html(
+												"<div class='user-info-div'><span class='user-nickname'>"+fRList[i].fRNickName+"</span><span class='reply-create-date'>"
+												+ ""+getFormattedDate(fRList[i].fRUpdate)+"&nbsp;(수정됨)</span></div><div class='reply-content'>"+fRList[i].fRContent+"</div>");
+									}
+											
+									if(sessionId === fRList[i].uId || sessionId === 'admin') {
+										right = $("<td class='td'>").html(
+												"<a href='javascript:void(0)' class='reply-modify-btn' data-bs-toggle='modal' data-bs-target='#modifyModal' "
+												+ "onclick='openModifyView("+fRList[i].fRNo+",\""+fRList[i].fRNickName+"\",\""+fRList[i].fRContent+"\",\"" + fRList[i].fRProfileImg + "\");'>수정</a>"
+												+ "<a href='javascript:void(0)' class='reply-delete-btn' onclick='checkdeleteReply("+fRList[i].fRNo+");'>삭제</a>"); 
+									} else {
+										right = $("<td class='td'>").html("");
+									}
+									
+									tr.append(left);
+									tr.append(center);
+									tr.append(right); 
+									tableBody.append(tr); 
+									
+									// 결과를 받은 후에 페이징을 업데이트
+						            rCreatePagination(data.totalPages);
+								}
+							} else {
+								th = $("<th colspan='3' style='text-align: left; font-size: 1.2em;'><span style='color: #FFD370;'>" + fRSearchKeyword + "</span> 검색 결과</th>");
+								tr = $("<tr class='td'><td class='td'colspan='3'><div style='color: lightgray;'>등록된 댓글이 없습니다</div></td></tr>");
+								tableBody.append(th);
+								tableBody.append(tr);
+								$("#pagination").html('');
+							}
+						}, 
+						error: function() {
+// 							alert("${ bOne.uId} 댓글 검색 오류. 관리자에게 문의 바랍니다.");
+							alert("${ bOne.uId} 댓글 검색 오류. 관리자에게 문의 바랍니다.");
+						}
+					});
+				} else {
+					getReplyList();
+					$("#pagination").html('');
+				}
+			}
+			
+			// 댓글 검색결과 페이지 만들기 
+			const rCreatePagination = (totalPages) => {
+				var fRSearchKeyword = document.getElementById('f-r-search-keyword').value.trim();
+			    const paginationUl = $("#pagination");
+			    paginationUl.empty(); // 이전의 페이징 링크를 지움
+			    
+			    const naviCountPerPage = 5; // 한 그룹당 페이지 수
+			    const numGroups = Math.ceil(totalPages / naviCountPerPage); // 총 그룹 수
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage); // 현재 페이지가 속한 그룹
+	
+			    let startPage = (currentGroup - 1) * naviCountPerPage + 1;
+			    let endPage = Math.min(currentGroup * naviCountPerPage, totalPages);
+			    
+			 	// "이전" 버튼 추가
+			    if (currentGroup > 1) {
+			        const prevLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>');
+			        prevLi.click(() => {
+			        	rGoToPreviousGroup();
+			        });
+			        paginationUl.append(prevLi);
+			    }
+			 	// 페이지 링크 추가
+			    for (let i = startPage; i <= endPage; i++) {
+			        const li = $('<li class="page-item" data-page="${i}"><a class="page-link" href="javascript:void(0)">'+i+'</a></li>');
+			        
+			     	// 현재 페이지에 해당하는 경우 클래스 추가
+			        if (i === currentPage) {
+			            li.addClass('active');
+			        }
+			     
+			        li.click(() => {
+			        	rChangePage(i);
+			        });
+			        paginationUl.append(li);
+			    }
+				// "다음" 버튼 추가
+			    if (currentGroup < numGroups) {
+			        const nextLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>');
+			        nextLi.click(() => {
+			        	rGoToNextGroup();
+			        });
+			        paginationUl.append(nextLi);
+			    }
+			}
+			
+			// 페이지 변경 시 호출되는 함수
+			const rChangePage = (newPage) => {
+			    currentPage = newPage;
+			    searchFBReply(currentPage);
+			}
+			
+			// 그룹 변경 시 호출되는 함수
+			const rChangeGroup = (newGroup) => {
+			    currentPage = (newGroup - 1) * naviCountPerPage + 1;
+			    searchFBReply(currentPage);
+			}
+	
+			// 이전 그룹으로 이동할 때 호출 
+			const rGoToPreviousGroup = () => {
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup > 1) {
+			        const lastPageOfPreviousGroup = (currentGroup - 1) * naviCountPerPage;
+			        rChangePage(lastPageOfPreviousGroup);
+			    }
+			}
+	
+			// 다음 그룹으로 이동할 때 호출
+			const rGoToNextGroup = () => {
+			    const numGroups = Math.ceil(totalPages / naviCountPerPage);
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup < numGroups) {
+			    	rChangeGroup(currentGroup + 1);
+			    }
+			}
+			
+			$(function(){
+				getReplyList();
+				// setInterval(getReplyList, 1000); // 1초 단위로 getReplyList가 호출되어 댓글 실시간 조회
 			})
 		</script>
+		<!-- 자유게시판 댓글 검색 (input search) -->
+		<script>
+			document.getElementById('f-r-search-keyword').addEventListener('keypress', function (event) {
+			    if (event.key === 'Enter') {
+			    	currentPage = 1;
+			    	searchFBReply(currentPage);
+			    }
+			});
+			
+			document.getElementById("search-icon").addEventListener("click", function() {
+				currentPage = 1;
+				searchFBReply(currentPage);
+			});
+        </script>
 		
     </body>
     </html>

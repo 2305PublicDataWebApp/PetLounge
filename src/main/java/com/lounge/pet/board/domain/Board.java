@@ -18,7 +18,19 @@ public class Board {
 	private String fViewCount;
 	private String fWriter;
 	private String fProfileImg;
+	private String fSearchKeyword;
 	
+	
+	
+	public Board() {
+	}
+	
+	public Board(int fNo, String fSearchKeyword) {
+		super();
+		this.fNo = fNo;
+		this.fSearchKeyword = fSearchKeyword;
+	}
+
 	public int getfNo() {
 		return fNo;
 	}
@@ -104,6 +116,12 @@ public class Board {
 		this.fProfileImg = fProfileImg;
 	}
 	
+	public String getfSearchKeyword() {
+		return fSearchKeyword;
+	}
+	public void setfSearchKeyword(String fSearchKeyword) {
+		this.fSearchKeyword = fSearchKeyword;
+	}
 	@Override
 	public String toString() {
 		return "자유게시판 [글번호=" + fNo + ", 아이디=" + uId + ", 제목=" + fTitle + ", 내용=" + fContent + ", 작성일="

@@ -638,3 +638,45 @@ tr > td:nth-child(3) {
                         border-radius: 8px;
                     }
                     
+               #search-div {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-top: 20px;
+                max-width: 300px;
+                margin-left: 380px;
+			}
+			
+				.search-input {
+					border: 2px solid #CCCCCC;
+				    border-radius: 50px;
+				    padding: 5px 20px;
+				    outline: none;
+	                transition: border-color 0.3s;
+	            }
+	
+	            .search-input:hover,
+	            .search-input:focus {
+	                border-color: #FFD370;
+	            }
+        
+        #page-navigation {
+            margin-top: 30px;
+            display: flex;
+    		justify-content: center;
+        }     
+        
+    #searchIcon {
+	color: #FFD370;
+	font-size: 0.8em;
+}
+                    
+#reply-table {
+	margin-top : 30px;
+}                
+
+#reply-table th {
+    height: 50px; /* 원하는 높이로 조절하세요 */
+    /* 다른 원하는 스타일을 추가하세요 */
+}    
+                    

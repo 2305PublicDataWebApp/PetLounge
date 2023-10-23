@@ -23,7 +23,21 @@
             <h1>자유게시판</h1>
             <div id="line"></div>
         </section>
-
+        
+<!--             게시글 검색 -->
+			<div id="search-sq">
+				<div id="search-div">
+					<c:if test="${ fSearchKeyword ne null }">
+					<input type="search" value="${ fSearchKeyword }" name="fSearchKeyword" id="f-search-keyword" class="search-input" placeholder="${ bOne.uId } 댓글 검색">                     	
+					</c:if>
+					<c:if test="${ fSearchKeyword eq null }">
+						<input type="search" name="fSearchKeyword" id="f-search-keyword" class="search-input" placeholder="게시글 검색">                     	
+					</c:if>
+					<span class="material-symbols-outlined search-icon" id="search-icon" style="font-size: 2em; color: #FFD370; cursor: pointer; margin-left: 10px;">
+			        	<i class="bi bi-search" id="searchIcon" ></i>
+			    	</span>
+				</div>
+			</div>
 <!--             게시글 목록 -->
 			<div class="square-container">
 			    <div id="portfolio">
@@ -69,19 +83,7 @@
 							const portfolio = $("#portfolio");  // id가 "portfolio"인 요소를 선택하는데 사용
 							portfolio.html('');	  // 해당 요소의 내용을 비우는 역할을 합니다. 이로써 이전에 표시된 내용은 지워지고, 새로운 내용을 추가할 준비가 됨
 							const fList = resultMap.freeBoardList; // 후원글 리스트 
-					        totalPages = resultMap.totalSearchPages; // 총 페이지 수 (함수 외부에서 선언한 totalPages에 할당->const를 쓰지 않음)
-							
-// 							const cardToday = `
-// 				                <div class='col-xl-3 col-md-6 portfolio-item'>
-// 			                    <div class='card-today'>
-// 			                        <div class='label-today'>Today</div>
-// 			                        <br>
-// 			                        <strong style='font-size: 20px;'>오늘 함께한 기부금</strong>
-// 			                        <div class='hr'></div>
-// 			                    </div>
-// 			                </div>`;
-			                
-// 							portfolio.append(cardToday); 
+					        totalPages = resultMap.totalSearchPages; // 총 페이지 수 (함수 외부에서 선언한 totalPages에 할당->const를 쓰지 않음)					
 	
 							let freeBoardList = '';
 
@@ -268,7 +270,207 @@
 				});
 				
 				
-        </script>
+				
+				// 자유게시판 목록 검색결과 페이지 만들기 
+				const fCreatePagination = (totalPages) => {
+					var fSearchKeyword = document.getElementById('f-search-keyword').value.trim();
+				    const paginationUl = $("#pagination");
+				    paginationUl.empty(); // 이전의 페이징 링크를 지움
+				    
+				    const naviCountPerPage = 5; // 한 그룹당 페이지 수
+				    const numGroups = Math.ceil(totalPages / naviCountPerPage); // 총 그룹 수
+				    const currentGroup = Math.ceil(currentPage / naviCountPerPage); // 현재 페이지가 속한 그룹
+		
+				    let startPage = (currentGroup - 1) * naviCountPerPage + 1;
+				    let endPage = Math.min(currentGroup * naviCountPerPage, totalPages);
+				    
+				 	// "이전" 버튼 추가
+				    if (currentGroup > 1) {
+				        const prevLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>');
+				        prevLi.click(() => {
+				        	fGoToPreviousGroup();
+				        });
+				        paginationUl.append(prevLi);
+				    }
+				 	// 페이지 링크 추가
+				    for (let i = startPage; i <= endPage; i++) {
+				        const li = $('<li class="page-item" data-page="${i}"><a class="page-link" href="javascript:void(0)">'+i+'</a></li>');
+				        
+				     	// 현재 페이지에 해당하는 경우 클래스 추가
+				        if (i === currentPage) {
+				            li.addClass('active');
+				        }
+				     
+				        li.click(() => {
+				        	fChangePage(i);
+				        });
+				        paginationUl.append(li);
+				    }
+					// "다음" 버튼 추가
+				    if (currentGroup < numGroups) {
+				        const nextLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>');
+				        nextLi.click(() => {
+				        	rGoToNextGroup();
+				        });
+				        paginationUl.append(nextLi);
+				    }
+				}
+
+				// 자유게시판 목록 검색결과(리스트)를 불러오는 ajax Function 
+				const searchFBList = (currentPage) => {
+					var fSearchKeyword = document.getElementById('f-search-keyword').value.trim();
+					$.ajax({
+						url : "/board/search.pet", // 서버에서 데이터를 가져올 URL
+						data : { 
+							fSearchKeyword: fSearchKeyword,
+							currentPage: currentPage, // 현재 페이지
+							recordCountPerPage: recordCountPerPage }, // 페이지당 게시글 수
+						type : "POST",
+						dataType : "json",
+						success : function(resultMap) {
+					        // 성공 시 실행될 콜백 함수
+							const portfolio = $("#portfolio");  // id가 "portfolio"인 요소를 선택하는데 사용
+							portfolio.html('');	  // 해당 요소의 내용을 비우는 역할을 합니다. 이로써 이전에 표시된 내용은 지워지고, 새로운 내용을 추가할 준비가 됨
+							const fList = resultMap.fList; // 후원글 리스트 
+					        totalPages = resultMap.totalSearchPages; // 총 페이지 수 (함수 외부에서 선언한 totalPages에 할당->const를 쓰지 않음)
+							
+							let freeBoardList = '';
+							
+							if(fList.length > 0) {
+// 								for(let f in fList) {
+
+								freeBoardList += `
+						            <div id="notice">
+						                    <table>
+						                        <colgroup>
+						                            <col width="7%">
+						                            <col width="54%">
+						                            <col width="15%">
+						                            <col width="15%">
+						                            <col width="10%">
+						                        </colgroup>
+						                        <thead>
+						                            <tr>
+						                                <th>번호</th>
+						                                <th>제목</th>
+						                                <th>작성자</th>
+						                                <th>작성일</th>
+						                                <th>조회수</th>
+						                            </tr>
+						                        </thead>
+						                        <tbody>`;
+								for(let f of fList) {
+									// 각 게시물의 정보를 추출
+									console.log(f.fNo);
+							        var fNo = f.fNo;
+							        var uId = f.uId;
+							        var fTitle = f.fTitle;
+							        var fCreate = f.fCreate;
+							        var fViewCount = f.fViewCount;
+							        var fWriter = f.fWriter;
+							        
+							     // 날짜 문자열에서 월, 일, 연도를 추출
+							        var dateParts = fCreate.match(/(\d{1,2})월 (\d{1,2}), (\d{4})/);
+							        
+							        if (dateParts) {
+							        	  var year = dateParts[3];
+							        	  var month = dateParts[1].padStart(2, '0');
+							        	  var day = dateParts[2].padStart(2, '0');   // 'padStart' 함수 = 월과 일이 1자리 숫자일 경우 앞에 '0' 을 추가하여 2자리 숫자로 만들어 줌
+							        	  
+							        	  // YYYY.MM.DD 형식으로 조합
+							        	  var formattedDate = year + "." + month + "." + day;
+							        	  
+							        	  // formattedDate를 표시하거나 사용하려는 방식에 맞게 적용
+							        	} else {
+							        	  // 날짜 문자열을 올바르게 파싱하지 못한 경우에 대한 오류 처리
+							        	  console.error("날짜를 파싱하지 못했습니다.");
+							        	}
+							        
+									// 후원 제목 두줄 이상 넘어가면 ... 처리
+// 									const truncatedTitle = title.length > 27 ? title.substring(0, 26) + '...' : title;
+									freeBoardList +=   "<tr>"
+														+"<td colspan='5'>"+"<hr class='line3'>"+"</td>"
+														+"</tr>"
+														+"<tr>"
+														+"<td class='right2'>" + fNo + "</td>"
+														+"<td class='right1'>" + "<a href='/board/freeDetail.pet?fNo=" + fNo + "'>" + (fTitle.length > 21 ? fTitle.substring(0, 20) + '...' : fTitle) + "</a>" + "</td>"
+														+"<td class='right2'>" + (fWriter.length > 11 ? fWriter.substring(0, 10) + '...' : fWriter) + "</td>"
+// 														+"<td class='right2'>" + (fWriter) + "</td>"
+														+"<td class='right2'>" + formattedDate + "</td>"
+														+"<td class='right2'>" + fViewCount + "</td>"
+														+"</tr>";									
+								}						
+								fCreatePagination(totalPages)
+							} else {
+// 								alert("게시글이 없습니다.")
+							    // 아무 결과도 검색되지 않은 경우
+							    freeBoardList += 
+							        "<tr>" +
+							        "<td colspan='5'><hr class='line3'></td>" +
+							        "</tr>" +
+							        "<tr>" +
+							        "<td class='right1' colspan='5' id='none'>검색결과가 없습니다.</td>" +
+							        "</tr>";
+							}
+							portfolio.html(freeBoardList);
+						},
+						error : function() {
+					        // 오류 시 실행될 콜백 함수
+							alert("Ajax 오류! 관리자에게 문의하세요.");
+						}
+					});
+				}
+				
+				// 페이지 변경 시 호출되는 함수
+				const fChangePage = (newPage) => {
+				    currentPage = newPage;
+				    searchFBList(currentPage);
+				}
+				
+				// 그룹 변경 시 호출되는 함수
+				const fChangeGroup = (newGroup) => {
+				    currentPage = (newGroup - 1) * naviCountPerPage + 1;
+				    searchFBList(currentPage);
+				}
+		
+				// 이전 그룹으로 이동할 때 호출 
+				const fGoToPreviousGroup = () => {
+				    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+				    if (currentGroup > 1) {
+				        const lastPageOfPreviousGroup = (currentGroup - 1) * naviCountPerPage;
+				        fChangePage(lastPageOfPreviousGroup);
+				    }
+				}
+		
+				// 다음 그룹으로 이동할 때 호출
+				const rGoToNextGroup = () => {
+				    const numGroups = Math.ceil(totalPages / naviCountPerPage);
+				    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+				    if (currentGroup < numGroups) {
+				    	fChangeGroup(currentGroup + 1);
+				    }
+				}
+				
+				$(function(){
+					getFBList();
+					// setInterval(getFBList, 1000); // 1초 단위로 getFBList가 호출되어 후기 실시간 조회
+				})
+ 			
+			</script>
+			<!-- 자유게시판 리스트 검색 (input search) -->
+			<script>
+				document.getElementById('f-search-keyword').addEventListener('keypress', function (event) {
+				    if (event.key === 'Enter') {
+				    	currentPage = 1;
+					    searchFBList(currentPage);
+				    }
+				});
+				
+				document.getElementById("search-icon").addEventListener("click", function() {
+					currentPage = 1;
+					searchFBList(currentPage);
+				});
+	        </script>
     </body>
     </html>
     

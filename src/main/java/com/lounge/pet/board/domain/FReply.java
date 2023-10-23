@@ -15,11 +15,18 @@ public class FReply {
 	private int FRRstatus;
 	private String fRNickName;
 	private String fRProfileImg;
+	private String fRSearchKeyword;
 	
 	
 	public FReply() {
 	}
 	
+	public FReply(int fNo, String fRSearchKeyword) {
+		super();
+		this.fNo = fNo;
+		this.fRSearchKeyword = fRSearchKeyword;
+	}
+
 	public int getfRNo() {
 		return fRNo;
 	}
@@ -85,7 +92,14 @@ public class FReply {
 	}
 	public void setfRProfileImg(String fRProfileImg) {
 		this.fRProfileImg = fRProfileImg;
+	}	
+	public String getfRSearchKeyword() {
+		return fRSearchKeyword;
 	}
+	public void setfRSearchKeyword(String fRSearchKeyword) {
+		this.fRSearchKeyword = fRSearchKeyword;
+	}
+
 	@Override
 	public String toString() {
 		return "자유게시판댓글 [댓글번호=" + fRNo + ", 글번호=" + fNo + ", 회원아이디=" + uId + ", 댓글내용=" + fRContent + ", 작성일="
