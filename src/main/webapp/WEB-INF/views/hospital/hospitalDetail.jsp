@@ -383,7 +383,7 @@
 		                } 
 		            },
 		            error: function () {
-		            	alert("동물병원 즐겨찾기 오류. 관리자에게 문의 바랍니다.");
+		            	alert("동물 병원 즐겨찾기 오류. 관리자에게 문의 바랍니다.");
 		            }
 		        });
 		    }
@@ -414,11 +414,11 @@
 							} else if (data == "empty") {
 			                	alert("후기 내용은 비워둘 수 없습니다.");
 			                } else {
-								alert("동물병원 후기 등록 실패");
+								alert("동물 병원 후기 등록 실패");
 							}
 						},
 						error : function() {
-							alert("동물병원 후기 작성 오류. 관리자에게 문의 바랍니다.");
+							alert("동물 병원 후기 작성 오류. 관리자에게 문의 바랍니다.");
 						}
 					});
 				} else {
@@ -467,11 +467,11 @@
 							} else if (data == "empty") {
 			                	alert("후기 내용은 비워둘 수 없습니다.");
 			                } else {
-								alert("동물병원 후기 수정 실패");
+								alert("동물 병원 후기 수정 실패");
 							}
 						},
 						error : function() {
-							alert("동물병원 후기 수정 오류. 관리자에게 문의 바랍니다.");
+							alert("동물 병원 후기 수정 오류. 관리자에게 문의 바랍니다.");
 						}
 					});
 				} else {
@@ -498,11 +498,11 @@
 						if(data == "success") {
 							getReviewList();
 						} else {
-							alert("동물병원 후기 삭제 실패");
+							alert("동물 병원 후기 삭제 실패");
 						}
 					},
 					error : function() {
-						alert("동물병원 후기 삭제 오류. 관리자에게 문의 바랍니다.");
+						alert("동물 병원 후기 삭제 오류. 관리자에게 문의 바랍니다.");
 					}
 				});
 			}
@@ -582,7 +582,7 @@
 						}
 					},
 					error : function() {
-						alert("동물병원 후기 리스트 호출 오류. 관리자에게 문의 바랍니다.");
+						alert("동물 병원 후기 리스트 호출 오류. 관리자에게 문의 바랍니다.");
 					}
 				});
 			}
@@ -828,7 +828,7 @@
 				window.history.back();
 			}
 		</script>
-		<!-- 동물병원 후기 검색 (input search) -->
+		<!-- 동물 병원 후기 검색 (input search) -->
 		<script>
 			document.getElementById('h-r-search-keyword').addEventListener('keypress', function (event) {
 			    if (event.key === 'Enter') {
