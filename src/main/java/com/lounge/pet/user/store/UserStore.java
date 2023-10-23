@@ -89,7 +89,7 @@ public interface UserStore {
 	 * @param session
 	 * @return
 	 */
-	int selectListCount(SqlSession session, String sessionId);
+	int selectHosListCount(SqlSession session, String sessionId);
 
 	/**
 	 * 즐겨찾는 병원 검색 수
@@ -97,7 +97,7 @@ public interface UserStore {
 	 * @param paramMap
 	 * @return
 	 */
-	int selectListCount(SqlSession session, Map<String, String> paramMap);
+	int selectHosSearchListCount(SqlSession session, Map<String, String> paramMap);
 
 	/**
 	 * 조건에 따른 즐겨찾는 병원 검색
@@ -250,6 +250,22 @@ public interface UserStore {
 	 * @return
 	 */
 	User userCheckEmail(SqlSession session, String uEmail);
+
+	/**
+	 * 아이디 찾기
+	 * @param session
+	 * @param user
+	 * @return
+	 */
+	User selectFindId(SqlSession session, User user);
+
+	/**
+	 * 비밀번호 찾기
+	 * @param session
+	 * @param user
+	 * @return
+	 */
+	User selectFindPw(SqlSession session, User user);
 
 	
 

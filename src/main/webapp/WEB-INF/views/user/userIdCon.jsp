@@ -14,45 +14,15 @@
 		<link rel="stylesheet" href="/resources/css/reset.css">
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<title>비밀번호 재확인</title>
+		<title>아이디 확인</title>
 		</head>
 	<body>
 		<jsp:include page="../include/header.jsp"></jsp:include>
 		<main>
 	
 			<section style="padding-top: 170px;">
-				<div id="wrap" class="clearfix">
-					<aside class="aside">
-					<div class="logo">
-						<img class="logoImg" src="${user.uFilePath }">
-					</div>
-					<nav class="nav" style="display: block;">
-							<ul>
-								<li><a href="#">회원관리</a>
-									<ul class="subMenu">
-										<li><a href="/user/userInfo.pet">회원정보조회</a></li>
-										<li><a href="/user/checkPw.pet">회원정보수정</a></li>
-										<li><a href="/user/delete.pet">회원탈퇴</a></li>
-									</ul></li>
-								<li><a href="#">게시글관리</a>
-									<ul class="subMenu">
-										<li><a href="/user/uBoard.pet">게시글 조회</a></li>
-										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
-										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
-									</ul></li>
-								<li><a href="#">후원관리</a>
-									<ul class="subMenu">
-										<li><a href="/user/uSupport.pet">후원내역</a></li>
-										<li><a href="/user/uSupportReply.pet">후원댓글</a></li>
-									</ul></li>
-								<li><a href="#">병원관리</a>
-									<ul class="subMenu">
-										<li><a href="/user/uHospital.pet">즐겨찾는 병원</a></li>
-										<li><a href="/user/uHosReview.pet">병원리뷰</a></li>
-									</ul></li>
-							</ul>
-						</nav>
-					</aside>
+				<div id="wrap" class="clearfix" style="border: none; display: flex; justify-content: center;">
+					
 					<section class="contents">
 						<div>
 							<div class="title">
@@ -60,7 +30,7 @@
 									<img src="/resources/images/pet.png">
 								</div>
 								<div class="info_h1">
-									<h1 style="font-size: 1em; font-weight: bold;">비밀번호 확인</h1>
+									<h1 style="font-size: 1em; font-weight: bold;  width: 313px;">안녕하세요 펫라운지입니다.</h1>
 								</div>
 							</div>
 							<div class="info_hr">
@@ -68,11 +38,9 @@
 							</div>
 						</div>
 						<div>
-							<form action="/user/checkPw.pet" method="post">
+							<form action="/user/findId.pet" method="get">
 								<article class="find1">
-									<p>
-										회원님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인해주세요.
-									</p>
+									
 	
 									<div>
 	
@@ -81,17 +49,17 @@
 	
 											<div>
 												<div>
-													<p>아이디</p>
+													<p>이름</p> 
 													<!-- <p style="margin-top: 45px;">비밀번호</p> -->
 													<!-- <p>비밀번호 확인</p> -->
-													<p>비밀번호</p>
+													<p>아이디</p>
 	
 	
 												</div>
 	
 												<div style="width: 357px;">
-													<input type="text"  value="${uId }" name="uId"  id="input" readonly><br>
-													<br> <input type="password" name="uPw" placeholder="비밀번호를 입력하세요."
+													<input type="text"  value="${uOne.uName }" name="uId"  id="input" readonly><br>
+													<br> <input type="text" name="uPw"value="${uOne.uId }" readonly
 														id="input"><br> <br>
 	
 													<!-- <button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button><br> -->
@@ -101,7 +69,7 @@
 												</div>
 											</div>
 	
-											<button type="submit">확인</button>
+											<button type="button" onclick="showLogin();" style="width: 74%; margin: 0.5rem auto 0 7.4rem;">로그인</button>
 										</section>
 	
 									</div>
@@ -132,7 +100,9 @@
 			});
 	
 		
-			
+			function showLogin() {
+				location.href="/user/login.pet"
+			}
 			
 		</script>
 	

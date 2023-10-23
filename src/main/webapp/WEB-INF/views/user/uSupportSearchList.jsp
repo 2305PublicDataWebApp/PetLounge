@@ -41,7 +41,7 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/Board.pet">게시글 조회</a></li>
+										<li><a href="/user/uBoard.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
@@ -89,65 +89,84 @@
 									</div>
 								</form>
 							</div>
-							<table class="table table-borderd  table-fixed">
-								<thead>
-									<tr>
-										<th style="border-bottom: 1px solid #dee2e6;">No</th>
-										<th style="border-bottom: 1px solid #dee2e6; width: 260px">제목</th>
-										<th style="border-bottom: 1px solid #dee2e6;">후원금액</th>
-										<th style="border-bottom: 1px solid #dee2e6;">후원일</th>
-										<th style="border-bottom: 1px solid #dee2e6;">결제방법</th>
-									</tr>
-								</thead>
-								<tbody>
-								<c:forEach items="${sList}" var="sList" varStatus="i">
-									<c:url var="detailUrl" value="/support/detail.pet">
-							            <c:param name="sNo" value="${sList.sNo}"></c:param>
-							        </c:url>
-								    <tr onclick="window.location.href='${detailUrl}'" id="tr">
-								        <td>${i.count}</td>
-								       <c:set var="inputString" value="${sList.sTitle}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
-											<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
-											    <c:choose>
-											        <c:when test="${fn:length(inputString) > 3}"> <!-- 만약 문자열 길이가 5를 초과한다면 -->
-											            <c:set var="truncatedString" value="${fn:substring(inputString, 0, 12)}..." /> <!-- 문자열을 자르고 "..."을 추가하여 truncatedString 변수에 저장 -->
-											            <c:out value="${truncatedString}" /> <!-- truncatedString을 출력 -->
-											        </c:when>
-											        <c:otherwise>
-											            <c:out value="${inputString}" /> <!-- 그렇지 않으면 원래 문자열을 출력 -->
-											        </c:otherwise>
-											    </c:choose>
-											</td>
-    								    <td><fmt:formatNumber value="${sList.sHAmount}" pattern="#,###" /></td>
-<%-- 								        <td>${sList.sHAmount}</td> --%>
-								        <c:set var="formattedDate" value="${fn:split(sList.sHPaydate, ' ')}" />
-										<c:set var="dateParts" value="${fn:split(formattedDate[0], '-')}"/>
-										<td>${dateParts[0]}.${dateParts[1]}.${dateParts[2]}</td>
-										<td>
-										  <c:choose>
-										    <c:when test="${sList.sHPaytype == 'kakaopay'}"><img src="/resources/images/user/kakaoLogo2.png" style="width: 30px; height: 30px"></c:when>
-										    <c:when test="${sList.sHPaytype == 'creditcard'}"><img src="/resources/images/user/card_credit.png" style="width: 30px; height: 30px"></c:when>
-										    <c:otherwise>${sList.sHPaytype}</c:otherwise>
-										  </c:choose>
-										</td>
-<%-- 								        <td>${sList.sHPaytype}</td> --%>
-								    </tr>
-								</c:forEach>
+						<table class="table table-borderd  table-fixed">
+							<thead>
+								<tr>
+									<th style="border-bottom: 1px solid #dee2e6;">No</th>
+									<th style="border-bottom: 1px solid #dee2e6; width: 260px">제목</th>
+									<th style="border-bottom: 1px solid #dee2e6;">후원금액</th>
+									<th style="border-bottom: 1px solid #dee2e6;">후원일</th>
+									<th style="border-bottom: 1px solid #dee2e6;">결제방법</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:choose>
+									<c:when test="${empty sList }">
+										<tr>
+											<td class="right1" id="none" colspan="5"><i
+												class="bi bi-file-earmark-x" id="fail"></i>검색결과가 없습니다!</td>
+										</tr>
+										<script>
+											// 검색 결과가 없을 때, pagination 숨기기
+											$(document).ready(function() {
+												$(".page").hide();
+											});
+										</script>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${sList}" var="sList" varStatus="i">
+											<c:url var="detailUrl" value="/support/detail.pet">
+												<c:param name="sNo" value="${sList.sNo}"></c:param>
+											</c:url>
+											<tr onclick="window.location.href='${detailUrl}'" id="tr">
+												<td>${(totalCount - i.index) - ((aInfo.currentPage - 1) * aInfo.recordCountPerPage)}</td>
+												<c:set var="inputString" value="${sList.sTitle}" />
+												<!-- sList.sTitle 값을 inputString 변수에 저장 -->
+												<td style="text-align: left; padding-left: 25px;">
+													<!-- 왼쪽 정렬 스타일을 적용 --> <c:choose>
+														<c:when test="${fn:length(inputString) > 3}">
+															<!-- 만약 문자열 길이가 5를 초과한다면 -->
+															<c:set var="truncatedString"
+																value="${fn:substring(inputString, 0, 12)}..." />
+															<!-- 문자열을 자르고 "..."을 추가하여 truncatedString 변수에 저장 -->
+															<c:out value="${truncatedString}" />
+															<!-- truncatedString을 출력 -->
+														</c:when>
+														<c:otherwise>
+															<c:out value="${inputString}" />
+															<!-- 그렇지 않으면 원래 문자열을 출력 -->
+														</c:otherwise>
+													</c:choose>
+												</td>
+												<td><fmt:formatNumber value="${sList.sHAmount}"
+														pattern="#,###" /></td>
+												<%-- 								        <td>${sList.sHAmount}</td> --%>
+												<c:set var="formattedDate"
+													value="${fn:split(sList.sHPaydate, ' ')}" />
+												<c:set var="dateParts"
+													value="${fn:split(formattedDate[0], '-')}" />
+												<td>${dateParts[0]}.${dateParts[1]}.${dateParts[2]}</td>
+												<td><c:choose>
+														<c:when test="${sList.sHPaytype == 'kakaopay'}">
+															<img src="/resources/images/user/kakaoLogo2.png"
+																style="width: 30px; height: 30px">
+														</c:when>
+														<c:when test="${sList.sHPaytype == 'creditcard'}">
+															<img src="/resources/images/user/card_credit.png"
+																style="width: 30px; height: 30px">
+														</c:when>
+														<c:otherwise>${sList.sHPaytype}</c:otherwise>
+													</c:choose></td>
+												<%-- 								        <td>${sList.sHPaytype}</td> --%>
+											</tr>
+										</c:forEach>
 
-<%-- 									<c:forEach items="${sList }" var="sList" varStatus="i"> --%>
-<!-- 										<tr> -->
-<%-- 											<td>${i.count }</td> --%>
-<%-- 											<c:url var="detailUrl" value="/support/detail.pet"> --%>
-<%-- 												<c:param name="sNo" value="${sList.sNo }"></c:param> --%>
-<%-- 											</c:url> --%>
-<%-- 											<td><a href="${detailUrl }">${sList.sTitle }</a></td> --%>
-<%-- 											<td>${sList.sHAmount }</td> --%>
-<%-- 											<td>${sList.sHPaydate }</td> --%>
-<%-- 											<td>${sList.sHPaytype }</td> --%>
-<!-- 										</tr> -->
-<%-- 									</c:forEach> --%>
-								</tbody>
-							</table><br><br>
+									</c:otherwise>
+								</c:choose>
+
+							</tbody>
+						</table>
+						<br><br>
 							<div aria-label="Page navigation example" class="page">
 							
 							<c:url var="prevUrl" value="/user/searchSupport.pet">

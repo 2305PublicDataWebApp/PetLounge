@@ -98,7 +98,7 @@
 
 	
 	<!--전체 즐겨찾기 병원 갯수 -->
-	<select id="selectListCount" resultType="_int">
+	<select id="selectHosListCount" resultType="_int">
 		SELECT COUNT (*) FROM
 		H_BOOKMARK_TBL WHERE U_ID = #{ uId }
 	</select>
@@ -112,7 +112,7 @@
 	</select>
 
 	<!-- 즐겨찾는 병원 검색 수 -->
-	<select id="selectListByKeywordCount" resultType="_int">
+	<select id="selectHosSearchListByKeywordCount" resultType="_int">
 		SELECT COUNT(*) FROM HOSPITAL_TBL H
 		JOIN H_BOOKMARK_TBL B ON B.H_NO = H.H_NO
 		WHERE B.U_ID = #{uId }
@@ -383,5 +383,16 @@
 		</if>
 		ORDER BY S.S_NO DESC
 	</select>
+	
+	<select id="selectFindId" resultType="User">
+		SELECT * FROM USER_TBL WHERE
+		U_NAME = #{uName} AND U_EMAIL = #{uEmail} AND U_STATUS = 'Y'
+	</select>
+	
+	<select id="selectFindPw" resultType="User">
+		SELECT * FROM USER_TBL WHERE
+		U_NAME = #{uName} AND U_ID = #{uId} AND U_STATUS = 'Y'
+	</select>
+
 
 </mapper>

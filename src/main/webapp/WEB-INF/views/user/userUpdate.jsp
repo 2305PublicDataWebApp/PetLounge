@@ -37,7 +37,7 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/Board.pet">게시글 조회</a></li>
+										<li><a href="/user/uBoard.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
@@ -184,6 +184,16 @@
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
+	let idMsg;
+	let passMsg;
+	let rePassMsg;
+	let nickMsg;
+	let emailMsg;
+	let conNumMsg;
+	let phoneMsg;
+	let addrMsg;
+	
+	
 		// 클릭했을 때
 		$(".nav > ul > li > a").click(function(e) {
 			e.preventDefault();
@@ -203,6 +213,7 @@
 						oncomplete : function(data) {
 							document.querySelector("#userZipcode").value = data.zonecode;
 							document.querySelector("#userAddr").value = data.roadAddress;
+							addrMsg = "success";
 						}
 					}).open();
 		}
@@ -295,9 +306,8 @@
       //닉네임 중복확인 및 유효성 검사
         $(document).ready(function() {
             $("#uNickName").on("change", function() {
-                var uNickName = $("#uNickName").val();
-
-                $.ajax({
+	        	var uNickName = $("#uNickName").val();
+            	$.ajax({
                     url: "/user/checkNick.pet",
                     type: "POST",
                     data: {
@@ -307,8 +317,9 @@
                         var result = JSON.parse(data);
 
                         if (result[0] === "Valid" && result[1] === "Unique") {
-                            $("#duplNickResult").removeClass("error").addClass("success").css("color", "green");;
+                            $("#duplNickResult").removeClass("error").addClass("success").css("color", "green");
                             $("#duplNickResult").text("사용 가능한 닉네임입니다.");
+                            nickMsg = "success";
                         } else if (result[0] === "Valid" && result[1] === "NotUnique") {
                             $("#duplNickResult").removeClass("success").addClass("error");
                             $("#duplNickResult").text("중복된 닉네임입니다.");
@@ -325,41 +336,51 @@
                 });
             });
         });
+
+
+// $(document).ready(function() {
+//     var prevNickName = $("#uNickName").val(); // 이전 닉네임을 저장
+
+//     $("#join2").on("click", function(event) {
+//         // 이전 닉네임과 현재 입력된 닉네임 비교
+//         if (prevNickName !== $("#uNickName").val()) {
+//             // 닉네임이 변경되었을 때만 ajax 요청 실행
+//             prevNickName = $("#uNickName").val(); // 현재 입력된 닉네임으로 업데이트
+//             // 이후 ajax 요청 및 유효성 검사 코드를 실행
+//             $.ajax({
+//                 url: "/user/checkNick.pet",
+//                 type: "POST",
+//                 data: {
+//                     "uNickName": prevNickName
+//                 },
+//                 async: false,
+//                 success: function(data) {
+//                     // ...
+//                 },
+//                 error: function() {
+//                     // ...
+//                 }
+//             });
+//         }
+
+//         // 이후의 유효성 검사 및 가입 처리 코드를 실행
+//         // ...
+//     });
+// });
+
+
+
+
+
+
+
+
         
       
       	//이메일 중복확인 및 유효성 검사
         $(document).ready(function() {
             $("#uEmailPrefix").on("change", function() {
-                var uEmailPrefix = $("#uEmailPrefix").val();
-				var uEmailSuffix = $("#uEmailSuffix").val();
-				var uEmail = uEmailPrefix +"@"+ uEmailSuffix;
-				
-                $.ajax({
-                    url: "/user/checkEmail.pet",
-                    type: "POST",
-                    data: {
-                        "uEmail": uEmail
-                    },
-                    success: function(data) {
-                        var result = JSON.parse(data);
-
-                        if (result[0] === "Valid" && result[1] === "Unique") {
-                            $("#duplEmailResult").removeClass("error").addClass("success").css("color", "green");
-                            $("#duplEmailResult").text("사용 가능한 이메일입니다.");
-                        } else if (result[0] === "Valid" && result[1] === "NotUnique") {
-                            $("#duplEmailResult").removeClass("success").addClass("error");
-                            $("#duplEmailResult").text("중복된 이메일입니다.");
-                        } else if (result[0] === "Invalid" && result[1] === "Unique") {
-                            $("#duplEmailResult").removeClass("success").addClass("error");
-                            $("#duplEmailResult").text("이메일은 한글 문자 또는 영문자 5자 이하 입니다.");
-                        }  else {
-                            $("#duplEmailResult").text("ajax 오류 관리자 문의 바람");
-                        }
-                    },
-                    error: function() {
-                        alert("ajax 오류, 큰일");
-                    }
-                });
+                
             });
         });
         
@@ -368,30 +389,7 @@
         //비밀번호 유효성 검사
         $(document).ready(function() {
             $("#uPw").on("change", function() {
-                var uPw = $("#uPw").val();
-
-                $.ajax({
-                    url: "/user/checkPwVal.pet",
-                    type: "POST",
-                    data: {
-                        "uPw": uPw
-                    },
-                    success: function(data) {
-
-                        if (data === "Valid") {
-                            $("#duplPwResult").removeClass("error").addClass("success").css("color", "green");;
-                            $("#duplPwResult").text("사용 가능한 비밀번호입니다.");
-                        } else if (data === "Invalid") {
-                            $("#duplPwResult").removeClass("success").addClass("error");
-                            $("#duplPwResult").text("비밀번호는 영문과 숫자 조합이어야 하며, 1~10자여야 합니다.");
-                        }   else {
-                            $("#duplPwResult").text("ajax 오류 관리자 문의 바람");
-                        }
-                    },
-                    error: function() {
-                        alert("ajax 오류, 큰일");
-                    }
-                });
+                
             });
         });
         
@@ -399,32 +397,7 @@
       //비밀번호 일치 확인
         $(document).ready(function() {
             $("#uPwRe").on("change", function() {
-                var uPwRe = $("#uPwRe").val();
-                var uPw = $("#uPw").val();
-
-                $.ajax({
-                    url: "/user/checkRePw.pet",
-                    type: "POST",
-                    data: {
-                        "uPwRe": uPwRe,
-                        "uPw": uPw
-                    },
-                    success: function(data) {
-
-                        if (data === "success") {
-                            $("#duplPwReResult").removeClass("error").addClass("success").css("color", "green");;
-                            $("#duplPwReResult").text("비밀번호 일치");
-                        } else if (data === "error") {
-                            $("#duplPwReResult").removeClass("success").addClass("error");
-                            $("#duplPwReResult").text("비밀번호가 일치하지 않습니다.");
-                        }   else {
-                            $("#duplPwReResult").text("ajax 오류 관리자 문의 바람");
-                        }
-                    },
-                    error: function() {
-                        alert("ajax 오류, 큰일");
-                    }
-                });
+                
             });
         });
   
@@ -433,30 +406,7 @@
         // 전화번호 유효성 검사
         $(document).ready(function() {
             $("#uPhone").on("change", function() {
-                var uPhone = $("#uPhone").val();
-
-                $.ajax({
-                    url: "/user/checkPhone.pet",
-                    type: "POST",
-                    data: {
-                        "uPhone": uPhone
-                    },
-                    success: function(data) {
-
-                        if (data === "Valid") {
-                            $("#duplPhoneResult").removeClass("error").addClass("success").css("color", "green");
-                            $("#duplPhoneResult").text("사용 가능한 전화번호입니다.");
-                        } else if (data === "Invalid") {
-                            $("#duplPhoneResult").removeClass("success").addClass("error");
-                            $("#duplPhoneResult").text("전화번호는 숫자 11자리여야 합니다.");
-                        }   else {
-                            $("#duplPhoneResult").text("ajax 오류 관리자 문의 바람");
-                        }
-                    },
-                    error: function() {
-                        alert("ajax 오류, 큰일");
-                    }
-                });
+                
             });
         });
         
@@ -505,7 +455,8 @@
                    $("#check-certification-num").attr("value", "true");
                    $("#user-email-check").attr("readonly", "true");
                    $("#duplEmailResult").text("인증 완료").removeClass("error").addClass("success").css("color", "green");
-                } else {
+                   conNumMsg = "success";
+        	   } else {
                    alert("작성한 인증번호가 다릅니다.");
                    $("#check-certification-num").attr("value", "false");
                    $("#duplEmailResult").text("인증 실패").removeClass("success").addClass("error");
@@ -515,6 +466,186 @@
         }
      
         
+        $(document).ready(function() {
+            $("#join2").on("click", function(event) {
+            	var uPw = $("#uPw").val();
+                var uPwRe = $("#uPwRe").val();
+                var uPhone = $("#uPhone").val();
+                var uNickName = $("#uNickName").val();
+                var uEmailPrefix = $("#uEmailPrefix").val();
+				var uEmailSuffix = $("#uEmailSuffix").val();
+				var uEmail = uEmailPrefix +"@"+ uEmailSuffix;
+                $.ajax({
+                    url: "/user/checkPwVal.pet",
+                    type: "POST",
+                    data: {
+                        "uPw": uPw
+                    },
+                    async : false,
+                    success: function(data) {
+
+                        if (data === "Valid") {
+                            $("#duplPwResult").removeClass("error").addClass("success").css("color", "green");;
+                            $("#duplPwResult").text("사용 가능한 비밀번호입니다.");
+                            passMsg = "success";
+                        } else if (data === "Invalid") {
+                            $("#duplPwResult").removeClass("success").addClass("error");
+                            $("#duplPwResult").text("비밀번호는 영문과 숫자 조합이어야 하며, 1~10자여야 합니다.");
+                        }   else {
+                            $("#duplPwResult").text("ajax 오류 관리자 문의 바람");
+                        }
+                    },
+                    error: function() {
+                        alert("ajax 오류, 큰일");
+                    }
+                });
+                
+                $.ajax({
+                    url: "/user/checkRePw.pet",
+                    type: "POST",
+                    data: {
+                        "uPwRe": uPwRe,
+                        "uPw": uPw
+                    },
+                    async : false,
+                    success: function(data) {
+
+                        if (data === "success") {
+                            $("#duplPwReResult").removeClass("error").addClass("success").css("color", "green");;
+                            $("#duplPwReResult").text("비밀번호 일치");
+                            rePassMsg = "success";
+                        } else if (data === "error") {
+                            $("#duplPwReResult").removeClass("success").addClass("error");
+                            $("#duplPwReResult").text("비밀번호가 일치하지 않습니다.");
+                        }   else {
+                            $("#duplPwReResult").text("ajax 오류 관리자 문의 바람");
+                        }
+                    },
+                    error: function() {
+                        alert("ajax 오류, 큰일");
+                    }
+                });
+
+                
+                $.ajax({
+                    url: "/user/checkNick.pet",
+                    type: "POST",
+                    data: {
+                        "uNickName": uNickName
+                    },
+                    async : false,
+                    success: function(data) {
+                        var result = JSON.parse(data);
+
+                        if (result[0] === "Valid" && result[1] === "Unique") {
+                            $("#duplNickResult").removeClass("error").addClass("success").css("color", "green");;
+                            $("#duplNickResult").text("사용 가능한 닉네임입니다.");
+                            nickMsg = "success";
+                        } else if (result[0] === "Valid" && result[1] === "NotUnique") {
+                            $("#duplNickResult").removeClass("success").addClass("error");
+                            $("#duplNickResult").text("중복된 닉네임입니다.");
+                        } else if (result[0] === "Invalid" && result[1] === "Unique") {
+                            $("#duplNickResult").removeClass("success").addClass("error");
+                            $("#duplNickResult").text("닉네임은 한글 문자 5자 이하 또는 영문자 5자 이하여야 합니다.");
+                        }  else {
+                            $("#duplNickResult").text("ajax 오류 관리자 문의 바람");
+                        }
+                    },
+                    error: function() {
+                        alert("ajax 오류, 큰일");
+                    }
+                });
+				
+                
+                $.ajax({
+                    url: "/user/checkEmail.pet",
+                    type: "POST",
+                    data: {
+                        "uEmail": uEmail
+                    },
+                    async : false,
+                    success: function(data) {
+                        var result = JSON.parse(data);
+
+                        if (result[0] === "Valid" && result[1] === "Unique") {
+                            $("#duplEmailResult").removeClass("error").addClass("success").css("color", "green");
+                            $("#duplEmailResult").text("사용 가능한 이메일입니다.");
+                            emailMsg = "success";
+                        } else if (result[0] === "Valid" && result[1] === "NotUnique") {
+                            $("#duplEmailResult").removeClass("success").addClass("error");
+                            $("#duplEmailResult").text("중복된 이메일입니다.");
+                        } else if (result[0] === "Invalid" && result[1] === "Unique") {
+                            $("#duplEmailResult").removeClass("success").addClass("error");
+                            $("#duplEmailResult").text("이메일은 한글 문자 또는 영문자 5자 이하 입니다.");
+                        }  else {
+                            $("#duplEmailResult").text("ajax 오류 관리자 문의 바람");
+                        }
+                    },
+                    error: function() {
+                        alert("ajax 오류, 큰일");
+                    }
+                });
+                $.ajax({
+                    url: "/user/checkPhone.pet",
+                    type: "POST",
+                    data: {
+                        "uPhone": uPhone
+                    },
+                    async : false,
+                    success: function(data) {
+
+                        if (data === "Valid") {
+                            $("#duplPhoneResult").removeClass("error").addClass("success").css("color", "green");
+                            $("#duplPhoneResult").text("사용 가능한 전화번호입니다.");
+                            phoneMsg = "success";
+                        } else if (data === "Invalid") {
+                            $("#duplPhoneResult").removeClass("success").addClass("error");
+                            $("#duplPhoneResult").text("전화번호는 숫자 11자리여야 합니다.");
+                        }   else {
+                            $("#duplPhoneResult").text("ajax 오류 관리자 문의 바람");
+                        }
+                    },
+                    error: function() {
+                        alert("ajax 오류, 큰일");
+                    }
+                });
+                if(emailMsg !== "success" && typeof emailMsg !== "undefined") confirmNumber();
+                
+                // 모든 유효성 검사가 success인 경우에만 가입 처리
+                if (passMsg === "success" && rePassMsg === "success" && nickMsg === "success" &&
+                    emailMsg === "success" && conNumMsg === "success" && phoneMsg === "success") {
+                    // 여기에서 가입 처리 로직을 실행
+                    
+                    
+                } else {
+                    // 하나라도 유효성 검사에서 실패한 경우 메시지를 표시하고 넘어가지 않음
+                    event.preventDefault(); // 폼 제출을 막음
+//                     displayErrorMessage(idMsg, "아이디 입력 확인"); // 아이디 에러 메시지 표시
+                    displayErrorMessage(passMsg, "비밀번호 입력 확인"); // 비밀번호 에러 메시지 표시
+                    displayErrorMessage(rePassMsg, "비밀번호 입력 확인"); // 비밀번호 확인 에러 메시지 표시
+                    displayErrorMessage(nickMsg, "닉네임 입력 확인"); // 닉네임 에러 메시지 표시
+                    displayErrorMessage(emailMsg, "이메일 입력 확인"); // 이메일 에러 메시지 표시
+                    displayErrorMessage(conNumMsg, "인증번호 입력 확인"); // 인증 번호 에러 메시지 표시
+                    displayErrorMessage(phone, "전화번호 입력 확인"); // 전화번호 에러 메시지 표시
+                    displayErrorMessage(addr, "주소 입력 확인"); // 주소 에러 메시지 표시
+                    function displayErrorMessage(message, field) {
+                        if (message !== "success") {
+                            alert("Error in " + field + ": " + message);
+                        }
+                    }
+
+//                     displayErrorMessage(idMsg, "아이디");
+                    displayErrorMessage(passMsg, "비밀번호");
+                    displayErrorMessage(rePassMsg, "비밀번호 확인");
+                    displayErrorMessage(nickMsg, "닉네임");
+                    displayErrorMessage(emailMsg, "이메일");
+                    displayErrorMessage(conNumMsg, "인증 번호");
+                    displayErrorMessage(phone, "전화번호");
+                    displayErrorMessage(addr, "주소");
+					alert("전부 기입해주세요.")
+                }
+            });
+        });
             
 	</script>
 </body>

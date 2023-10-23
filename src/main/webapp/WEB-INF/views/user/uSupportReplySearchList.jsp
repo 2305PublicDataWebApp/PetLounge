@@ -41,7 +41,7 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/Board.pet">게시글 조회</a></li>
+										<li><a href="/user/uBoard.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
@@ -100,42 +100,58 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${sRList }" var="sRList" varStatus="i">
-										<c:url var="detailUrl" value="/support/detail.pet">
-											<c:param name="sNo" value="${sRList.sNo }"></c:param>
-										</c:url>
-										<tr onclick="window.location.href='${detailUrl}'" id="tr">
-											<td>${i.count }</td>
-<%-- 											<td>${sRList.sTitle }</td> --%>
-											<c:set var="inputString" value="${sRList.sTitle}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
-											<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
-											    <c:choose>
-											        <c:when test="${fn:length(inputString) > 9}"> <!-- 만약 문자열 길이가 5를 초과한다면 -->
-											            <c:set var="truncatedString" value="${fn:substring(inputString, 0, 9)}..." /> <!-- 문자열을 자르고 "..."을 추가하여 truncatedString 변수에 저장 -->
-											            <c:out value="${truncatedString}" /> <!-- truncatedString을 출력 -->
-											        </c:when>
-											        <c:otherwise>
-											            <c:out value="${inputString}" /> <!-- 그렇지 않으면 원래 문자열을 출력 -->
-											        </c:otherwise>
-											    </c:choose>
-											</td>
-<%-- 											<td>${sRList.sRContent}</td> --%>
-											<c:set var="inputString" value="${sRList.sRContent}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
-											<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
-											    <c:choose>
-											        <c:when test="${fn:length(inputString) > 9}"> <!-- 만약 문자열 길이가 5를 초과한다면 -->
-											            <c:set var="truncatedString" value="${fn:substring(inputString, 0, 9)}..." /> <!-- 문자열을 자르고 "..."을 추가하여 truncatedString 변수에 저장 -->
-											            <c:out value="${truncatedString}" /> <!-- truncatedString을 출력 -->
-											        </c:when>
-											        <c:otherwise>
-											            <c:out value="${inputString}" /> <!-- 그렇지 않으면 원래 문자열을 출력 -->
-											        </c:otherwise>
-											    </c:choose>
-											</td>
-											<td><fmt:formatDate value="${sRList.sRCreate}" pattern="yyyy.MM.dd" /></td>
-<%-- 											<td>${sRList.sRCreate}</td> --%>
-										</tr>
-									</c:forEach>
+								<c:choose>
+                        		<c:when test="${empty sRList }">
+                        			<tr>
+                        				<td class="right1" id="none" colspan="5"><i class="bi bi-file-earmark-x" id="fail"></i>검색결과가 없습니다!</td>
+                        			</tr>
+                   			        <script>
+							            // 검색 결과가 없을 때, pagination 숨기기
+							            $(document).ready(function () {
+							                $(".page").hide();
+							            });
+							        </script>
+                        		</c:when>
+	                        		<c:otherwise>
+			                        	<c:forEach items="${sRList }" var="sRList" varStatus="i">
+											<c:url var="detailUrl" value="/support/detail.pet">
+												<c:param name="sNo" value="${sRList.sNo }"></c:param>
+											</c:url>
+											<tr onclick="window.location.href='${detailUrl}'" id="tr">
+											<td>${(totalCount - i.index) - ((aInfo.currentPage - 1) * aInfo.recordCountPerPage)}</td> 
+	
+	<%-- 											<td>${sRList.sTitle }</td> --%>
+												<c:set var="inputString" value="${sRList.sTitle}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
+												<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
+												    <c:choose>
+												        <c:when test="${fn:length(inputString) > 9}"> <!-- 만약 문자열 길이가 5를 초과한다면 -->
+												            <c:set var="truncatedString" value="${fn:substring(inputString, 0, 9)}..." /> <!-- 문자열을 자르고 "..."을 추가하여 truncatedString 변수에 저장 -->
+												            <c:out value="${truncatedString}" /> <!-- truncatedString을 출력 -->
+												        </c:when>
+												        <c:otherwise>
+												            <c:out value="${inputString}" /> <!-- 그렇지 않으면 원래 문자열을 출력 -->
+												        </c:otherwise>
+												    </c:choose>
+												</td>
+	<%-- 											<td>${sRList.sRContent}</td> --%>
+												<c:set var="inputString" value="${sRList.sRContent}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
+												<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
+												    <c:choose>
+												        <c:when test="${fn:length(inputString) > 9}"> <!-- 만약 문자열 길이가 5를 초과한다면 -->
+												            <c:set var="truncatedString" value="${fn:substring(inputString, 0, 9)}..." /> <!-- 문자열을 자르고 "..."을 추가하여 truncatedString 변수에 저장 -->
+												            <c:out value="${truncatedString}" /> <!-- truncatedString을 출력 -->
+												        </c:when>
+												        <c:otherwise>
+												            <c:out value="${inputString}" /> <!-- 그렇지 않으면 원래 문자열을 출력 -->
+												        </c:otherwise>
+												    </c:choose>
+												</td>
+												<td><fmt:formatDate value="${sRList.sRCreate}" pattern="yyyy.MM.dd" /></td>
+	<%-- 											<td>${sRList.sRCreate}</td> --%>
+											</tr>
+										</c:forEach>		                    		
+	                        		</c:otherwise>
+	                        	</c:choose>	
 								</tbody>
 							</table><br><br>
 							

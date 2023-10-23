@@ -38,7 +38,7 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/Board.pet">게시글 조회</a></li>
+										<li><a href="/user/uBoard.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
@@ -103,7 +103,7 @@
 											<c:param name="fNo" value="${bList.fNo }"></c:param>
 										</c:url>
 										 <tr onclick="window.location.href='${detailUrl}'" id="tr"  style="cursor: pointer;">
-											<td>${i.count }</td>
+											<td>${(totalCount - i.index) - ((aInfo.currentPage - 1) * aInfo.recordCountPerPage)}</td>
 <%-- 											<td>${bList.fTitle }</td> --%>
 											<c:set var="inputString" value="${bList.fTitle}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
 											<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
@@ -129,7 +129,7 @@
 							
 							<div aria-label="Page navigation example" class="page">
 							
-						        <c:url var="prevUrl" value="/user/Board.pet">
+						        <c:url var="prevUrl" value="/user/uBoard.pet">
 									<c:param name="page" value="${aInfo.startNavi -1 }"></c:param>
 									<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
 									<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
@@ -142,7 +142,7 @@
 						            </c:if>
 					            
 						            <c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }" var="p">
-										<c:url var="pageUrl" value="/user/Board.pet">
+										<c:url var="pageUrl" value="/user/uBoard.pet">
 											<c:param name="page" value="${p }"></c:param>
 											<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
 											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
@@ -156,7 +156,7 @@
 										</c:if>							            </c:forEach>
 					            
 						            <c:if test="${aInfo.endNavi != aInfo.naviTotalCount }">
-										<c:url var="nextUrl" value="/user/Board.pet"> 
+										<c:url var="nextUrl" value="/user/uBoard.pet"> 
 											<c:param name="page" value="${aInfo.endNavi + 1 }"></c:param>
 											<c:param name="searchCondition" value="${paramMap.searchCondition }"></c:param>
 											<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
@@ -187,12 +187,6 @@
 	            // 다른 모든 하위 메뉴 닫기
 	            $(".subMenu").not(subMenu).slideUp();
 	        });
-	        
-	        
-	        
-// 			const showDetail = (url) => {
-// 				location.href = url;
-// 			}
 	   
 	        
 	    </script>

@@ -37,7 +37,7 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/Board.pet">게시글 조회</a></li>
+										<li><a href="/user/uBoard.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
@@ -164,20 +164,7 @@
 				// 다른 모든 하위 메뉴 닫기
 				$(".subMenu").not(subMenu).slideUp();
 			});
-	
-			//클릭했을 때
-			// $(".nav > ul > li").click(function (e) {
-			//     e.preventDefault();
-			//     $(".nav > ul > li").removeClass("active");
-			//     $(this).addClass("active");
-			// });
-	
-			//마우스 오버 효과
-			// $(".nav > ul > li > a").hover(function(){
-			//     $(this).next('.subMenu').not(':animated').slideDown();
-			//     }, function(){
-			//     $(this).next('.subMenu').not(':animated').slideUp();
-			// });
+
 		</script>
 	
 	

@@ -39,7 +39,7 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/Board.pet">게시글 조회</a></li>
+										<li><a href="/user/uBoard.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
@@ -103,7 +103,8 @@
 											<c:param name="hNo" value="${hRList.hNo }"></c:param>
 										</c:url>
 										<tr onclick="window.location.href='${detailUrl}'" id="tr">
-											<td>${i.count }</td>
+<%-- 										<c:forEach var="notice" items="${noticeList }" varStatus="n"> --%>
+											<td>${(totalCount - i.index) - ((aInfo.currentPage - 1) * aInfo.recordCountPerPage)}</td>
 										    <td>${hRList.hName}</td>
 <%-- 											<td>${hRList.hRContent }</td> --%>
 											<c:set var="inputString" value="${hRList.hRContent}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
@@ -191,19 +192,7 @@
 				$(".subMenu").not(subMenu).slideUp();
 			});
 	
-			//클릭했을 때
-			// $(".nav > ul > li").click(function (e) {
-			//     e.preventDefault();
-			//     $(".nav > ul > li").removeClass("active");
-			//     $(this).addClass("active");
-			// });
-	
-			//마우스 오버 효과
-			// $(".nav > ul > li > a").hover(function(){
-			//     $(this).next('.subMenu').not(':animated').slideDown();
-			//     }, function(){
-			//     $(this).next('.subMenu').not(':animated').slideUp();
-			// });
+
 		</script>
 	
 	

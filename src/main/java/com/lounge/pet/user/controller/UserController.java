@@ -80,9 +80,9 @@ public class UserController {
 		if (user != null) {
 			mv.setViewName("redirect:/user/update.pet");
 		} else {
-			mv.addObject("msg", "비밀번호가 일치하지 않습니다.");
+			mv.addObject("msg", "비밀번호 불일치.");
 			mv.addObject("url", "/user/checkPw.pet");
-			mv.setViewName("common/alert"); // 오류 페이지로 이동
+			mv.setViewName("common/alert"); 
 		}
 		return mv;
 	}
@@ -222,7 +222,7 @@ public class UserController {
 		} catch (Exception e) { // 예외처리
 			mv.addObject("msg", "관리자에게 문의바랍니다.");
 			mv.addObject("error", e.getMessage());
-			mv.addObject("url", "/user/register.pet");
+			mv.addObject("url", "/home.pet");
 			mv.setViewName("common/alert");
 		}
 
@@ -508,7 +508,7 @@ public class UserController {
 	}
 
 	// 나의 게시글 페이지 user/Board.pet
-	@RequestMapping(value = "/user/Board.pet", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/uBoard.pet", method = RequestMethod.GET)
 	public ModelAndView userBoardPage(ModelAndView mv, HttpSession session,
 			@RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
 
@@ -527,6 +527,7 @@ public class UserController {
 
 					mv.addObject("aInfo", aInfo);
 					mv.addObject("bList", bList);
+					mv.addObject("totalCount", totalCount);
 					mv.addObject("user", user);
 					mv.setViewName("/user/uBoardList");
 
@@ -557,6 +558,7 @@ public class UserController {
 			HttpSession session) {
 
 		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+		User user = uService.selectOneById(sessionId);
 
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("searchCondition", searchCondition);
@@ -571,12 +573,15 @@ public class UserController {
 		if (!bList.isEmpty()) {
 			model.addAttribute("paramMap", paramMap);
 			model.addAttribute("aInfo", aInfo);
+			model.addAttribute("user", user);
+			model.addAttribute("totalCount", totalCount);
 			model.addAttribute("bList", bList);
 			return "/user/uBoardSearchList";
 		} else {
 			model.addAttribute("msg", "서비스 실패");
-			model.addAttribute("url", "/user/uHospital.pet");
-			return "common/errorPage";
+			model.addAttribute("url", "/home.pet");
+			model.addAttribute("user", user);
+			return "/user/uBoardSearchList";
 		}
 	}
 
@@ -648,12 +653,13 @@ public class UserController {
 				User user = uService.selectOneById(sessionId);
 				if (user != null) {
 
-					Integer totalCount = uService.getListCount(sessionId);
+					Integer totalCount = uService.getHosListCount(sessionId);
 					UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
 
 					List<Hospital> hList = uService.selectHos(sessionId, aInfo);
 
 					mv.addObject("aInfo", aInfo);
+					mv.addObject("totalCount", totalCount);
 					mv.addObject("hList", hList);
 					mv.addObject("user", user);
 					mv.setViewName("/user/uHospitalList");
@@ -685,12 +691,14 @@ public class UserController {
 			HttpSession session) {
 
 		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+		User user = uService.selectOneById(sessionId);
+		
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("searchCondition", searchCondition);
 		paramMap.put("searchKeyword", searchKeyword);
 		paramMap.put("uId", sessionId);
 
-		int totalCount = uService.getListCount(paramMap);
+		int totalCount = uService.getHosSearchListCount(paramMap);
 		UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
 
 		List<Hospital> hList = uService.searchHosByKeyword(aInfo, paramMap);
@@ -700,12 +708,15 @@ public class UserController {
 //			model.addAttribute("searchKeyword", searchKeyword);
 			model.addAttribute("paramMap", paramMap);
 			model.addAttribute("aInfo", aInfo);
+			model.addAttribute("user", user);
+			model.addAttribute("totalCount", totalCount);
 			model.addAttribute("hList", hList);
 			return "/user/uHospitalSearchList";
 		} else {
 			model.addAttribute("msg", "서비스 실패");
 			model.addAttribute("url", "/user/uHospital.pet");
-			return "common/errorPage";
+			model.addAttribute("user", user);
+			return "/user/uHospitalSearchList";
 		}
 	}
 
@@ -726,6 +737,7 @@ public class UserController {
 
 					List<Hospital> hRList = uService.selectHosRe(sessionId, aInfo);
 
+					mv.addObject("totalCount", totalCount);
 					mv.addObject("aInfo", aInfo);
 					mv.addObject("hRList", hRList);
 					mv.addObject("user", user);
@@ -758,6 +770,8 @@ public class UserController {
 			HttpSession session) {
 
 		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+		User user = uService.selectOneById(sessionId);
+		
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("searchCondition", searchCondition);
 		paramMap.put("searchKeyword", searchKeyword);
@@ -770,13 +784,16 @@ public class UserController {
 
 		if (!hRList.isEmpty()) {
 			model.addAttribute("paramMap", paramMap);
+			model.addAttribute("totalCount",totalCount);
 			model.addAttribute("aInfo", aInfo);
+			model.addAttribute("user", user);
 			model.addAttribute("hRList", hRList);
 			return "/user/uHospitalReviewSearchList";
 		} else {
 			model.addAttribute("msg", "서비스 실패");
-			model.addAttribute("url", "/user/uHospital.pet");
-			return "common/errorPage";
+			model.addAttribute("user", user);
+			model.addAttribute("url", "/home.pet");
+			return "/user/uHospitalReviewSearchList";
 		}
 
 	}
@@ -799,6 +816,7 @@ public class UserController {
 
 					List<SupportReply> sList = uService.selectSupport(sessionId, aInfo);
 
+					mv.addObject("totalCount", totalCount);
 					mv.addObject("aInfo", aInfo);
 					mv.addObject("sList", sList);
 					mv.addObject("user", user);
@@ -831,6 +849,8 @@ public class UserController {
 			HttpSession session) {
 
 		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+		User user = uService.selectOneById(sessionId);
+		
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("searchCondition", searchCondition);
 		paramMap.put("searchKeyword", searchKeyword);
@@ -843,16 +863,20 @@ public class UserController {
 
 		if (!sList.isEmpty()) {
 			model.addAttribute("paramMap", paramMap);
+			model.addAttribute("totalCount", totalCount);
 			model.addAttribute("aInfo", aInfo);
+			model.addAttribute("user", user);
 			model.addAttribute("sList", sList);
 			return "/user/uSupportSearchList";
 		} else {
 			model.addAttribute("msg", "서비스 실패");
-			model.addAttribute("url", "/user/uHospital.pet");
-			return "common/errorPage";
+			model.addAttribute("url", "/home.pet");
+			model.addAttribute("user", user);
+			return "/user/uSupportSearchList";
 		}
 
 	}
+	
 
 	// 나의 후원댓글 페이지 user/searchSupportReply.pet
 	@RequestMapping(value = "/user/uSupportReply.pet", method = RequestMethod.GET)
@@ -869,6 +893,7 @@ public class UserController {
 					List<UserSupport> sRList = uService.selectSupportReply(sessionId, aInfo);
 
 					mv.addObject("aInfo", aInfo);
+					mv.addObject("totalCount", totalCount);
 					mv.addObject("sRList", sRList);
 					mv.addObject("user", user);
 					mv.setViewName("/user/uSupportReplyList");
@@ -891,6 +916,7 @@ public class UserController {
 		}
 		return mv;
 	}
+	
 
 	// 나의 후원댓글 검색 페이지 user/searchSupportReply.pet
 	@RequestMapping(value = "/user/searchSupportReply.pet", method = RequestMethod.GET)
@@ -900,6 +926,8 @@ public class UserController {
 			HttpSession session) {
 
 		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+		User user = uService.selectOneById(sessionId);
+		
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("searchCondition", searchCondition);
 		paramMap.put("searchKeyword", searchKeyword);
@@ -912,16 +940,78 @@ public class UserController {
 
 		if (!sRList.isEmpty()) {
 			model.addAttribute("paramMap", paramMap);
+			model.addAttribute("totalCount", totalCount);
 			model.addAttribute("aInfo", aInfo);
+			model.addAttribute("user", user);
 			model.addAttribute("sRList", sRList);
 			return "/user/uSupportReplySearchList";
 		} else {
 			model.addAttribute("msg", "서비스 실패");
-			model.addAttribute("url", "/user/uHospital.pet");
-			return "common/errorPage";
+			model.addAttribute("user", user);
+			model.addAttribute("url", "/home.pet");
+			return "/user/uSupportReplySearchList";
 		}
 	}
 
+	
+
+	
+	// 아이디 찾기
+	@RequestMapping(value = "/user/findId.pet", method = RequestMethod.GET)
+	public ModelAndView userFindId(ModelAndView mv, @ModelAttribute User user) {
+
+		try {
+			User uOne = uService.selectFindId(user);
+			if (uOne != null) { 
+				mv.addObject("uOne", uOne);
+				mv.setViewName("/user/userIdCon");
+			} else { // 실패
+				mv.addObject("msg", "아이디 찾기 실패");
+				mv.addObject("url", "/user/login.pet");
+				mv.setViewName("common/alert");
+			}
+		} catch (Exception e) { // 예외처리
+			mv.addObject("msg", "관리자에게 문의바랍니다.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/home.pet");
+			mv.setViewName("common/alert");
+		}
+
+		return mv;
+	}
+	
+	
+	
+	
+	// 비밀번호 찾기
+	@RequestMapping(value = "/user/findPw.pet", method = RequestMethod.GET)
+	public ModelAndView userFindPw(ModelAndView mv, @ModelAttribute User user) {
+
+		try {
+			User uOne = uService.selectFindPw(user);
+			if (uOne != null) { 
+				mv.addObject("uOne", uOne);
+				mv.setViewName("/user/userPwCon");
+			} else { // 실패
+				mv.addObject("msg", "비밀번호 찾기 실패");
+				mv.addObject("url", "/user/login.pet");
+				mv.setViewName("common/alert");
+			}
+		} catch (Exception e) { // 예외처리
+			mv.addObject("msg", "관리자에게 문의바랍니다.");
+			mv.addObject("error", e.getMessage());
+			mv.addObject("url", "/home.pet");
+			mv.setViewName("common/alert");
+		}
+
+		return mv;
+	}
+	
+	
+	
+	
+	
+	
 	private Map<String, Object> saveFile(HttpServletRequest request, MultipartFile uploadFile) throws Exception {
 
 		Map<String, Object> fileMap = new HashMap<String, Object>();
@@ -994,5 +1084,8 @@ public class UserController {
 
 		return aInfo;
 	}
+
+
+	
 
 }

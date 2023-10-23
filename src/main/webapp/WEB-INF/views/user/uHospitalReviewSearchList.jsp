@@ -39,7 +39,7 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/Board.pet">게시글 조회</a></li>
+										<li><a href="/user/uBoard.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
@@ -97,13 +97,25 @@
 									</tr>
 								</thead>
 								<tbody>
-								
-									<c:forEach items="${hRList }" var="hRList" varStatus="i">
+								<c:choose>
+                        		<c:when test="${empty hRList }">
+                        			<tr>
+                        				<td class="right1" id="none" colspan="5"><i class="bi bi-file-earmark-x" id="fail"></i>검색결과가 없습니다!</td>
+                        			</tr>
+                   			        <script>
+							            // 검색 결과가 없을 때, pagination 숨기기
+							            $(document).ready(function () {
+							                $(".page").hide();
+							            });
+							        </script>
+                        		</c:when>
+                        		<c:otherwise>
+		                        	<c:forEach items="${hRList }" var="hRList" varStatus="i">
 										<c:url var="detailUrl" value="/hospital/detail.pet">
 											<c:param name="hNo" value="${hRList.hNo }"></c:param>
 										</c:url>
 										<tr onclick="window.location.href='${detailUrl}'" id="tr">
-											<td>${i.count }</td>
+											<td>${(totalCount - i.index) - ((aInfo.currentPage - 1) * aInfo.recordCountPerPage)}</td>
 											 <td>${hRList.hName}</td>
 <%-- 											<td>${hRList.hRContent }</td> --%>
 											<c:set var="inputString" value="${hRList.hRContent}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
@@ -124,8 +136,9 @@
 												<td>${modifiedDate}</td>
 <%-- 											<td>${hRList.hRCreate}</td> --%>
 										</tr>
-									</c:forEach>
-
+									</c:forEach>                      		
+                        		</c:otherwise>
+                        	</c:choose>
 								</tbody>
 							</table><br><br>
 								<div aria-label="Page navigation example" class="page">

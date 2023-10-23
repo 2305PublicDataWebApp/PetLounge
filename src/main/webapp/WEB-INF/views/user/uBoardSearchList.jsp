@@ -38,7 +38,7 @@
 									</ul></li>
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
-										<li><a href="/user/Board.pet">게시글 조회</a></li>
+										<li><a href="/user/uBoard.pet">게시글 조회</a></li>
 										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
 										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
 									</ul></li>
@@ -87,44 +87,69 @@
 									</div>
 								</form>
 							</div>
-							<table class="table table-borderd  table-fixed">
-								<thead>
-									<tr>
-										<th style="border-bottom: 1px solid #dee2e6;">No</th>
-										<th style="border-bottom: 1px solid #dee2e6;  width: 235px;">제목</th>
-										<th style="border-bottom: 1px solid #dee2e6;">작성자</th>
-										<th style="border-bottom: 1px solid #dee2e6;">작성일</th>
-										<th style="border-bottom: 1px solid #dee2e6;">조회수</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${bList }" var="bList" varStatus="i">
-										<c:url var="detailUrl" value="/board/freeDetail.pet">
-											<c:param name="fNo" value="${bList.fNo }"></c:param>
-										</c:url>
-										<tr onclick="window.location.href='${detailUrl}'" id="tr" >
-											<td>${i.count }</td>
-<%-- 											<td>${bList.fTitle }</td> --%>
-											<c:set var="inputString" value="${bList.fTitle}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
-											<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
-											    <c:choose>
-											        <c:when test="${fn:length(inputString) > 3}"> <!-- 만약 문자열 길이가 5를 초과한다면 -->
-											            <c:set var="truncatedString" value="${fn:substring(inputString, 0, 12)}..." /> <!-- 문자열을 자르고 "..."을 추가하여 truncatedString 변수에 저장 -->
-											            <c:out value="${truncatedString}" /> <!-- truncatedString을 출력 -->
-											        </c:when>
-											        <c:otherwise>
-											            <c:out value="${inputString}" /> <!-- 그렇지 않으면 원래 문자열을 출력 -->
-											        </c:otherwise>
-											    </c:choose>
-											</td>
-											<td>${bList.uId}</td>
-											<c:set var="formattedDate" value="${fn:split(bList.fCreate, '-')}" />
-											<td>${formattedDate[0]}.${formattedDate[1]}.${formattedDate[2]}</td>
-											<td>${bList.fViewCount}</td>
+						<table class="table table-borderd  table-fixed">
+							<thead>
+								<tr>
+									<th style="border-bottom: 1px solid #dee2e6;">No</th>
+									<th style="border-bottom: 1px solid #dee2e6; width: 235px;">제목</th>
+									<th style="border-bottom: 1px solid #dee2e6;">작성자</th>
+									<th style="border-bottom: 1px solid #dee2e6;">작성일</th>
+									<th style="border-bottom: 1px solid #dee2e6;">조회수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:choose>
+									<c:when test="${empty bList }">
+										<tr>
+											<td class="right1" id="none" colspan="5"><i
+												class="bi bi-file-earmark-x" id="fail"></i>검색결과가 없습니다!</td>
 										</tr>
-									</c:forEach>
-								</tbody>
-							</table><br><br>
+										<script>
+											// 검색 결과가 없을 때, pagination 숨기기
+											$(document).ready(function() {
+												$(".page").hide();
+											});
+										</script>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${bList }" var="bList" varStatus="i">
+											<c:url var="detailUrl" value="/board/freeDetail.pet">
+												<c:param name="fNo" value="${bList.fNo }"></c:param>
+											</c:url>
+											<tr onclick="window.location.href='${detailUrl}'" id="tr">
+												<td>${(totalCount - i.index) - ((aInfo.currentPage - 1) * aInfo.recordCountPerPage)}</td>
+												<%-- 											<td>${bList.fTitle }</td> --%>
+												<c:set var="inputString" value="${bList.fTitle}" />
+												<!-- sList.sTitle 값을 inputString 변수에 저장 -->
+												<td style="text-align: left; padding-left: 25px;">
+													<!-- 왼쪽 정렬 스타일을 적용 --> <c:choose>
+														<c:when test="${fn:length(inputString) > 3}">
+															<!-- 만약 문자열 길이가 5를 초과한다면 -->
+															<c:set var="truncatedString"
+																value="${fn:substring(inputString, 0, 12)}..." />
+															<!-- 문자열을 자르고 "..."을 추가하여 truncatedString 변수에 저장 -->
+															<c:out value="${truncatedString}" />
+															<!-- truncatedString을 출력 -->
+														</c:when>
+														<c:otherwise>
+															<c:out value="${inputString}" />
+															<!-- 그렇지 않으면 원래 문자열을 출력 -->
+														</c:otherwise>
+													</c:choose>
+												</td>
+												<td>${bList.uId}</td>
+												<c:set var="formattedDate"
+													value="${fn:split(bList.fCreate, '-')}" />
+												<td>${formattedDate[0]}.${formattedDate[1]}.${formattedDate[2]}</td>
+												<td>${bList.fViewCount}</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
+
+							</tbody>
+						</table>
+						<br><br>
 							
 							<div aria-label="Page navigation example" class="page">
 							
