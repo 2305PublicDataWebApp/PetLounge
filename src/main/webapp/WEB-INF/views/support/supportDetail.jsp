@@ -37,8 +37,6 @@
         
 		<link rel="stylesheet" href="/resources/css/support/supportDetail.css">
 		
-		
-		
 		<title>펫 라운지 모금함 : 상세</title>
 	</head>
 	<body>
@@ -86,7 +84,10 @@
                             <!-- 등록 -->
                             <c:if test="${sHistoryCount != 0 }">
                             <div id="reply-create-div">
-	                            <input type="text" name="sRContent" id="reply-create-content" placeholder="응원의 댓글을 남겨주세요."></input>
+	                            <input type="text" name="sRContent" id="reply-create-content" onkeyup="fn_checkByte(this);" placeholder="응원의 댓글을 남겨주세요."></input>
+	                            <div id="reply-create-byte">
+			                    	<sup style="color:#ccc;"><span id="nowByte" style="color:#ccc;">0</span>/600bytes</sup>
+			                    </div>
 	                            <input type="submit" value="등록" id="reply-create-btn">
                             </div>
                             </c:if>
@@ -177,7 +178,10 @@
                                         </div>
                                         <div id="reply-modify-div">
                                         	<input type="hidden" value="" name="sRNo" class="s-r-no">
-                                        	<input type="text" name="sRContent" class="reply-modify-content" placeholder="댓글 내용을 수정해주세요"></input>
+                                        	<input type="text" name="sRContent" class="reply-modify-content" onkeyup="fn_checkByte_modify(this);" placeholder="댓글 내용을 수정해주세요"></input>
+                                        	<div id="reply-modify-byte">
+						                    	<sup style="color:#ccc;"><span id="modify-nowByte" style="color:#ccc;">0</span>/600bytes</sup>
+						                    </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -244,6 +248,8 @@
 			
 			        if (!sRContent.trim()) {
 			            alert("댓글 내용을 입력해주세요.");
+			        } else if(new TextEncoder().encode(sRContent).length > 600) {
+			        	alert('작성 가능한 최대 글자 수를 초과하였습니다.');
 			        } else {
 			            $.ajax({
 			                url: "/sReply/insert.pet",
@@ -251,8 +257,9 @@
 			                type: "POST",
 			                success: function (result) {
 			                    if (result == "success") {
-			                        getReplyList();
 			                        $("#reply-create-content").val("");
+			                        document.getElementById("nowByte").innerText = "0";
+			                        getReplyList();
 			                    } else {
 			                        alert("댓글 등록 실패");
 			                    }
@@ -268,28 +275,88 @@
 			$("#reply-create-btn").on("click", function() {
 				const sRContent = $("#reply-create-content").val();
 				const sNo = ${support.sNo };
-				if(!sRContent.trim()) {
-					alert("댓글 내용을 입력해주세요.");
-				} else {
-					$.ajax({
-						url : "/sReply/insert.pet",
-						data : { sRContent : sRContent, sNo : sNo },
-						type : "POST",
-						success : function(result) {
-							if(result == "success") {
-								getReplyList();
-								$("#reply-create-content").val("");
-							} else {
-								alert("댓글 등록 실패");
-							}
-						},
+				if (!sRContent.trim()) {
+		            alert("댓글 내용을 입력해주세요.");
+		        } else if(new TextEncoder().encode(sRContent).length > 600) {
+		        	alert('작성 가능한 최대 글자 수를 초과하였습니다.');
+		        } else {
+		            $.ajax({
+		                url: "/sReply/insert.pet",
+		                data: { sRContent: sRContent, sNo: sNo },
+		                type: "POST",
+		                success: function (result) {
+		                    if (result == "success") {
+		                        $("#reply-create-content").val("");
+		                        document.getElementById("nowByte").innerText = "0";
+		                        getReplyList();
+		                    } else {
+		                        alert("댓글 등록 실패");
+		                    }
+		                },
 						error : function() {
 							alert("Ajax 오류! 관리자에게 문의하세요.");
 						}
 					});
 				}
 			});
+			<!-- 글자수 제한 -->
+			// 댓글 글자수 제한 
+			// 작성
+	        function fn_checkByte(obj){
+	            const maxByte = 600; //최대 600바이트
+	            const text_val = obj.value; //입력한 문자
+	            const text_len = text_val.length; //입력한 문자수
+	            
+	            let totalByte=0;
+	            for(let i=0; i<text_len; i++){
+	            	const each_char = text_val.charAt(i);
+	                const uni_char = escape(each_char); //유니코드 형식으로 변환
+	                if(uni_char.length > 4){
+	                	// 한글 : 3Byte
+	                    totalByte += 3;
+	                }else{
+	                	// 영문,숫자,특수문자 : 1Byte
+	                    totalByte += 1;
+	                }
+	            }
+	            
+	            if(totalByte>maxByte){
+                	document.getElementById("nowByte").innerText = totalByte;
+                    document.getElementById("nowByte").style.color = "#FF7070";
+                } else{
+                	document.getElementById("nowByte").innerText = totalByte;
+                	document.getElementById("nowByte").style.color = "#ccc";
+                }
+	        }
+	        // 수정
+	        function fn_checkByte_modify(obj){
+	            const maxByte = 600; //최대 600바이트
+	            const text_val = obj.value; //입력한 문자
+	            const text_len = text_val.length; //입력한 문자수
+	            
+	            let totalByte=0;
+	            for(let i=0; i<text_len; i++){
+	            	const each_char = text_val.charAt(i);
+	                const uni_char = escape(each_char); //유니코드 형식으로 변환
+	                if(uni_char.length > 4){
+	                	// 한글 : 3Byte
+	                    totalByte += 3;
+	                }else{
+	                	// 영문,숫자,특수문자 : 1Byte
+	                    totalByte += 1;
+	                }
+	            }
+	            
+				if(totalByte>maxByte){
+					document.getElementById("modify-nowByte").innerText = totalByte;
+					document.getElementById("modify-nowByte").style.color = "#FF7070";
+				} else{
+					document.getElementById("modify-nowByte").innerText = totalByte;
+					document.getElementById("modify-nowByte").style.color = "#ccc";
+				}	
+	        }
 			
+	        <!-- 댓글 수정 -->
 			// 댓글 수정창 보이기 
 			const openModifyView = (sRNo, sRWriter, sRContent, uFilePath) => {
 				document.querySelector('.modify-user-image').src = uFilePath;
@@ -297,6 +364,10 @@
 				document.querySelector('.modify-user-nickname').innerText = sRWriter;
 				document.querySelector('.reply-modify-content').value = sRContent;
 				let modifyButton = document.querySelector('.modal-modify-btn');
+				
+				// 글자수 관련 체크
+				document.getElementById("modify-nowByte").innerText = new TextEncoder().encode(sRContent).length;
+			    document.getElementById("modify-nowByte").style.color = "inherit";
 			}
 			
 			// 댓글 수정 - 엔터
@@ -309,6 +380,8 @@
 			
 			        if (!sRContent.trim()) {
 			            alert("댓글 내용을 입력해주세요.");
+			        } else if(new TextEncoder().encode(sRContent).length > 600){
+			        	alert('작성 가능한 최대 글자 수를 초과하였습니다.');
 			        } else {
 			        	$.ajax({
 							url : "/sReply/update.pet",
@@ -335,7 +408,9 @@
 				let sRContent = $('.reply-modify-content').val();
 				if(!sRContent.trim()) {
 					alert("댓글 내용을 입력해주세요.");
-				} else {
+				} else if(new TextEncoder().encode(sRContent).length > 600){
+		        	alert('작성 가능한 최대 글자 수를 초과하였습니다.');
+		        }  else {
 					$.ajax({
 						url : "/sReply/update.pet",
 						data : { sRNo : sRNo, sRContent : sRContent},
@@ -381,7 +456,6 @@
 				});
 			}
 			
-			
 			<!-- 페이징 처리된 댓글, 후원내역 조회 -->
 			// 페이징 
 			let currentPage = 1; // 현재 페이지 
@@ -396,8 +470,7 @@
 			    return formattedDate;
 			};
 			
-			
-			
+			<!-- 댓글 -->
 			// 댓글 리스트를 불러오는 ajax Function 
 			const getReplyList = () => {
 				let sessionId = "${sessionScope.uId}";
@@ -533,11 +606,13 @@
 			    }
 			}
 			
-			// 후원 내역 갯수에 , 붙이기 
+			
+			<!-- 후원내역 -->
+			// 후원내역 갯수에 , 붙이기 
 			const formattedCount = (${totalHistoryCount }).toLocaleString();
 			$("#history-total").text(formattedCount);
 			
-			// 후원 내역 리스트를 불러오는 ajax Function 
+			// 후원내역 리스트를 불러오는 ajax Function 
 			const getHistoryList = () => {
 				const sNo = ${support.sNo };
 				$.ajax({
@@ -593,7 +668,7 @@
 			}
 			
 			
-			// 후원 내역 페이지 만들기 
+			// 후원내역 페이지 만들기 
 			const createHistoryPagination = (totalHistoryPages) => {
 			    const HistoryPaginationUl = $("#history-pagination");
 			    HistoryPaginationUl.empty(); // 이전의 페이징 링크를 지움
@@ -757,6 +832,7 @@
 					location.href = "/support/delete.pet?sNo=" + sNo;
 				}
 			}
+         	
         </script>
 	</body>
 </html>
