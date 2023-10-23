@@ -22,7 +22,21 @@
   	</update>
   	
 	<select id="getListCount" resultType="_int">
-		SELECT COUNT(*) FROM NOTICE_TBL WHERE N_STATUS = 'Y'
+		SELECT COUNT(*) FROM NOTICE_TBL   
+		<where>
+		<if test="searchCondition == 'all'">
+			(N_TITLE LIKE '%'||#{searchKeyword }||'%' AND N_STATUS = 'Y')
+			OR
+			(N_NO LIKE '%'||#{searchKeyword}||'%')
+		</if>
+		<if test="searchCondition == 'no'">
+			N_NO LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'title'">
+			N_TITLE LIKE '%'||#{searchKeyword}||'%' AND N_STATUS = 'Y'
+		</if>
+		</where>
+		ORDER BY N_NO DESC
 	</select>
 
 	<select id="searchByKeyword" resultType="Notice">

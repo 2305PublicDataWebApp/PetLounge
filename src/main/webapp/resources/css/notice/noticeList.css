@@ -188,10 +188,10 @@ hr {
     text-decoration: none;
 /*     margin-left: 7px; */
 /*     margin-right: 7px; */
-    padding-top: 8px;    /* 위 패딩을 10px로 설정 */
-  	padding-right: 13px;  /* 오른쪽 패딩을 20px로 설정 */
-  	padding-bottom: 8px; /* 아래 패딩을 15px로 설정 */
-  	padding-left: 13px;   /* 왼쪽 패딩을 30px로 설정 */
+    padding-top: 3px;    /* 위 패딩을 10px로 설정 */
+  	padding-right: 11px;  /* 오른쪽 패딩을 20px로 설정 */
+  	padding-bottom: 3px; /* 아래 패딩을 15px로 설정 */
+  	padding-left: 11px;   /* 왼쪽 패딩을 30px로 설정 */
 }
 
 .pagination a.page:hover {
@@ -205,6 +205,9 @@ hr {
     font-size: 0.995rem;
     font-family: Pretendard, sans-serif;
     font-weight: 700;
+    background-color: #FFD370;
+    color: white;
+    border: none;
 }
 
 .pagination a.next {

@@ -83,10 +83,10 @@
 						</c:url>
 						    <c:choose>
 						        <c:when test="${p == pInfo.currentPage}">
-						            <a class="page current" href="${pageUrl}">${p}</a>&nbsp;
+						            <a class="page current" href="${pageUrl}">${p}</a>
 						        </c:when>
 						        <c:otherwise>
-						            <a class="page" href="${pageUrl}">${p}</a>&nbsp;
+						            <a class="page" href="${pageUrl}">${p}</a>
 						        </c:otherwise>
 						    </c:choose>
 					</c:forEach>

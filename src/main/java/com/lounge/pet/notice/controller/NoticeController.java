@@ -235,6 +235,8 @@ public class NoticeController {
 			nParamMap.put("searchCondition", searchCondition);
 			nParamMap.put("searchKeyword", searchKeyword);
 			int totalCount = nService.getListCount(nParamMap);
+			
+			// 수정: 검색 결과에 따른 총 페이지 수 계산
 			PageInfo pInfo = this.getPageInfo(currentPage, totalCount);
 			List<Notice> nList = new ArrayList<Notice>();
 			nList = nService.searchByKeyword(pInfo, nParamMap);
@@ -247,8 +249,8 @@ public class NoticeController {
 			}
 			else {
 				// 에러가 발생하지 않고 검색 결과가 비어 있는 경우에도 동일한 뷰 페이지를 표시
-				mv.addObject("nList", new ArrayList<Notice>()); // 빈 결과 목록을 추가
-				mv.addObject("pInfo", new PageInfo()); // 빈 페이지 정보를 추가
+//				mv.addObject("nList", new ArrayList<Notice>()); // 빈 결과 목록을 추가
+//				mv.addObject("pInfo", new PageInfo()); // 빈 페이지 정보를 추가
 				mv.addObject("searchCondition", searchCondition);
 				mv.addObject("searchKeyword", searchKeyword);
 				mv.setViewName("notice/noticeSearch");

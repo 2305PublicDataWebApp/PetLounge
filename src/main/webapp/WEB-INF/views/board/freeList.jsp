@@ -404,13 +404,17 @@
 							} else {
 // 								alert("게시글이 없습니다.")
 							    // 아무 결과도 검색되지 않은 경우
+							    $(".pagination").hide();
+							    
 							    freeBoardList += 
+							    	"<div class='nonesq'>" +
 							        "<tr>" +
 							        "<td colspan='5'><hr class='line3'></td>" +
 							        "</tr>" +
 							        "<tr>" +
-							        "<td class='right1' colspan='5' id='none'>검색결과가 없습니다.</td>" +
-							        "</tr>";
+							        "<td class='right1' colspan='5' id='none'>" + "<span id='fcent'><i class='bi bi-file-earmark-x' id='fail'></i>검색결과가 없습니다.</span>" + "</td>" +
+							        "</tr>" +
+							    	"</div>";
 							}
 							portfolio.html(freeBoardList);
 						},

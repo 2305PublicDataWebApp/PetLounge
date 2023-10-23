@@ -41,14 +41,14 @@
 			*:not(.n-content) .edit {
 			    font-family: Pretendard;
 			    color: #ffffff;
-			    font-size: 13px;
+			    font-size: 14px;
 			    font-weight: bold;
 			} 
 			*:not(.n-content) .backtolist2 {
 			    font-family: Pretendard;
 			    border-color: #ffffff;
 			    color: #ffd370;
-			    font-size: 13px;
+			    font-size: 14px;
 			    font-weight: bold;
 			} 
         </style> 

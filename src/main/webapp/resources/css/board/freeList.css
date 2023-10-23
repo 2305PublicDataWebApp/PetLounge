@@ -318,3 +318,33 @@ td.right1 a:hover {
     font-weight: bold;
     line-height: 100px;	
 }
+
+.nonesq {
+/* 	display: flex; */
+/* 	justify-content: center; */
+	margin-left: auto;
+	margin-right: auto;
+	height: 170px;
+}
+
+#fcent {
+	display: flex;
+	justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 100px;
+    padding: 10px;	
+}
+
+#fail {
+	color: red;
+	vertical-align: -2px;
+	margin-right: 5px;
+}
+
+.bi-file-earmark-x::before {
+	color: red;
+	vertical-align: -8px;
+	margin-right: 5px;
+	font-size: 1.5em;	
+}

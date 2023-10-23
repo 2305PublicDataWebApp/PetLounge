@@ -136,27 +136,24 @@
                                 	</div>
 	                            </div>
 	                        </div>
+	                        
 	                        <div class="content-inner">
 	                            <div class="content-title">
-	                                <p class="content-title-name">병원 순위(리뷰)</p>
+	                                <p class="content-title-name">후원 순위</p>
 	                                <div class="line"></div>
 	                            </div>
 	                            <div id="s-history-list">
 	                                <table id="history-table">
 	                                    <colgroup>
+	                                        <col width="20%">
 	                                        <col width="40%">
-	                                        <col width="15%">
-	                                        <col width="17%">
-	                                        <col width="15%">
-	                                        <col width="13%">
+	                                        <col width="40%">
 	                                    </colgroup>
 	                                    <thead>
 	                                        <tr>
-	                                            <th class="table-border">모금함 제목</th>
+	                                            <th class="table-border">순위</th>
 	                                            <th class="table-border">후원자</th>
 	                                            <th class="table-border">후원 금액</th>
-	                                            <th class="table-border">후원일</th>
-	                                            <th class="table-border">결제 방법</th>
 	                                        </tr>
 	                                    </thead>
 	                                    <tbody>
@@ -164,8 +161,6 @@
 	                                            <td class="table-border table-left"></td>
 	                                            <td class="table-border"></td>
 	                                            <td class="table-border table-right"></td>
-	                                            <td class="table-border"></td>
-	                                            <td class="table-border"></td>
 	                                        </tr>
 	                                    </tbody>
 	                                </table>
@@ -174,6 +169,8 @@
                                 	</div>
 	                            </div>
 	                        </div>
+	                        
+	                        
 	                        <div class="content-inner">
 	                            <div class="content-title">
 	                                <p class="content-title-name">병원 순위(좋아요)</p>
@@ -406,25 +403,25 @@
 				return formattedDate;
 			}
 			
+// ====================================================================================================================================				
 			
-			
-			// 후원 내역 리스트를 불러오는 ajax Function 
-			const getHistoryList = () => {
+			// 후원 내역 리스트(for 후원순위)를 불러오는 ajax Function 
+			const getHistoryListForRank = () => {
 				$.ajax({
-					url : "/admin/sHList.pet",
+					url : "/admin/sRank.pet",
 					data : { currentPage: currentPage }, // 현재 페이지와 페이지당 댓글 수 전달
 					type : "GET",
 					success : function(resultMap) {
 						const tableBody = $("#history-table tbody");
 						tableBody.html('');
-						let title;
+						let RankNo;
+// 						let sNo;
 						let nickname;
 						let amount;
-						let paytype;
-						let paydate;
 						
 						const sHList = resultMap.sHList; // 후원내역 리스트 
 						totalHistoryPages = resultMap.totalPages; // 총 페이지 수
+						const totalRecords = resultMap.totalRecords; // 후원내역 총 갯수
 				        
 						if(sHList.length > 0) {
 							for(let i in sHList) {
@@ -434,30 +431,22 @@
 									sHName = '숨은천사';
 								}
 								
-								// 결제방법 이미지 넣어주기
-								let sHPaytypeImage = '';
-								switch(sHList[i].sHPaytype) {
-								case 'kakaopay' : sHPaytypeImage = '/resources/images/user/kakaoLogo2.png'; break;
-								case 'creditcard' : sHPaytypeImage = '/resources/images/user/card_credit.png'; break;
-								}
+								// RankNo를 1부터 시작해서 순차적으로 증가
+			                    let RankNo = i + 1;
 								
-								// 후원글 제목 길이 잘라주기 
-								let sTitle = sHList[i].sTitle;
-								let truncatedTitle = sTitle.length > 21 ? sTitle.substring(0, 20) + '...' : sTitle;
+								let sNo = sHList[i].sNo;	
 								
 								tr = $("<tr onclick='window.location.href=\"/support/detail.pet?sNo="+sHList[i].sNo+"\"' class='tr'>");
-								title = $("<td class='table-border table-left'>").html(""+truncatedTitle+""); 
+								RankNo = $("<td class='table-border table-left'>").html(""+RankNo+""); 
 								nickname = $("<td class='table-border'>").html(""+sHName+""); 
 								amount = $("<td class='table-border table-right'>").html(""+sHList[i].sHAmount.toLocaleString()+"원"); 
-								paydate = $("<td class='table-border'>").html(""+getFormattedTimestamp(sHList[i].sHPaydate)+""); 
-								paytype = $("<td class='table-border'>").html("<img src='"+sHPaytypeImage+"' style='width: 25px; height: 25px'>"); 
+
 								
 				
-								tr.append(title);
+								tr.append(RankNo);
 								tr.append(nickname);
 								tr.append(amount);
-								tr.append(paydate);
-								tr.append(paytype);
+
 								tableBody.append(tr); 
 								
 								// 결과를 받은 후에 페이징을 업데이트
@@ -523,13 +512,13 @@
 			// 후원내역 페이지 변경 시 호출되는 함수
 			const changeHistoryPage = (newPage) => {
 			    currentPage = newPage;
-			    getHistoryList(currentPage);
+			    getHistoryListForRank(currentPage);
 			}
 			
 			// 후원내역 그룹 변경 시 호출되는 함수
 			const changeHistoryGroup = (newGroup) => {
 			    currentPage = (newGroup - 1) * naviCountPerPage + 1;
-			    getHistoryList(currentPage);
+			    getHistoryListForRank(currentPage);
 			}
 
 			// 후원내역 이전 그룹으로 이동할 때 호출 
@@ -550,7 +539,7 @@
 			    }
 			}
 			
-			
+// ====================================================================================================================================			
 			
 			// 댓글 리스트를 불러오는 ajax Function 
 			const getReplyList = () => {
@@ -690,7 +679,7 @@
 			// 후원글, 댓글, 후원내역 출력 
 			$(function(){
 				getSupportList(currentPage, status);
-				getHistoryList();
+				getHistoryListForRank();
 				getReplyList();
 			})
 			

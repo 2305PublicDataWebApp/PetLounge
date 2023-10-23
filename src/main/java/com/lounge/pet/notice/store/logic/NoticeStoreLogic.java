@@ -43,7 +43,7 @@ public class NoticeStoreLogic implements NoticeStore {
 
 	@Override
 	public int getListCount(SqlSession session, Map<String, String> nParamMap) {
-		int result = session.selectOne("NoticeMapper.getListCount");
+		int result = session.selectOne("NoticeMapper.getListCount", nParamMap);
 		return result;
 	}
 
