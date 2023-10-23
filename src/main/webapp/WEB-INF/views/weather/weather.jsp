@@ -35,6 +35,7 @@
 	                            <button class="select-button">지역</button>
 	                            <p id="select-region"></p>
 	                        </div>
+	                        	<input type="hidden" id="addressInput" value="${ user.uAddr }">
 	                            <ul class="region-list">
 	                                <li>
 	                                    <button class="button-item active" onclick="handleButtonClick('60', '127', 'Seoul')">
@@ -97,7 +98,7 @@
 	                                    </button>
 	                                </li>
 	                                <li>
-	                                    <button class="button-item" onclick="handleButtonClick('89', '90'. 'Daegu')">
+	                                    <button class="button-item" onclick="handleButtonClick('89', '90', 'Daegu')">
 	                                        대구
 	                                    </button>
 	                                </li>
@@ -131,10 +132,6 @@
 							<img class="free-img" src="/resources/images/weather/jong.png">
 							<div class="tmi" id="randomTmi"></div>
 		                </div>
-	<!-- 					<a class="free-board" href="/board/freeList.pet" style="text-decoration: none; color: white;"> -->
-	<!-- 					    <img class="board-logo" src="/resources/images/pet-white.png" alt="로고"> -->
-	<!-- 					    자유게시판 -->
-	<!-- 					</a> -->
 						<div class="img-area">
 						    <img class="dog-img" src="/resources/images/weather/dog.png">
 						</div>
@@ -189,7 +186,12 @@
 										<c:forEach begin="0" end="5" varStatus="i">
 				                    		<li>
 				                    			<div class="time" id="weather${i.index }"></div>
-				                    			<img id="time-${i.index }-icon" src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg" alt="날씨 아이콘">
+				                    			<img class="time-icon" id="time-${i.index }-icon" src="" alt="날씨 아이콘">
+												
+<!-- 												<div class="demo demo-white demo-128 svg"> -->
+<!-- 													<i class="wu wu-white wu-clear wu-128" data-name="clear"></i> -->
+<!-- 												</div> -->
+												
 				                    			<span class="time" id="time-today${i.index }"></span>
 				                    		</li>
 										</c:forEach>
@@ -260,8 +262,47 @@
         <script>        
             // 지역 선택
             document.addEventListener("DOMContentLoaded", function () {
-                const selectRegion = document.getElementById("select-region");
-                selectRegion.textContent = "서울"; // 기본값으로 서울 설정
+            	
+            	if(${sessionScope.uId != null}) {
+					// 회원 주소를 기본값 설정
+		        	const addressInput = document.getElementById("addressInput");
+		        	const addressValue = addressInput.value;
+		        	
+		        	// 주소 앞 2글자 추출
+		        	const firstTwoCharacters = addressValue.substring(0, 2);
+		        	
+		        	for (var i = 0; i < buttons.length; i++) {
+		                var button = buttons[i];
+		                var buttonText = button.textContent.trim().toLowerCase(); // 버튼 텍스트를 소문자로 변환
+	                    buttons.forEach(function (btn) {
+	                        btn.classList.remove("active");
+	                    });
+		                
+		                // 버튼의 텍스트 내용과 주소 값이 같으면 버튼을 활성화
+		                if (buttonText === firstTwoCharacters) {
+	
+		                    button.classList.add("active");
+		                    const selectRegion = document.getElementById("select-region");
+			                selectRegion.textContent = firstTwoCharacters;
+		                    break; // 일치하는 버튼을 찾았으므로 루프 종료
+		                } else {	// 고객 주소와 버튼 지역값이 동일하지 않다면
+			                const selectRegion = document.getElementById("select-region");
+			                selectRegion.textContent = "서울"; // 기본값으로 서울 설정
+		                }
+		            }
+            	} else {
+	                const selectRegion = document.getElementById("select-region");
+	                selectRegion.textContent = "서울"; // 기본값으로 서울 설정
+            	}
+            	
+            	// 버튼을 선택
+            	const buttonToClick = document.querySelector(".button-item.active"); // .active 클래스를 가진 버튼 선택
+
+            	if (buttonToClick) {
+            	  // 버튼을 찾았을 경우 클릭 이벤트를 발생시킴
+            	  buttonToClick.click();
+            	}
+	        	
             });
             
             const selectRegion = document.getElementById("select-region");
@@ -301,6 +342,9 @@
 	        // 아이콘 출력을 위해 강수확률 값 저장할 변수 선언
 	        let rainValue = "";
 	        
+	        // 시간별 기온 시간의 시작값 계산을 위한 변수 선언
+	        let checkHour = "";
+	        
 	        // API url, serviceKey, parameter 기본값
 	        let apiUrl = "https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst";
             const serviceKey = "4pYTUL0IAyNldYcuL1CFGcJpGrgPllaY%2BkD8xcBEHAbaLSA8xraNMsfHFO%2BXhGJmos%2FBszyn6LH7HoSBORAAhQ%3D%3D";
@@ -308,8 +352,6 @@
             const numOfRows = "1000";
             const dataType = "JSON";
             let base_date = initDate;
-            let nx = "60";
-            let ny = "127";
 	        
 			// base_time 형식 메소드화 ex. 0200
 			function getFormattedTime() {
@@ -319,14 +361,6 @@
 			    return hours + minutes;										// 현재 시간
 			}
 			
-// 			// api 발표시간 오차로 60분 빼기
-// 			function calculateBaseTime(formattedTime, subtractMinutes) {
-// 			    let base_time = "0" + (formattedTime - subtractMinutes); // 구한 시간 앞에 0 추가
-// // 			    console.log("bt : " +base_time.slice(-4));				 // 현재시간 - 1시간
-// 			    return base_time.slice(-4);								 // 0을 포함한 시간을 뒤에서 부터 4자리 반환
-// 			}
-
-            
 			// 지역 선택(버튼 클릭)
 			function handleButtonClick (nxValue, nyValue, city) {
 		        
@@ -335,16 +369,12 @@
 		        city = city
 		        
 		        weatherTemp(nx, ny, city);	// 현재 온도
-// 		        weatherRain(nx, ny);		// 오늘 강수량
-// 		        weatherTempMinMax(nx, ny);	// 오늘 최저/최대 온도
 		        weatherTime(nx, ny);		// 오늘 시간별 기온
 		        weatherDay(nx, ny);			// 일별 강수량/최저, 최대 온도
 			}
 
 			// api 출력 메소드 위치 기본값 세팅(서울)
         	weatherTemp('60', '127', 'Seoul');
-        	//weatherRain('60', '127');
-        	//weatherTempMinMax('60', '127');
         	weatherTime('60', '127');
         	weatherDay('60', '127');
             
@@ -388,7 +418,6 @@
 
 				apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
 				url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-				console.log(url);
 				$.getJSON (url, function(data) {
 					
 					const celsius = "℃";
@@ -400,21 +429,47 @@
 						}
 					});
 					
+					let hourTime;
 					// 시간이 현재 시간 기준으로 6시간 출력 됨.
 					for(let i = 0; i < 6; i++) {
 						const temp = t1hData[i].fcstValue;
-						let hour = parseInt(formattedTime.substring(0,2))+i;
+						let hour = parseInt(formattedTime.substring(0,2));
 						$("#weather"+i).empty().append(temp).append(celsius);
-						$("#time-today"+i).text(hour+"시");
+						
+						if(hour > 0 && hour < 7) {
+							hourTime = 1+i;
+							$("#time-today"+i).text(hourTime+"시");
+						} else if(hour >= 7 && hour < 13) {
+							hourTime = 7+i;
+							$("#time-today"+i).text(hourTime+"시");
+						} else if(hour > 12 && hour < 19) {
+							hourTime = 13+i
+							$("#time-today"+i).text(hourTime+"시");
+						} else if((hour > 18 && hour < 24) || hour == 0) {
+							hourTime = 19+i
+							$("#time-today"+i).text(hourTime+"시");
+						}
 					}
-// 					consoel.log(hour);
+					checkHour = hourTime - 5;
+					
 				});
-				
-				timeIcon()	   // 시간별 아이콘 메소드
 			}
 			
 			// ************************************************ 단기 예보(최고/최저기온, 강수량) ************************************************//
+			
 			function weatherDay(nx, ny) {
+				
+				let formattedTime = getFormattedTime();
+				
+				if(formattedTime >= "0000" && formattedTime < "0700") {
+					base_time = "0030";
+				} else if(formattedTime >= "0700" && formattedTime < "1300") {
+					base_time = "0630";
+				} else if(formattedTime >= "1300" && formattedTime < "1900") {
+					base_time = "1230";
+				} else if(formattedTime >= "1900" && formattedTime <= "2359") {
+					base_time = "1830";
+				}
 				
 				// 오늘 날짜 출력
 	            const $now = new Date($.now());
@@ -424,14 +479,10 @@
 	            base_time="0200";
 	            apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst";
 	            url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-				
-				$.getJSON (url, function(data){ // 오후 3시 기준	
+
+	            $.getJSON (url, function(data){ // 오후 3시 기준	
 					const percentage = "%";
 					const celsius = "℃";
-					
-// 					const fcstTimeAm = "0900"; // 오전
-// 					const fcstTimePm = "1800"; // 오후
-					
 
 					
 					// 오전/오후 강수량만 가져오는 배열
@@ -497,9 +548,45 @@
 					$('#tomorrow-temp-min').empty().append(tmoTempMin).append(celsius);		  // 내일 최저 기온(일별)
 					$('#aft-tomorrow-temp-min').empty().append(aftTempMin).append(celsius);	  // 모레 최저 기온(일별)
 					
+					// 시간별 아이콘
+					let hour = parseInt(checkHour).toString().padStart(2, '0');
+					for(let i = 0; i < 6; i++) {
+						let newHour = (parseInt(hour) + i).toString().padStart(2, '0');
+						let timeRainValue = "0";
+						
+						for (let j = 0; j < fcstTimes.length; j++) {
+						  if ((newHour) + "00" === fcstTimes[j]) {
+							  timeRainValue = popData[j].fcstValue; // 현재 강수량
+						  }
+						}
+						
+						// checkHour -> 기준시간 중 첫번째 시간
+						// newHour -> hour를 for문을 돌릴 수 있도록 재가공
+						
+						if(timeRainValue == 0) {
+							// 오전 7시부터 오후 5시까지는 해 이미지
+							if(newHour >= 7 && newHour < 18) {
+								$("#time-"+i+"-icon").attr("src", "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg");
+							// 오후 6시부터 다음 날 아침 6시까지는 달 이미지
+							} else {
+								$("#time-"+i+"-icon").attr("src", "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-night.svg");
+							}
+						} else if (timeRainValue > "0" && timeRainValue < "30") {
+							if(newHour >= 7 && newHour < 18) {
+								$("#time-"+i+"-icon").attr("src", "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-day.svg");
+							} else {
+								$("#time-"+i+"-icon").attr("src", "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-night.svg");
+							}
+						} else if(timeRainValue >= "30") {
+							if(newHour >= 7 && newHour < 18) {
+								$("#time-"+i+"-icon").attr("src", "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-day-rain.svg");
+							} else {
+								$("#time-"+i+"-icon").attr("src", "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-night-rain.svg");
+							}
+						}
+					}
 					
 					weatherIcon(); // 날씨 아이콘 메소드
-					timeIcon()	   // 시간별 아이콘 메소드
 				});
 			}
 			
@@ -518,26 +605,23 @@
 						iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-night.svg";
 					}
 				} else if (rainValue > "0" && rainValue < "30") {
-					iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/cloudy.svg";
+					if(formattedTime >= "0700" && formattedTime < "1800") {
+						iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-day.svg";
+					}else {
+						iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-night.svg";
+					}
+// 					iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/cloudy.svg";
 				} else if (rainValue >= "30") {
-					iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/rain.svg";
+					if(formattedTime >= "0700" && formattedTime < "1800") {
+						iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-day-rain.svg";
+					} else {
+						iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-night-rain.svg";
+					}
+// 					iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/rain.svg";
 				}
 				
 				const weatherIcon = document.getElementById("weather-icon");
 				weatherIcon.src = iconUrl;
-			}
-			
-			// 시간별 아이콘 출력
-			function timeIcon() {
-				console.log("시간별 아이콘 강수량 : "+rainValue);
-// 				console.log("시간별 시간 : " + hour);
-				
-				let iconUrl;
-				formattedTime = getFormattedTime();				  // 현재 시간+분
-				let hour = parseInt(formattedTime.substring(0,2)) // 현재 시간
-				
-				
-				
 			}
 			
         </script>
