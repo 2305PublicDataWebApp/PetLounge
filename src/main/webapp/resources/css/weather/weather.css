@@ -24,9 +24,15 @@ footer {
     display: flex;
     justify-content: center;
     width: 90%;
-    height: 1300px;
+    height: 1250px;
+    --height: 150vh;
     margin: 0 auto;
     background: #FAFAFA;
+}
+
+.contanier {
+	display: flex;
+	flex-direction: column;
 }
 
 /* ********** 타이틀 ********** */
@@ -52,6 +58,11 @@ h1 {
     margin: 40px auto 60px auto;
 }
 
+/* ********** 강아지 윗 영역 ********** */
+#weather {
+	margin: 0 auto;
+}
+
 /* ********** 지역 선택 ********** */
 button {
     background: none;
@@ -63,9 +74,7 @@ button {
 
 .choice-area {
     display: flex;
-    justify-content: baseline;
     align-items: center;
-    margin: 0 130px;
     width: 100%;
     height: 100px;
 
@@ -80,10 +89,10 @@ button {
     display: flex;
     align-items: center;
     position: relative;
-    left: 70px;
+    left: 45px;
     background-color: #FAFAFA;
     color: black;
-    border : 1px solid #FFD370;
+    border : 3px solid #FFD370;
     border-radius: 6px;
     width: 122px;
     height: 50px;   
@@ -167,11 +176,9 @@ ul li button {
 /* ********** 오늘의 tmi ********** */
 .today-tmi {
     display: flex;
-/*     justify-content: baseline; */
     position: relative;
-    left: 70px;
+    left: 45px;
     align-items: center;
-    margin: 0 130px 50px;
     width: 100%;
     height: 100px;
 }
@@ -186,12 +193,12 @@ label {
 	align-items: center;
     background: #FAFAFA;
     color : black;
-    width: 655px;
+    width: 695px;
     height: 50px;
     border: 1px solid black;
     padding: 15px;
     border-radius: 6px;
-    margin-right: 20px;
+    --margin-right: 20px;
 }
 
 .tmi {
@@ -237,27 +244,47 @@ label {
     margin-right: 10px;
 }
 
+.weather-area {
+	display: flex;
+	
+}
+
 /* ********** 오늘의 날씨 ********** */
-.today-weather {
-/*     position: relative; */
-    left: 70px;
-    display: flex;
-	--margin: 30px 100px 0 100px;
-    width: 400px;
-    height: 150px;
+.now-weather {
+	width: 100%;
+	--margin-top: 20px;
+}
+
+.today-weather-area {
+	display: block;
+	align-items: flex-end;
+	position: relative;
+	left: 46px;
+    width: 350px;
+    height: 180px;
     padding: 25px;
-	--margin-left: 130px;
-    --border : 2px solid #ccc;
     border-radius: 6px;
     background-color: #ffd47061;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-    float: left;
+    --float: left;
+}
+
+.today-weather {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    height: 75%;
+    background-color: rgba(255, 255, 255, 0.5);	
+    border-radius: 5px;
+/*     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); */
 }
 
 .today-left {
+	display: flex;
+	align-items: center;
 	flex: 1;
     width: 60%;
-    height: 150px;
+    height: 100%;
     text-align: center;
 }
 
@@ -270,8 +297,11 @@ label {
 }
 
 .tDate {
-    width: 250px;
-    height: 20%;
+	font-family: 'GmarketSansMedium';
+	font-weight: bold;
+    width: 300px;
+    height: 27%;
+    text-align: center;
     /* border: 1px solid black; */
 }
 
@@ -305,28 +335,24 @@ label {
 .today-right {
 	display: flex;
 	flex-wrap: wrap;
-	align-items: end;;
-	--align-items:flex-end;
-	flex: 1;
+	align-items: center;;
+	--flex: 1;
 	position: relative;
-	top: 20px;
+	top: 11px;
     width: 40%;
-    height: 100%;
-    text-align: center;
-    --background-color: rgba(255, 255, 255, 0.5);	
-    --border-radius: 15px;
-    --box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    height: 80%;
+    --text-align: center;
 }
 
 .today-info {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 30%;
 }
 
 .pro-rain {
 	padding-left: 10px;
+	color: blue;
 }
 
 .temp-max {
@@ -379,19 +405,20 @@ label {
 
 /* ********** 시간별 기온 ********** */
 .today-time-weather {
-	display: flex;
-	justify-content: flex-end;
+	--display: flex;
+	position: relative;
+	left: 229px;
 	flex: 1;
 }
 
 .time-weather {
-    display: flex;
+    display: inline-block;
     grid-template-rows: auto 1fr;
-    --margin: 80px 100px 0 100px;
+    position: relative;
+    right: 278px;
 	overflow: auto;
     width: 500px;;
     height: 180px;
-    --margin-left: 130px;
     border-radius: 6px;
     background-color: #ffffff;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
@@ -430,14 +457,20 @@ label {
 	padding-bottom: 25px;
 }
 
+
 /* ********** 일별 기온 ********** */
+.day-weather {
+	display: flex;
+	justify-content: center;
+	height: 200px;
+	margin: 30px;
+}
+
 .date-weather {
     display: grid;
     grid-template-rows: auto 1fr;
-    margin: 80px 100px 0 100px;
-    width: 855px;
-    height: 180px;
-    margin-left: 130px;
+    width: 900px;
+    height: 200px;
     border-radius: 6px;
     background-color: #ffffff;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
@@ -450,14 +483,14 @@ label {
 
 .date-temp {
 	display: flex;
+	justify-content: center;
     width: 100%;
-/*     height: 90%; */
-    padding-left: 20px;
 	margin: 0 auto;
 }
 
 .date-temp ul {
 	display: flex;
+	align-items: center;
 }
 
 .date-temp li {
@@ -467,11 +500,9 @@ label {
 
 .day-temp {
 	width: 265px;
-	--height: 70%;
-	border: 1px solid black;
+	border: 5px outset #ffd370;
 	border-radius: 15px;
 	padding: 10px;
-	--padding-top: 10px;
 	font-size: 15px;
 }
 
@@ -544,13 +575,21 @@ label {
 }
 
 
-/* 배경 - 움직이는 강아지 */
+
+/* ********** 움직이는 강아지 ********** */
+.dog-area {
+	--display: flex;
+	--position: absolute;
+	width: 100vw;
+	height: 280px;
+}
+
 .dog {
-/*   background: url(''); */
+  background: url('');
   height: 297px;
   width: 400px;
-  bottom: -15%;
-  position: fixed;
+  --bottom: -15%;
+  position: relative;
   animation: walk 25s linear infinite;
 }
 

@@ -26,221 +26,232 @@
                 </div>
 
                 <div id="line"></div>
-
-                <section class="choice-area">
-                    <!-- 지역 선택 -->
-                    <div class="region-selector">
-                        <div id="region">
-                            <button class="select-button">지역</button>
-                            <p id="select-region"></p>
-                        </div>
-                            <ul class="region-list">
-                                <li>
-                                    <button class="button-item active" onclick="handleButtonClick('60', '127', 'Seoul')">
-                                        서울
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('66', '103', 'Sejong')">
-                                        세종
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('51', '67', 'Jeollanam-do')">
-                                        전남
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('89', '91', 'Gyeongsangbuk-do')">
-                                        경북
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('91', '77', 'Gyeongsangnam-do')">
-                                        경남
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('60', '120', 'Gyeonggi-do')">
-                                        경기
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('68', '100', 'Chungcheongnam-do')">
-                                        충남
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('63', '89', 'Jeollabuk-do')">
-                                        전북
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('98', '76', 'Busan')">
-                                        부산
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('73', '134', 'Gangwon-do')">
-                                        강원
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('55', '124', 'Incheon')">
-                                        인천
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('69', '107', 'Chungcheongbuk-do')">
-                                        충북
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('89', '90'. 'Daegu')">
-                                        대구
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('102', '84', 'Ulsan')">
-                                        울산
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('52', '38', 'Jeju')">
-                                        제주
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('67', '100', 'Daejeon')">
-                                        대전
-                                    </button>
-                                </li>
-                                <li>
-                                    <button class="button-item" onclick="handleButtonClick('58', '74', 'Gwangju')">
-                                        광주
-                                    </button>
-                                </li>
-                            </ul>
-                    </div>
-                </section>
-
-                <!-- 오늘의 tmi -->
-                <section class="today-tmi">
-	                <div class="tmi-text">
-						<img class="free-img" src="/resources/images/weather/jong.png">
-						<div class="tmi" id="randomTmi"></div>
-	                </div>
-<!-- 					<a class="free-board" href="/board/freeList.pet" style="text-decoration: none; color: white;"> -->
-<!-- 					    <img class="board-logo" src="/resources/images/pet-white.png" alt="로고"> -->
-<!-- 					    자유게시판 -->
-<!-- 					</a> -->
-					<div class="img-area">
-					    <img class="dog-img" src="/resources/images/weather/dog.png">
-					</div>
-                </section>
 				
-				<div>
-	                <!-- 오늘의 날씨 -->
-	                <section class="today-weather">
-	                    <div class="today-left">
-	                        <!-- 오늘 날짜 -->
-<!-- 	                        <div class="today-weather-date"> -->
-							<div class="tDate"></div>
-<!-- 	                        </div> -->
-	                        <!-- 기온 -->
-	                        <div class="today-weather-Temperature">
-	                        
-	                        	<!-- 날씨 아이콘 동적으로 수정 예정 -->
-	                        	<img id="weather-icon" src="" alt="날씨 아이콘">
-								<div id="tIcon"></div>
-	                            <span class="tTemp"></span>
+				<div id="weather">
+	                <section class="choice-area">
+	                    <!-- 지역 선택 -->
+	                    <div class="region-selector">
+	                        <div id="region">
+	                            <button class="select-button">지역</button>
+	                            <p id="select-region"></p>
 	                        </div>
-	<!--                         <div class="img-area"> -->
-	<!--                             <img class="dog-img" src="/resources/images/weather/dog.png"> -->
-	<!--                         </div> -->
-	                    </div>
-	
-	                    <div class="today-right">
-	                        <!-- 강수 확률 -->
-	                        <div id="pro-rain" class="today-info">
-	                            강수 확률 <span class="pro-rain"></span>
-	                        </div>
-	                        <!-- 최고 기온 -->
-	                        <div id="temp-max" class="today-info">
-	                            최고 기온 <span class="temp-max"></span>
-	                        </div>
-	                        <!-- 최저 기온 -->
-	                        <div id="temp-min" class="today-info">
-	                            최저 기온 <span></span>
-	                            <span class="temp-min"></span>
-	                        </div>
+	                            <ul class="region-list">
+	                                <li>
+	                                    <button class="button-item active" onclick="handleButtonClick('60', '127', 'Seoul')">
+	                                        서울
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('66', '103', 'Sejong')">
+	                                        세종
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('51', '67', 'Jeollanam-do')">
+	                                        전남
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('89', '91', 'Gyeongsangbuk-do')">
+	                                        경북
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('91', '77', 'Gyeongsangnam-do')">
+	                                        경남
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('60', '120', 'Gyeonggi-do')">
+	                                        경기
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('68', '100', 'Chungcheongnam-do')">
+	                                        충남
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('63', '89', 'Jeollabuk-do')">
+	                                        전북
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('98', '76', 'Busan')">
+	                                        부산
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('73', '134', 'Gangwon-do')">
+	                                        강원
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('55', '124', 'Incheon')">
+	                                        인천
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('69', '107', 'Chungcheongbuk-do')">
+	                                        충북
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('89', '90'. 'Daegu')">
+	                                        대구
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('102', '84', 'Ulsan')">
+	                                        울산
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('52', '38', 'Jeju')">
+	                                        제주
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('67', '100', 'Daejeon')">
+	                                        대전
+	                                    </button>
+	                                </li>
+	                                <li>
+	                                    <button class="button-item" onclick="handleButtonClick('58', '74', 'Gwangju')">
+	                                        광주
+	                                    </button>
+	                                </li>
+	                            </ul>
 	                    </div>
 	                </section>
 	
-	                <!-- 시간별 기온 -->
-	                <section class="today-time-weather">
-	                	<div id="time-dog-img">
-	                		<img alt="" src="">
-	                	</div>
-	                	
-		                <div class="time-weather">
-		                    <h2>시간별 기온</h2>
-		                    <div class="time-temp">
-		                    	<ul>
-		                    		<!-- 0030, 0630, 1230, 1830 기준으로 6시간씩 출력 -->
-									<c:forEach begin="0" end="5" varStatus="i">
-			                    		<li>
-			                    			<div class="time" id="weather${i.index }"></div>
-			                    			<img id="time-${i.index }-icon" src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg" alt="날씨 아이콘">
-			                    			<span class="time" id="time-today${i.index }"></span>
-			                    		</li>
-									</c:forEach>
-		                    	</ul>
-		                    </div>
+	                <!-- 오늘의 tmi -->
+	                <section class="today-tmi">
+		                <div class="tmi-text">
+							<img class="free-img" src="/resources/images/weather/jong.png">
+							<div class="tmi" id="randomTmi"></div>
 		                </div>
+	<!-- 					<a class="free-board" href="/board/freeList.pet" style="text-decoration: none; color: white;"> -->
+	<!-- 					    <img class="board-logo" src="/resources/images/pet-white.png" alt="로고"> -->
+	<!-- 					    자유게시판 -->
+	<!-- 					</a> -->
+						<div class="img-area">
+						    <img class="dog-img" src="/resources/images/weather/dog.png">
+						</div>
 	                </section>
+					
+					<div class="weather-area">
+						<section class="now-weather">
+			                <!-- 오늘의 날씨 -->
+			                <div class="today-weather-area">
+		                        <!-- 오늘 날짜 -->
+								<div class="tDate"></div>
+				                <div class="today-weather">
+				                    <div class="today-left">
+				                        <!-- 기온 -->
+				                        <div class="today-weather-Temperature">
+				                        
+				                        	<!-- 날씨 아이콘 동적으로 수정 예정 -->
+				                        	<img id="weather-icon" src="" alt="날씨 아이콘">
+											<div id="tIcon"></div>
+				                            <span class="tTemp"></span>
+				                        </div>
+				                    </div>
+				
+				                    <div class="today-right">
+				                        <!-- 강수 확률 -->
+				                        <div id="pro-rain" class="today-info">
+				                            강수 확률 <span class="pro-rain"></span>
+				                        </div>
+				                        <!-- 최고 기온 -->
+				                        <div id="temp-max" class="today-info">
+				                            최고 기온 <span class="temp-max"></span>
+				                        </div>
+				                        <!-- 최저 기온 -->
+				                        <div id="temp-min" class="today-info">
+				                            최저 기온 <span></span>
+				                            <span class="temp-min"></span>
+				                        </div>
+				                    </div>
+				                </div>
+			                </div>
+						</section>
+			
+		                <!-- 시간별 기온 -->
+		                <section class="today-time-weather">
+			                <div class="time-weather">
+			                	<div>
+				                    <h2>시간별 기온</h2>
+			                	</div>
+			                    <div class="time-temp">
+			                    	<ul>
+			                    		<!-- 0030, 0630, 1230, 1830 기준으로 6시간씩 출력 -->
+										<c:forEach begin="0" end="5" varStatus="i">
+				                    		<li>
+				                    			<div class="time" id="weather${i.index }"></div>
+				                    			<img id="time-${i.index }-icon" src="https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg" alt="날씨 아이콘">
+				                    			<span class="time" id="time-today${i.index }"></span>
+				                    		</li>
+										</c:forEach>
+			                    	</ul>
+			                    </div>
+			                </div>
+		                </section>
+					</div>
 				</div>
                 
-<!-- **************** 움직이는 강아지 **************** -->
-<div class="dog">
- <img src="https://media1.giphy.com/media/Rk2vpkjp446amkIwIz/giphy.gif" alt="Corgi Cartoon Transparent / 1,572 corgi cartoons on gograph. - Lainey Love" class=" nofocus" tabindex="0" aria-label="Corgi Cartoon Transparent / 1,572 corgi cartoons on gograph. - Lainey Love" style="position: absolute; height: 100%; width: 100%; inset: 0px; margin: auto;" data-bm="77">
-</div>
+<!-- 				**************** 움직이는 강아지 **************** -->
+<!-- 				<div class="dog-area"> -->
+<!-- 					<div class="dog"> -->
+<!-- 						<img src="https://media1.giphy.com/media/Rk2vpkjp446amkIwIz/giphy.gif" alt="Corgi Cartoon Transparent / 1,572 corgi cartoons on gograph. - Lainey Love" class=" nofocus" tabindex="0" aria-label="Corgi Cartoon Transparent / 1,572 corgi cartoons on gograph. - Lainey Love" style="position: absolute; height: 100%; width: 100%; inset: 0px; margin: auto;" data-bm="77"> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 				
                 <!-- 일별 기온 -->
-                <section class="date-weather">
-                    <h2>일별 기온</h2>
-                    <div class="date-temp">
-	                    <ul>
-	                    	<li>
-			                    <div class="day-temp" id="day-temp-one">
-			                    	<span id="today">오늘</span>
-			                    	강수 확률 : 
-			                    	<span class="day-text">오전</span> <span id="today-rain-am" class="today-rain"></span> 
-			                    	<span class="day-text">오후</span> <span id="today-rain-pm" class="today-rain"></span><br>
-			                    	최저 기온 : <span id="today-temp-min"></span> 최고 기온: <span id="today-temp-max"></span>
-			                    </div>
-	                    	</li>
-	                    	<li>
-			                    <div class="day-temp" id="day-temp-two">
-			                    	<span id="tomorrow">내일</span>
-			                    	강수 확률 : 
-			                    	<span class="day-text">오전</span> <span id="tomorrow-rain-am" class="tomorrow-rain"></span> 
-			                    	<span class="day-text">오후</span> <span id="tomorrow-rain-pm" class="tomorrow-rain"></span><br>
-			                    	최저 기온 : <span id="tomorrow-temp-min"></span> 최고 기온: <span id="tomorrow-temp-max"></span>
-			                    </div>
-	                    	</li>
-	                    	<li>
-			                    <div class="day-temp" id="day-temp-three">
-									<span id="aft-tomorrow"></span>
-			                    	강수 확률 :
-			                    	<span class="day-text">오전</span> <span id="aft-tomorrow-am" class="aft-tomorrow"></span> 
-			                    	<span class="day-text">오후</span> <span id="aft-tomorrow-pm"  class="aft-tomorrow"></span><br>
-			                    	최저 기온 : <span id="aft-tomorrow-temp-min"></span> 최고 기온: <span id="aft-tomorrow-temp-max"></span>
-			                    </div>
-	                    	</li>
-	                    </ul>
-                    </div>
+                <section class="day-weather">
+	                <div class="date-weather">
+	                    <h2>일별 기온</h2>
+	                    <div class="date-temp">
+		                    <ul>
+		                    	<li>
+				                    <div class="day-temp" id="day-temp-one">
+				                    	<span id="today">오늘</span>
+				                    	강수 확률 : 
+				                    	<span class="day-text">오전</span> <span id="today-rain-am" class="today-rain"></span> 
+				                    	<span class="day-text">오후</span> <span id="today-rain-pm" class="today-rain"></span><br>
+				                    	최저 기온 : <span id="today-temp-min"></span> 최고 기온: <span id="today-temp-max"></span>
+				                    </div>
+		                    	</li>
+		                    	<li>
+				                    <div class="day-temp" id="day-temp-two">
+				                    	<span id="tomorrow">내일</span>
+				                    	강수 확률 : 
+				                    	<span class="day-text">오전</span> <span id="tomorrow-rain-am" class="tomorrow-rain"></span> 
+				                    	<span class="day-text">오후</span> <span id="tomorrow-rain-pm" class="tomorrow-rain"></span><br>
+				                    	최저 기온 : <span id="tomorrow-temp-min"></span> 최고 기온: <span id="tomorrow-temp-max"></span>
+				                    </div>
+		                    	</li>
+		                    	<li>
+				                    <div class="day-temp" id="day-temp-three">
+										<span id="aft-tomorrow"></span>
+				                    	강수 확률 :
+				                    	<span class="day-text">오전</span> <span id="aft-tomorrow-am" class="aft-tomorrow"></span> 
+				                    	<span class="day-text">오후</span> <span id="aft-tomorrow-pm"  class="aft-tomorrow"></span><br>
+				                    	최저 기온 : <span id="aft-tomorrow-temp-min"></span> 최고 기온: <span id="aft-tomorrow-temp-max"></span>
+				                    </div>
+		                    	</li>
+		                    </ul>
+	                    </div>
+	                </div>
                 </section>
+                
+				<!-- **************** 움직이는 강아지 **************** -->
+				<div class="dog-area">
+					<div class="dog">
+						<img src="https://media1.giphy.com/media/Rk2vpkjp446amkIwIz/giphy.gif" alt="Corgi Cartoon Transparent / 1,572 corgi cartoons on gograph. - Lainey Love" class=" nofocus" tabindex="0" aria-label="Corgi Cartoon Transparent / 1,572 corgi cartoons on gograph. - Lainey Love" style="position: absolute; height: 100%; width: 100%; inset: 0px; margin: auto;" data-bm="77">
+					</div>
+				</div>
+				
             </div>
         </main>
 
@@ -365,8 +376,6 @@
 				
 				let formattedTime = getFormattedTime();
 				
-				console.log(formattedTime);
-				
 				if(formattedTime >= "0000" && formattedTime < "0700") {
 					base_time = "0030";
 				} else if(formattedTime >= "0700" && formattedTime < "1300") {
@@ -379,8 +388,7 @@
 
 				apiUrl = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
 				url = apiUrl + "?serviceKey=" +  serviceKey + "&pageNo=" + pageNo + "&numOfRows=" + numOfRows + "&dataType=" + dataType + "&base_date=" + base_date + "&base_time=" + base_time + "&nx=" + nx + "&ny=" + ny;
-				console.log("일 시간별 기온 url : " + url);
-				
+				console.log(url);
 				$.getJSON (url, function(data) {
 					
 					const celsius = "℃";
@@ -392,18 +400,18 @@
 						}
 					});
 					
-					
+					// 시간이 현재 시간 기준으로 6시간 출력 됨.
 					for(let i = 0; i < 6; i++) {
 						const temp = t1hData[i].fcstValue;
 						let hour = parseInt(formattedTime.substring(0,2))+i;
 						$("#weather"+i).empty().append(temp).append(celsius);
 						$("#time-today"+i).text(hour+"시");
 					}
-					
+// 					consoel.log(hour);
 				});
+				
+				timeIcon()	   // 시간별 아이콘 메소드
 			}
-			
-			// 시간대별 온도 추가해야함.
 			
 			// ************************************************ 단기 예보(최고/최저기온, 강수량) ************************************************//
 			function weatherDay(nx, ny) {
@@ -503,7 +511,7 @@
 				
 				if (rainValue == "0") {
 					// 오전 7시부터 오후 5시까지는 해 이미지
-					if(formattedTime >= "0700" && formattedTime <"1800") {
+					if(formattedTime >= "0700" && formattedTime < "1800") {
 						iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg";
 					// 오후 6시부터 다음 날 아침 6시까지는 달 이미지
 					} else {
@@ -522,9 +530,13 @@
 			// 시간별 아이콘 출력
 			function timeIcon() {
 				console.log("시간별 아이콘 강수량 : "+rainValue);
+// 				console.log("시간별 시간 : " + hour);
 				
 				let iconUrl;
-				formattedTime = getFormattedTime(); // 현재 시간
+				formattedTime = getFormattedTime();				  // 현재 시간+분
+				let hour = parseInt(formattedTime.substring(0,2)) // 현재 시간
+				
+				
 				
 			}
 			
