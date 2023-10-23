@@ -320,12 +320,24 @@
                     			sessionStorage.setItem("sHPaytype", "creditcard");
                        			const url = '/support/complete.pet';
                        			location.href = url;
+                       			
+                       			// 메일 발송 
+                       			$.ajax({
+                       				url : '/support/sendMail.pet'	, 
+                       				data : { sNo : sNo, uId : uId, sHName : sHName, sHAmount : sHAmount, sHPaytype : 'creditcard', sHType : sHType }, 
+                       				type : 'post', 
+                       				success : function(result) {
+                       					console.log("메일 발송 완료");
+                       				},
+                       				error : function() {
+                       					console.log("메일 발송 실패");
+                       				}
+                       			});
                        		}, 
                        		error : function() {
                        			alert("Ajax 오류! 관리자에게 문의하세요.");
                        		} 
-                       	})
-                    	
+                       	});
                     } else {
                     	console.log("결제 실패");
                     }
@@ -361,11 +373,24 @@
                     			sessionStorage.setItem("sHPaytype", "kakaopay");
                     			const url = '/support/complete.pet';
                     			location.href = url;
-                    		}, 
-                    		error : function() {
-                    			alert("Ajax 오류! 관리자에게 문의하세요.");
-                    		} 
-                    	});
+                    			
+                    			// 메일 발송 
+                       			$.ajax({
+                       				url : '/support/sendMail.pet'	, 
+                       				data : { sNo : sNo, uId : uId, sHName : sHName, sHAmount : sHAmount, sHPaytype : 'kakaopay', sHType : sHType }, 
+                       				type : 'post', 
+                       				success : function(result) {
+                       					console.log("메일 발송 완료");
+                       				},
+                       				error : function() {
+                       					console.log("메일 발송 실패");
+                       				}
+                       			});
+                       		}, 
+                       		error : function() {
+                       			alert("Ajax 오류! 관리자에게 문의하세요.");
+                       		} 
+                       	});
                     } else {
                         console.log("결제 실패");
                     }

@@ -211,8 +211,8 @@ public class SupportController {
 			if(!sList.isEmpty()) {
 				mv.addObject("sPInfo", sPInfo).addObject("sList", sList).addObject("sHistory", sHistory).addObject("sMap", sMap).setViewName("support/supportSearchList");
 			} else {
-				mv.addObject("msg", "게시글 목록 조회가 완료되지 않았습니다.");
-				mv.addObject("url", "/home.pet");
+				mv.addObject("msg", "선택하신 카테고리에 글이 존재하지 않습니다.");
+				mv.addObject("url", "/support/list.pet");
 				mv.setViewName("common/message");
 			}
 		} catch (Exception e) {
@@ -295,26 +295,35 @@ public class SupportController {
 			System.out.println("글번호 : " + sOne.getsNo() + ", 금액 : " + sOne.getsFundAmount());
 			int result2 = sService.updateSupportFund(sOne);
 			
-			// 후원내역을 메일로 발송하는 코드 들어와야함 
-			String uId = sHistory.getuId();
-			User user = uService.selectOneById(uId);
-			
-			// 현재 시간을 java.sql.Timestamp로 변환
-			Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-			sHistory.setsHPaydate(currentTimestamp);
-			String sendMail = mailService.sendMail(sHistory, user);
-			if(sendMail == "success") {
-				System.out.println("메일 발송 완료");
-			} else {
-				System.out.println("메일 발송 실패");
-			}
-			
 			if(result2 > 0) {
 				return "success";
 			} else {
 				return "fail";
 			}
 		} else {
+			return "fail";
+		}
+	}
+	
+	// 메일 발송 
+	@ResponseBody
+	@RequestMapping(value = "/support/sendMail.pet", method = RequestMethod.POST)
+	public String supportHistorySendMail(ModelAndView mv
+				, @ModelAttribute SupportHistory sHistory) {
+		// 후원내역을 메일로 발송하는 코드 들어와야함 
+		String uId = sHistory.getuId();
+		User user = uService.selectOneById(uId);
+		
+		// 현재 시간을 java.sql.Timestamp로 변환
+		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+		sHistory.setsHPaydate(currentTimestamp);
+		String sendMail = mailService.sendMail(sHistory, user);
+		
+		if(sendMail == "success") {
+			System.out.println("메일 발송 완료");
+			return "success";
+		} else {
+			System.out.println("메일 발송 실패");
 			return "fail";
 		}
 	}
