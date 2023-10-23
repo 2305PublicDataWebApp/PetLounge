@@ -11,6 +11,7 @@ import com.lounge.pet.support.domain.SPageInfo;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
+import com.lounge.pet.support.domain.SupportTotalAmount;
 import com.lounge.pet.support.service.SupportService;
 import com.lounge.pet.support.store.SupportStore;
 import com.lounge.pet.user.domain.UserSupport;
@@ -168,6 +169,13 @@ public class SupportServiceImpl implements SupportService{
 		List<Support> sList = sStore.selectMainSupportList(sqlSession);
 		return sList;
 	}
+
+	@Override
+	public List<SupportTotalAmount> selectSupportAmountByPaytype() {
+		List<SupportTotalAmount> sList = sStore.selectSupportAmountByPaytype(sqlSession);
+		return sList;
+	}
+
 
 
 }

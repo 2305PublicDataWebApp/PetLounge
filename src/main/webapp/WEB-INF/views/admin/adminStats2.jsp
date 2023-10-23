@@ -10,7 +10,6 @@
 		<jsp:include page="../include/importSource.jsp"></jsp:include>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" />
 		<link rel="stylesheet" href="/resources/css/admin/adminSupport.css">
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js"></script>
 		<title>펫 라운지 관리자페이지</title>
 	</head>
 	<body>
@@ -84,12 +83,8 @@
 	                        </div>
 	                        <div class="line-hr"></div>
 	                        <div class="content-title">
-	                            <p class="content-title-name">후원금액 통계(일별)</p>
+	                            <p class="content-title-name">후원금액 통계(월별)</p>
 	                            <div class="line"></div>
-	                            <!-- 후원금액 통계 그래프 -->
-								<div class="chart">
-									<canvas id="c1" width="700px" height="300px"></canvas>
-								</div>
 	                        </div>
 	                        <div class="line-hr"></div>
 	                        <div class="content-title">
@@ -727,104 +722,318 @@
 	        }
 	        })
 		</script>
-		<!-- 통계 그래프 -->
-		<script>
-			// Inspired by https://dribbble.com/shots/1821178-Sales-Report/
-			// 현재 날짜를 가져오는 JavaScript 코드
-	        var currentDate = new Date();
-	        var payCurrentDate = new Date();
-	        
-	        // 날짜를 원하는 형식으로 포맷
-	        var year = currentDate.getFullYear();
-	        var month = String(currentDate.getMonth() + 1).padStart(2, '0');
-	        var day = String(currentDate.getDate()).padStart(2, '0');
-	        var formattedDate = month + "/" + day;
-	        var paydateFormatted = year + "-" + month + "-" + day;
-	        
-			// 배열 초기화
-			var labels = [formattedDate];
-			var paydateArr = [paydateFormatted];
-			var kakaoArr = [];
-			var creditArr = [];
-			var totalArr = [];
-			
-			
-			// 6일 동안의 이전 날짜를 labels 배열에 추가
-			for (var i = 0; i < 6; i++) {
-			    currentDate.setDate(currentDate.getDate() - 1); // 하루씩 이전 날짜로 이동
-			    var month = String(currentDate.getMonth() + 1).padStart(2, '0');
-			    var day = String(currentDate.getDate()).padStart(2, '0');
-			    var previousDate = month + "/" + day;
-			    labels.unshift(previousDate); // 배열의 맨 앞에 추가
-			}
-			
-			// 날짜 비교를 위해 7일 동안의 이전 날짜를 paydateArr 배열에 추가
-			for (var i = 0; i < 7; i++) {
-				payCurrentDate.setDate(payCurrentDate.getDate() - 1); // 하루씩 이전 날짜로 이동
-			    var month = String(payCurrentDate.getMonth() + 1).padStart(2, '0');
-			    var day = String(payCurrentDate.getDate()).padStart(2, '0');
-			    var payPreviousDate = year + "-" + month + "-" + day;
-			    paydateArr.unshift(payPreviousDate); // 배열의 맨 앞에 추가
-			}
-			
-			<c:forEach items="${sList}" var="sList">
-				for(var i = 0; i < paydateArr.length; i++) {
-					if(('${sList.sHPaytype}' == 'kakaopay') && ('${sList.paydate}' == paydateArr[i])) {
-						kakaoArr[i] = ${sList.totalAmount};
-					}
-					if(('${sList.sHPaytype}' == 'creditcard') && ('${sList.paydate}' == paydateArr[i])) {
-						creditArr[i] = ${sList.totalAmount};
-					}
-					if(('${sList.sHPaytype}' == '') && ('${sList.paydate}'== paydateArr[i])) {
-						totalArr[i] = ${sList.totalAmount};
-					}
-				}
-			</c:forEach>
-			
-			var data1 = {
-			  labels : labels,
-			  datasets : [
-			    {
-			      // 전체
-			      fillColor : "rgba(236,72,127,.1)",
-			      strokeColor : "rgba(236,72,127,1)",
-			      pointColor : "rgba(236,72,127,1)",
-			      pointStrokeColor : "rgba(0,0,0,0.6)",
-			      data : totalArr
-			    },
-			    {
-			      // 신용카드
-			      fillColor : "#cce2ef9c",
-			      strokeColor : "#1b79ce",
-			      pointColor : "#1b79ce",
-			      pointStrokeColor : "rgba(0,0,0,0.6)",
-			      data : creditArr
-			    },
-			    {
-			      // 카카오페이
-			      fillColor : "#fffbebb5",
-			      strokeColor : "#fee339",
-			      pointColor : "#fee339",
-			      pointStrokeColor : "rgba(0,0,0,0.6)",
-			      data : kakaoArr
-			    }
-			  ]
-			}
-	
-			var options1 = {
-			  scaleGridLineColor : "#eee",
-			  scaleFontFamily: "GmarketSansMedium",
-			  scaleFontSize: 14,
-			  bezierCurve : true,
-			  scaleShowLabels: true,
-			  pointDotRadius: 6,
-			  animation: true,
-			  scaleShowGridLines: true,
-			  datasetFill: false,
-			  responsive: true
-			}
-	
-			new Chart(c1.getContext("2d")).Line(data1,options1);
-		</script>
+		
 	</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" --%>
+<%--     pageEncoding="UTF-8"%> --%>
+<!-- <!DOCTYPE html> -->
+<!-- <html lang="ko"> -->
+<!--     <head> -->
+<!--         <meta charset="UTF-8"> -->
+<!--         <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+<%--         <jsp:include page="../include/importSource.jsp"></jsp:include> --%>
+<!--         <link rel="stylesheet" href="/resources/css/admin/main_stats.css"> -->
+<!--         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css" /> -->
+<!--         <title>관리자 페이지</title> -->
+<!--     </head> -->
+<!--     <body> -->
+<%--         <jsp:include page="../include/header.jsp"></jsp:include> --%>
+
+<!--         <main> -->
+
+<!--     왼쪽 메뉴 바 -->
+<!--   <section class="left-section"> -->
+<!--     <div class="menu"> -->
+<!--         <div class="m-container"> -->
+<!--             <div class="sub-title"> -->
+<!--                 <p class="sub-title-name">관리자페이지</p> -->
+<!--                 <hr class="line4"> -->
+<!--             </div> -->
+<!--             <ul class="sub-menu"> -->
+<!--                 <li class="menu-item"> -->
+<!--                     <div> -->
+<!--                     <span> -->
+<!--                     </span>   -->
+<!--                     <span class="m-name"> -->
+<!--                         <a href="#">통계 관리</a> -->
+<!--                     </span> -->
+<!--                     </div> -->
+<!--                 </li> -->
+<!--                 <li class="menu-item"> -->
+<!--                     <div> -->
+<!--                     <span></span>   -->
+<!--                     <span class="m-name"> -->
+<!--                         <a href="#">회원 관리</a> -->
+<!--                     </span> -->
+<!--                     </div> -->
+<!--                 </li> -->
+<!--                 <li class="menu-item"> -->
+<!--                     <div> -->
+<!--                     <span></span>   -->
+<!--                     <span class="m-name"> -->
+<!--                         <a href="/admin/support.pet">후원 관리</a> -->
+<!--                     </span> -->
+<!--                     </div> -->
+<!--                 </li> -->
+<!--                 <li class="menu-item"> -->
+<!--                     <div> -->
+<!--                     <span></span>   -->
+<!--                     <span class="m-name"> -->
+<!--                         <a href="#">게시판 관리</a> -->
+<!--                     </span> -->
+<!--                     </div> -->
+<!--                 </li> -->
+<!--             </ul> -->
+<!--         </div> -->
+<!--     </div> -->
+<!--   </section> -->
+
+<!--     오른쪽 메인 화면 -->
+<!--     <section class="right-section">     -->
+<!--     <div class="main"> -->
+<!--         <div class="square-container"> -->
+<!--             <div class="sub-title"> -->
+<!--                 <p class="main-title-name">통계 관리</p> -->
+<!--                 <hr class="line5"> -->
+<!--             </div> -->
+<!--             <div class="sub-title2"> -->
+<!--                 <p class="sub-title-name2">가입자수 통계</p> -->
+<!--             </div> -->
+<!--             <div class="sub-title2"> -->
+<!--                 <p class="sub-title-name2">후원금액 통계(월별)</p> -->
+<!--             </div> -->
+<!--             <div class="sub-title2"> -->
+<!--                 <p class="sub-title-name2">후원 순위</p> -->
+<!--             </div> -->
+<!--             <div id="notice"> -->
+<!--                 <ul> -->
+<!--                     <table> -->
+<%--                         <colgroup> --%>
+<%--                             <col width="10%"> --%>
+<%--                             <col width="60%"> --%>
+<%--                             <col width="30%"> --%>
+<%--                         </colgroup> --%>
+<!--                         <thead> -->
+<!--                             <tr> -->
+<!--                                 <th>순위</th> -->
+<!--                                 <th>닉네임</th> -->
+<!--                                 <th>후원금액</th> -->
+<!--                             </tr> -->
+<!--                         </thead> -->
+<!--                         <tbody> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3-1"></td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td class="right2">1</td> -->
+<!--                                 <td class="right1" style="text-align: center;">사이다</td> -->
+<!--                                 <td class="right2">10,322,000</td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3"></td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td class="right2">2</td> -->
+<!--                                 <td class="right1" style="text-align: center;">여울이</td> -->
+<!--                                 <td class="right2">5,810,000</td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3"></td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td class="right2">3</td> -->
+<!--                                 <td class="right1" style="text-align: center;">클레오</td> -->
+<!--                                 <td class="right2">3,520,000</td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3"></td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td class="right2">4</td> -->
+<!--                                 <td class="right1" style="text-align: center;">스피카</td> -->
+<!--                                 <td class="right2">1,125,000</td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3"></td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td class="right2">5</td> -->
+<!--                                 <td class="right1" style="text-align: center;">뽀야미</td> -->
+<!--                                 <td class="right2">580,000</td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3"></td> -->
+<!--                             </tr> -->
+<!--                         </tbody> -->
+<!--                     </table> -->
+<!--                 </ul> -->
+<!--             </div> -->
+<!--             <div class="sub-title2"> -->
+<!--                 <p class="sub-title-name2">병원 순위(리뷰)</p> -->
+<!--             </div> -->
+<!--             <div id="notice"> -->
+<!--                 <ul> -->
+<!--                     <table> -->
+<%--                         <colgroup> --%>
+<%--                             <col width="10%"> --%>
+<%--                             <col width="60%"> --%>
+<%--                             <col width="30%"> --%>
+<%--                         </colgroup> --%>
+<!--                         <thead> -->
+<!--                             <tr> -->
+<!--                                 <th>순위</th> -->
+<!--                                 <th>이름</th> -->
+<!--                                 <th>리뷰 수</th> -->
+<!--                             </tr> -->
+<!--                         </thead> -->
+<!--                         <tbody> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3-1"></td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td class="right2">1</td> -->
+<!--                                 <td class="right1" style="text-align: center;">가로수동물 병원</td> -->
+<!--                                 <td class="right2">270</td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3"></td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td class="right2">2</td> -->
+<!--                                 <td class="right1" style="text-align: center;">케어덴동물 병원</td> -->
+<!--                                 <td class="right2">222</td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3"></td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td class="right2">3</td> -->
+<!--                                 <td class="right1" style="text-align: center;">그레이스동물 병원</td> -->
+<!--                                 <td class="right2">180</td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3"></td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td class="right2">4</td> -->
+<!--                                 <td class="right1" style="text-align: center;">메이트동물 병원</td> -->
+<!--                                 <td class="right2">132</td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3"></td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td class="right2">5</td> -->
+<!--                                 <td class="right1" style="text-align: center;">커비동물 병원</td> -->
+<!--                                 <td class="right2">105</td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3"></td> -->
+<!--                             </tr> -->
+<!--                         </tbody> -->
+<!--                     </table> -->
+<!--                 </ul> -->
+<!--             </div> -->
+<!--             <div class="sub-title2"> -->
+<!--                 <p class="sub-title-name2">병원 순위(좋아요)</p> -->
+<!--             </div> -->
+<!--             <div id="notice"> -->
+<!--                 <ul> -->
+<!--                     <table> -->
+<%--                         <colgroup> --%>
+<%--                             <col width="10%"> --%>
+<%--                             <col width="60%"> --%>
+<%--                             <col width="30%"> --%>
+<%--                         </colgroup> --%>
+<!--                         <thead> -->
+<!--                             <tr> -->
+<!--                                 <th>순위</th> -->
+<!--                                 <th>이름</th> -->
+<!--                                 <th>좋아요</th> -->
+<!--                             </tr> -->
+<!--                         </thead> -->
+<!--                         <tbody> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3-1"></td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td class="right2">1</td> -->
+<!--                                 <td class="right1" style="text-align: center;">가로수동물 병원</td> -->
+<!--                                 <td class="right2">100</td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3"></td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td class="right2">2</td> -->
+<!--                                 <td class="right1" style="text-align: center;">케어덴동물 병원</td> -->
+<!--                                 <td class="right2">80</td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3"></td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td class="right2">3</td> -->
+<!--                                 <td class="right1" style="text-align: center;">그레이스동물 병원</td> -->
+<!--                                 <td class="right2">60</td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3"></td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td class="right2">4</td> -->
+<!--                                 <td class="right1" style="text-align: center;">메이트동물 병원</td> -->
+<!--                                 <td class="right2">40</td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3"></td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td class="right2">5</td> -->
+<!--                                 <td class="right1" style="text-align: center;">커비동물 병원</td> -->
+<!--                                 <td class="right2">20</td> -->
+<!--                             </tr> -->
+<!--                             <tr> -->
+<!--                                 <td colspan="5"><hr class="line3"></td> -->
+<!--                             </tr> -->
+<!--                         </tbody> -->
+<!--                     </table> -->
+<!--                 </ul> -->
+<!--             </div> -->
+<!--     	</div> -->
+<!-- 	</div> -->
+<!-- 	</section> -->
+<!-- 	</main>    -->
+<!--   	<footer> -->
+<%-- 	<jsp:include page="../include/footer.jsp"></jsp:include> --%>
+<!-- 	</footer> -->
+
+<!--     </body> -->
+<!--     </html> -->
+    
+    
+    

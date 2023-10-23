@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.lounge.pet.support.domain.Support;
-import com.lounge.pet.support.domain.SupportHistory;
+import com.lounge.pet.support.domain.SupportTotalAmount;
 import com.lounge.pet.support.service.SupportService;
 import com.lounge.pet.user.domain.UserSupport;
 
@@ -31,7 +32,10 @@ public class AdminController {
 	}
 	
 	@GetMapping("/stats.pet")
-	public String adminStats() {
+	public String adminStats(Model model) {
+		List<SupportTotalAmount> sList = sService.selectSupportAmountByPaytype();
+		model.addAttribute("sList", sList);
+		System.out.println(sList);
 		return "admin/adminStats";
 	}
 	
@@ -161,5 +165,4 @@ public class AdminController {
 			Gson gson = new Gson();
 			return gson.toJson(resultMap);
 		}
-	
 }
