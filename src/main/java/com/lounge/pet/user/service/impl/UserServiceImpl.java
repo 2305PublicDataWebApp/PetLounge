@@ -14,6 +14,7 @@ import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.user.domain.UPageInfo;
 import com.lounge.pet.user.domain.User;
+import com.lounge.pet.user.domain.UserFreeBoard;
 import com.lounge.pet.user.domain.UserHosRe;
 import com.lounge.pet.user.domain.UserSupport;
 import com.lounge.pet.user.service.UserService;
@@ -211,6 +212,58 @@ public class UserServiceImpl implements UserService{
 		User uOne = uStore.selectFindPw(session,user);
 		return uOne;
 	}
+
+	@Override
+	public Integer getBoardReplyListCount(String sessionId) {
+		int result = uStore.selectBoardReplyListCoun(session, sessionId);
+		return result;
+	}
+
+	@Override
+	public List<UserFreeBoard> selectBoardReply(String sessionId, UPageInfo aInfo) {
+		List<UserFreeBoard> fRList = uStore.selectBoardReply(session, sessionId, aInfo);
+		return fRList;
+	}
+
+	@Override
+	public int getBoardReplySearchListCount(Map<String, String> paramMap) {
+		int result = uStore.selectBoardReplySearchListCount(session, paramMap);
+		return result;
+	}
+
+	@Override
+	public List<UserFreeBoard> searchBoardReplyByKeyword(UPageInfo aInfo, Map<String, String> paramMap) {
+		List<UserFreeBoard> bRList = uStore.searchBoardReplyByKeyword(session, aInfo, paramMap);
+		return bRList;
+	}
+
+	@Override
+	public Integer getBookMarkListCount(String sessionId) {
+		int result = uStore.selectBookMarkListCount(session, sessionId);
+		return result;
+	}
+
+	@Override
+	public List<UserFreeBoard> selectBookMark(String sessionId, UPageInfo aInfo) {
+		List<UserFreeBoard> fBList = uStore.selectBookMark(session, sessionId, aInfo);
+		return fBList;
+	}
+
+	@Override
+	public int getBookMarkSearchListCount(Map<String, String> paramMap) {
+		int result = uStore.selectBookMarkSearchListCount(session, paramMap);
+		return result;
+	}
+
+	@Override
+	public List<UserFreeBoard> searchBookMarkByKeyword(UPageInfo aInfo, Map<String, String> paramMap) {
+		List<UserFreeBoard> fBList = uStore.searchBookMarkByKeyword(session, aInfo, paramMap);
+		return fBList;
+	}
+
+
+
+
 
 
 

@@ -10,6 +10,7 @@ import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.user.domain.UPageInfo;
 import com.lounge.pet.user.domain.User;
+import com.lounge.pet.user.domain.UserFreeBoard;
 import com.lounge.pet.user.domain.UserHosRe;
 import com.lounge.pet.user.domain.UserSupport;
 
@@ -236,6 +237,70 @@ public interface UserService {
 	 * @return
 	 */
 	User selectFindPw(User user);
+
+	/**
+	 * 자유게시판 댓글 수
+	 * @param sessionId
+	 * @return
+	 */
+	Integer getBoardReplyListCount(String sessionId);
+
+	/**
+	 * 자유게시판 댓글 조회
+	 * @param sessionId
+	 * @param aInfo
+	 * @return
+	 */
+	List<UserFreeBoard> selectBoardReply(String sessionId, UPageInfo aInfo);
+
+	/**
+	 * 자유게시판 댓글 검색 수
+	 * @param paramMap
+	 * @return
+	 */
+	int getBoardReplySearchListCount(Map<String, String> paramMap);
+
+	/**
+	 * 조건에 따른 자유게시판 검색 조회
+	 * @param aInfo
+	 * @param paramMap
+	 * @return
+	 */
+	List<UserFreeBoard> searchBoardReplyByKeyword(UPageInfo aInfo, Map<String, String> paramMap);
+
+	/**
+	 * 자유게시판 북마크 수
+	 * @param sessionId
+	 * @return
+	 */
+	Integer getBookMarkListCount(String sessionId);
+
+	/**
+	 * 자유게시판 북마크 수
+	 * @param sessionId
+	 * @param aInfo
+	 * @return
+	 */
+	List<UserFreeBoard> selectBookMark(String sessionId, UPageInfo aInfo);
+
+	/**
+	 * 자유게시판 북마크 검색 수
+	 * @param paramMap
+	 * @return
+	 */
+	int getBookMarkSearchListCount(Map<String, String> paramMap);
+
+	/**
+	 * 자유게시판 북마크 조회
+	 * @param aInfo
+	 * @param paramMap
+	 * @return
+	 */
+	List<UserFreeBoard> searchBookMarkByKeyword(UPageInfo aInfo, Map<String, String> paramMap);
+
+	
+
+	
 
 
 	

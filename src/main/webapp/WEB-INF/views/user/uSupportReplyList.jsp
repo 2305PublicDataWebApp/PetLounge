@@ -41,8 +41,8 @@
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
 										<li><a href="/user/uBoard.pet">게시글 조회</a></li>
-										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
-										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
+										<li><a href="/user/uBoardReply.pet">댓글 조회</a></li>
+										<li><a href="/user/uBoardMark.pet">북마크</a></li>
 									</ul></li>
 								<li><a href="#">후원관리</a>
 									<ul class="subMenu">
