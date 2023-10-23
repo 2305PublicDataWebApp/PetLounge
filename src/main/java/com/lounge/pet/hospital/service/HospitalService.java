@@ -83,7 +83,7 @@ public interface HospitalService {
 	 * @param userSearchLocation
 	 * @return
 	 */
-	List<Hospital> selectFiveByKeyword(Hospital userSearchLocation);
+	List<Hospital> selectHosListByKeyword(Hospital userSearchLocation);
 
 	/**
 	 * 동물병원 전체 리스트 Service

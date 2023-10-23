@@ -96,7 +96,7 @@ public interface HospitalStore {
 	 * @param userSearchLocation
 	 * @return
 	 */
-	List<Hospital> selectFiveByKeyword(SqlSession session, Hospital userSearchLocation);
+	List<Hospital> selectHosListByKeyword(SqlSession session, Hospital userSearchLocation);
 
 	/**
 	 * 동물병원 전체 리스트 Store

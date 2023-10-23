@@ -86,7 +86,7 @@
 		]]>
 	</select>
 	
-	<select id="selectFiveByKeyword" resultType="Hospital">
+	<select id="selectHosListByKeyword" resultType="Hospital">
 		<![CDATA[
 			SELECT *
 			FROM (
@@ -141,6 +141,7 @@
 		 WHERE H_NO = #{ hNo } 
 		   AND H_R_STATUS = 'Y'
 		   AND H_R_CONTENT LIKE '%' || #{ hRSearchKeyword } || '%'
+	     ORDER BY H_R_NO DESC
 	</select>
 	
 	<select id="getHReviewSearchTotalCount" resultType="_int">

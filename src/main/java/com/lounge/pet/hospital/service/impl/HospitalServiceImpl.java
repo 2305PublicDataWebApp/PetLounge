@@ -81,8 +81,8 @@ public class HospitalServiceImpl implements HospitalService {
 	}
 
 	@Override
-	public List<Hospital> selectFiveByKeyword(Hospital userSearchLocation) {
-		List<Hospital> hList = hStore.selectFiveByKeyword(session, userSearchLocation);
+	public List<Hospital> selectHosListByKeyword(Hospital userSearchLocation) {
+		List<Hospital> hList = hStore.selectHosListByKeyword(session, userSearchLocation);
 		return hList;
 	}
 

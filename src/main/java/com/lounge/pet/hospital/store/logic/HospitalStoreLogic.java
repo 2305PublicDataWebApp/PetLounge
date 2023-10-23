@@ -74,8 +74,8 @@ public class HospitalStoreLogic implements HospitalStore {
 	}
 
 	@Override
-	public List<Hospital> selectFiveByKeyword(SqlSession session, Hospital userSearchLocation) {
-		List<Hospital> hList = session.selectList("HosMapper.selectFiveByKeyword", userSearchLocation);
+	public List<Hospital> selectHosListByKeyword(SqlSession session, Hospital userSearchLocation) {
+		List<Hospital> hList = session.selectList("HosMapper.selectHosListByKeyword", userSearchLocation);
 		return hList;
 	}
 
