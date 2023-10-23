@@ -916,7 +916,7 @@
 <!--                             </tr> -->
 <!--                             <tr> -->
 <!--                                 <td class="right2">1</td> -->
-<!--                                 <td class="right1" style="text-align: center;">가로수동물병원</td> -->
+<!--                                 <td class="right1" style="text-align: center;">가로수동물 병원</td> -->
 <!--                                 <td class="right2">270</td> -->
 <!--                             </tr> -->
 <!--                             <tr> -->
@@ -924,7 +924,7 @@
 <!--                             </tr> -->
 <!--                             <tr> -->
 <!--                                 <td class="right2">2</td> -->
-<!--                                 <td class="right1" style="text-align: center;">케어덴동물병원</td> -->
+<!--                                 <td class="right1" style="text-align: center;">케어덴동물 병원</td> -->
 <!--                                 <td class="right2">222</td> -->
 <!--                             </tr> -->
 <!--                             <tr> -->
@@ -932,7 +932,7 @@
 <!--                             </tr> -->
 <!--                             <tr> -->
 <!--                                 <td class="right2">3</td> -->
-<!--                                 <td class="right1" style="text-align: center;">그레이스동물병원</td> -->
+<!--                                 <td class="right1" style="text-align: center;">그레이스동물 병원</td> -->
 <!--                                 <td class="right2">180</td> -->
 <!--                             </tr> -->
 <!--                             <tr> -->
@@ -940,7 +940,7 @@
 <!--                             </tr> -->
 <!--                             <tr> -->
 <!--                                 <td class="right2">4</td> -->
-<!--                                 <td class="right1" style="text-align: center;">메이트동물병원</td> -->
+<!--                                 <td class="right1" style="text-align: center;">메이트동물 병원</td> -->
 <!--                                 <td class="right2">132</td> -->
 <!--                             </tr> -->
 <!--                             <tr> -->
@@ -948,7 +948,7 @@
 <!--                             </tr> -->
 <!--                             <tr> -->
 <!--                                 <td class="right2">5</td> -->
-<!--                                 <td class="right1" style="text-align: center;">커비동물병원</td> -->
+<!--                                 <td class="right1" style="text-align: center;">커비동물 병원</td> -->
 <!--                                 <td class="right2">105</td> -->
 <!--                             </tr> -->
 <!--                             <tr> -->
@@ -982,7 +982,7 @@
 <!--                             </tr> -->
 <!--                             <tr> -->
 <!--                                 <td class="right2">1</td> -->
-<!--                                 <td class="right1" style="text-align: center;">가로수동물병원</td> -->
+<!--                                 <td class="right1" style="text-align: center;">가로수동물 병원</td> -->
 <!--                                 <td class="right2">100</td> -->
 <!--                             </tr> -->
 <!--                             <tr> -->
@@ -990,7 +990,7 @@
 <!--                             </tr> -->
 <!--                             <tr> -->
 <!--                                 <td class="right2">2</td> -->
-<!--                                 <td class="right1" style="text-align: center;">케어덴동물병원</td> -->
+<!--                                 <td class="right1" style="text-align: center;">케어덴동물 병원</td> -->
 <!--                                 <td class="right2">80</td> -->
 <!--                             </tr> -->
 <!--                             <tr> -->
@@ -998,7 +998,7 @@
 <!--                             </tr> -->
 <!--                             <tr> -->
 <!--                                 <td class="right2">3</td> -->
-<!--                                 <td class="right1" style="text-align: center;">그레이스동물병원</td> -->
+<!--                                 <td class="right1" style="text-align: center;">그레이스동물 병원</td> -->
 <!--                                 <td class="right2">60</td> -->
 <!--                             </tr> -->
 <!--                             <tr> -->
@@ -1006,7 +1006,7 @@
 <!--                             </tr> -->
 <!--                             <tr> -->
 <!--                                 <td class="right2">4</td> -->
-<!--                                 <td class="right1" style="text-align: center;">메이트동물병원</td> -->
+<!--                                 <td class="right1" style="text-align: center;">메이트동물 병원</td> -->
 <!--                                 <td class="right2">40</td> -->
 <!--                             </tr> -->
 <!--                             <tr> -->
@@ -1014,7 +1014,7 @@
 <!--                             </tr> -->
 <!--                             <tr> -->
 <!--                                 <td class="right2">5</td> -->
-<!--                                 <td class="right1" style="text-align: center;">커비동물병원</td> -->
+<!--                                 <td class="right1" style="text-align: center;">커비동물 병원</td> -->
 <!--                                 <td class="right2">20</td> -->
 <!--                             </tr> -->
 <!--                             <tr> -->

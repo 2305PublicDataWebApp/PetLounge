@@ -188,8 +188,14 @@ main {
 	                    margin-right: 5px;
 	                }
 	
-	                .review-modify-btn:hover, .review-delete-btn:hover {
+	                .review-modify-btn:hover {
 	                    color: #FFD370;
+	                    text-decoration: none;
+	                }
+	
+	                .review-delete-btn:hover {
+	                    color: #ff7070;
+	                    text-decoration: none;
 	                }
 	                
 			#search-div {

@@ -17,7 +17,7 @@
             <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
             <ul class="navbar-nav">
                 <li class="nav-item" id="hospitalLink">
-                    <a class="nav-link" href="/hospital/page.pet">동물병원 안내</a>
+                    <a class="nav-link" href="/hospital/page.pet">동물 병원 안내</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/weather/weather.pet">산책 날씨 예보</a>

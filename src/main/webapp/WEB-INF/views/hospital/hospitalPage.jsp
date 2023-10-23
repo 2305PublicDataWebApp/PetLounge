@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" />
         <!-- 카카오맵 API services와 clusterer 라이브러리 불러오기 -->
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e9674da3ceea3cb3a1acdb7044a416e8&libraries=services,clusterer"></script>
-        <title>동물병원 안내</title>
+        <title>동물 병원 안내</title>
         <style>
             .call-icon, .location-icon, .home-icon, .search-icon {
                 margin-right: 10px;
@@ -65,7 +65,7 @@
         <main>
             <!-- 페이지 타이틀 -->
             <section id="title-section">
-                <h1>동물병원 안내</h1>
+                <h1>동물 병원 안내</h1>
                 <div id="line"></div>
             </section>
 
@@ -110,7 +110,7 @@
                 </div>
             </section>
 
-       		<!-- 동물병원 리스트 -->
+       		<!-- 동물 병원 리스트 -->
 			<section id="hospital-list-section">
 				<div>
 				    <table>
@@ -122,7 +122,7 @@
 				        </colgroup>
 				        <thead>
 				        	<tr>
-					            <th colspan="5">내 주변 동물병원</th>
+					            <th colspan="5">내 주변 동물 병원</th>
 				        	</tr>
 				        </thead>
 				        <tbody id="hospital-list-body">
@@ -185,7 +185,7 @@
 				moveLocation(map);
 			}
 			
-			// 하단에 표시되는 동물병원 리스트를 불러오는 ajax
+			// 하단에 표시되는 동물 병원 리스트를 불러오는 ajax
 			function getHospitalList(map, lat, lng) {
 				$.ajax ({
 					 url: "/hospital/getHospitalList.pet",
@@ -199,10 +199,10 @@
 						showListFunc(data);
 						
 						var hospitalListTitle = document.querySelector('th[colspan="5"]');
-						hospitalListTitle.innerHTML = '내 주변 동물병원';
+						hospitalListTitle.innerHTML = '내 주변 동물 병원';
 					 },
 					 error: function(){
-						 alert("동물병원 리스트 호출 오류. 관리자에게 문의 바랍니다.");
+						 alert("동물 병원 리스트 호출 오류. 관리자에게 문의 바랍니다.");
 					 }
 				 });
 			}
@@ -574,7 +574,7 @@
 		            	} 
 		            },
 		            error: function () {
-		            	alert("동물병원 즐겨찾기 오류. 관리자에게 문의 바랍니다.");
+		            	alert("동물 병원 즐겨찾기 오류. 관리자에게 문의 바랍니다.");
 		            }
 		        });
 		    }
@@ -593,7 +593,7 @@
 			    searchHos(currentPage, "");
 			});
 			
-			// 동물병원 검색 ajax
+			// 동물 병원 검색 ajax
 			function searchHos(currentPage, keyword) {
 				var searchKeyword = document.getElementById('h-search-keyword').value;
 				if(keyword != "" && keyword != searchKeyword) {
@@ -620,7 +620,7 @@
 							hospitalListTitle.innerHTML = '<span style="color: #FFD370;">' + searchKeyword + '</span> 검색 결과';
 			    		 },
 			    		 error: function(){
-			    			 alert("동물병원 검색 오류. 관리자에게 문의 바랍니다.");
+			    			 alert("동물 병원 검색 오류. 관리자에게 문의 바랍니다.");
 			    		 }
 			    	 });
 			    	
@@ -712,7 +712,7 @@
 				// setInterval(getReviewList, 1000); // 1초 단위로 getReviewList가 호출되어 검색결과 실시간 조회
 			})
 		</script>
-		<!-- 동물병원 검색 (input search) -->
+		<!-- 동물 병원 검색 (input search) -->
 		<script>
 			document.getElementById('h-search-keyword').addEventListener('keypress', function (event) {
 			    if (event.key === 'Enter') {

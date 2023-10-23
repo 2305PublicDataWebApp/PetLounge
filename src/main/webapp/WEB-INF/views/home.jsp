@@ -34,7 +34,7 @@
                     <ul>
                         <li>
                             <a href="/hospital/page.pet">
-                                동물병원 안내
+                                동물 병원 안내
                             </a>
                         </li>
                         <li>
@@ -134,12 +134,12 @@
                 </div>
             </section>
     
-            <!-- 동물병원 안내 -->
+            <!-- 동물 병원 안내 -->
             <section class="container second" id="section2">
                 <div class="container-box">
                     <div>
-                        <h1 class="title">동물병원 안내</h1>
-                        <p class="info">펫 라운지를 통해 주변 동물병원을 간편하게 찾아보세요<br>반려동물의 건강은 행복의 첫걸음입니다</p>
+                        <h1 class="title">동물 병원 안내</h1>
+                        <p class="info">펫 라운지를 통해 주변 동물 병원을 간편하게 찾아보세요<br>반려동물의 건강은 행복의 첫걸음입니다</p>
                     </div>
                     <form action="/hospital/page.pet" method="get" id="search-hospital-form">
                         <div>
@@ -223,7 +223,7 @@
 
         <footer></footer>
 
-        <!-- 동물병원 검색 -->
+        <!-- 동물 병원 검색 -->
         <script>
             function searchHospital() {
                 var form = document.getElementById('search-hospital-form');
