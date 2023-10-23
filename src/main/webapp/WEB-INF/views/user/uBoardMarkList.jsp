@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -39,8 +40,8 @@
 								<li><a href="#">게시글관리</a>
 									<ul class="subMenu">
 										<li><a href="/user/uBoard.pet">게시글 조회</a></li>
-										<li><a href="/user/searchBoardReply.pet">댓글 조회</a></li>
-										<li><a href="/user/searchBoardMark.pet">북마크</a></li>
+										<li><a href="/user/uBoardReply.pet">댓글 조회</a></li>
+										<li><a href="/user/uBoardMark.pet">북마크</a></li>
 									</ul></li>
 								<li><a href="#">후원관리</a>
 									<ul class="subMenu">
@@ -72,96 +73,111 @@
 						<div style="margin: 30px 60px 30px 60px;">
 							<div id="boardTable" class="board-list">
 								<form action="/user/searchBoardMark.pet" method="get">
-									<div class="filter input-group mb-3">
-										<select name="searchCondition" style="border-radius: 20px; padding-top: 2px;">
-											<option value="all">전체</option>
-											<option value="name">이름</option>
-											<option value="id">아이디</option>
-											<option value="nickname">닉네임</option>
-										</select> <input class="form-control" type="text" name="searchKeyword"
-											placeholder="검색"
-											style="width: 73%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 10px; border-color: #FFD370; padding-top: 10px; margin-right: 10px;" />
-										<input type="submit" value="검색"
-											style="background-color: #ffd370; color: white; border-color: #ffd370; width: 10%; height: 28px; border-radius: 20px; margin-left: 0; padding-top: 3px;">
-									</div>
+									<input type="hidden" name="uId" value="${uId}">
+								<div class="filter input-group mb-3">
+									<select name="searchCondition"
+										style="border-radius: 20px; padding-top: 2px;">
+										<option value="all"
+											<c:if test="${param.searchCondition == 'all' }">selected</c:if>>전체</option>
+										<option value="title"
+											<c:if test="${param.searchCondition == 'title' }">selected</c:if>>제목</option>
+										<option value="writer"
+											<c:if test="${param.searchCondition == 'writer' }">selected</c:if>>작성자</option>
+										<option value="date"
+											<c:if test="${param.searchCondition == 'date' }">selected</c:if>>작성일</option>
+									</select> <input class="form-control" type="text" name="searchKeyword"
+										placeholder="검색"
+										style="width: 73%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 10px; border-color: #FFD370; padding-top: 10px; margin-right: 10px;" />
+									<input type="submit" value="검색"
+										style="background-color: #ffd370; color: white; border-color: #ffd370; width: 10%; height: 28px; border-radius: 20px; margin-left: 0; padding-top: 3px;">
+								</div>
 								</form>
 							</div>
-							<table class="table table-borderd  table-fixed">
-								<thead>
-									<tr>
-										<th style="border-bottom: 1px solid #dee2e6;">No</th>
-										<th style="border-bottom: 1px solid #dee2e6;">제목</th>
-										<th style="border-bottom: 1px solid #dee2e6;">작성일</th>
-										<th style="border-bottom: 1px solid #dee2e6;">작성자</th>
-										<th style="border-bottom: 1px solid #dee2e6;">조회수</th>
+						<table class="table table-borderd  table-fixed">
+							<thead>
+								<tr>
+									<th style="border-bottom: 1px solid #dee2e6;">No</th>
+									<th style="border-bottom: 1px solid #dee2e6;">제목</th>
+									<th style="border-bottom: 1px solid #dee2e6;">작성일</th>
+									<th style="border-bottom: 1px solid #dee2e6;">조회수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${bMList }" var="bMList" varStatus="i">
+									<c:url var="detailUrl" value="/board/freeDetail.pet">
+										<c:param name="fNo" value="${bMList.fNo }"></c:param>
+									</c:url>
+									<tr onclick="window.location.href='${detailUrl}'" id="tr"
+										style="cursor: pointer;">
+										<td>${(totalCount - i.index) - ((aInfo.currentPage - 1) * aInfo.recordCountPerPage)}</td>
+										<td style="text-align: left;">${bMList.fTitle}</td>
+										<c:set var="formattedDate"
+											value="${fn:replace(bMList.fCreate, '-', '.')}" />
+										<td>${formattedDate}</td>
+										<td>${bMList.fViewCount}</td>
 									</tr>
-								</thead>
-								<tbody>
-<%-- 									<c:forEach items="${user }" var="uOne" varStatus="i"> --%>
-										<tr>
-											<td>user</td>
-											<td>password</td>
-<%-- 											<c:url var="detailUrl" value="/admin/aInfo.pet"> --%>
-<%-- 												<c:param name="userId" value="${uOne.userId }"></c:param> --%>
-<%-- 											</c:url> --%>
-											<td><a href="${detailUrl }">이름</a></td>
-											<td>닉네임</td>
-											<td>가입일</td>
-										</tr>
-										<tr>
-											<td>user</td>
-											<td>password</td>
-<%-- 											<c:url var="detailUrl" value="/admin/aInfo.pet"> --%>
-<%-- 												<c:param name="userId" value="${uOne.userId }"></c:param> --%>
-<%-- 											</c:url> --%>
-											<td><a href="${detailUrl }">이름</a></td>
-											<td>닉네임</td>
-											<td>가입일</td>
-										</tr>
-										<tr>
-											<td>user</td>
-											<td>password</td>
-<%-- 											<c:url var="detailUrl" value="/admin/aInfo.pet"> --%>
-<%-- 												<c:param name="userId" value="${uOne.userId }"></c:param> --%>
-<%-- 											</c:url> --%>
-											<td><a href="${detailUrl }">이름</a></td>
-											<td>닉네임</td>
-											<td>가입일</td>
-										</tr>
-<%-- 									</c:forEach> --%>
-								</tbody>
-							</table>
-							<div class="paging" style="margin-top: 50px;">
-								<div>
-<%-- 									<c:if test="${nInfo.nStartNavi != 1}"> --%>
-<%-- 										<c:url var="preUrl" value="/notice/n_list.pet"> --%>
-<%-- 											<c:param name="page" value="${nInfo.nStartNavi -1 }" /> --%>
-<%-- 										</c:url> --%>
-<%-- 										<a href="${preUrl }">[이전]</a> --%>
-<%-- 									</c:if> --%>
-<%-- 									<c:forEach begin="${nInfo.nStartNavi }" end="${nInfo.nEndNavi }" --%>
-<%-- 										var="n"> --%>
-<%-- 										<c:url var="pageUrl" value="/notice/n_list.pet"> --%>
-<%-- 											<c:param name="page" value="${n }"></c:param> --%>
-<%-- 										</c:url> --%>
-<%-- 										<a href="${pageUrl }">1 2 3 4 5</a>&nbsp; --%>
-<%-- 	                                </c:forEach> --%>
-<%-- 									<c:if test="${nInfo.nEndNavi != nInfo.nNaviTotalCount }"> --%>
-<%-- 										<c:url var="nextUrl" value="/notice/n_list.pet"> --%>
-<%-- 											<c:param name="page" value="${nInfo.nEndNavi +1 }" /> --%>
-<%-- 										</c:url> --%>
-<%-- 										<a href="${nextUrl }">[다음]</a> --%>
-<%-- 									</c:if> --%>
-								</div>
-							</div>
+								</c:forEach>
+							</tbody>
+						</table>
+						<br> <br>
+						<div aria-label="Page navigation example" class="page">
+
+							<c:url var="prevUrl" value="/user/uBoardMark.pet">
+								<c:param name="page" value="${aInfo.startNavi -1 }"></c:param>
+								<c:param name="searchCondition"
+									value="${paramMap.searchCondition }"></c:param>
+								<c:param name="searchKeyword" value="${paramMap.searchKeyword }"></c:param>
+								<c:param name="uId" value="${sessionScope.uId}"></c:param>
+							</c:url>
+							<div></div>
+							<ul style="display: flex; justify-content: center;">
+								<c:if test="${aInfo.startNavi != 1 }">
+									<li class="boardLi"><a class="page-link" id="pageBtn"
+										href="${prevUrl }"><img
+											src="/resources/images/user/previous.png"
+											style="width: 13px;"></a></li>&nbsp;
+						            </c:if>
+
+								<c:forEach begin="${aInfo.startNavi }" end="${aInfo.endNavi }"
+									var="p">
+									<c:url var="pageUrl" value="/user/uBoardMark.pet">
+										<c:param name="page" value="${p }"></c:param>
+										<c:param name="searchCondition"
+											value="${paramMap.searchCondition }"></c:param>
+										<c:param name="searchKeyword"
+											value="${paramMap.searchKeyword }"></c:param>
+										<c:param name="uId" value="${sessionScope.uId}"></c:param>
+									</c:url>
+									<c:if test="${ aInfo.currentPage ne p }">
+										<li class="boardLi"><a class="page-link" id="pageBtn"
+											href="${pageUrl }">${p }</a></li>
+									</c:if>
+									<c:if test="${ aInfo.currentPage eq p }">
+										<li class="boardLi"><a class="page-link"
+											id="pageBtnSelect" href="${pageUrl }">${p }</a></li>
+									</c:if>
+								</c:forEach>
+
+								<c:if test="${aInfo.endNavi != aInfo.naviTotalCount }">
+									<c:url var="nextUrl" value="/user/uBoardMark.pet">
+										<c:param name="page" value="${aInfo.endNavi + 1 }"></c:param>
+										<c:param name="searchCondition"
+											value="${paramMap.searchCondition }"></c:param>
+										<c:param name="searchKeyword"
+											value="${paramMap.searchKeyword }"></c:param>
+										<c:param name="uId" value="${sessionScope.uId}"></c:param>
+									</c:url>
+						            	&nbsp;<li class="boardLi"><a class="page-link"
+										id="pageBtn" href="${nextUrl }"><img
+											src="/resources/images/user/next.png" style="width: 13px;"></a></li>
+								</c:if>
+							</ul>
 						</div>
-				</div>
+
+					</div>
+					</section>
 				</div>
 			</section>
-			</div>
-			</section>
-	
-	
 		</main>
 		<jsp:include page="../include/footer.jsp"></jsp:include>
 		<script>

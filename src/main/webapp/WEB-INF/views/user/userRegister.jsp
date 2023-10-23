@@ -240,7 +240,7 @@ section[id^="content"]:target {
 									<input type="hidden" name="uEmail" id="uEmail" value="">
 									<div id="mailCheckBox">
 									<span id="duplEmailResult" style="font-size: 0.8em; width: 200px; padding-left: 3px;"></span>
-									<button id="sendMailBtn" class="dupl" style=" margin: 0;">메일인증</button>
+									<button type="button" id="sendMailBtn" class="dupl" style=" margin: 0;">메일인증</button>
 									</div><br>
 									
 									<!-- 컨트롤러에서 인증번호 받아온 값 저장 -> 입력된 인증번호와 비교 -->
@@ -564,11 +564,14 @@ section[id^="content"]:target {
                         } else if (result[0] === "Valid" && result[1] === "NotUnique") {
                             $("#duplResult").removeClass("success").addClass("error");
                             $("#duplResult").text("중복된 아이디입니다.");
+	                        idMsg = "fail";
                         } else if (result[0] === "Invalid" && result[1] === "Unique") {
                             $("#duplResult").removeClass("success").addClass("error");
                             $("#duplResult").text("아이디는 영문과 숫자 조합이어야 하며, 1~10자여야 합니다.");
+	                        idMsg = "fail";
                         }  else {
                             $("#duplResult").text("ajax 오류 관리자 문의 바람");
+	                        idMsg = "fail";
                         }
                     },
                     error: function() {
@@ -598,16 +601,17 @@ section[id^="content"]:target {
                             $("#duplNickResult").removeClass("error").addClass("success");
                             $("#duplNickResult").text("사용 가능한 닉네임입니다.");
                             nickMsg = "success";
-                          
                         } else if (result[0] === "Valid" && result[1] === "NotUnique") {
                             $("#duplNickResult").removeClass("success").addClass("error");
                             $("#duplNickResult").text("중복된 닉네임입니다.");
-                    
+	                        nickMsg = "fail";
                         } else if (result[0] === "Invalid" && result[1] === "Unique") {
                             $("#duplNickResult").removeClass("success").addClass("error");
-                            $("#duplNickResult").text("닉네임은 한글 문자 5자 이하 또는 영문자 5자 이하여야 합니다.");
+                            $("#duplNickResult").text("닉네임은 한글, 영문자, 숫자 10자 이하여야 합니다.");
+	                        nickMsg = "fail";
                         }  else {
                             $("#duplNickResult").text("ajax 오류 관리자 문의 바람");
+	                        nickMsg = "fail";
                         }
                     },
                     error: function() {
@@ -642,11 +646,14 @@ section[id^="content"]:target {
                         } else if (result[0] === "Valid" && result[1] === "NotUnique") {
                             $("#duplEmailResult").removeClass("success").addClass("error").css("color", "red");;
                             $("#duplEmailResult").text("중복된 이메일입니다.");
+	                        emailMsg = "fail";
                         } else if (result[0] === "Invalid" && result[1] === "Unique") {
                             $("#duplEmailResult").removeClass("success").addClass("error").css("color", "red");;
-                            $("#duplEmailResult").text("이메일은 한글 문자 또는 영문자 5자 이하 입니다.");
+                            $("#duplEmailResult").text("이메일은 한글 또는 영문자 숫자 10자 이하 입니다.");
+	                        emailMsg = "fail";s
                         }  else {
                             $("#duplEmailResult").text("ajax 오류 관리자 문의 바람");
+	                        emailMsg = "fail";
                         }
                     },
                     error: function() {
@@ -680,8 +687,10 @@ section[id^="content"]:target {
                         } else if (data === "Invalid") {
                             $("#duplPwResult").removeClass("success").addClass("error");
                             $("#duplPwResult").text("비밀번호는 영문과 숫자 조합이어야 하며, 1~10자여야 합니다.");
+	                        passMsg = "fail";
                         }   else {
                             $("#duplPwResult").text("ajax 오류 관리자 문의 바람");
+	                        passMsg = "fail";
                         }
                     },
                     error: function() {
@@ -714,8 +723,10 @@ section[id^="content"]:target {
                         } else if (data === "error") {
                             $("#duplPwReResult").removeClass("success").addClass("error");
                             $("#duplPwReResult").text("비밀번호가 일치하지 않습니다.");
+	                        rePassMsg = "fail";
                         }   else {
                             $("#duplPwReResult").text("ajax 오류 관리자 문의 바람");
+	                        rePassMsg = "fail";
                         }
                     },
                     error: function() {
@@ -746,8 +757,10 @@ section[id^="content"]:target {
                         } else if (data === "Invalid") {
                             $("#duplPhoneResult").removeClass("success").addClass("error");
                             $("#duplPhoneResult").text("전화번호는 숫자 11자리여야 합니다.");
+	                        phoneMsg = "fail";
                         }   else {
                             $("#duplPhoneResult").text("ajax 오류 관리자 문의 바람");
+	                        phoneMsg = "fail";
                         }
                     },
                     error: function() {
@@ -785,6 +798,7 @@ section[id^="content"]:target {
                   data : { mail : emailVal },
                   success : function(data) {
                      $("#send-certification-num").attr("value", data);
+                     sendMsg = "fail";
                   },
                   error : function() {
                      alert:("ajax 오류, 관리자에게 문의 바랍니다.");
@@ -870,20 +884,25 @@ section[id^="content"]:target {
                 } else {
                     // 하나라도 유효성 검사에서 실패한 경우 메시지를 표시하고 넘어가지 않음
                     event.preventDefault(); // 폼 제출을 막음
-//                     displayErrorMessage(idMsg, "idErrorMsg"); // 아이디 에러 메시지 표시
-//                     displayErrorMessage(passMsg, "passErrorMsg"); // 비밀번호 에러 메시지 표시
-//                     displayErrorMessage(rePassMsg, "rePassErrorMsg"); // 비밀번호 확인 에러 메시지 표시
-//                     displayErrorMessage(nickMsg, "nickErrorMsg"); // 닉네임 에러 메시지 표시
-//                     displayErrorMessage(emailMsg, "emailErrorMsg"); // 이메일 에러 메시지 표시
-//                     displayErrorMessage(conNumMsg, "conNumErrorMsg"); // 인증 번호 에러 메시지 표시
-//                     displayErrorMessage(phone, "phoneErrorMsg"); // 전화번호 에러 메시지 표시
-//                     displayErrorMessage(addr, "addrErrorMsg"); // 주소 에러 메시지 표시
+                    displayErrorMessage(idMsg, "idErrorMsg"); // 아이디 에러 메시지 표시
+                    displayErrorMessage(passMsg, "passErrorMsg"); // 비밀번호 에러 메시지 표시
+                    displayErrorMessage(rePassMsg, "rePassErrorMsg"); // 비밀번호 확인 에러 메시지 표시
+                    displayErrorMessage(nickMsg, "nickErrorMsg"); // 닉네임 에러 메시지 표시
+                    displayErrorMessage(emailMsg, "emailErrorMsg"); // 이메일 에러 메시지 표시
+                    displayErrorMessage(conNumMsg, "conNumErrorMsg"); // 인증 번호 에러 메시지 표시
+                    displayErrorMessage(phone, "phoneErrorMsg"); // 전화번호 에러 메시지 표시
+                    displayErrorMessage(addr, "addrErrorMsg"); // 주소 에러 메시지 표시
                     alert("전부 기입해주세요.")
                 }
             });
         });
         
         
+        function displayErrorMessage(message, field) {
+            if (message !== "success") {
+                alert("Error in " + field + ": " + message);
+            }
+        }
         
         
         
@@ -893,43 +912,7 @@ section[id^="content"]:target {
         
         
         
-        
-     // "join2" 버튼 클릭 이벤트 처리
-//         const join2 = document.getElementById('join2');
-//         join2.addEventListener('click', (event) => {
-//             event.preventDefault(); // 기본 폼 제출 동작 방지
-
-//             // 폼 데이터 수집
-//             const formData = new FormData(document.getElementById('registration-form'));
-
-//             // AJAX 요청 생성
-//             const xhr = new XMLHttpRequest();
-//             xhr.open("POST", "/user/register.pet", true);
-//             xhr.onreadystatechange = function () {
-//                 if (xhr.readyState === 4) {
-//                     if (xhr.status === 200) {
-//                         // 서버 응답이 성공인 경우
-//                         const response = JSON.parse(xhr.responseText);
-//                         if (response.success) {
-//                             // 가입완료 탭으로 변경
-//                             const tabs = document.querySelectorAll('input[name="tabs"]');
-//                             tabs.forEach(tab => (tab.checked = false));
-//                             document.getElementById("tab4").checked = true;
-
-//                             // URL에 #tab4를 추가하여 탭이 열리도록 함
-//                             window.location.hash = "tab4";
-//                         } else {
-//                             alert("회원가입에 실패했습니다. 다시 시도해주세요.");
-//                         }
-//                     } else {
-//                         alert("서버 오류로 인해 회원가입에 실패했습니다. 다시 시도해주세요.");
-//                     }
-//                 }
-//             };
-
-//             // AJAX 요청 전송
-//             xhr.send(formData);
-//         });
+  
         
 	    </script>
 

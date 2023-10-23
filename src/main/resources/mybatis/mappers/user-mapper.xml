@@ -384,15 +384,126 @@
 		ORDER BY S.S_NO DESC
 	</select>
 	
+	<!-- 아이디 찾기 -->
 	<select id="selectFindId" resultType="User">
 		SELECT * FROM USER_TBL WHERE
 		U_NAME = #{uName} AND U_EMAIL = #{uEmail} AND U_STATUS = 'Y'
 	</select>
 	
+	<!-- 비밀번호 찾기 -->
 	<select id="selectFindPw" resultType="User">
 		SELECT * FROM USER_TBL WHERE
 		U_NAME = #{uName} AND U_ID = #{uId} AND U_STATUS = 'Y'
 	</select>
 
+
+	<!--전체 자유게시판 댓글 갯수 -->
+	<select id="selectBoardReplyListCoun" resultType="_int">
+		SELECT COUNT (*) FROM
+		F_REPLY_TBL WHERE U_ID = #{ uId }
+	</select>
+	
+	<!-- 자유게시판 댓글 조회 -->
+	<select id="selectBoardReply" resultType="UserFreeBoard">
+		SELECT * FROM F_REPLY_TBL R
+		JOIN FREE_TBL F ON F.F_NO = R.F_NO
+		WHERE R.U_ID = #{ uId } ORDER
+		BY R.F_NO DESC
+	</select>
+	
+	<!-- 자유게시판 댓글 검색 수 -->
+	<select id="selectBoardReplySearchListCount" resultType="_int">
+		SELECT COUNT(*) FROM F_REPLY_TBL R
+		JOIN FREE_TBL F ON F.F_NO = R.F_NO
+		WHERE R.U_ID = #{ uId }
+		<if test="searchCondition == 'all'">
+			AND (F.F_TITLE LIKE '%'||#{searchKeyword}||'%' OR R.F_R_CONTENT LIKE '%'||#{searchKeyword}||'%' OR R.F_R_CREATE LIKE '%'||#{searchKeyword}||'%')
+		</if>
+		<if test="searchCondition == 'title'">
+			AND F.F_TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'content'">
+			AND R.F_R_CONTENT LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'date'">
+			AND R.F_R_CREATE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY R.F_NO DESC
+	</select>
+	
+	<!-- 후원 댓글 검색 -->
+	<select id="searchBoardReplyByKeyword" resultType="UserFreeBoard">
+		SELECT * FROM F_REPLY_TBL R
+		JOIN FREE_TBL F ON F.F_NO = R.F_NO
+		WHERE R.U_ID = #{ uId }
+		<if test="searchCondition == 'all'">
+			AND (F.F_TITLE LIKE '%'||#{searchKeyword}||'%' OR R.F_R_CONTENT LIKE '%'||#{searchKeyword}||'%' OR R.F_R_CREATE LIKE '%'||#{searchKeyword}||'%')
+		</if>
+		<if test="searchCondition == 'title'">
+			AND F.F_TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'content'">
+			AND R.F_R_CONTENT LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'date'">
+			AND R.F_R_CREATE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY R.F_NO DESC
+	</select>
+	
+	<!--전체 북마크 댓글 갯수 -->
+	<select id="selectBookMarkListCount" resultType="_int">
+		SELECT COUNT (*) FROM
+		F_BOOKMARK_TBL WHERE U_ID = #{ uId }
+	</select>
+	
+	<!-- 자유게시판 북마크 조회 -->
+	<select id="selectBookMark" resultType="UserFreeBoard">
+		SELECT * FROM F_BOOKMARK_TBL B
+		JOIN FREE_TBL F ON F.F_NO = B.F_NO
+		WHERE B.U_ID = #{ uId } ORDER
+		BY B.F_NO DESC
+	</select>
+	
+	<!-- 자유게시판 북마크 검색 수 -->
+	<select id="selectBookMarkSearchListCount" resultType="_int">
+		SELECT COUNT(*) FROM F_BOOKMARK_TBL B
+		JOIN FREE_TBL F ON F.F_NO = B.F_NO
+		WHERE B.U_ID = #{ uId }
+		<if test="searchCondition == 'all'">
+			AND (F.F_TITLE LIKE '%'||#{searchKeyword}||'%' OR F.F_VIEWCOUNT LIKE '%'||#{searchKeyword}||'%' OR F.F_CREATE LIKE '%'||#{searchKeyword}||'%')
+		</if>
+		<if test="searchCondition == 'title'">
+			AND F.F_TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'count'">
+			AND F.F_VIEWCOUNT LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'date'">
+			AND F.F_CREATE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY B.F_NO DESC
+	</select>
+	
+	<!-- 자유게시판 북마크 검색 -->
+	<select id="searchBookMarkByKeyword" resultType="UserFreeBoard">
+		SELECT * FROM F_BOOKMARK_TBL B
+		JOIN FREE_TBL F ON F.F_NO = B.F_NO
+		WHERE B.U_ID = #{ uId }
+		<if test="searchCondition == 'all'">
+			AND (F.F_TITLE LIKE '%'||#{searchKeyword}||'%' OR F.F_VIEWCOUNT LIKE '%'||#{searchKeyword}||'%' OR F.F_CREATE LIKE '%'||#{searchKeyword}||'%')
+		</if>
+		<if test="searchCondition == 'title'">
+			AND F.F_TITLE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'count'">
+			AND F.F_VIEWCOUNT LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		<if test="searchCondition == 'date'">
+			AND F.F_CREATE LIKE '%'||#{searchKeyword}||'%'
+		</if>
+		ORDER BY B.F_NO DESC
+	</select>
+	
 
 </mapper>

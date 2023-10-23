@@ -144,7 +144,7 @@
 												<input type="hidden" name="uEmail" id="uEmail" value="${user.uEmail}">
 												<div id="mailCheckBox">
 												<span id="duplEmailResult" style="font-size: 0.8em; width: 200px; padding-left: 5px;"></span>
-												<button class="중복확인버튼" id="sendMailBtn" style="height: 8px; margin: 0; padding-bottom: 23px; margin-left: 100px;">메일인증</button>
+												<button type="button" class="중복확인버튼" id="sendMailBtn" style="height: 8px; margin: 0; padding-bottom: 23px; margin-left: 100px;">메일인증</button>
 												</div>
 													
 												
@@ -165,7 +165,7 @@
 										</div>
 
 
-										<button id="join2" style="cursor: pointer !important;">수정하기</button>
+										<button type="button" id="join2" style="cursor: pointer !important;">수정하기</button>
 									</section>
 
 								</div>
@@ -472,9 +472,11 @@
                 var uPwRe = $("#uPwRe").val();
                 var uPhone = $("#uPhone").val();
                 var uNickName = $("#uNickName").val();
+                var prevNickName = "${user.uNickName}";
                 var uEmailPrefix = $("#uEmailPrefix").val();
 				var uEmailSuffix = $("#uEmailSuffix").val();
 				var uEmail = uEmailPrefix +"@"+ uEmailSuffix;
+				var prevEmail = "${user.uEmail}";
                 $.ajax({
                     url: "/user/checkPwVal.pet",
                     type: "POST",
@@ -527,64 +529,74 @@
                 });
 
                 
-                $.ajax({
-                    url: "/user/checkNick.pet",
-                    type: "POST",
-                    data: {
-                        "uNickName": uNickName
-                    },
-                    async : false,
-                    success: function(data) {
-                        var result = JSON.parse(data);
-
-                        if (result[0] === "Valid" && result[1] === "Unique") {
-                            $("#duplNickResult").removeClass("error").addClass("success").css("color", "green");;
-                            $("#duplNickResult").text("사용 가능한 닉네임입니다.");
-                            nickMsg = "success";
-                        } else if (result[0] === "Valid" && result[1] === "NotUnique") {
-                            $("#duplNickResult").removeClass("success").addClass("error");
-                            $("#duplNickResult").text("중복된 닉네임입니다.");
-                        } else if (result[0] === "Invalid" && result[1] === "Unique") {
-                            $("#duplNickResult").removeClass("success").addClass("error");
-                            $("#duplNickResult").text("닉네임은 한글 문자 5자 이하 또는 영문자 5자 이하여야 합니다.");
-                        }  else {
-                            $("#duplNickResult").text("ajax 오류 관리자 문의 바람");
-                        }
-                    },
-                    error: function() {
-                        alert("ajax 오류, 큰일");
-                    }
-                });
-				
+				// 닉네임이 변경되었을 때만 ajax 요청 실행
+				// 이후 ajax 요청 및 유효성 검사 코드를 실행
+				if (prevNickName !== uNickName) {
+	                $.ajax({
+	                    url: "/user/checkNick.pet",
+	                    type: "POST",
+	                    data: {
+	                        "uNickName": uNickName // 현재 입력된 닉네임으로 업데이트
+	                    },
+	                    async : false,
+	                    success: function(data) {
+	                        var result = JSON.parse(data);
+	
+	                        if (result[0] === "Valid" && result[1] === "Unique") {
+	                            $("#duplNickResult").removeClass("error").addClass("success").css("color", "green");;
+	                            $("#duplNickResult").text("사용 가능한 닉네임입니다.");
+	                            nickMsg = "success";
+	                        } else if (result[0] === "Valid" && result[1] === "NotUnique") {
+	                            $("#duplNickResult").removeClass("success").addClass("error");
+	                            $("#duplNickResult").text("중복된 닉네임입니다.");
+	                        } else if (result[0] === "Invalid" && result[1] === "Unique") {
+	                            $("#duplNickResult").removeClass("success").addClass("error");
+	                            $("#duplNickResult").text("닉네임은 한글 문자 5자 이하 또는 영문자 5자 이하여야 합니다.");
+	                        }  else {
+	                            $("#duplNickResult").text("ajax 오류 관리자 문의 바람");
+	                        }
+	                    },
+	                    error: function() {
+	                        alert("ajax 오류, 큰일");
+	                    }
+	                });
+				}else {
+					nickMsg = "success";
+				}
                 
-                $.ajax({
-                    url: "/user/checkEmail.pet",
-                    type: "POST",
-                    data: {
-                        "uEmail": uEmail
-                    },
-                    async : false,
-                    success: function(data) {
-                        var result = JSON.parse(data);
-
-                        if (result[0] === "Valid" && result[1] === "Unique") {
-                            $("#duplEmailResult").removeClass("error").addClass("success").css("color", "green");
-                            $("#duplEmailResult").text("사용 가능한 이메일입니다.");
-                            emailMsg = "success";
-                        } else if (result[0] === "Valid" && result[1] === "NotUnique") {
-                            $("#duplEmailResult").removeClass("success").addClass("error");
-                            $("#duplEmailResult").text("중복된 이메일입니다.");
-                        } else if (result[0] === "Invalid" && result[1] === "Unique") {
-                            $("#duplEmailResult").removeClass("success").addClass("error");
-                            $("#duplEmailResult").text("이메일은 한글 문자 또는 영문자 5자 이하 입니다.");
-                        }  else {
-                            $("#duplEmailResult").text("ajax 오류 관리자 문의 바람");
-                        }
-                    },
-                    error: function() {
-                        alert("ajax 오류, 큰일");
-                    }
-                });
+				if(prevEmail !== uEmail) {
+	                $.ajax({
+	                    url: "/user/checkEmail.pet",
+	                    type: "POST",
+	                    data: {
+	                        "uEmail": uEmail
+	                    },
+	                    async : false,
+	                    success: function(data) {
+	                        var result = JSON.parse(data);
+	
+	                        if (result[0] === "Valid" && result[1] === "Unique") {
+	                            $("#duplEmailResult").removeClass("error").addClass("success").css("color", "green");
+	                            $("#duplEmailResult").text("사용 가능한 이메일입니다.");
+	                            emailMsg = "success";
+	                        } else if (result[0] === "Valid" && result[1] === "NotUnique") {
+	                            $("#duplEmailResult").removeClass("success").addClass("error");
+	                            $("#duplEmailResult").text("중복된 이메일입니다.");
+	                        } else if (result[0] === "Invalid" && result[1] === "Unique") {
+	                            $("#duplEmailResult").removeClass("success").addClass("error");
+	                            $("#duplEmailResult").text("이메일은 한글 문자 또는 영문자 5자 이하 입니다.");
+	                        }  else {
+	                            $("#duplEmailResult").text("ajax 오류 관리자 문의 바람");
+	                        }
+	                    },
+	                    error: function() {
+	                        alert("ajax 오류, 큰일");
+	                    }
+	                });
+				}else{
+					emailMsg = "success";
+					conNumMsg = "success";
+				}
                 $.ajax({
                     url: "/user/checkPhone.pet",
                     type: "POST",
@@ -615,7 +627,7 @@
                 if (passMsg === "success" && rePassMsg === "success" && nickMsg === "success" &&
                     emailMsg === "success" && conNumMsg === "success" && phoneMsg === "success") {
                     // 여기에서 가입 처리 로직을 실행
-                    
+                    $("#registration-form").submit();
                     
                 } else {
                     // 하나라도 유효성 검사에서 실패한 경우 메시지를 표시하고 넘어가지 않음

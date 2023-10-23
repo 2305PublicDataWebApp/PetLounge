@@ -14,6 +14,7 @@ import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.user.domain.UPageInfo;
 import com.lounge.pet.user.domain.User;
+import com.lounge.pet.user.domain.UserFreeBoard;
 import com.lounge.pet.user.domain.UserHosRe;
 import com.lounge.pet.user.domain.UserSupport;
 import com.lounge.pet.user.store.UserStore;
@@ -248,6 +249,72 @@ public class UserStoreLogic implements UserStore{
 	public User selectFindPw(SqlSession session, User user) {
 		User uOne = session.selectOne("UserMapper.selectFindPw", user);
 		return uOne;
+	}
+
+	@Override
+	public int selectBoardReplyListCoun(SqlSession session, String sessionId) {
+		int result = session.selectOne("UserMapper.selectBoardReplyListCoun", sessionId);
+		return result;
+	}
+
+	@Override
+	public List<UserFreeBoard> selectBoardReply(SqlSession session, String sessionId, UPageInfo aInfo) {
+		int limit = aInfo.getRecordCountPerPage();
+		int offset = (aInfo.getCurrentPage()-1)*limit;
+		
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		List<UserFreeBoard> fRList = session.selectList("UserMapper.selectBoardReply", sessionId,  rowbounds);
+		return fRList;
+	}
+
+	@Override
+	public int selectBoardReplySearchListCount(SqlSession session, Map<String, String> paramMap) {
+		int result = session.selectOne("UserMapper.selectBoardReplySearchListCount", paramMap);
+		return result;
+	}
+
+	@Override
+	public List<UserFreeBoard> searchBoardReplyByKeyword(SqlSession session, UPageInfo aInfo,
+			Map<String, String> paramMap) {
+		int limit = aInfo.getRecordCountPerPage();
+		int offset = (aInfo.getCurrentPage()-1)*limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<UserFreeBoard> searchList = session.selectList("UserMapper.searchBoardReplyByKeyword", paramMap, rowBounds);
+		return searchList;
+	}
+
+	@Override
+	public int selectBookMarkListCount(SqlSession session, String sessionId) {
+		int result = session.selectOne("UserMapper.selectBookMarkListCount", sessionId);
+		return result;
+	}
+
+	@Override
+	public List<UserFreeBoard> selectBookMark(SqlSession session, String sessionId, UPageInfo aInfo) {
+		int limit = aInfo.getRecordCountPerPage();
+		int offset = (aInfo.getCurrentPage()-1)*limit;
+		
+		RowBounds rowbounds = new RowBounds(offset, limit);
+		List<UserFreeBoard> fBList = session.selectList("UserMapper.selectBookMark", sessionId,  rowbounds);
+		return fBList;
+	}
+
+	@Override
+	public int selectBookMarkSearchListCount(SqlSession session, Map<String, String> paramMap) {
+		int result = session.selectOne("UserMapper.selectBookMarkSearchListCount", paramMap);
+		return result;
+	}
+
+	@Override
+	public List<UserFreeBoard> searchBookMarkByKeyword(SqlSession session, UPageInfo aInfo,
+			Map<String, String> paramMap) {
+		int limit = aInfo.getRecordCountPerPage();
+		int offset = (aInfo.getCurrentPage()-1)*limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		List<UserFreeBoard> searchList = session.selectList("UserMapper.searchBookMarkByKeyword", paramMap, rowBounds);
+		return searchList;
 	}
 
 

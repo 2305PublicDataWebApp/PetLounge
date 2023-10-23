@@ -30,6 +30,7 @@ import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
 import com.lounge.pet.user.domain.UPageInfo;
 import com.lounge.pet.user.domain.User;
+import com.lounge.pet.user.domain.UserFreeBoard;
 import com.lounge.pet.user.domain.UserHosRe;
 import com.lounge.pet.user.domain.UserSupport;
 import com.lounge.pet.user.service.UserService;
@@ -455,7 +456,7 @@ public class UserController {
 	}
 
 	private boolean validateUserNick(String uNickName) {
-		String regex = "^[가-힣a-zA-Z]{1,5}$";
+		String regex = "^[가-힣a-zA-Z0-9]{1,10}$ ";
 		return uNickName.matches(regex);
 	}
 
@@ -586,62 +587,162 @@ public class UserController {
 	}
 
 	// 나의 북마크 페이지 user/searchBoardMark.pet
-	@RequestMapping(value = "/user/searchBoardMark.pet", method = RequestMethod.GET)
-	public ModelAndView userBookMarkPage(ModelAndView mv, HttpSession session) {
+	@RequestMapping(value = "/user/uBoardMark.pet", method = RequestMethod.GET)
+	public ModelAndView userBookMarkPage(ModelAndView mv, HttpSession session,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
+		
 		try {
 			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+
 			if (sessionId != "" && sessionId != null) {
 				User user = uService.selectOneById(sessionId);
+
 				if (user != null) {
+
+					Integer totalCount = uService.getBookMarkListCount(sessionId);
+					UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+
+					List<UserFreeBoard> bMList = uService.selectBookMark(sessionId, aInfo);
+				
+					mv.addObject("aInfo", aInfo);
+					mv.addObject("bMList", bMList);
+					mv.addObject("totalCount", totalCount);
 					mv.addObject("user", user);
 					mv.setViewName("/user/uBoardMarkList");
+
 				} else {
-					mv.addObject("msg", "북마크 조회 실패");
+					mv.addObject("msg", "게시글 조회 실패");
 					mv.addObject("url", "/home.pet");
-					mv.setViewName("common/errorPage");
+					mv.setViewName("common/alert");
 				}
 			} else {
 				mv.addObject("msg", "로그인 후 이용 바랍니다.");
 				mv.addObject("url", "/user/login.pet");
-				mv.setViewName("common/errorPage");
+				mv.setViewName("common/alert");
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", "관리자에게 문의바랍니다.");
 			mv.addObject("error", e.getMessage());
 			mv.addObject("url", "/home.pet");
-			mv.setViewName("common/errorPage");
+			mv.setViewName("common/alert");
 		}
 		return mv;
+	}
+	
+	// 나의 북마크 검색 페이지 user/searchBoardMark.pet
+	@RequestMapping(value = "/user/searchBoardMark.pet", method = RequestMethod.GET)
+	public String userBookMarkSearchPage(@RequestParam("searchCondition") String searchCondition,
+			@RequestParam("searchKeyword") String searchKeyword,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage, Model model,
+			HttpSession session) {
+		
+		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+		User user = uService.selectOneById(sessionId);
+
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("searchCondition", searchCondition);
+		paramMap.put("searchKeyword", searchKeyword);
+		paramMap.put("uId", sessionId);
+
+		int totalCount = uService.getBookMarkSearchListCount(paramMap);
+		UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+
+		List<UserFreeBoard> bMList = uService.searchBookMarkByKeyword(aInfo, paramMap);
+
+		if (!bMList.isEmpty()) {
+			model.addAttribute("paramMap", paramMap);
+			model.addAttribute("aInfo", aInfo);
+			model.addAttribute("user", user);
+			model.addAttribute("totalCount", totalCount);
+			model.addAttribute("bMList", bMList);
+			return "/user/uBoardMarkSearchList";
+		} else {
+			model.addAttribute("msg", "서비스 실패");
+			model.addAttribute("url", "/home.pet");
+			model.addAttribute("user", user);
+			return "/user/uBoardMarkSearchList";
+		}
+		
 	}
 
-	// 나의 자유게시판 댓글 페이지 user/searchBoardReply.pet
-	@RequestMapping(value = "/user/searchBoardReply.pet", method = RequestMethod.GET)
-	public ModelAndView userBoardReplyPage(ModelAndView mv, HttpSession session) {
+	// 나의 자유게시판 댓글 페이지 
+	@RequestMapping(value = "/user/uBoardReply.pet", method = RequestMethod.GET)
+	public ModelAndView userBoardReplyPage(ModelAndView mv, HttpSession session,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage) {
+		
 		try {
 			String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+
 			if (sessionId != "" && sessionId != null) {
 				User user = uService.selectOneById(sessionId);
+
 				if (user != null) {
+
+					Integer totalCount = uService.getBoardReplyListCount(sessionId);
+					UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+
+					List<UserFreeBoard> bRList = uService.selectBoardReply(sessionId, aInfo);
+
+					mv.addObject("aInfo", aInfo);
+					mv.addObject("bRList", bRList);
+					mv.addObject("totalCount", totalCount);
 					mv.addObject("user", user);
 					mv.setViewName("/user/uBoardReplyList");
+
 				} else {
-					mv.addObject("msg", "댓글 조회 실패");
+					mv.addObject("msg", "게시글 조회 실패");
 					mv.addObject("url", "/home.pet");
-					mv.setViewName("common/errorPage");
+					mv.setViewName("common/alert");
 				}
 			} else {
 				mv.addObject("msg", "로그인 후 이용 바랍니다.");
 				mv.addObject("url", "/user/login.pet");
-				mv.setViewName("common/errorPage");
+				mv.setViewName("common/alert");
 			}
 		} catch (Exception e) {
 			mv.addObject("msg", "관리자에게 문의바랍니다.");
 			mv.addObject("error", e.getMessage());
 			mv.addObject("url", "/home.pet");
-			mv.setViewName("common/errorPage");
+			mv.setViewName("common/alert");
 		}
 		return mv;
 	}
+	
+	// 나의 자유게시판 댓글 검색 페이지 user/searchBoardReply.pet
+	@RequestMapping(value = "/user/searchBoardReply.pet", method = RequestMethod.GET)
+	public String userBoardReplySearchPage(@RequestParam("searchCondition") String searchCondition,
+			@RequestParam("searchKeyword") String searchKeyword,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer currentPage, Model model,
+			HttpSession session) {
+		
+		String sessionId = (String) session.getAttribute("uId"); // 세션에 저장된 아이디
+		User user = uService.selectOneById(sessionId);
+
+		Map<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("searchCondition", searchCondition);
+		paramMap.put("searchKeyword", searchKeyword);
+		paramMap.put("uId", sessionId);
+
+		int totalCount = uService.getBoardReplySearchListCount(paramMap);
+		UPageInfo aInfo = this.getPageInfo(currentPage, totalCount);
+
+		List<UserFreeBoard> bRList = uService.searchBoardReplyByKeyword(aInfo, paramMap);
+
+		if (!bRList.isEmpty()) {
+			model.addAttribute("paramMap", paramMap);
+			model.addAttribute("aInfo", aInfo);
+			model.addAttribute("user", user);
+			model.addAttribute("totalCount", totalCount);
+			model.addAttribute("bRList", bRList);
+			return "/user/uBoardReplySearchList";
+		} else {
+			model.addAttribute("msg", "서비스 실패");
+			model.addAttribute("url", "/home.pet");
+			model.addAttribute("user", user);
+			return "/user/uBoardSearchList";
+		}
+	}
+
 
 	// 나의 즐겨찾는 병원 페이지 user/uHospital.pet
 	@RequestMapping(value = "/user/uHospital.pet", method = RequestMethod.GET)
