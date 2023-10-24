@@ -11,6 +11,7 @@ import com.lounge.pet.support.domain.SPageInfo;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
+import com.lounge.pet.support.domain.SupportTotalAmount;
 import com.lounge.pet.support.store.SupportStore;
 import com.lounge.pet.user.domain.UserSupport;
 
@@ -162,6 +163,12 @@ public class SupportStoreLogic implements SupportStore{
 	@Override
 	public List<Support> selectMainSupportList(SqlSession sqlSession) {
 		List<Support> sList = sqlSession.selectList("SupportMapper.selectMainSupportList");
+		return sList;
+	}
+
+	@Override
+	public List<SupportTotalAmount> selectSupportAmountByPaytype(SqlSession sqlSession) {
+		List<SupportTotalAmount> sList = sqlSession.selectList("SHistoryMapper.selectSupportAmountByPaytype");
 		return sList;
 	}
 

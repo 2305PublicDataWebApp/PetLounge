@@ -7,6 +7,7 @@ import com.lounge.pet.support.domain.SPageInfo;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
+import com.lounge.pet.support.domain.SupportTotalAmount;
 import com.lounge.pet.user.domain.UserSupport;
 
 public interface SupportService {
@@ -172,6 +173,12 @@ public interface SupportService {
 	 * @return List
 	 */
 	List<Support> selectMainSupportList();
+
+	/**
+	 * 후원 타입별 후원 총액 조회 Service
+	 * @return
+	 */
+	List<SupportTotalAmount> selectSupportAmountByPaytype();
 
 	
 	

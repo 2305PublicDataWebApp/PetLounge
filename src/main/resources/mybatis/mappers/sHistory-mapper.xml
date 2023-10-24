@@ -72,5 +72,12 @@
 			S_H_NO DESC
 	</select>
 	
+	<!-- 후원 타입별 후원 총액 조회  -->
+	<select id="selectSupportAmountByPaytype" resultType="SupportTotalAmount">
+		SELECT TO_DATE(TO_CHAR(S_H_PAYDATE, 'YYYY-MM-DD'), 'YYYY-MM-DD') AS PAYDATE, S_H_PAYTYPE, SUM(S_H_AMOUNT) AS TOTAL_AMOUNT
+		  FROM S_HISTORY_TBL 
+		 GROUP BY ROLLUP(TO_DATE(TO_CHAR(S_H_PAYDATE, 'YYYY-MM-DD'), 'YYYY-MM-DD'), S_H_PAYTYPE) 
+		 ORDER BY 1
+	</select>	
 
 </mapper>

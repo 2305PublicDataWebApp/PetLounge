@@ -9,6 +9,7 @@ import com.lounge.pet.support.domain.SPageInfo;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportReply;
+import com.lounge.pet.support.domain.SupportTotalAmount;
 import com.lounge.pet.user.domain.UserSupport;
 
 public interface SupportStore {
@@ -194,6 +195,13 @@ public interface SupportStore {
 	 * @return
 	 */
 	List<Support> selectMainSupportList(SqlSession sqlSession);
+
+	/**
+	 * 후원 타입별 후원 총액 조회 Store
+	 * @param sqlSession
+	 * @return
+	 */
+	List<SupportTotalAmount> selectSupportAmountByPaytype(SqlSession sqlSession);
 
 
 }

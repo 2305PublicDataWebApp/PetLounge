@@ -104,7 +104,6 @@ public class SupportHistory {
 		this.uFilePath = uFilePath;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "후원 내역 [후원 내역 번호=" + sHNo + ", 후원글 번호=" + sNo + ", 회원 아이디=" + uId + ", 후원자닉네임=" + sHName + ", 후원 금액="
