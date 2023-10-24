@@ -427,7 +427,7 @@ public class UserController {
 		}
 	}
 
-	// 닉네임 중복체크 및 유효성 검사
+	// 이메일 중복체크 및 유효성 검사
 	@ResponseBody
 	@RequestMapping(value = "/user/checkEmail.pet", method = RequestMethod.POST)
 	public String userCheckEmail(@RequestParam("uEmail") String uEmail) {
@@ -456,7 +456,7 @@ public class UserController {
 	}
 
 	private boolean validateUserNick(String uNickName) {
-		String regex = "^[가-힣a-zA-Z0-9]{1,10}$ ";
+		String regex = "^(?!^\\d+$)[a-zA-Z0-9가-힣]{2,10}$";
 		return uNickName.matches(regex);
 	}
 
