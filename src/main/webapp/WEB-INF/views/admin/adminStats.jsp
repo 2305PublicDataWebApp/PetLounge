@@ -87,12 +87,7 @@
 	                        </div>
 	                        <div class="line-hr"></div>
 	                        <div class="content-title">
-	                            <p class="content-title-name">가입자수 통계</p>
-	                            <div class="line"></div>
-	                        </div>
-	                        <div class="line-hr"></div>
-	                        <div class="content-title">
-	                            <p class="content-title-name">후원금액 통계(일별)</p>
+	                            <p class="content-title-name">일별 후원금액 통계</p>
 	                            <div class="line" style="margin-bottom:35px;"></div>
 	                            <!-- 후원금액 통계 그래프 -->
 								<div class="chart">
