@@ -77,7 +77,7 @@
 	<!-- 아이디 중복확인 -->
 	<select id="userCheckId" resultType="User">
 		SELECT * FROM USER_TBL WHERE
-		U_ID= #{uId }
+		U_ID= #{uId } 
 	</select>
 
 	<!-- 닉네임 중복확인 -->
@@ -163,18 +163,18 @@
 	<!--전체 자유게시판 게시글 갯수 -->
 	<select id="selectBoardListCount" resultType="_int">
 		SELECT COUNT (*) FROM
-		FREE_TBL WHERE U_ID = #{ uId }
+		FREE_TBL WHERE U_ID = #{ uId } AND F_STATUS = 'Y'
 	</select>
 	
 	<!-- 자유게시판 게시글 조회 -->
 	<select id="selectBoard" resultType="Board">
-		SELECT * FROM FREE_TBL WHERE U_ID = #{ uId } 
+		SELECT * FROM FREE_TBL WHERE U_ID = #{ uId } AND F_STATUS = 'Y' ORDER BY F_CREATE DESC
 	</select>
 	
 	
 	<!--자유게시판 검색 -->
 	<select id="searchBoardByKeyword" resultType="Board">
-		SELECT * FROM FREE_TBL WHERE U_ID = #{ uId } 
+		SELECT * FROM FREE_TBL WHERE U_ID = #{ uId } AND F_STATUS = 'Y'
 		<if test="searchCondition == 'all'">
 			AND (F_TITLE LIKE '%'||#{searchKeyword}||'%' OR U_ID LIKE '%'||#{searchKeyword}||'%' OR F_CREATE LIKE '%'||#{searchKeyword}||'%')
 		</if>
@@ -192,7 +192,7 @@
 	
 	<!-- 자유게시판 검색 수 -->
 	<select id="selectBoardSearchListCount" resultType="_int">
-		SELECT COUNT(*) FROM FREE_TBL WHERE U_ID = #{ uId } 
+		SELECT COUNT(*) FROM FREE_TBL WHERE U_ID = #{ uId } AND F_STATUS = 'Y'
 		<if test="searchCondition == 'all'">
 			AND (F_TITLE LIKE '%'||#{searchKeyword}||'%' OR U_ID LIKE '%'||#{searchKeyword}||'%' OR F_CREATE LIKE '%'||#{searchKeyword}||'%')
 		</if>
@@ -205,6 +205,7 @@
 		<if test="searchCondition == 'date'">
 			AND F_CREATE LIKE '%'||#{searchKeyword}||'%'
 		</if>
+		ORDER BY F_CREATE DESCS
 	</select>
 
 
@@ -213,7 +214,7 @@
 	<!--전체 병원리뷰 게시글 갯수 -->
 	<select id="selectHosReListCount" resultType="_int">
 		SELECT COUNT (*) FROM
-		H_REVIEW_TBL WHERE U_ID = #{ uId }
+		H_REVIEW_TBL WHERE U_ID = #{ uId } AND H_R_STATUS = 'Y'
 	</select>
 	
 	
@@ -221,8 +222,8 @@
 	<select id="selectHosRe" resultType="UserHosRe">
 		SELECT * FROM H_REVIEW_TBL R   
 		JOIN HOSPITAL_TBL H ON H.H_NO = R.H_NO
-		WHERE R.U_ID = #{uId } ORDER
-		BY H.H_NO DESC
+		WHERE R.U_ID = #{uId } AND R.H_R_STATUS = 'Y' ORDER
+		BY H.H_NO DESC 
 	</select>
 	
 
@@ -230,7 +231,7 @@
 	<select id="selectHosReSearchListCount" resultType="_int">
 		SELECT COUNT(*) FROM H_REVIEW_TBL R  
 		JOIN HOSPITAL_TBL H ON H.H_NO = R.H_NO
-		WHERE R.U_ID = #{uId }
+		WHERE R.U_ID = #{uId } AND R.H_R_STATUS = 'Y'
 		<if test="searchCondition == 'all'">
 			AND (H.H_NAME LIKE '%'||#{searchKeyword}||'%' OR R.H_R_CONTENT LIKE '%'||#{searchKeyword}||'%' OR R.H_R_CREATE LIKE '%'||#{searchKeyword}||'%')
 		</if>
@@ -250,7 +251,7 @@
 	<select id="searchHosReviewByKeyword" resultType="UserHosRe">
 		SELECT * FROM H_REVIEW_TBL R   
 		JOIN HOSPITAL_TBL H ON H.H_NO = R.H_NO
-		WHERE R.U_ID = #{uId }
+		WHERE R.U_ID = #{uId } AND R.H_R_STATUS = 'Y'
 		<if test="searchCondition == 'all'">
 			AND (H.H_NAME LIKE '%'||#{searchKeyword}||'%' OR R.H_R_CONTENT LIKE '%'||#{searchKeyword}||'%' OR R.H_R_CREATE LIKE '%'||#{searchKeyword}||'%')
 		</if>
@@ -281,7 +282,7 @@
 		SELECT * FROM S_HISTORY_TBL H   
 		JOIN SUPPORT_TBL S ON S.S_NO = H.S_NO
 		WHERE H.U_ID = #{uId } ORDER
-		BY S.S_NO DESC
+		BY H.S_H_PAYDATE DESC
 	</select>
 	
 	
@@ -289,7 +290,7 @@
 	<select id="selectSupportSearchListCount" resultType="_int">
 		SELECT COUNT(*) FROM S_HISTORY_TBL H   
 		JOIN SUPPORT_TBL S ON S.S_NO = H.S_NO
-		WHERE H.U_ID = #{uId }
+		WHERE H.U_ID = #{uId } 
 		<if test="searchCondition == 'all'">
 			AND (S.S_TITLE LIKE '%'||#{searchKeyword}||'%' OR H.S_H_PAYDATE LIKE '%'||#{searchKeyword}||'%' OR H.S_H_TYPE LIKE '%'||#{searchKeyword}||'%')
 		</if>
@@ -302,7 +303,7 @@
 		<if test="searchCondition == 'type'">
 			AND H.S_H_TYPE LIKE '%'||#{searchKeyword}||'%'
 		</if>
-		ORDER BY S.S_NO DESC
+		ORDER BY H.S_H_PAYDATE DESC
 	</select>
 	
 	
@@ -323,7 +324,7 @@
 		<if test="searchCondition == 'type'">
 			AND H.S_H_TYPE LIKE '%'||#{searchKeyword}||'%'
 		</if>
-		ORDER BY S.S_NO DESC
+		ORDER BY H.S_H_PAYDATE DESC
 	</select>
 	
 	
@@ -331,22 +332,22 @@
 	<!--전체 후원 댓글 갯수 -->
 	<select id="selectSupportReplyListCount" resultType="_int">
 		SELECT COUNT (*) FROM
-		S_REPLY_TBL WHERE U_ID = #{ uId }
+		S_REPLY_TBL WHERE U_ID = #{ uId } AND S_R_STATUS = 'Y' 
 	</select>
 	
 	<!-- 후원댓글 조회 -->
 	<select id="selectSupportReply" resultType="UserSupport">
 		SELECT * FROM S_REPLY_TBL R   
 		JOIN SUPPORT_TBL S ON S.S_NO = R.S_NO
-		WHERE R.U_ID = #{uId } ORDER
-		BY S.S_NO DESC
+		WHERE R.U_ID = #{uId } AND R.S_R_STATUS = 'Y'  ORDER
+		BY R.S_R_CREATE DESC
 	</select>
 	
 	<!-- 후원댓글 검색 수 -->
 	<select id="selectSupportReplySearchlistCount" resultType="_int">
 		SELECT COUNT(*) FROM S_REPLY_TBL R   
 		JOIN SUPPORT_TBL S ON S.S_NO = R.S_NO
-		WHERE R.U_ID = #{uId }
+		WHERE R.U_ID = #{uId } AND R.S_R_STATUS = 'Y' 
 		<if test="searchCondition == 'all'">
 			AND (S.S_TITLE LIKE '%'||#{searchKeyword}||'%' OR R.S_R_CONTENT LIKE '%'||#{searchKeyword}||'%' OR R.S_R_CREATE LIKE '%'||#{searchKeyword}||'%')
 		</if>
@@ -359,7 +360,7 @@
 		<if test="searchCondition == 'create'">
 			AND R.S_R_CREATE LIKE '%'||#{searchKeyword}||'%'
 		</if>
-		ORDER BY S.S_NO DESC
+		ORDER BY R.S_R_CREATE DESC
 	</select>
 
 
@@ -368,7 +369,7 @@
 	<select id="searchSupportReplyByKeyword" resultType="UserSupport">
 		SELECT *  FROM S_REPLY_TBL R   
 		JOIN SUPPORT_TBL S ON S.S_NO = R.S_NO
-		WHERE R.U_ID = #{uId }
+		WHERE R.U_ID = #{uId } AND R.S_R_STATUS = 'Y' 
 		<if test="searchCondition == 'all'">
 			AND (S.S_TITLE LIKE '%'||#{searchKeyword}||'%' OR R.S_R_CONTENT LIKE '%'||#{searchKeyword}||'%' OR R.S_R_CREATE LIKE '%'||#{searchKeyword}||'%')
 		</if>
@@ -381,7 +382,7 @@
 		<if test="searchCondition == 'create'">
 			AND R.S_R_CREATE LIKE '%'||#{searchKeyword}||'%'
 		</if>
-		ORDER BY S.S_NO DESC
+		ORDER BY R.S_R_CREATE DESC
 	</select>
 	
 	<!-- 아이디 찾기 -->
@@ -400,22 +401,22 @@
 	<!--전체 자유게시판 댓글 갯수 -->
 	<select id="selectBoardReplyListCoun" resultType="_int">
 		SELECT COUNT (*) FROM
-		F_REPLY_TBL WHERE U_ID = #{ uId }
+		F_REPLY_TBL WHERE U_ID = #{ uId } AND F_R_STATUS = 'Y' 
 	</select>
 	
 	<!-- 자유게시판 댓글 조회 -->
 	<select id="selectBoardReply" resultType="UserFreeBoard">
 		SELECT * FROM F_REPLY_TBL R
 		JOIN FREE_TBL F ON F.F_NO = R.F_NO
-		WHERE R.U_ID = #{ uId } ORDER
-		BY R.F_NO DESC
+		WHERE R.U_ID = #{ uId } AND F_R_STATUS = 'Y' ORDER
+		BY R.F_R_CREATE DESC
 	</select>
 	
 	<!-- 자유게시판 댓글 검색 수 -->
 	<select id="selectBoardReplySearchListCount" resultType="_int">
 		SELECT COUNT(*) FROM F_REPLY_TBL R
 		JOIN FREE_TBL F ON F.F_NO = R.F_NO
-		WHERE R.U_ID = #{ uId }
+		WHERE R.U_ID = #{ uId } AND F_R_STATUS = 'Y'
 		<if test="searchCondition == 'all'">
 			AND (F.F_TITLE LIKE '%'||#{searchKeyword}||'%' OR R.F_R_CONTENT LIKE '%'||#{searchKeyword}||'%' OR R.F_R_CREATE LIKE '%'||#{searchKeyword}||'%')
 		</if>
@@ -428,14 +429,14 @@
 		<if test="searchCondition == 'date'">
 			AND R.F_R_CREATE LIKE '%'||#{searchKeyword}||'%'
 		</if>
-		ORDER BY R.F_NO DESC
+		ORDER BY R.F_R_CREATE DESC
 	</select>
 	
-	<!-- 후원 댓글 검색 -->
+	<!-- 자유게시판 댓글 검색 -->
 	<select id="searchBoardReplyByKeyword" resultType="UserFreeBoard">
 		SELECT * FROM F_REPLY_TBL R
 		JOIN FREE_TBL F ON F.F_NO = R.F_NO
-		WHERE R.U_ID = #{ uId }
+		WHERE R.U_ID = #{ uId } AND F_R_STATUS = 'Y'
 		<if test="searchCondition == 'all'">
 			AND (F.F_TITLE LIKE '%'||#{searchKeyword}||'%' OR R.F_R_CONTENT LIKE '%'||#{searchKeyword}||'%' OR R.F_R_CREATE LIKE '%'||#{searchKeyword}||'%')
 		</if>
@@ -448,7 +449,7 @@
 		<if test="searchCondition == 'date'">
 			AND R.F_R_CREATE LIKE '%'||#{searchKeyword}||'%'
 		</if>
-		ORDER BY R.F_NO DESC
+		ORDER BY R.F_R_CREATE DESC
 	</select>
 	
 	<!--전체 북마크 댓글 갯수 -->

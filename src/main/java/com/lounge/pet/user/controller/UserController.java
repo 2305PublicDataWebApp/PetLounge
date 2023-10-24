@@ -451,7 +451,7 @@ public class UserController {
 	}
 
 	private boolean validateUserEmail(String uEmail) {
-		String regex = "^([0-9a-zA-Z_-]{1,10})@([0-9a-zA-Z_-]+)(\\.[0-9a-zA-Z_-]+){1,2}$";
+		String regex = "^([0-9a-zA-Z_-]{1,20})@([0-9a-zA-Z_-]+)(\\.[0-9a-zA-Z_-]+){1,2}$";
 		return uEmail.matches(regex);
 	}
 

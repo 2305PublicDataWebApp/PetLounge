@@ -584,7 +584,7 @@
 	                            $("#duplEmailResult").text("중복된 이메일입니다.");
 	                        } else if (result[0] === "Invalid" && result[1] === "Unique") {
 	                            $("#duplEmailResult").removeClass("success").addClass("error");
-	                            $("#duplEmailResult").text("이메일은 영문자 숫자 10자 이하 입니다.");
+	                            $("#duplEmailResult").text("이메일은 영문자 숫자 20자 이하 입니다.");
 	                        }  else {
 	                            $("#duplEmailResult").text("ajax 오류 관리자 문의 바람");
 	                        }
