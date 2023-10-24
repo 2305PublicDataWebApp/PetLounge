@@ -31,7 +31,7 @@
 	                                    <span>
 	                                    </span>
 	                                    <span class="m-name">
-	                                        <a href="#">통계 관리</a>
+	                                        <a href="/admin/stats.pet">통계 관리</a>
 	                                    </span>
 	                                </div>
 	                            </li>
@@ -39,7 +39,7 @@
 	                                <div>
 	                                    <span></span>
 	                                    <span class="m-name">
-	                                        <a href="#">회원 관리</a>
+	                                        <a href="/admin/user.pet">회원 관리</a>
 	                                    </span>
 	                                </div>
 	                            </li>
@@ -47,7 +47,7 @@
 	                                <div>
 	                                    <span></span>
 	                                    <span class="m-name">
-	                                        <a href="#">후원 관리</a>
+	                                        <a href="/admin/support.pet">후원 관리</a>
 	                                    </span>
 	                                </div>
 	                            </li>
