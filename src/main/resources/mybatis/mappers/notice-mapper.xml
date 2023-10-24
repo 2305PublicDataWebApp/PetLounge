@@ -58,6 +58,7 @@
 <!-- 			WHERE TO_CHAR(N_CREATE, 'YYYY.MM.DD') LIKE '%' || #{searchKeyword} || '%' -->
 <!-- 		</if>   -->
 		</where>
+		ORDER BY N_NO DESC
 	</select>
 	
 	<insert id="submitNoticeForm">

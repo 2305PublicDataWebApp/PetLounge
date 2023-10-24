@@ -146,7 +146,7 @@
 												class="a-detail s-title" title="More Details"></a>
 											</strong>
 										</div>
-										<div class="card-group">${suppport.sGroup }</div>
+										<div class="card-group">${support.sGroup }</div>
 										<!-- 퍼센트 계산 -->
 										<div class="card-bar">
 											<span class="card-bar-collection" id="graph-num"
