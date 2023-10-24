@@ -51,14 +51,14 @@
 	                                    </span>
 	                                </div>
 	                            </li>
-	                            <li class="menu-item">
-	                                <div>
-	                                    <span></span>
-	                                    <span class="m-name">
-	                                        <a href="#">게시판 관리</a>
-	                                    </span>
-	                                </div>
-	                            </li>
+<!-- 	                            <li class="menu-item"> -->
+<!-- 	                                <div> -->
+<!-- 	                                    <span></span> -->
+<!-- 	                                    <span class="m-name"> -->
+<!-- 	                                        <a href="#">게시판 관리</a> -->
+<!-- 	                                    </span> -->
+<!-- 	                                </div> -->
+<!-- 	                            </li> -->
 	                        </ul>
 	                    </div>
 	                </div>

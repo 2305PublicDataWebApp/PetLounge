@@ -48,7 +48,7 @@
 	                                <div>
 	                                    <span></span>
 	                                    <span class="m-name">
-	                                        <a href="#">회원 관리</a>
+	                                        <a href="/admin/user.pet">회원 관리</a>
 	                                    </span>
 	                                </div>
 	                            </li>
@@ -60,14 +60,14 @@
 	                                    </span>
 	                                </div>
 	                            </li>
-	                            <li class="menu-item">
-	                                <div>
-	                                    <span></span>
-	                                    <span class="m-name">
-	                                        <a href="#">게시판 관리</a>
-	                                    </span>
-	                                </div>
-	                            </li>
+<!-- 	                            <li class="menu-item"> -->
+<!-- 	                                <div> -->
+<!-- 	                                    <span></span> -->
+<!-- 	                                    <span class="m-name"> -->
+<!-- 	                                        <a href="#">게시판 관리</a> -->
+<!-- 	                                    </span> -->
+<!-- 	                                </div> -->
+<!-- 	                            </li> -->
 	                        </ul>
 	                    </div>
 	                </div>
@@ -129,42 +129,77 @@
 	                            </div>
 	                        </div>
 	                        
+	                        <div class="line-hr"></div>
 	                        
-<!-- 	                        <div class="content-inner"> -->
-<!-- 	                            <div class="content-title"> -->
-<!-- 	                                <p class="content-title-name">병원 순위(좋아요)</p> -->
-<!-- 	                                <div class="line"></div> -->
-<!-- 	                            </div> -->
-<!-- 	                            <div id="s-reply-list"> -->
-<!-- 	                                <table id="reply-table"> -->
-<%-- 	                                    <colgroup> --%>
-<%-- 	                                        <col width="35%"> --%>
-<%-- 	                                        <col width="35%"> --%>
-<%-- 	                                        <col width="15%"> --%>
-<%-- 	                                        <col width="15%"> --%>
-<%-- 	                                    </colgroup> --%>
-<!-- 	                                    <thead> -->
-<!-- 	                                        <tr> -->
-<!-- 	                                            <th class="table-border">모금함 제목</th> -->
-<!-- 	                                            <th class="table-border">댓글 내용</th> -->
-<!-- 	                                            <th class="table-border">작성자</th> -->
-<!-- 	                                            <th class="table-border">작성일</th> -->
-<!-- 	                                        </tr> -->
-<!-- 	                                    </thead> -->
-<!-- 	                                    <tbody> -->
-<!-- 	                                        <tr> -->
-<!-- 	                                            <td class="table-border table-left"></td> -->
-<!-- 	                                            <td class="table-border table-left"></td> -->
-<!-- 	                                            <td class="table-border"></td> -->
-<!-- 	                                            <td class="table-border"></td> -->
-<!-- 	                                        </tr> -->
-<!-- 	                                    </tbody> -->
-<!-- 	                                </table> -->
-<!-- 	                                <div class="page-navigation"> -->
-<!-- 	                                    <ul id="reply-pagination" class="pagination pagination-sm"></ul> -->
-<!--                                 	</div> -->
-<!-- 	                            </div> -->
-<!-- 	                        </div> -->
+	                        <div class="content-inner">
+	                            <div class="content-title">
+	                                <p class="content-title-name">병원 순위(리뷰)</p>
+	                                <div class="line"></div>
+	                            </div>
+	                            <div id="s-history-list">
+	                                <table id="HReview-table">
+	                                    <colgroup>
+	                                        <col width="20%">
+	                                        <col width="40%">
+	                                        <col width="40%">
+	                                    </colgroup>
+	                                    <thead>
+	                                        <tr>
+	                                            <th class="table-border">순위</th>
+	                                            <th class="table-border">병원명</th>
+	                                            <th class="table-border">리뷰 수</th>
+	                                        </tr>
+	                                    </thead>
+	                                    <tbody>
+	                                        <tr>
+	                                            <td class="table-border table-left1"></td>
+	                                            <td class="table-border"></td>
+	                                            <td class="table-border table-right1"></td>
+	                                        </tr>
+	                                    </tbody>
+	                                </table>
+	                                <div class="page-navigation">
+	                                    <ul id="HReview-pagination" class="pagination pagination-sm"></ul>
+                                	</div>
+	                            </div>
+	                        </div>	                    	                        
+
+
+	                        <div class="line-hr"></div>
+	                        
+	                        <div class="content-inner">
+	                            <div class="content-title">
+	                                <p class="content-title-name">병원 순위(북마크)</p>
+	                                <div class="line"></div>
+	                            </div>
+	                            <div id="s-history-list">
+	                                <table id="HBookmark-table">
+	                                    <colgroup>
+	                                        <col width="20%">
+	                                        <col width="40%">
+	                                        <col width="40%">
+	                                    </colgroup>
+	                                    <thead>
+	                                        <tr>
+	                                            <th class="table-border">순위</th>
+	                                            <th class="table-border">병원명</th>
+	                                            <th class="table-border">북마크 수</th>
+	                                        </tr>
+	                                    </thead>
+	                                    <tbody>
+	                                        <tr>
+	                                            <td class="table-border table-left1"></td>
+	                                            <td class="table-border"></td>
+	                                            <td class="table-border table-right1"></td>
+	                                        </tr>
+	                                    </tbody>
+	                                </table>
+	                                <div class="page-navigation">
+	                                    <ul id="HBM-pagination" class="pagination pagination-sm"></ul>
+                                	</div>
+	                            </div>
+	                        </div>	         
+
 	                        
 	                    </div>
 	                </div>
@@ -184,183 +219,10 @@
 			let totalSupportPages = 0; // 총 후원글 페이지 수
 			let totalReplyPages = 0; // 총 댓글 페이지 수
 			let totalHistoryPages = 0; // 총 후원내역 페이지 수
+			let totalHReviewPages = 0;
+			let totalHBookMarkPages = 0;
 			
-			// 후원글 리스트를 불러오는 ajax Function 
-			const getSupportList = (currentPage, status) => {
-				$.ajax({
-					url : "/admin/sList.pet",
-					data : { currentPage : currentPage, status : status}, // 현재 페이지와 후원 상태 전달 
-					type : "GET",
-					success : function(resultMap) {
-						const tableBody = $("#support-table tbody");
-						tableBody.html('');
-						let tr;
-						let category;
-						let title;
-						let group;
-						let term;
-						let amounts;
-						
-						const sList = resultMap.sList; // 후원글 리스트 
-						totalSupportPages = resultMap.totalPages; // 총 페이지 수
-						
-						if(sList.length > 0) {
-							for(let i in sList) {
-								
-								// 카테고리 한글로 넣어주기  
-								let sCategory = '';
-								switch(sList[i].sCategory) {
-								case 'residence' : 
-									sCategory = '주거';
-									break;
-								case 'living' : 
-									sCategory = '생계';
-									break;
-								case 'health' : 
-									sCategory = '건강';
-									break;
-								case 'improvement' : 
-									sCategory = '개선';
-									break;
-								}
-								
-								// Date타입 날짜 형식 변환 
-								function formatDate(dataString) {
-									const dateParts = dataString.match(/(\d{1,2})월 (\d{1,2}), (\d{4})/);
-									if (dateParts) {
-										var year = dateParts[3];
-										var month = dateParts[1].padStart(2, '0');
-										var day = dateParts[2].padStart(2, '0');   
-										// 'padStart' 함수 = 월과 일이 1자리 숫자일 경우 앞에 '0' 을 추가하여 2자리 숫자로 만들어 줌
-							      	  
-							      		// YYYY.MM.DD 형식으로 조합
-							      		var formattedDate = year + "." + month + "." + day;
-							      		return formattedDate;
-							      	} else {
-							      		// 날짜 문자열을 올바르게 파싱하지 못한 경우에 대한 오류 처리
-							      		console.error("날짜를 파싱하지 못했습니다.");
-									}
-						        }
-								
-								// 후원글 제목 길이 잘라주기 
-								let title = sList[i].sTitle;
-								let truncatedTitle = title.length > 30 ? title.substring(0, 29) + '...' : title;
-						        
-								tr = $("<tr onclick='window.location.href=\"/support/detail.pet?sNo="+sList[i].sNo+"\"' class='tr'>");
-								category = $("<td class='table-border'>").html(""+sCategory+""); 
-								title = $("<td class='table-border table-left'>").html(""+truncatedTitle+""); 
-								group = $("<td class='table-border'>").html(""+sList[i].sGroup+""); 
-								term = $("<td class='table-border'>").html(""+formatDate(sList[i].sStart)+"<br> ~ "+formatDate(sList[i].sEnd)+""); 
-								amounts = $("<td class='table-border table-right'>").html(""+sList[i].sFundAmount.toLocaleString()+" / <br>"+sList[i].sTargetAmount.toLocaleString()+" 원"); 
-								
-				
-								tr.append(category);
-								tr.append(title);
-								tr.append(group);
-								tr.append(term);
-								tr.append(amounts);
-								tableBody.append(tr); 
-								
-								// 결과를 받은 후에 페이징을 업데이트
-					            createSupportPagination(totalSupportPages);
-							}
-						} else {
-							tr = $("<tr class='td'><td class='td'colspan='5'style='width:725px;'><div width='100%' style='color: lightgray;'>후원글이 없습니다.</div></td></tr>");
-							tableBody.append(tr);
-						}
-					},
-					error : function() {
-						alert("Ajax 오류! 관리자에게 문의하세요.");
-					}
-				});
-			}
-			// 후원글 페이지 만들기 
-			const createSupportPagination = (totalSupportPages) => {
-			    const SupportPaginationUl = $("#support-pagination");
-			    SupportPaginationUl.empty(); // 이전의 페이징 링크를 지움
-			    
-			    const numGroups = Math.ceil(totalSupportPages / naviCountPerPage); // 총 그룹 수
-			    const currentGroup = Math.ceil(currentPage / naviCountPerPage); // 현재 페이지가 속한 그룹
-	
-			    let startPage = (currentGroup - 1) * naviCountPerPage + 1;
-			    let endPage = Math.min(currentGroup * naviCountPerPage, totalSupportPages);
-			    
-			 	// "이전" 버튼 추가
-			    if (currentGroup > 1) {
-			        const prevLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>');
-			        prevLi.click(() => {
-			        	goToPreviousSupportGroup();
-			        });
-			        SupportPaginationUl.append(prevLi);
-			    }
-			 	// 페이지 링크 추가
-			    for (let i = startPage; i <= endPage; i++) {
-			        const li = $('<li class="page-item" data-page="${i}"><a class="page-link" href="javascript:void(0)">'+i+'</a></li>');
-			        
-			     	// 현재 페이지에 해당하는 경우 클래스 추가
-			        if (i === currentPage) {
-			            li.addClass('active');
-			        }
-			     
-			        li.click(() => {
-			        	changeSupportPage(i, status);
-			        });
-			        SupportPaginationUl.append(li);
-			    }
-			 	
-				// "다음" 버튼 추가
-			    if (currentGroup < numGroups) {
-			        const nextLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>');
-			        nextLi.click(() => {
-			        	goToNextSupportGroup();
-			        });
-			        SupportPaginationUl.append(nextLi);
-			    }
-			}
-			
-			// 후원글 페이지 변경 시 호출되는 함수
-			const changeSupportPage = (newPage, status) => {
-			    currentPage = newPage;
-			    getSupportList(currentPage, status);
-			}
-			
-			// 후원글 그룹 변경 시 호출되는 함수
-			const changeSupportGroup = (newGroup, status) => {
-			    currentPage = (newGroup - 1) * naviCountPerPage + 1;
-			    getSupportList(currentPage, status);
-			}
-	
-			// 후원글 이전 그룹으로 이동할 때 호출 
-			const goToPreviousSupportGroup = () => {
-			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
-			    if (currentGroup > 1) {
-			        const lastPageOfPreviousGroup = (currentGroup - 1) * naviCountPerPage;
-			        changeSupportPage(lastPageOfPreviousGroup);
-			    }
-			}
-	
-			// 후원글 다음 그룹으로 이동할 때 호출
-			const goToNextSupportGroup = () => {
-			    const numGroups = Math.ceil(totalSupportPages / naviCountPerPage);
-			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
-			    if (currentGroup < numGroups) {
-			    	changeSupportGroup(currentGroup + 1);
-			    }
-			}
-			
-			
-			<!-- Timestamp타입 날짜 형식 변환 -->
-			const getFormattedTimestamp = (dateString) => {
-				// Date 객체를 생성
-				const date = new Date(dateString);
-				// 년, 월, 일 추출
-				const year = date.getFullYear();
-				const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 +1을 하고 두 자리로 포맷팅
-				const day = date.getDate().toString().padStart(2, '0');
-				// 최종 결과를 출력
-				const formattedDate = year + '.' + month + '.' + day;
-				return formattedDate;
-			}
+
 			
 // ====================================================================================================================================				
 			
@@ -497,56 +359,51 @@
 			    }
 			}
 			
-// ====================================================================================================================================			
+// ====================================================================================================================================				
 			
-			// 댓글 리스트를 불러오는 ajax Function 
-			const getReplyList = () => {
+			// 병원 내역 리스트(for 리뷰수순위)를 불러오는 ajax Function 
+			const getHReviewListForRank = () => {
 				$.ajax({
-					url : "/admin/sRList.pet",
+					url : "/admin/HReview.pet",
 					data : { currentPage: currentPage }, // 현재 페이지와 페이지당 댓글 수 전달
 					type : "GET",
 					success : function(resultMap) {
-						const tableBody = $("#reply-table tbody");
+						const tableBody = $("#HReview-table tbody");
 						tableBody.html('');
-						let tr;
-						let title;
-						let content;
-						let nickname;
-						let date;
+						let hRNo;
+						let hRContent;
+						let hRStatus;
 						
-						const sRList = resultMap.sRList; // 댓글 리스트 
-						totalReplyPages = resultMap.totalPages; // 총 페이지 수
-						
-						if(sRList.length > 0) {
-							for(let i in sRList) {
+						const hRList = resultMap.hRList; // 후원내역 리스트 
+						totalHReviewPages = resultMap.totalPages; // 총 페이지 수
+						const totalRecords = resultMap.totalRecords; // 후원내역 총 갯수
+				        
+						if(hRList.length > 0) {
+							for(let i in hRList) {				
 								
+								let hNo = hRList[i].hNo;
+								let hRNo = hRList[i].hRNo;
+								let hRContent = hRList[i].hRContent;
+								let hRStatus = hRList[i].hRStatus;
 								
-								let sRDate = getFormattedTimestamp(sRList[i].sRCreate);
-								if(sRList[i].sRCreate != sRList[i].sRUpdate) {
-									sRDate = getFormattedTimestamp(sRList[i].sRUpdate);
-								}
-								// 후원글 제목 길이 잘라주기 
-								let sTitle = sRList[i].sTitle;
-								let truncatedTitle = sTitle.length > 18 ? sTitle.substring(0, 17) + '...' : sTitle;
+								tr = $("<tr onclick='window.location.href=\"/hospital/detail.pet?hNo="+hRList[i].hNo+"\"' class='tr'>");
+								hRNo = $("<td class='table-border table-left1'>").html(""+hRNo+""); 
+								hRContent = $("<td class='table-border'>").html(""+hRContent+""); 
+								hRStatus = $("<td class='table-border table-right1'>").html(""+hRList[i].hRStatus.toLocaleString()+" 개"); 
+
 								
-								tr = $("<tr onclick='window.location.href=\"/support/detail.pet?sNo="+sRList[i].sNo+"\"' class='tr'>");
-								title = $("<td class='table-border table-left'>").html(""+truncatedTitle+""); 
-								content = $("<td class='table-border table-left'>").html(""+sRList[i].sRContent+""); 
-								nickname = $("<td class='table-border'>").html(""+sRList[i].uNickName+""); 
-								date = $("<td class='table-border'>").html(""+sRDate+""); 
-								
-								
-								tr.append(title);
-								tr.append(content);	
-								tr.append(nickname); 
-								tr.append(date); 
+				
+								tr.append(hRNo);
+								tr.append(hRContent);
+								tr.append(hRStatus);
+
 								tableBody.append(tr); 
 								
 								// 결과를 받은 후에 페이징을 업데이트
-					            createReplyPagination(totalReplyPages);
+					            createHReviewPagination(totalHReviewPages);
 							}
 						} else {
-							tr = $("<tr class='td'><td class='td'colspan='3'style='width:725px;'><div width='100%' style='color: lightgray;'>등록된 댓글이 없습니다.</div></td></tr>");
+							tr = $("<tr class='td'><td class='td'colspan='3'style='width:725px;'><div width='100%' style='color: lightgray;'>후원 내역이 없습니다.</div></td></tr>");
 							tableBody.append(tr);
 						}
 					},
@@ -556,25 +413,27 @@
 				});
 			}
 			
-			// 댓글 페이지 만들기 
-			const createReplyPagination = (totalReplyPages) => {
-			    const replyPaginationUl = $("#reply-pagination");
-			    replyPaginationUl.empty(); // 이전의 페이징 링크를 지움
+			
+			// 후원 내역 페이지 만들기 
+			const createHReviewPagination = (totalHReviewPages) => {
+			    const HReviewPaginationUl = $("#HReview-pagination");
+			    HReviewPaginationUl.empty(); // 이전의 페이징 링크를 지움
 			    
 			    const naviCountPerPage = 5; // 한 그룹당 페이지 수
-			    const numGroups = Math.ceil(totalReplyPages / naviCountPerPage); // 총 그룹 수
+			    const numGroups = Math.ceil(totalHReviewPages / naviCountPerPage); // 총 그룹 수
 			    const currentGroup = Math.ceil(currentPage / naviCountPerPage); // 현재 페이지가 속한 그룹
 
+
 			    let startPage = (currentGroup - 1) * naviCountPerPage + 1;
-			    let endPage = Math.min(currentGroup * naviCountPerPage, totalReplyPages);
+			    let endPage = Math.min(currentGroup * naviCountPerPage, totalHReviewPages);
 			    
 			 	// "이전" 버튼 추가
 			    if (currentGroup > 1) {
 			        const prevLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>');
 			        prevLi.click(() => {
-			            goToPreviousGroup();
+			        	goToPreviousHReviewGroup();
 			        });
-			        replyPaginationUl.append(prevLi);
+			        HReviewPaginationUl.append(prevLi);
 			    }
 			 	// 페이지 링크 추가
 			    for (let i = startPage; i <= endPage; i++) {
@@ -586,86 +445,198 @@
 			        }
 			     
 			        li.click(() => {
-			        	changeReplyPage(i);
+			        	changeHReviewPage(i);
 			        });
-			        replyPaginationUl.append(li);
+			        HReviewPaginationUl.append(li);
 			    }
 			 	
 				// "다음" 버튼 추가
 			    if (currentGroup < numGroups) {
 			        const nextLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>');
 			        nextLi.click(() => {
-			            goToNextGroup();
+			        	goToNextHReviewGroup();
 			        });
-			        replyPaginationUl.append(nextLi);
+			        HReviewPaginationUl.append(nextLi);
 			    }
-			}
+			} 
 			
-			// 댓글 페이지 변경 시 호출되는 함수
-			const changeReplyPage = (newPage) => {
+			// 후원내역 페이지 변경 시 호출되는 함수
+			const changeHReviewPage = (newPage) => {
 			    currentPage = newPage;
-			    getReplyList(currentPage);
+			    getHReviewListForRank(currentPage);
 			}
 			
-			// 댓글 그룹 변경 시 호출되는 함수
-			const changeGroup = (newGroup) => {
+			// 후원내역 그룹 변경 시 호출되는 함수
+			const changeHReviewGroup = (newGroup) => {
 			    currentPage = (newGroup - 1) * naviCountPerPage + 1;
-			    getReplyList(currentPage);
+			    getHReviewListForRank(currentPage);
 			}
 
-			// 댓글 이전 그룹으로 이동할 때 호출 
-			const goToPreviousGroup = () => {
+			// 후원내역 이전 그룹으로 이동할 때 호출 
+			const goToPreviousHReviewGroup = () => {
 			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
 			    if (currentGroup > 1) {
 			        const lastPageOfPreviousGroup = (currentGroup - 1) * naviCountPerPage;
-			        changeReplyPage(lastPageOfPreviousGroup);
+			        changeHReviewPage(lastPageOfPreviousGroup);
 			    }
 			}
 
-			// 댓글 다음 그룹으로 이동할 때 호출
-			const goToNextGroup = () => {
-			    const numGroups = Math.ceil(totalReplyPages / naviCountPerPage);
+			// 후원내역 다음 그룹으로 이동할 때 호출
+			const goToNextHReviewGroup = () => {
+			    const numGroups = Math.ceil(totalHReviewPages / naviCountPerPage);
 			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
 			    if (currentGroup < numGroups) {
-			        changeGroup(currentGroup + 1);
+			    	changeHReviewGroup(currentGroup + 1);
 			    }
 			}
 			
+// ====================================================================================================================================
+
+// ====================================================================================================================================				
 			
-			// 후원글, 댓글, 후원내역 출력 
+			// 병원 내역 리스트(for 북마크 순위)를 불러오는 ajax Function 
+			const getHBookMarkListForRank = () => {
+				$.ajax({
+					url : "/admin/HBookmark.pet",
+					data : { currentPage: currentPage }, // 현재 페이지와 페이지당 댓글 수 전달
+					type : "GET",
+					success : function(resultMap) {
+						const tableBody = $("#HBookmark-table tbody");
+						tableBody.html('');
+						let hNo;
+						let hAddr;
+						let hName;
+						let hX;
+						
+						const hBMList = resultMap.hBMList; // 후원내역 리스트 
+						totalHBookMarkPages = resultMap.totalPages; // 총 페이지 수
+						const totalRecords = resultMap.totalRecords; // 후원내역 총 갯수
+				        
+						if(hBMList.length > 0) {
+							for(let i in hBMList) {				
+								
+								let hNo = hBMList[i].hNo;
+								let hAddr = hBMList[i].hAddr;
+								let hName = hBMList[i].hName;
+								let hX = hBMList[i].hX;
+								
+								tr = $("<tr onclick='window.location.href=\"/hospital/detail.pet?hNo="+hBMList[i].hNo+"\"' class='tr'>");
+								hAddr = $("<td class='table-border table-left1'>").html(""+hAddr+""); 
+								hName = $("<td class='table-border'>").html(""+hName+""); 
+								hX = $("<td class='table-border table-right1'>").html(""+hBMList[i].hX.toLocaleString()+" 개");  
+
+								
+				
+								tr.append(hAddr);
+								tr.append(hName);
+								tr.append(hX);
+
+								tableBody.append(tr); 
+								
+								// 결과를 받은 후에 페이징을 업데이트
+					            createHBookMarkPagination(totalHBookMarkPages);
+							}
+						} else {
+							tr = $("<tr class='td'><td class='td'colspan='3'style='width:725px;'><div width='100%' style='color: lightgray;'>후원 내역이 없습니다.</div></td></tr>");
+							tableBody.append(tr);
+						}
+					},
+					error : function() {
+						alert("Ajax 오류! 관리자에게 문의하세요.");
+					}
+				});
+			}
+			
+			
+			// 후원 내역 페이지 만들기 
+			const createHBookMarkPagination = (totalHBookMarkPages) => {
+			    const HBookMarkPaginationUl = $("#HBM-pagination");
+			    HBookMarkPaginationUl.empty(); // 이전의 페이징 링크를 지움
+			    
+			    const naviCountPerPage = 5; // 한 그룹당 페이지 수
+			    const numGroups = Math.ceil(totalHBookMarkPages / naviCountPerPage); // 총 그룹 수
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage); // 현재 페이지가 속한 그룹
+
+
+			    let startPage = (currentGroup - 1) * naviCountPerPage + 1;
+			    let endPage = Math.min(currentGroup * naviCountPerPage, totalHBookMarkPages);
+			    
+			 	// "이전" 버튼 추가
+			    if (currentGroup > 1) {
+			        const prevLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>');
+			        prevLi.click(() => {
+			        	goToPreviousHBMGroup();
+			        });
+			        HBookMarkPaginationUl.append(prevLi);
+			    }
+			 	// 페이지 링크 추가
+			    for (let i = startPage; i <= endPage; i++) {
+			        const li = $('<li class="page-item" data-page="${i}"><a class="page-link" href="javascript:void(0)">'+i+'</a></li>');
+			        
+			     	// 현재 페이지에 해당하는 경우 클래스 추가
+			        if (i === currentPage) {
+			            li.addClass('active');
+			        }
+			     
+			        li.click(() => {
+			        	changeHBMPage(i);
+			        });
+			        HBookMarkPaginationUl.append(li);
+			    }
+			 	
+				// "다음" 버튼 추가
+			    if (currentGroup < numGroups) {
+			        const nextLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>');
+			        nextLi.click(() => {
+			        	goToNextHBMGroup();
+			        });
+			        HBookMarkPaginationUl.append(nextLi);
+			    }
+			} 
+			
+			// 후원내역 페이지 변경 시 호출되는 함수
+			const changeHBMPage = (newPage) => {
+			    currentPage = newPage;
+			    getHBookMarkListForRank(currentPage);
+			}
+			
+			// 후원내역 그룹 변경 시 호출되는 함수
+			const changeHBMGroup = (newGroup) => {
+			    currentPage = (newGroup - 1) * naviCountPerPage + 1;
+			    getHBookMarkListForRank(currentPage);
+			}
+
+			// 후원내역 이전 그룹으로 이동할 때 호출 
+			const goToPreviousHBMGroup = () => {
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup > 1) {
+			        const lastPageOfPreviousGroup = (currentGroup - 1) * naviCountPerPage;
+			        changeHBMPage(lastPageOfPreviousGroup);
+			    }
+			}
+
+			// 후원내역 다음 그룹으로 이동할 때 호출
+			const goToNextHBMGroup = () => {
+			    const numGroups = Math.ceil(totalHBookMarkPages / naviCountPerPage);
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup < numGroups) {
+			    	changeHBMGroup(currentGroup + 1);
+			    }
+			}
+			
+// ====================================================================================================================================	
+	
+	
+			
+			// 출력 
 			$(function(){
-				getSupportList(currentPage, status);
 				getHistoryListForRank();
-				getReplyList();
+				getHReviewListForRank();
+				getHBookMarkListForRank();
 			})
 			
 			
-			<!-- 상태바 -->
-	        const label = document.querySelector('.status-label');
-	        const options = document.querySelectorAll('.optionItem');
-	
-	        // 클릭한 옵션의 텍스트를 라벨 안에 넣음
-	        const handleSelect = (item) => {
-	        label.parentNode.classList.remove('active');
-	        status = item.getAttribute('data-status');
-	        label.innerHTML = item.textContent;
-		    currentPage = 1; 
-			getSupportList(currentPage, status);
-	        }
-	        
-	        // 옵션 클릭시 클릭한 옵션을 넘김
-	        options.forEach(option => {
-	            option.addEventListener('click', () => handleSelect(option))
-	        })
-	
-	        // 라벨을 클릭시 옵션 목록이 열림/닫힘
-	        label.addEventListener('click', () => {
-	        if(label.parentNode.classList.contains('active')) {
-	            label.parentNode.classList.remove('active');
-	        } else {
-	            label.parentNode.classList.add('active');
-	        }
-	        })
+
 		</script>
 		<!-- 통계 그래프 -->
 		<script>

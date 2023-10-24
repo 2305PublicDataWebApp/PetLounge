@@ -60,14 +60,14 @@
 	                                    </span>
 	                                </div>
 	                            </li>
-	                            <li class="menu-item">
-	                                <div>
-	                                    <span></span>
-	                                    <span class="m-name">
-	                                        <a href="#">게시판 관리</a>
-	                                    </span>
-	                                </div>
-	                            </li>
+<!-- 	                            <li class="menu-item"> -->
+<!-- 	                                <div> -->
+<!-- 	                                    <span></span> -->
+<!-- 	                                    <span class="m-name"> -->
+<!-- 	                                        <a href="#">게시판 관리</a> -->
+<!-- 	                                    </span> -->
+<!-- 	                                </div> -->
+<!-- 	                            </li> -->
 	                        </ul>
 	                    </div>
 	                </div>
@@ -96,11 +96,11 @@
 	                            <div id="s-history-list">
 	                                <table id="history-table">
 	                                    <colgroup>
+	                                        <col width="10%">
 	                                        <col width="20%">
 	                                        <col width="20%">
 	                                        <col width="20%">
-	                                        <col width="20%">
-	                                        <col width="20%">
+	                                        <col width="30%">
 	                                    </colgroup>
 	                                    <thead>
 	                                        <tr>
@@ -163,37 +163,43 @@
 					success : function(resultMap) {
 						const tableBody = $("#history-table tbody");
 						tableBody.html('');
-						let sNo;
-						let nickname;
-						let amount;
-						let sHNo;
+						let uAddr;
+						let uId;
+						let uName;
+						let uNickName;
+						let uPhone;
 						
-						const sHList = resultMap.sHList; // 후원내역 리스트 
+						const sUList = resultMap.sUList; // 후원내역 리스트 
 						totalHistoryPages = resultMap.totalPages; // 총 페이지 수
 						const totalRecords = resultMap.totalRecords; // 후원내역 총 갯수
 				        
-						if(sHList.length > 0) {
-							for(let i in sHList) {
-								// 닉네임, 숨은천사 
-								let sHName = sHList[i].sHName;
-								if(sHList[i].sHType == 'A') {
-									sHName = '숨은천사';
-								}
+						if(sUList.length > 0) {
+							for(let i in sUList) {					
 								
+								let uAddr = sUList[i].uAddr;
+			                    let uId = sUList[i].uId;
+			                    let uName = sUList[i].uName;
+			                    let uNickName = sUList[i].uNickName;
+			                 	// 휴대폰 번호에 '-' 추가
+			                    let uPhone = sUList[i].uPhone; // 휴대폰 번호 받아오기
+			                    // '-'를 추가하여 포맷팅
+			                    uPhone = uPhone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
 								
-								let sNo = sHList[i].sNo;
-								let sHNo = sHList[i].sHNo;
-								
-								tr = $("<tr onclick='window.location.href=\"/support/detail.pet?sNo="+sHList[i].sNo+"\"' class='tr'>");
-								sHNo = $("<td class='table-border table-left1'>").html(""+sHNo+""); 
-								nickname = $("<td class='table-border'>").html(""+sHName+""); 
-								amount = $("<td class='table-border table-right1'>").html(""+sHList[i].sHAmount.toLocaleString()+" 원"); 
+								tr = $("<tr onclick='event.preventDefault()' class='tr'>");
+// 								tr = $("<tr onclick='window.location.href=\"/user/userInfo.pet?uId="+sUList[i].uId+"\"' class='tr'>");
+								uAddr = $("<td class='table-border table-left1'>").html(""+uAddr+""); 
+								uId = $("<td class='table-border'>").html(""+uId+""); 
+								uName = $("<td class='table-border'>").html(""+uName+""); 
+								uNickName = $("<td class='table-border'>").html(""+uNickName+""); 
+								uPhone = $("<td class='table-border table-right1'>").html(""+uPhone+""); 
 
 								
 				
-								tr.append(sHNo);
-								tr.append(nickname);
-								tr.append(amount);
+								tr.append(uAddr);
+								tr.append(uId);
+								tr.append(uName);
+								tr.append(uNickName);
+								tr.append(uPhone);
 
 								tableBody.append(tr); 
 								
@@ -288,8 +294,13 @@
 			}
 			
 // ====================================================================================================================================			
-		
-	
+					// 출력 
+			$(function(){
+				getHistoryListForRank(currentPage);
+				getHistoryList();
+			})
+			
+			// ====================================================================================================================================				
 
 	
 		</script>

@@ -68,6 +68,7 @@ public class BoardController {
 			
 			int totalCount = bService.getSearchCount();
 			model.addAttribute("totalCount", totalCount);
+
 			
 			Map<String, String> fMap = new HashMap();
 			fMap.put("currentPage", String.valueOf(currentPage));

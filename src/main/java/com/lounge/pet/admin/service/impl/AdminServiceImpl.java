@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.lounge.pet.admin.service.AdminService;
 import com.lounge.pet.admin.store.AdminStore;
+import com.lounge.pet.hospital.domain.HBookmark;
 import com.lounge.pet.hospital.domain.HReview;
+import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.support.domain.SupportHistory;
+import com.lounge.pet.user.domain.User;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -36,6 +39,30 @@ public class AdminServiceImpl implements AdminService {
 	public List<HReview> selectHReviewList() {
 		List<HReview> hRList = aStore.selectHReviewList(session);
 		return hRList;
+	}
+
+	@Override
+	public List<User> selectUserList() {
+		List<User> sUList = aStore.selectUserList(session);
+		return sUList;
+	}
+
+	@Override
+	public int getUserListCount() {
+		int count = aStore.getUserListCount(session);
+		return count;
+	}
+
+	@Override
+	public List<Hospital> selectHBookMarkList() {
+		List<Hospital> hBMList = aStore.selectHBookMarkList(session);
+		return hBMList;
+	}
+
+	@Override
+	public int getHBookMarkTotalCount() {
+		int count = aStore.getHBookMarkTotalCount(session);
+		return count;
 	}
 
 }

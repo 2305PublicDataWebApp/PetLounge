@@ -23,7 +23,8 @@
 	<!-- 병원 후기 총 개수 조회 -->
 	<select id="getHReviewTotalCount" resultType="_int">
 		SELECT COUNT(*)
-			FROM H_REVIEW_TBL
+			FROM 
+				H_REVIEW_TBL
 	</select>
 
 	<!-- 병원 후기내역 전체 조회 -->
@@ -33,7 +34,47 @@
 		FROM H_REVIEW_TBL H
 		JOIN HOSPITAL_TBL S ON S.H_NO = H.H_NO
 		GROUP BY H.H_NO, H_NAME
-		ORDER BY H_R_STATUS DESC;
+		ORDER BY H_R_STATUS DESC
+	</select>
+	
+	<!-- 회원정보 총 개수 조회 -->
+	<select id="getUserListCount" resultType="_int">
+		SELECT COUNT(*)
+			FROM 
+				USER_TBL
+	</select>
+	
+	<!-- 회원정보내역 전체 조회 -->
+	<select id="selectUserList" resultType="User">	
+		SELECT 
+		    ROWNUM AS U_ADDR,
+		    U_ID, 
+		    U_NAME, 
+		    U_NICKNAME, 
+		    U_PHONE
+		FROM 
+		    USER_TBL 		
+	</select>
+	
+
+	<!-- 병원 북마크 총 개수 조회 -->
+	<select id="getHBookMarkTotalCount" resultType="_int">
+		SELECT COUNT(*)
+			FROM 
+				H_BOOKMARK_TBL
 	</select>
 
+	<!-- 병원 북마크 내역 전체 조회 -->
+	<select id="selectHBookMarkList" resultType="Hospital">	
+		SELECT ROWNUM AS H_ADDR, H_NO, H_NAME, H_X
+		FROM (
+		    SELECT H.H_NO, S.H_NAME, COUNT(H.H_NO) AS H_X
+		    FROM H_BOOKMARK_TBL H
+		    JOIN HOSPITAL_TBL S ON S.H_NO = H.H_NO
+		    GROUP BY H.H_NO, S.H_NAME
+	        ORDER BY H_X DESC
+		)
+	</select>
+	
+	
 </mapper>

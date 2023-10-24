@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.lounge.pet.admin.service.AdminService;
+import com.lounge.pet.hospital.domain.HBookmark;
+import com.lounge.pet.hospital.domain.HReview;
+import com.lounge.pet.hospital.domain.Hospital;
 import com.lounge.pet.support.domain.Support;
 import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportTotalAmount;
 import com.lounge.pet.support.service.SupportService;
+import com.lounge.pet.user.domain.User;
 import com.lounge.pet.user.domain.UserSupport;
 
 @Controller
@@ -80,10 +84,123 @@ public class AdminController {
 		return gson.toJson(resultMap);
 	}
 	
+	
+	// 관리자페이지 병원 내역 리스트 조회(for 리뷰수순위)
+	@ResponseBody
+	@RequestMapping(value = "/HReview.pet"
+	, produces = "application/json; charset=utf-8"
+	, method = RequestMethod.GET)
+	public String showHReviewListForRank(Integer currentPage) {
+		Integer recordCountPerPage =  5;
+		// 페이징을 적용하여 댓글 데이터를 가져오도록 구현 
+		int start = (currentPage - 1) * recordCountPerPage;
+		int end = start + recordCountPerPage;
+		
+		List<HReview> hRList = aService.selectHReviewList();
+		
+		// 범위 체크를 통해 부분 리스트 추출
+		if (start < hRList.size()) {
+			end = Math.min(end, hRList.size());
+			// 범위에 해당하는 부분 리스트를 추출하여 sHList에 대입
+			hRList  = hRList.subList(start, end);
+		} else {
+			hRList  = Collections.emptyList();
+		}
+		
+		// 전체 페이지 수 계산 (후원내역의 총 갯수를 페이지당 글 갯수로 나눠서 계산) 
+		int totalRecords = aService.getHReviewTotalCount(); // 후원내역의 총 갯수 
+		int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 전체 페이지 수 
+		
+		// 후원내역 리스트와 전체 페이지 수를 Map에 담아서 보냄 
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("hRList", hRList);
+		resultMap.put("totalPages", totalPages);
+		resultMap.put("totalRecords", totalRecords);
+		
+		Gson gson = new Gson();
+		return gson.toJson(resultMap);
+	}
+	
+	
+	// 관리자페이지 병원 내역 리스트 조회(for 북마크수순위)
+	@ResponseBody
+	@RequestMapping(value = "/HBookmark.pet"
+	, produces = "application/json; charset=utf-8"
+	, method = RequestMethod.GET)
+	public String showHBookMarkListForRank(Integer currentPage) {
+		Integer recordCountPerPage =  5;
+		// 페이징을 적용하여 댓글 데이터를 가져오도록 구현 
+		int start = (currentPage - 1) * recordCountPerPage;
+		int end = start + recordCountPerPage;
+		
+		List<Hospital> hBMList = aService.selectHBookMarkList();
+		
+		// 범위 체크를 통해 부분 리스트 추출
+		if (start < hBMList.size()) {
+			end = Math.min(end, hBMList.size());
+			// 범위에 해당하는 부분 리스트를 추출하여 sHList에 대입
+			hBMList  = hBMList.subList(start, end);
+		} else {
+			hBMList  = Collections.emptyList();
+		}
+		
+		// 전체 페이지 수 계산 (후원내역의 총 갯수를 페이지당 글 갯수로 나눠서 계산) 
+		int totalRecords = aService.getHBookMarkTotalCount(); // 후원내역의 총 갯수 
+		int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 전체 페이지 수 
+		
+		// 후원내역 리스트와 전체 페이지 수를 Map에 담아서 보냄 
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("hBMList", hBMList);
+		resultMap.put("totalPages", totalPages);
+		resultMap.put("totalRecords", totalRecords);
+		
+		Gson gson = new Gson();
+		return gson.toJson(resultMap);
+	}
+	
+	
+	
 	@GetMapping("/user.pet")
 	public String adminUser() {
 		return "admin/adminUser";
 	}
+	
+	// 관리자페이지 회원관리페이지 회원리스트 조회
+	@ResponseBody
+	@RequestMapping(value = "/userlist.pet"
+	, produces = "application/json; charset=utf-8"
+	, method = RequestMethod.GET)
+	public String showUserListForRank(Integer currentPage) {
+		Integer recordCountPerPage =  5;
+		// 페이징을 적용하여 댓글 데이터를 가져오도록 구현 
+		int start = (currentPage - 1) * recordCountPerPage;
+		int end = start + recordCountPerPage;
+		
+		List<User> sUList = aService.selectUserList();
+		
+		// 범위 체크를 통해 부분 리스트 추출
+		if (start < sUList.size()) {
+			end = Math.min(end, sUList.size());
+			// 범위에 해당하는 부분 리스트를 추출하여 sHList에 대입
+			sUList  = sUList.subList(start, end);
+		} else {
+			sUList  = Collections.emptyList();
+		}
+		
+		// 전체 페이지 수 계산 (내역의 총 갯수를 페이지당 글 갯수로 나눠서 계산) 
+		int totalRecords = aService.getUserListCount(); // 후원내역의 총 갯수 
+		int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 전체 페이지 수 
+		
+		// 후원내역 리스트와 전체 페이지 수를 Map에 담아서 보냄 
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("sUList", sUList);
+		resultMap.put("totalPages", totalPages);
+//		resultMap.put("totalRecords", totalRecords);
+		
+		Gson gson = new Gson();
+		return gson.toJson(resultMap);
+	}
+	
 	
 	@GetMapping("/userdetail.pet")
 	public String adminUserDetail() {
