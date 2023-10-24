@@ -20,7 +20,20 @@
 			S_H_AMOUNT DESC
 	</select>
 
+	<!-- 병원 후기 총 개수 조회 -->
+	<select id="getHReviewTotalCount" resultType="_int">
+		SELECT COUNT(*)
+			FROM H_REVIEW_TBL
+	</select>
 
-
+	<!-- 병원 후기내역 전체 조회 -->
+	<select id="selectHReviewList" resultType="HReview">
+		SELECT H.H_NO, H_NAME AS H_R_CONTENT, COUNT(H_R_CONTENT) AS H_R_STATUS,
+		       RANK() OVER (ORDER BY COUNT(H_R_CONTENT) DESC) AS H_R_NO
+		FROM H_REVIEW_TBL H
+		JOIN HOSPITAL_TBL S ON S.H_NO = H.H_NO
+		GROUP BY H.H_NO, H_NAME
+		ORDER BY H_R_STATUS DESC;
+	</select>
 
 </mapper>

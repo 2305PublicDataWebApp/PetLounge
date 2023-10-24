@@ -1,181 +1,298 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<jsp:include page="../include/importSource.jsp"></jsp:include>
-        <link rel="stylesheet" href="/resources/css/admin/main_user.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard-dynamic-subset.css" />
-        <title>관리자 페이지</title>
-    </head>
-    <body>
-        <jsp:include page="../include/header.jsp"></jsp:include>
-
-        <main>
-
-    <!-- 왼쪽 메뉴 바 -->
-   	<section class="left-section">
-    	<div class="menu">
-	        <div class="m-container">
-	            <div class="sub-title">
-	                <p class="sub-title-name">관리자페이지</p>
-	                <hr class="line4">
-	            </div>
-	            <ul class="sub-menu">
-	                <li class="menu-item">
-	                    <div>
-	                    <span>
-	                    </span>  
-	                    <span class="m-name">
-	                        <a href="#">통계 관리</a>
-	                    </span>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" />
+		<link rel="stylesheet" href="/resources/css/admin/adminSupport.css">
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js"></script>
+		<title>펫 라운지 관리자페이지</title>
+		<style>
+			.table-border table-left1 {
+				padding-left: 10px;
+			}
+			.table-border table-right1 {
+				padding-left: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<jsp:include page="../include/header.jsp"></jsp:include>
+		
+		<main id="main">
+	        <section id="wrap">
+	            <!-- 왼쪽 메뉴 바 -->
+	            <section class="left-section">
+	                <div class="menu">
+	                    <div class="m-container">
+	                        <div class="sub-title">
+	                            <p class="sub-title-name">관리자페이지</p>
+	                            <hr class="line4">
+	                        </div>
+	                        <ul class="sub-menu">
+	                            <li class="menu-item">
+	                                <div>
+	                                    <span>
+	                                    </span>
+	                                    <span class="m-name">
+	                                        <a href="/admin/stats.pet">통계 관리</a>
+	                                    </span>
+	                                </div>
+	                            </li>
+	                            <li class="menu-item">
+	                                <div>
+	                                    <span></span>
+	                                    <span class="m-name">
+	                                        <a href="/admin/user.pet">회원 관리</a>
+	                                    </span>
+	                                </div>
+	                            </li>
+	                            <li class="menu-item">
+	                                <div>
+	                                    <span></span>
+	                                    <span class="m-name">
+	                                        <a href="/admin/support.pet">후원 관리</a>
+	                                    </span>
+	                                </div>
+	                            </li>
+	                            <li class="menu-item">
+	                                <div>
+	                                    <span></span>
+	                                    <span class="m-name">
+	                                        <a href="#">게시판 관리</a>
+	                                    </span>
+	                                </div>
+	                            </li>
+	                        </ul>
 	                    </div>
-	                </li>
-	                <li class="menu-item">
-	                    <div>
-	                    <span></span>  
-	                    <span class="m-name">
-	                        <a href="#">회원 관리</a>
-	                    </span>
-	                    </div>
-	                </li>
-	                <li class="menu-item">
-	                    <div>
-	                    <span></span>  
-	                    <span class="m-name">
-	                        <a href="#">후원 관리</a>
-	                    </span>
-	                    </div>
-	                </li>
-	                <li class="menu-item">
-	                    <div>
-	                    <span></span>  
-	                    <span class="m-name">
-	                        <a href="#">게시판 관리</a>
-	                    </span>
-	                    </div>
-	                </li>
-	            </ul>
-	        </div>
-		</div>
-	</section>
-    
+	                </div>
+	            </section>
+	
+	            <!-- 오른쪽 메인 화면 -->
+	            <section class="right-section">
+	                <div class="content">
+	                    <div class="square-container">
+	                        <div class="right-title">
+	                            <div>
+	                                <img src="/resources/images/pet.png" id="logo">
+	                            </div>
+	                            <div>
+	                                <p class="main-title-name">회원 관리</p>
+	                            </div>
+	                        </div>
+	                        <div class="line-hr"></div>
 
-    <!-- 오른쪽 메인 화면 -->
-    <section class="right-section">    
-    <div class="main">
-        <div class="square-container">
-            <div class="sub-title">
-                <p class="main-title-name">회원 관리</p>
-                <hr class="line5">
-            </div>
-            <div class="sub-title2">
-                <p class="sub-title-name2">회원 목록 조회</p>
-            </div>
-            <div id="notice">
-                <ul>
-                    <table>
-                        <colgroup>
-                            <col width="10%">
-                            <col width="20%">
-                            <col width="15%">
-                            <col width="20%">
-                            <col width="20%">
-                        </colgroup>
-                        <thead>
-                            <tr>
-                                <th>번호</th>
-                                <th>아이디</th>
-                                <th>이름</th>
-                                <th>닉네임</th>
-                                <th>휴대폰</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="5"><hr class="line3-1"></td>
-                            </tr>
-                            <tr>
-                                <td class="right2">1</td>
-                                <td class="right1" style="text-align: center;">user01</td>
-                                <td class="right1">김이름</td>
-                                <td class="right1">여행가고싶다</td>
-                                <td class="right1">01072932193</td>
-                            </tr>
-                            <tr>
-                                <td colspan="5"><hr class="line3"></td>
-                            </tr>
-                            <tr>
-                                <td class="right2">2</td>
-                                <td class="right1" style="text-align: center;">user02</td>
-                                <td class="right1">이용자</td>
-                                <td class="right1">이용자</td>
-                                <td class="right1">01023125888</td>
-                            </tr>
-                            <tr>
-                                <td colspan="5"><hr class="line3"></td>
-                            </tr>
-                            <tr>
-                                <td class="right2">3</td>
-                                <td class="right1" style="text-align: center;">user03</td>
-                                <td class="right1">삼용자</td>
-                                <td class="right1">삼용자</td>
-                                <td class="right1">01020205587</td>
-                            </tr>
-                            <tr>
-                                <td colspan="5"><hr class="line3"></td>
-                            </tr>
-                            <tr>
-                                <td class="right2">4</td>
-                                <td class="right1" style="text-align: center;">user04</td>
-                                <td class="right1">사용자</td>
-                                <td class="right1">사용자</td>
-                                <td class="right1">01055489657</td>
-                            </tr>
-                            <tr>
-                                <td colspan="5"><hr class="line3"></td>
-                            </tr>
-                            <tr>
-                                <td class="right2">5</td>
-                                <td class="right1" style="text-align: center;">user05</td>
-                                <td class="right1">오용자</td>
-                                <td class="right1">오용자</td>
-                                <td class="right1">01032125557</td>
-                            </tr>
-                            <tr>
-                                <td colspan="5"><hr class="line3"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </ul>
-            </div>
-            <div class="page">
-                <ul class="pagination">
-                    <li class="Mui-selected"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">다음</a></li>
-                </ul>
-            </div>
-            <div class="search-container">
-                <input type="text" class="search-input">
-                <button class="search-button">검색</button>
-            </div>
-    	</div>
-	</div>
-	</section>
-	</main>   
-  	<footer>
-	<jsp:include page="../include/footer.jsp"></jsp:include>
-	</footer>
+	                        
+	                        <div class="content-inner">
+	                            <div class="content-title">
+	                                <p class="content-title-name">회원 목록 조회</p>
+	                                <div class="line"></div>
+	                            </div>
+	                            <div id="s-history-list">
+	                                <table id="history-table">
+	                                    <colgroup>
+	                                        <col width="20%">
+	                                        <col width="20%">
+	                                        <col width="20%">
+	                                        <col width="20%">
+	                                        <col width="20%">
+	                                    </colgroup>
+	                                    <thead>
+	                                        <tr>
+	                                            <th class="table-border">번호</th>
+	                                            <th class="table-border">아이디</th>
+	                                            <th class="table-border">이름</th>
+	                                            <th class="table-border">닉네임</th>
+	                                            <th class="table-border">휴대폰</th>
+	                                        </tr>
+	                                    </thead>
+	                                    <tbody>
+	                                        <tr>
+	                                            <td class="table-border table-left1"></td>
+	                                            <td class="table-border"></td>
+	                                            <td class="table-border"></td>
+	                                            <td class="table-border"></td>
+	                                            <td class="table-border table-right1"></td>
+	                                        </tr>
+	                                    </tbody>
+	                                </table>
+	                                <div class="page-navigation">
+	                                    <ul id="history-pagination" class="pagination pagination-sm"></ul>
+                                	</div>
+	                            </div>
+	                        </div>
 
 
-    </body>
-    </html>
-    
-    
-    
+	                        <div class="line-hr"></div>
+
+
+	                    </div>
+	                </div>
+	            </section>
+	        </section>
+	    </main>
+		
+		
+		<jsp:include page="../include/footer.jsp"></jsp:include>
+		
+		<script>
+			<!-- 페이징 처리된 후원글, 후원내역, 댓글 조회 -->
+			// 페이징 
+			let currentPage = 1; // 현재 페이지 
+			let status = 'all'; // 초기값 설정
+			let naviCountPerPage = 5; // 한 그룹당 페이지 수
+			let totalSupportPages = 0; // 총 후원글 페이지 수
+			let totalReplyPages = 0; // 총 댓글 페이지 수
+			let totalHistoryPages = 0; // 총 후원내역 페이지 수
+			
+
+			
+// ====================================================================================================================================				
+			
+			//회원 내역 리스트를 불러오는 ajax Function 
+			const getHistoryListForRank = () => {
+				$.ajax({
+					url : "/admin/userlist.pet",
+					data : { currentPage: currentPage }, // 현재 페이지와 페이지당 댓글 수 전달
+					type : "GET",
+					success : function(resultMap) {
+						const tableBody = $("#history-table tbody");
+						tableBody.html('');
+						let sNo;
+						let nickname;
+						let amount;
+						let sHNo;
+						
+						const sHList = resultMap.sHList; // 후원내역 리스트 
+						totalHistoryPages = resultMap.totalPages; // 총 페이지 수
+						const totalRecords = resultMap.totalRecords; // 후원내역 총 갯수
+				        
+						if(sHList.length > 0) {
+							for(let i in sHList) {
+								// 닉네임, 숨은천사 
+								let sHName = sHList[i].sHName;
+								if(sHList[i].sHType == 'A') {
+									sHName = '숨은천사';
+								}
+								
+								
+								let sNo = sHList[i].sNo;
+								let sHNo = sHList[i].sHNo;
+								
+								tr = $("<tr onclick='window.location.href=\"/support/detail.pet?sNo="+sHList[i].sNo+"\"' class='tr'>");
+								sHNo = $("<td class='table-border table-left1'>").html(""+sHNo+""); 
+								nickname = $("<td class='table-border'>").html(""+sHName+""); 
+								amount = $("<td class='table-border table-right1'>").html(""+sHList[i].sHAmount.toLocaleString()+" 원"); 
+
+								
+				
+								tr.append(sHNo);
+								tr.append(nickname);
+								tr.append(amount);
+
+								tableBody.append(tr); 
+								
+								// 결과를 받은 후에 페이징을 업데이트
+					            createHistoryPagination(totalHistoryPages);
+							}
+						} else {
+							tr = $("<tr class='td'><td class='td'colspan='3'style='width:725px;'><div width='100%' style='color: lightgray;'>후원 내역이 없습니다.</div></td></tr>");
+							tableBody.append(tr);
+						}
+					},
+					error : function() {
+						alert("Ajax 오류! 관리자에게 문의하세요.");
+					}
+				});
+			}
+			
+			
+			// 후원 내역 페이지 만들기 
+			const createHistoryPagination = (totalHistoryPages) => {
+			    const HistoryPaginationUl = $("#history-pagination");
+			    HistoryPaginationUl.empty(); // 이전의 페이징 링크를 지움
+			    
+			    const naviCountPerPage = 5; // 한 그룹당 페이지 수
+			    const numGroups = Math.ceil(totalHistoryPages / naviCountPerPage); // 총 그룹 수
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage); // 현재 페이지가 속한 그룹
+
+			    let startPage = (currentGroup - 1) * naviCountPerPage + 1;
+			    let endPage = Math.min(currentGroup * naviCountPerPage, totalHistoryPages);
+			    
+			 	// "이전" 버튼 추가
+			    if (currentGroup > 1) {
+			        const prevLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-left-fill"></i></a></li>');
+			        prevLi.click(() => {
+			        	goToPreviousHistoryGroup();
+			        });
+			        HistoryPaginationUl.append(prevLi);
+			    }
+			 	// 페이지 링크 추가
+			    for (let i = startPage; i <= endPage; i++) {
+			        const li = $('<li class="page-item" data-page="${i}"><a class="page-link" href="javascript:void(0)">'+i+'</a></li>');
+			        
+			     	// 현재 페이지에 해당하는 경우 클래스 추가
+			        if (i === currentPage) {
+			            li.addClass('active');
+			        }
+			     
+			        li.click(() => {
+			            changeHistoryPage(i);
+			        });
+			        HistoryPaginationUl.append(li);
+			    }
+			 	
+				// "다음" 버튼 추가
+			    if (currentGroup < numGroups) {
+			        const nextLi = $('<li class="page-item"><a class="page-link" href="javascript:void(0)"><i class="bi bi-caret-right-fill"></i></a></li>');
+			        nextLi.click(() => {
+			        	goToNextHistoryGroup();
+			        });
+			        HistoryPaginationUl.append(nextLi);
+			    }
+			}
+			
+			// 후원내역 페이지 변경 시 호출되는 함수
+			const changeHistoryPage = (newPage) => {
+			    currentPage = newPage;
+			    getHistoryListForRank(currentPage);
+			}
+			
+			// 후원내역 그룹 변경 시 호출되는 함수
+			const changeHistoryGroup = (newGroup) => {
+			    currentPage = (newGroup - 1) * naviCountPerPage + 1;
+			    getHistoryListForRank(currentPage);
+			}
+
+			// 후원내역 이전 그룹으로 이동할 때 호출 
+			const goToPreviousHistoryGroup = () => {
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup > 1) {
+			        const lastPageOfPreviousGroup = (currentGroup - 1) * naviCountPerPage;
+			        changeHistoryPage(lastPageOfPreviousGroup);
+			    }
+			}
+
+			// 후원내역 다음 그룹으로 이동할 때 호출
+			const goToNextHistoryGroup = () => {
+			    const numGroups = Math.ceil(totalHistoryPages / naviCountPerPage);
+			    const currentGroup = Math.ceil(currentPage / naviCountPerPage);
+			    if (currentGroup < numGroups) {
+			    	changeHistoryGroup(currentGroup + 1);
+			    }
+			}
+			
+// ====================================================================================================================================			
+		
+	
+
+	
+		</script>
+
+	</body>
+</html>

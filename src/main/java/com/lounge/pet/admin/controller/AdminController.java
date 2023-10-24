@@ -43,7 +43,7 @@ public class AdminController {
 		System.out.println(sList);
 		return "admin/adminStats";
 	}
-	
+
 	// 관리자페이지 통계관리페이지 후원내역 조회(for 후원순위)
 	@ResponseBody
 	@RequestMapping(value = "/sRank.pet"

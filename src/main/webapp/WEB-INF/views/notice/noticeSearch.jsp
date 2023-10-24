@@ -84,29 +84,35 @@
             </div>
       	        <div class="pagination">
 	                <c:if test="${pInfo.startNavi != 1 }">
-						<c:url var="prevUrl" value="/notice/noticeList.pet">
+						<c:url var="prevUrl" value="//notice/noticeSearch.pet">
 		                	<c:param name="page" value="${pInfo.startNavi -1 }"></c:param>
+               	            <c:param name="searchCondition" value="${param.searchCondition}" />
+           					<c:param name="searchKeyword" value="${param.searchKeyword}" />
 	    	            </c:url>
 	                	<a class="prev" href="${prevUrl }">
 	                		<i class="bi bi-caret-left-fill"></i>	                	
 	                	</a>
 	                </c:if>	       
 		             <c:forEach begin="${pInfo.startNavi }" end="${pInfo.endNavi }" var="p">
-						<c:url var="pageUrl" value="/notice/noticeList.pet">
+						<c:url var="pageUrl" value="/notice/noticeSearch.pet">
 							<c:param name="page" value="${p }"></c:param>
+							<c:param name="searchCondition" value="${param.searchCondition}" />
+           					<c:param name="searchKeyword" value="${param.searchKeyword}" />
 						</c:url>
 						    <c:choose>
 						        <c:when test="${p == pInfo.currentPage}">
-						            <a class="page current" href="${pageUrl}">${p}</a>&nbsp;
+						            <a class="page current" href="${pageUrl}">${p}</a>
 						        </c:when>
 						        <c:otherwise>
-						            <a class="page" href="${pageUrl}">${p}</a>&nbsp;
+						            <a class="page" href="${pageUrl}">${p}</a>
 						        </c:otherwise>
 						    </c:choose>
 					</c:forEach>
 	                <c:if test="${pInfo.endNavi != pInfo.naviTotalCount}">
-						<c:url var="nextUrl" value="/notice/noticeList.pet">
+						<c:url var="nextUrl" value="/notice/noticeSearch.pet">
 			                <c:param name="page" value="${pInfo.endNavi +1 }"></c:param>
+  							<c:param name="searchCondition" value="${param.searchCondition}" />
+           					<c:param name="searchKeyword" value="${param.searchKeyword}" />
 	    	            </c:url>
 	                	<a class="next" href="${nextUrl }">
 	                		<i class="bi bi-caret-right-fill" id="right-fill"></i>

@@ -436,7 +436,7 @@
 					            createPagination(data.totalPages);
 							}
 						} else {
-							tr = $("<tr class='td'><td class='td'colspan='3'><div style='color: lightgray;'>등록된 댓글가 없습니다</div></td></tr>");
+							tr = $("<tr class='td'><td class='td'colspan='3'><div style='color: lightgray;'>등록된 댓글이 없습니다</div></td></tr>");
 							tableBody.append(tr);
 						}
 					},
