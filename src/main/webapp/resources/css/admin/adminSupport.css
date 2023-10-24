@@ -252,6 +252,9 @@ ul {
 	cursor: pointer;
   }
 
-
-
-
+.chart {
+	width: 90%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 40px auto;
+}

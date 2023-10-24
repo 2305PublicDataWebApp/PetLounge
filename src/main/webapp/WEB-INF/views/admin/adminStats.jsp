@@ -10,7 +10,7 @@
 		<jsp:include page="../include/importSource.jsp"></jsp:include>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" />
 		<link rel="stylesheet" href="/resources/css/admin/adminSupport.css">
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 		<title>펫 라운지 관리자페이지</title>
 		<style>
 			.table-border table-left1 {
@@ -87,13 +87,8 @@
 	                        </div>
 	                        <div class="line-hr"></div>
 	                        <div class="content-title">
-	                            <p class="content-title-name">가입자수 통계</p>
-	                            <div class="line"></div>
-	                        </div>
-	                        <div class="line-hr"></div>
-	                        <div class="content-title">
-	                            <p class="content-title-name">후원금액 통계(일별)</p>
-	                            <div class="line"></div>
+	                            <p class="content-title-name">일별 후원금액 통계</p>
+	                            <div class="line" style="margin-bottom:35px;"></div>
 	                            <!-- 후원금액 통계 그래프 -->
 								<div class="chart">
 									<canvas id="c1" width="700px" height="300px"></canvas>
@@ -637,8 +632,6 @@
 			}
 			
 			
-			
-			
 			// 후원글, 댓글, 후원내역 출력 
 			$(function(){
 				getSupportList(currentPage, status);
@@ -727,61 +720,58 @@
 					}
 				}
 			</c:forEach>
-			
-			var data1 = {
-			  labels : labels,
-			  datasets : [
+
+			const data = {
+			  labels: labels,
+			  datasets: [
 			    {
-			      // 전체
-			      fillColor : "rgba(236,72,127,.1)",
-			      strokeColor : "rgba(236,72,127,1)",
-			      pointColor : "rgba(236,72,127,1)",
-			      pointStrokeColor : "#FFF",
-			      data : totalArr
-			    },
-			    {
-			      // 신용카드
-			      fillColor : "#cce2ef9c",
-			      strokeColor : "#1b79ce",
-			      pointColor : "#1b79ce",
-			      pointStrokeColor : "#FFF",
-			      data : creditArr
-			    },
-			    {
-			      // 카카오페이
-			      fillColor : "#fffbebb5",
-			      strokeColor : "#fee339",
-			      pointColor : "#fee339",
-			      pointStrokeColor : "#FFF",
-			      data : kakaoArr
+			      label: '총합',
+			      data: totalArr,
+			      borderColor: "rgba(236,72,127,1)",
+			      backgroundColor: "rgba(236,72,127,.1)",
+			      fill: true,
+			      tension: 0.4,
+			    }, {
+			      label: '신용카드',
+			      data: creditArr,
+			      borderColor: "#1b79ce",
+			      backgroundColor: "#cce2ef9c",
+			      fill: true,
+			      tension: 0.4
+			    }, {
+			      label: '카카오페이',
+			      data: kakaoArr,
+			      borderColor: "#fee339",
+			      backgroundColor: "#fffbebb5",
+			      fill: true,
+			      tension: 0.4
 			    }
 			  ]
-			}
-	
-			var options1 = {
-			  scaleGridLineColor : "#eee",
-			  scaleFontFamily: "GmarketSansMedium",
-			  scaleFontSize: 14,
-			  bezierCurve : true,
-			  scaleShowLabels: true,
-			  pointDotRadius: 6,
-			  animation: true,
-			  scaleShowGridLines: true,
-			  datasetFill: true,
-			  responsive: true
-			}
-	
-// 			new Chart(c1.getContext("2d")).Line(data1,options1);
-			
-			var chart = new Chart(c1.getContext("2d")).Line(data1, {
-				  scaleOverride: true,
-				  scaleSteps: 7, // 원하는 스텝 수 설정
-				  scaleStepWidth: 200000, // 스텝 너비 설정
-				  scaleStartValue: 0
-				});
+			};
 
-
-			
+			const ctx = document.getElementById('c1');
+			Chart.defaults.font.family = "GmarketSansMedium";
+			  new Chart(ctx, {
+				  type: 'line',
+				  data: data,
+				  options: {
+				    responsive: true,
+				    plugins: {
+				    },
+				    interaction: {
+				      intersect: false,
+				    },
+				    scales: {
+				      x: {
+				        display: true,
+				      },
+				      y: {
+				        display: true,
+				        suggestedMin: 0,
+				      }
+				    }
+				  },
+			  });
 		</script>
 	</body>
 </html>
