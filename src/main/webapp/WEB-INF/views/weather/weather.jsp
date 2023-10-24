@@ -14,6 +14,26 @@
         <title>산책 날씨 예보</title>
         <script src="http://code.jquery.com/jquery-1.7.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+		<style>
+        /* 모달 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: white;
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+	</style>
     </head>
     <body>
         <jsp:include page="../include/header.jsp"></jsp:include>
@@ -132,6 +152,22 @@
 							<img class="free-img" src="/resources/images/weather/jong.png">
 							<div class="tmi" id="randomTmi"></div>
 		                </div>
+		                
+		                
+						<!-- 버튼을 클릭하여 모달 창 열기 -->
+						<!-- 모달 창 -->
+<!-- 						<button id="openModal">모달 열기</button> -->
+					
+<!-- 					    <div id="myModal" class="modal"> -->
+<!-- 					        <div class="modal-content"> -->
+<!-- 					            <input type="text" id="modalInput" placeholder="내용을 입력하세요"> -->
+<!-- 					            <button id="addButton">추가</button> -->
+<!-- 					            <ul id="itemList"></ul> -->
+<!-- 					        </div> -->
+<!-- 					    </div> -->
+	
+
+
 						<div class="img-area">
 						    <img class="dog-img" src="/resources/images/weather/dog.png">
 						</div>
@@ -150,6 +186,7 @@
 				                        
 				                        	<!-- 날씨 아이콘 동적으로 수정 예정 -->
 				                        	<img id="weather-icon" src="" alt="날씨 아이콘">
+<%-- 				                        	<img class="time-icon" id="time-${i.index }-icon" src="" alt="날씨 아이콘"> --%>
 											<div id="tIcon"></div>
 				                            <span class="tTemp"></span>
 				                        </div>
@@ -187,11 +224,6 @@
 				                    		<li>
 				                    			<div class="time" id="weather${i.index }"></div>
 				                    			<img class="time-icon" id="time-${i.index }-icon" src="" alt="날씨 아이콘">
-												
-<!-- 												<div class="demo demo-white demo-128 svg"> -->
-<!-- 													<i class="wu wu-white wu-clear wu-128" data-name="clear"></i> -->
-<!-- 												</div> -->
-												
 				                    			<span class="time" id="time-today${i.index }"></span>
 				                    		</li>
 										</c:forEach>
@@ -548,7 +580,30 @@
 					$('#tomorrow-temp-min').empty().append(tmoTempMin).append(celsius);		  // 내일 최저 기온(일별)
 					$('#aft-tomorrow-temp-min').empty().append(aftTempMin).append(celsius);	  // 모레 최저 기온(일별)
 					
-					// 시간별 아이콘
+					// ********************* 현재 날씨 아이콘 *********************
+					if (rainValue == "0") {
+						// 오전 7시부터 오후 5시까지는 해 이미지
+						if(formattedTime >= "0700" && formattedTime < "1800") {
+							$("#weather-icon").attr("src", "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg");
+						// 오후 6시부터 다음 날 아침 6시까지는 달 이미지
+						} else {
+							$("#weather-icon").attr("src", "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-night.svg");
+						}
+					} else if (rainValue > "0" && rainValue < "30") {
+						if(formattedTime >= "0700" && formattedTime < "1800") {
+							$("#weather-icon").attr("src", "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-day.svg");
+						}else {
+							$("#weather-icon").attr("src", "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-night.svg");
+						}
+					} else if (rainValue >= "30") {
+						if(formattedTime >= "0700" && formattedTime < "1800") {
+							$("#weather-icon").attr("src", "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-day-rain.svg");
+						} else {
+							$("#weather-icon").attr("src", "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-night-rain.svg");
+						}
+					}
+					
+					// ********************* 시간별 날씨 아이콘 *********************
 					let hour = parseInt(checkHour).toString().padStart(2, '0');
 					for(let i = 0; i < 6; i++) {
 						let newHour = (parseInt(hour) + i).toString().padStart(2, '0');
@@ -585,43 +640,54 @@
 							}
 						}
 					}
-					
-					weatherIcon(); // 날씨 아이콘 메소드
 				});
-			}
-			
-			// 현재 날씨 아이콘 출력
-			function weatherIcon() {
-				
-				let iconUrl;
-				formattedTime = getFormattedTime(); // 현재 시간
-				
-				if (rainValue == "0") {
-					// 오전 7시부터 오후 5시까지는 해 이미지
-					if(formattedTime >= "0700" && formattedTime < "1800") {
-						iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-day.svg";
-					// 오후 6시부터 다음 날 아침 6시까지는 달 이미지
-					} else {
-						iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/clear-night.svg";
-					}
-				} else if (rainValue > "0" && rainValue < "30") {
-					if(formattedTime >= "0700" && formattedTime < "1800") {
-						iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-day.svg";
-					}else {
-						iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-night.svg";
-					}
-// 					iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/cloudy.svg";
-				} else if (rainValue >= "30") {
-					if(formattedTime >= "0700" && formattedTime < "1800") {
-						iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-day-rain.svg";
-					} else {
-						iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-night-rain.svg";
-					}
-// 					iconUrl = "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/rain.svg";
-				}
-				
-				const weatherIcon = document.getElementById("weather-icon");
-				weatherIcon.src = iconUrl;
+	            
+	            
+// 	            const openModalButton = document.getElementById("openModal");
+// 	            const modal = document.getElementById("myModal");
+// 	            const modalInput = document.getElementById("modalInput");
+// 	            const addButton = document.getElementById("addButton");
+// 	            const itemList = document.getElementById("itemList");
+
+// 	            // 모달 열기
+// 	            openModalButton.addEventListener("click", function() {
+// 	                modal.style.display = "block";
+// 	            });
+
+// 	            // 모달 닫기
+// 	            modal.addEventListener("click", function(event) {
+// 	                if (event.target === modal) {
+// 	                    modal.style.display = "none";
+// 	                }
+// 	            });
+
+// 	            // 입력칸에서 Enter 키 누를 때
+// 	            modalInput.addEventListener("keyup", function(event) {
+// 	                if (event.key === "Enter") {
+// 	                    addItem();
+// 	                }
+// 	            });
+
+// 	            // "추가" 버튼 클릭
+// 	            addButton.addEventListener("click", addItem);
+
+// 	            function addItem() {
+// 	                const inputValue = modalInput.value.trim();
+// 	                if (inputValue) {
+// 	                    const li = document.createElement("li");
+// 	                    li.textContent = inputValue;
+// 	                    itemList.appendChild(li);
+// 	                    modalInput.value = ""; // 입력칸 비우기
+// 	                }
+// 	            }
+
+// 	            // 항목 삭제
+// 	            itemList.addEventListener("click", function(event) {
+// 	                const item = event.target;
+// 	                if (item.tagName === "LI") {
+// 	                    item.remove();
+// 	                }
+// 	            });
 			}
 			
         </script>
