@@ -615,3 +615,9 @@ label {
       left: 0;   
       transform: translatex(-50%) scalex(-1);      }
 }
+
+
+/* tmi */
+#tmiListDiv {
+	display: flex;
+}

@@ -114,7 +114,8 @@ public class FaqController {
 	
 	// faq 글 수정
 	@PostMapping("/modify.pet")
-	public String modifyFaq(Faq faq
+	public String modifyFaq(
+			Faq faq
 			, HttpSession session
 			, Model model) {
 		try {

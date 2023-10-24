@@ -27,7 +27,7 @@
         }
         .modal-content {
             background-color: white;
-            width: 300px;
+            width: 700px;
             margin: 50px auto;
             padding: 20px;
             border: 1px solid #ccc;
@@ -145,28 +145,48 @@
 	                            </ul>
 	                    </div>
 	                </section>
+		                
+					<!-- 버튼을 클릭하여 모달 창 열기 -->
+					<!-- 모달 창 -->
+<%-- 					<c:if test="${ sessionScope.uId eq 'admin' }"> --%>
+<!-- 						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> -->
+<!-- 						TMI 등록 -->
+<!-- 						</button> -->
+<%-- 					</c:if> --%>
 	
+<!-- 					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
+<!-- 						<div class="modal-dialog"> -->
+<!-- 							<div class="modal-content"> -->
+<!-- 								<div class="modal-header"> -->
+<!-- 									<h5 class="modal-title" id="exampleModalLabel">펫 라운지 TMI</h5> -->
+<!-- 									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+<!-- 								</div> -->
+<!-- 								<div class="modal-body"> -->
+<!-- 								<input type="text" name="tmiContent" id="tmiContent"> -->
+<!-- 								</div> -->
+<!-- 								<div class="modal-footer"> -->
+<!-- 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button> -->
+<!-- 									<button type="button" class="btn btn-primary" id="add-tmi">추가하기</button> -->
+									
+<!-- 									TMI 목록을 검색하는 버튼을 추가합니다. -->
+<!--  									<button type="button" class="btn btn-primary" id="get-tmi-list">TMI 목록 조회</button> -->
+<!-- 					                이 부분에 리스트를 추가할 div -->
+<!-- 					                <div id="tmiListDiv"> -->
+<!-- 					                    <ul id="tmiList"> -->
+<!-- 					                    </ul> -->
+<!-- 					                </div> -->
+									
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+					
 	                <!-- 오늘의 tmi -->
 	                <section class="today-tmi">
 		                <div class="tmi-text">
 							<img class="free-img" src="/resources/images/weather/jong.png">
 							<div class="tmi" id="randomTmi"></div>
 		                </div>
-		                
-		                
-						<!-- 버튼을 클릭하여 모달 창 열기 -->
-						<!-- 모달 창 -->
-<!-- 						<button id="openModal">모달 열기</button> -->
-					
-<!-- 					    <div id="myModal" class="modal"> -->
-<!-- 					        <div class="modal-content"> -->
-<!-- 					            <input type="text" id="modalInput" placeholder="내용을 입력하세요"> -->
-<!-- 					            <button id="addButton">추가</button> -->
-<!-- 					            <ul id="itemList"></ul> -->
-<!-- 					        </div> -->
-<!-- 					    </div> -->
-	
-
 
 						<div class="img-area">
 						    <img class="dog-img" src="/resources/images/weather/dog.png">
@@ -185,8 +205,12 @@
 				                        <div class="today-weather-Temperature">
 				                        
 				                        	<!-- 날씨 아이콘 동적으로 수정 예정 -->
+				                        	
+				                        	<!-- 로딩 중 아이콘 -->
+<!-- 				                        	<img id="loadingIcon" src="/resources/images/weather/loading.gif" alt="로딩 중 아이콘" style="display: none;"> -->
+				                        	
+				                        	<!-- 날씨 아이콘 -->
 				                        	<img id="weather-icon" src="" alt="날씨 아이콘">
-<%-- 				                        	<img class="time-icon" id="time-${i.index }-icon" src="" alt="날씨 아이콘"> --%>
 											<div id="tIcon"></div>
 				                            <span class="tTemp"></span>
 				                        </div>
@@ -602,7 +626,6 @@
 							$("#weather-icon").attr("src", "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-night-rain.svg");
 						}
 					}
-					
 					// ********************* 시간별 날씨 아이콘 *********************
 					let hour = parseInt(checkHour).toString().padStart(2, '0');
 					for(let i = 0; i < 6; i++) {
@@ -643,51 +666,65 @@
 				});
 	            
 	            
-// 	            const openModalButton = document.getElementById("openModal");
-// 	            const modal = document.getElementById("myModal");
-// 	            const modalInput = document.getElementById("modalInput");
-// 	            const addButton = document.getElementById("addButton");
-// 	            const itemList = document.getElementById("itemList");
+	            
+	            // tmi 등록
+// 	            const registerButton = $("#add-tmi");
+// 				registerButton.on("click", function() {
+// 	            	var tmiContent = $("#tmiContent").val();
+// 	            	$.ajax({
+// 	            		url : "/weather/insertTmi.pet",
+// 	            		data : { tmiContent : tmiContent },
+// 	            		type : "POST",
+// 	            		success: function(result) {
+// 	                        if (result == "success") {
+// 	                            alert("TMI 등록 성공!");
 
-// 	            // 모달 열기
-// 	            openModalButton.addEventListener("click", function() {
-// 	                modal.style.display = "block";
+// 	                            // TMI를 등록할 때마다 목록에 추가
+// // 	                            const tmiListDiv = $("#tmiListDiv");
+// // 	                            const listItem = $("<li>").text(tmiContent);
+// // 	                            tmiListDiv.append(listItem);
+// 	                        } else {
+// 	                            alert("TMI 등록 실패!");
+// 	                        }
+// 	                    },
+// 	                    error: function() {
+// 	                        alert("시스템 오류");
+// 	                    }
+// 	            	});
 // 	            });
+				
+				// tmi 리스트 조회
+				// TMI 목록 불러오기
+// 				$.ajax({
+// 				    url: "/weather/show.pet", // TMI 목록을 가져올 URL
+// 				    type: "GET",
+// 				    success: function (result) {
+// 				        // 서버에서 받은 JSON 응답을 파싱합니다.
+// 				        const tmiArray = JSON.parse(result);
 
-// 	            // 모달 닫기
-// 	            modal.addEventListener("click", function(event) {
-// 	                if (event.target === modal) {
-// 	                    modal.style.display = "none";
-// 	                }
-// 	            });
+// 				        const tmiListDiv = $("#tmiListDiv");
 
-// 	            // 입력칸에서 Enter 키 누를 때
-// 	            modalInput.addEventListener("keyup", function(event) {
-// 	                if (event.key === "Enter") {
-// 	                    addItem();
-// 	                }
-// 	            });
+// 				        // tmiArray를 순회하며 목록을 업데이트합니다.
+// 				        tmiArray.forEach(function (tmi) {
+// 				            const listItem = $("<li>").text(tmi.tmiContent);
+// 				            tmiListDiv.append(listItem);
+// 				        });
+// 				    },
+// 				    error: function () {
+// 				        alert("시스템 오류");
+// 				    }
+// 				});
 
-// 	            // "추가" 버튼 클릭
-// 	            addButton.addEventListener("click", addItem);
-
-// 	            function addItem() {
-// 	                const inputValue = modalInput.value.trim();
-// 	                if (inputValue) {
-// 	                    const li = document.createElement("li");
-// 	                    li.textContent = inputValue;
-// 	                    itemList.appendChild(li);
-// 	                    modalInput.value = ""; // 입력칸 비우기
-// 	                }
-// 	            }
-
-// 	            // 항목 삭제
-// 	            itemList.addEventListener("click", function(event) {
-// 	                const item = event.target;
-// 	                if (item.tagName === "LI") {
-// 	                    item.remove();
-// 	                }
-// 	            });
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
 			}
 			
         </script>
