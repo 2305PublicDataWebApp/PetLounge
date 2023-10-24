@@ -77,11 +77,38 @@ public class WeatherController {
 	
 	// tmi 조회
 	@ResponseBody
-	@RequestMapping(value="/show.pet")
-	public String showTmiLis() {
+	@GetMapping(value="/show.pet")
+	public String showTmiList() {
 		List<Weather> tmiList = wService.selectTmiList();
 		Gson gson = new Gson();
 		return gson.toJson(tmiList);
+	}
+	
+	
+	// tmi 목록 삭제
+	@ResponseBody
+	@PostMapping(value="/deleteTmi.pet")
+	public String deleteTmiList(
+			@RequestParam("tmiNo") Integer tmiNo
+			, Model model) {
+		int result = wService.deleteTmiList(tmiNo);
+		if(result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	// tmi 랜덤 출력
+	@ResponseBody
+	@GetMapping(value="/randomTmi.pet")
+	public Weather showRandomTmi() {
+		Weather tmi = wService.selectOneByTmi();
+		if(tmi != null) {
+			return tmi;
+		} else {
+			return null;
+		}
 	}
 	
 	

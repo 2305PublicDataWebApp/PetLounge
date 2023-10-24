@@ -246,7 +246,27 @@ label {
 
 .weather-area {
 	display: flex;
-	
+}
+
+#tmiList li {
+	display: flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+#modal-btn {
+	position: relative;
+	top: 15px;
+	left: 647px;
+}
+
+.delete-icon {
+	cursor: pointer;
+}
+
+#tmiContent {
+	width: 630px;
+	height: 40px;
 }
 
 /* ********** 오늘의 날씨 ********** */
@@ -614,10 +634,4 @@ label {
      99% { 
       left: 0;   
       transform: translatex(-50%) scalex(-1);      }
-}
-
-
-/* tmi */
-#tmiListDiv {
-	display: flex;
 }

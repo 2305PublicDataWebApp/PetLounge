@@ -25,5 +25,19 @@ public class WeatherStoreLogic implements WeatherStore{
 		return tmiList;
 	}
 
+	// tmi 목록 삭제
+	@Override
+	public int deleteTmiList(SqlSession session, Integer tmiNo) {
+		int result = session.update("WeatherMapper.deleteTmiList", tmiNo);
+		return result;
+	}
+
+	// tmi 랜덤 출력
+	@Override
+	public Weather selectOneByTmi(SqlSession session) {
+		Weather tmi = session.selectOne("WeatherMapper.selectOneByTmi");
+		return tmi;
+	}
+
 
 }

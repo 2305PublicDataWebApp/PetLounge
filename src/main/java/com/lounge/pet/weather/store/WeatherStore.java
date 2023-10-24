@@ -21,5 +21,20 @@ public interface WeatherStore {
 	 */
 	List<Weather> selectTmiList(SqlSession session);
 
+	/**
+	 * tmi 목록 삭제
+	 * @param session
+	 * @param tmiNo
+	 * @return
+	 */
+	int deleteTmiList(SqlSession session, Integer tmiNo);
+
+	/**
+	 * tmi 랜덤 출력
+	 * @param session
+	 * @return
+	 */
+	Weather selectOneByTmi(SqlSession session);
+
 
 }

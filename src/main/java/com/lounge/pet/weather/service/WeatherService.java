@@ -18,4 +18,17 @@ public interface WeatherService {
 	 */
 	List<Weather> selectTmiList();
 
+	/**
+	 * tmi 목록 삭제
+	 * @param tmiNo
+	 * @return
+	 */
+	int deleteTmiList(Integer tmiNo);
+
+	/**
+	 * tmi 랜덤 출력
+	 * @return
+	 */
+	Weather selectOneByTmi();
+
 }

@@ -32,4 +32,18 @@ public class WeatherServiceImpl implements WeatherService{
 		return tmiList;
 	}
 
+	// tmi 목록 삭제
+	@Override
+	public int deleteTmiList(Integer tmiNo) {
+		int result = wStore.deleteTmiList(session, tmiNo);
+		return result;
+	}
+
+	// tmi 랜덤 출력
+	@Override
+	public Weather selectOneByTmi() {
+		Weather tmi = wStore.selectOneByTmi(session);
+		return tmi;
+	}
+
 }
