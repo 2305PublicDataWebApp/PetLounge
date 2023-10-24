@@ -11,6 +11,14 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css" />
 		<link rel="stylesheet" href="/resources/css/admin/adminSupport.css">
 		<title>펫 라운지 관리자페이지</title>
+		<style>
+			.table-border table-left1 {
+				padding-left: 10px;
+			}
+			.table-border table-right1 {
+				padding-left: 10px;
+			}
+		</style>
 	</head>
 	<body>
 		<jsp:include page="../include/header.jsp"></jsp:include>
@@ -87,55 +95,6 @@
 	                            <div class="line"></div>
 	                        </div>
 	                        <div class="line-hr"></div>
-	                        <div class="content-title">
-	                            <p class="content-title-name">후원 순위</p>
-	                            <div class="line"></div>
-	                        </div>
-	                        <!-- 정렬 -->
-				            <div class="status-wrap">
-				                <div class="status" style="">
-				                    <button name="" id="status-label" class="status-label">전체</button>
-				                    <ul class="optionList">
-				                        <li class="optionItem" data-status="all">전체</li>
-				                        <li class="optionItem" data-status="onGoing">진행중</li>
-				                        <li class="optionItem" data-status="closed">종료</li>
-				                    </ul>
-				                </div>
-				            </div>
-	                        <div class="content-inner">
-	                            <div id="support-list">
-	                                <table id="support-table">
-	                                    <colgroup>
-	                                        <col width="12%">
-	                                        <col width="30%">
-	                                        <col width="18%">
-	                                        <col width="20%">
-	                                        <col width="20%">
-	                                    </colgroup>
-	                                    <thead>
-	                                        <tr>
-	                                            <th class="table-border">카테고리</th>
-	                                            <th class="table-border">모금함 제목</th>
-	                                            <th class="table-border">모금 단체</th>
-	                                            <th class="table-border">모금 기간</th>
-	                                            <th class="table-border">모금/목표금액</th>
-	                                        </tr>
-	                                    </thead>
-	                                    <tbody>
-	                                        <tr>
-	                                            <td class="table-border"></td>
-	                                            <td class="table-border table-left"></td>
-	                                            <td class="table-border"></td>
-	                                            <td class="table-border"></td>
-	                                            <td class="table-border"></td>
-	                                        </tr>
-	                                    </tbody>
-	                                </table>
-	                                <div class="page-navigation">
-	                                    <ul id="support-pagination" class="pagination pagination-sm"></ul>
-                                	</div>
-	                            </div>
-	                        </div>
 	                        
 	                        <div class="content-inner">
 	                            <div class="content-title">
@@ -171,41 +130,41 @@
 	                        </div>
 	                        
 	                        
-	                        <div class="content-inner">
-	                            <div class="content-title">
-	                                <p class="content-title-name">병원 순위(좋아요)</p>
-	                                <div class="line"></div>
-	                            </div>
-	                            <div id="s-reply-list">
-	                                <table id="reply-table">
-	                                    <colgroup>
-	                                        <col width="35%">
-	                                        <col width="35%">
-	                                        <col width="15%">
-	                                        <col width="15%">
-	                                    </colgroup>
-	                                    <thead>
-	                                        <tr>
-	                                            <th class="table-border">모금함 제목</th>
-	                                            <th class="table-border">댓글 내용</th>
-	                                            <th class="table-border">작성자</th>
-	                                            <th class="table-border">작성일</th>
-	                                        </tr>
-	                                    </thead>
-	                                    <tbody>
-	                                        <tr>
-	                                            <td class="table-border table-left"></td>
-	                                            <td class="table-border table-left"></td>
-	                                            <td class="table-border"></td>
-	                                            <td class="table-border"></td>
-	                                        </tr>
-	                                    </tbody>
-	                                </table>
-	                                <div class="page-navigation">
-	                                    <ul id="reply-pagination" class="pagination pagination-sm"></ul>
-                                	</div>
-	                            </div>
-	                        </div>
+<!-- 	                        <div class="content-inner"> -->
+<!-- 	                            <div class="content-title"> -->
+<!-- 	                                <p class="content-title-name">병원 순위(좋아요)</p> -->
+<!-- 	                                <div class="line"></div> -->
+<!-- 	                            </div> -->
+<!-- 	                            <div id="s-reply-list"> -->
+<!-- 	                                <table id="reply-table"> -->
+<%-- 	                                    <colgroup> --%>
+<%-- 	                                        <col width="35%"> --%>
+<%-- 	                                        <col width="35%"> --%>
+<%-- 	                                        <col width="15%"> --%>
+<%-- 	                                        <col width="15%"> --%>
+<%-- 	                                    </colgroup> --%>
+<!-- 	                                    <thead> -->
+<!-- 	                                        <tr> -->
+<!-- 	                                            <th class="table-border">모금함 제목</th> -->
+<!-- 	                                            <th class="table-border">댓글 내용</th> -->
+<!-- 	                                            <th class="table-border">작성자</th> -->
+<!-- 	                                            <th class="table-border">작성일</th> -->
+<!-- 	                                        </tr> -->
+<!-- 	                                    </thead> -->
+<!-- 	                                    <tbody> -->
+<!-- 	                                        <tr> -->
+<!-- 	                                            <td class="table-border table-left"></td> -->
+<!-- 	                                            <td class="table-border table-left"></td> -->
+<!-- 	                                            <td class="table-border"></td> -->
+<!-- 	                                            <td class="table-border"></td> -->
+<!-- 	                                        </tr> -->
+<!-- 	                                    </tbody> -->
+<!-- 	                                </table> -->
+<!-- 	                                <div class="page-navigation"> -->
+<!-- 	                                    <ul id="reply-pagination" class="pagination pagination-sm"></ul> -->
+<!--                                 	</div> -->
+<!-- 	                            </div> -->
+<!-- 	                        </div> -->
 	                        
 	                    </div>
 	                </div>
@@ -414,10 +373,10 @@
 					success : function(resultMap) {
 						const tableBody = $("#history-table tbody");
 						tableBody.html('');
-						let RankNo;
-// 						let sNo;
+						let sNo;
 						let nickname;
 						let amount;
+						let sHNo;
 						
 						const sHList = resultMap.sHList; // 후원내역 리스트 
 						totalHistoryPages = resultMap.totalPages; // 총 페이지 수
@@ -431,19 +390,18 @@
 									sHName = '숨은천사';
 								}
 								
-								// RankNo를 1부터 시작해서 순차적으로 증가
-			                    let RankNo = i + 1;
 								
-								let sNo = sHList[i].sNo;	
+								let sNo = sHList[i].sNo;
+								let sHNo = sHList[i].sHNo;
 								
 								tr = $("<tr onclick='window.location.href=\"/support/detail.pet?sNo="+sHList[i].sNo+"\"' class='tr'>");
-								RankNo = $("<td class='table-border table-left'>").html(""+RankNo+""); 
+								sHNo = $("<td class='table-border table-left1'>").html(""+sHNo+""); 
 								nickname = $("<td class='table-border'>").html(""+sHName+""); 
-								amount = $("<td class='table-border table-right'>").html(""+sHList[i].sHAmount.toLocaleString()+"원"); 
+								amount = $("<td class='table-border table-right1'>").html(""+sHList[i].sHAmount.toLocaleString()+" 원"); 
 
 								
 				
-								tr.append(RankNo);
+								tr.append(sHNo);
 								tr.append(nickname);
 								tr.append(amount);
 
