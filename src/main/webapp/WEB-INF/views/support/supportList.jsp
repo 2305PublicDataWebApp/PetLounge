@@ -119,7 +119,10 @@
 												class="a-detail s-title" title="More Details"></a>
 											</strong>
 										</div>
-										<div class="card-group">${suppport.sGroup }</div>
+										<div class="card-group">${support.sGroup }</div>
+										<script type="text/javascript">
+											console.log("${suppport.sGroup }");
+										</script>
 										<!-- 퍼센트 계산 -->
 										<div class="card-bar">
 											<span class="card-bar-collection" id="graph-num"
@@ -254,6 +257,7 @@
 			    // 새로운 URL로 이동
 			    window.location.href = newURL;
 			});
+			
         </script>
 	</body>
 </html>

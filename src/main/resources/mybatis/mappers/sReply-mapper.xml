@@ -33,7 +33,7 @@
 	</update>
 	
 	<!-- 후원댓글 후원글별 갯수 조회 -->
-	<select id="getTotalCount" resultType="_int">
+	<select id="getTotalCountByNo" resultType="_int">
 		SELECT 
 			COUNT(*) 
 		FROM 
@@ -42,7 +42,7 @@
 			S_NO = #{sNo} AND S_R_STATUS = 'Y'
 	</select>
 	<!-- 후원댓글 후원글별 조회 -->
-	<select id="selectSReplyList" resultType="SupportReply">
+	<select id="selectSReplyListByNo" resultType="SupportReply">
 		SELECT 
 			* 
 		FROM 

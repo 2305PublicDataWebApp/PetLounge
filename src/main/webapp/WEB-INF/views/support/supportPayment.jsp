@@ -285,7 +285,7 @@
 					alert('후원 최소 금액은 1,000원 입니다.');
 				} else if(!$('#agree-term').is(':checked')) {
 					// 필수동의 확인 
-					alert('동의 해주세요');
+					alert('펫라운지 후원 이용약관에 동의 해주셔야 후원이 가능합니다.');
 				} else {
 	            	// 어떤 라디오 버튼이 선택되었는지 확인
 				    if ($('#kakaopay').is(':checked')) {

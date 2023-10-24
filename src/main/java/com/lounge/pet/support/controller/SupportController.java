@@ -75,9 +75,8 @@ public class SupportController {
 	@RequestMapping(value = "/support/insert.pet", method = RequestMethod.POST)
 	public ModelAndView insertSupport(ModelAndView mv
 			, @ModelAttribute Support support) {
-		System.out.println(support.toString());
+		System.out.println("후원글 등록 : " + support.toString());
 		try {
-				System.out.println(support.toString());
 			int result = sService.insertSupport(support);
 			if(result > 0) {
 				mv.addObject("msg", "게시글이 등록되었습니다.");
@@ -168,10 +167,10 @@ public class SupportController {
 			sMap.put("category", "all");
 			sMap.put("sort", "latest");
 			
+			
 			Integer totalCount = sService.getListCount(sMap);
 			SPageInfo sPInfo = this.getPageInfo(currentPage, totalCount);			
 			List<Support> sList = sService.selectSupportList(sMap, sPInfo);
-			
 			// 오늘 후원 받아오기 
 			SupportHistory sHistory = sService.selectTodaySupport();
 			
@@ -403,7 +402,7 @@ public class SupportController {
 	    int end = start + recordCountPerPage;
 	    
 	    // 글번호 sNo의 전체 댓글 리스트 불러옴 
-	    List<SupportReply> sRList = sService.selectSReplyList(sNo);
+	    List<SupportReply> sRList = sService.selectSReplyListByNo(sNo);
 	    
 	    // 범위 체크를 통해 부분 리스트 추출
 	    if (start < sRList.size()) {
@@ -422,7 +421,7 @@ public class SupportController {
 	    }
 		
 		// 전체 페이지 수 계산 (댓글의 총 갯수를 페이지당 댓글 갯수로 나눠서 계산) 
-	    int totalRecords = sService.getReplyListCount(sNo); // 댓글의 총 갯수 
+	    int totalRecords = sService.getReplyListCountByNo(sNo); // 댓글의 총 갯수 
 	    int totalPages = (int) Math.ceil((double) totalRecords / recordCountPerPage); // 전체 페이지 수 
 	    
 	    // 댓글 리스트와 전체 페이지 수를 Map에 담아서 보냄 
