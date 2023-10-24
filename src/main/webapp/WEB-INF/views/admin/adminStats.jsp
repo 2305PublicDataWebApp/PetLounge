@@ -775,7 +775,7 @@
 			
 			var chart = new Chart(c1.getContext("2d")).Line(data1, {
 				  scaleOverride: true,
-				  scaleSteps: 8, // 원하는 스텝 수 설정
+				  scaleSteps: 7, // 원하는 스텝 수 설정
 				  scaleStepWidth: 200000, // 스텝 너비 설정
 				  scaleStartValue: 0
 				});

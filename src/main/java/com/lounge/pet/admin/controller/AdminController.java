@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.lounge.pet.admin.service.AdminService;
 import com.lounge.pet.support.domain.Support;
+import com.lounge.pet.support.domain.SupportHistory;
 import com.lounge.pet.support.domain.SupportTotalAmount;
 import com.lounge.pet.support.service.SupportService;
 import com.lounge.pet.user.domain.UserSupport;
