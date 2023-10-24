@@ -95,6 +95,12 @@
 								</form>
 							</div>
 						<table class="table table-borderd  table-fixed">
+							<colgroup>
+								<col width="10%">
+								<col width="25%">
+								<col width="40%">
+								<col width="25%">
+							</colgroup>
 							<thead>
 								<tr>
 									<th style="border-bottom: 1px solid #dee2e6;">No</th>
@@ -130,10 +136,10 @@
 												<!-- sList.sTitle 값을 inputString 변수에 저장 -->
 												<td style="text-align: left; padding-left: 25px;">
 													<!-- 왼쪽 정렬 스타일을 적용 --> <c:choose>
-														<c:when test="${fn:length(inputString) > 3}">
+														<c:when test="${fn:length(inputString) > 15}">
 															<!-- 만약 문자열 길이가 5를 초과한다면 -->
 															<c:set var="truncatedString"
-																value="${fn:substring(inputString, 0, 12)}..." />
+																value="${fn:substring(inputString, 0, 15)}..." />
 															<!-- 문자열을 자르고 "..."을 추가하여 truncatedString 변수에 저장 -->
 															<c:out value="${truncatedString}" />
 															<!-- truncatedString을 출력 -->

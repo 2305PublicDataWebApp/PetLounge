@@ -36,6 +36,7 @@ public class MailServiceImpl implements MailService {
 			message.setRecipients(MimeMessage.RecipientType.TO, mail);
 			message.setSubject("PetLounge 이메일 인증번호 안내");
 			String body = "";
+			body += "<h3>" + "안녕하세요<font color='#FFD370'> 펫라운지</font>입니다." + "</h3>";
 			body += "<h3>" + "요청하신 인증 번호입니다." + "</h3>";
 			body += "<h1>" + number + "</h1>";
 			body += "<h3>" + "인증번호 입력칸에 6자리 숫자를 입력해주세요." + "</h3>";

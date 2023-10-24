@@ -88,11 +88,17 @@
 								</form>
 							</div>
 						<table class="table table-borderd  table-fixed">
+							<colgroup>
+								<col width="10%">
+								<col width="55%">
+								<col width="20%">
+								<col width="15%">
+							</colgroup>
 							<thead>
 								<tr>
 									<th style="border-bottom: 1px solid #dee2e6;">No</th>
-									<th style="border-bottom: 1px solid #dee2e6; width: 235px;">제목</th>
-									<th style="border-bottom: 1px solid #dee2e6;">작성자</th>
+									<th style="border-bottom: 1px solid #dee2e6;">제목</th>
+<!-- 									<th style="border-bottom: 1px solid #dee2e6;">작성자</th> -->
 									<th style="border-bottom: 1px solid #dee2e6;">작성일</th>
 									<th style="border-bottom: 1px solid #dee2e6;">조회수</th>
 								</tr>
@@ -123,7 +129,7 @@
 												<!-- sList.sTitle 값을 inputString 변수에 저장 -->
 												<td style="text-align: left; padding-left: 25px;">
 													<!-- 왼쪽 정렬 스타일을 적용 --> <c:choose>
-														<c:when test="${fn:length(inputString) > 3}">
+														<c:when test="${fn:length(inputString) > 12}">
 															<!-- 만약 문자열 길이가 5를 초과한다면 -->
 															<c:set var="truncatedString"
 																value="${fn:substring(inputString, 0, 12)}..." />
@@ -137,7 +143,7 @@
 														</c:otherwise>
 													</c:choose>
 												</td>
-												<td>${bList.uId}</td>
+<%-- 												<td>${bList.uId}</td> --%>
 												<c:set var="formattedDate"
 													value="${fn:split(bList.fCreate, '-')}" />
 												<td>${formattedDate[0]}.${formattedDate[1]}.${formattedDate[2]}</td>

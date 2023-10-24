@@ -95,6 +95,12 @@
 							</form>
 						</div>
 						<table class="table table-borderd  table-fixed">
+							<colgroup>
+								<col width="10%">
+								<col width="25%">
+								<col width="40%">
+								<col width="25%">
+							</colgroup>
 							<thead>
 								<tr>
 									<th style="border-bottom: 1px solid #dee2e6;">No</th>
@@ -112,8 +118,32 @@
 									<tr onclick="window.location.href='${detailUrl}'" id="tr"
 										style="cursor: pointer;">
 										<td>${(totalCount - i.index) - ((aInfo.currentPage - 1) * aInfo.recordCountPerPage)}</td>
-										<td>${bRList.fTitle}</td>
-										<td style="text-align: left;">${bRList.fRContent}</td>
+										<c:set var="inputString" value="${bRList.fTitle}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
+											<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
+											    <c:choose>
+											        <c:when test="${fn:length(inputString) > 6}"> <!-- 만약 문자열 길이가 5를 초과한다면 -->
+											            <c:set var="truncatedString" value="${fn:substring(inputString, 0, 6)}..." /> <!-- 문자열을 자르고 "..."을 추가하여 truncatedString 변수에 저장 -->
+											            <c:out value="${truncatedString}" /> <!-- truncatedString을 출력 -->
+											        </c:when>
+											        <c:otherwise>
+											            <c:out value="${inputString}" /> <!-- 그렇지 않으면 원래 문자열을 출력 -->
+											        </c:otherwise>
+											    </c:choose>
+											</td>
+<%-- 										<td>${bRList.fTitle}</td> --%>
+											<c:set var="inputString" value="${bRList.fRContent}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
+											<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
+											    <c:choose>
+											        <c:when test="${fn:length(inputString) > 16}"> <!-- 만약 문자열 길이가 5를 초과한다면 -->
+											            <c:set var="truncatedString" value="${fn:substring(inputString, 0, 16)}..." /> <!-- 문자열을 자르고 "..."을 추가하여 truncatedString 변수에 저장 -->
+											            <c:out value="${truncatedString}" /> <!-- truncatedString을 출력 -->
+											        </c:when>
+											        <c:otherwise>
+											            <c:out value="${inputString}" /> <!-- 그렇지 않으면 원래 문자열을 출력 -->
+											        </c:otherwise>
+											    </c:choose>
+											</td>
+<%-- 										<td style="text-align: left;">${bRList.fRContent}</td> --%>
 										<td><fmt:formatDate value="${bRList.fRCreate}" pattern="yyyy.MM.dd" /></td>
 									</tr>
 								</c:forEach>
