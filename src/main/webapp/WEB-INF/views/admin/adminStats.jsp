@@ -759,7 +759,7 @@
 			}
 			
 			// 날짜 비교를 위해 7일 동안의 이전 날짜를 paydateArr 배열에 추가
-			for (var i = 0; i < 7; i++) {
+			for (var i = 0; i < 6; i++) {
 				payCurrentDate.setDate(payCurrentDate.getDate() - 1); // 하루씩 이전 날짜로 이동
 			    var month = String(payCurrentDate.getMonth() + 1).padStart(2, '0');
 			    var day = String(payCurrentDate.getDate()).padStart(2, '0');
@@ -789,7 +789,7 @@
 			      fillColor : "rgba(236,72,127,.1)",
 			      strokeColor : "rgba(236,72,127,1)",
 			      pointColor : "rgba(236,72,127,1)",
-			      pointStrokeColor : "rgba(0,0,0,0.6)",
+			      pointStrokeColor : "#FFF",
 			      data : totalArr
 			    },
 			    {
@@ -797,7 +797,7 @@
 			      fillColor : "#cce2ef9c",
 			      strokeColor : "#1b79ce",
 			      pointColor : "#1b79ce",
-			      pointStrokeColor : "rgba(0,0,0,0.6)",
+			      pointStrokeColor : "#FFF",
 			      data : creditArr
 			    },
 			    {
@@ -805,7 +805,7 @@
 			      fillColor : "#fffbebb5",
 			      strokeColor : "#fee339",
 			      pointColor : "#fee339",
-			      pointStrokeColor : "rgba(0,0,0,0.6)",
+			      pointStrokeColor : "#FFF",
 			      data : kakaoArr
 			    }
 			  ]
@@ -820,11 +820,21 @@
 			  pointDotRadius: 6,
 			  animation: true,
 			  scaleShowGridLines: true,
-			  datasetFill: false,
+			  datasetFill: true,
 			  responsive: true
 			}
 	
-			new Chart(c1.getContext("2d")).Line(data1,options1);
+// 			new Chart(c1.getContext("2d")).Line(data1,options1);
+			
+			var chart = new Chart(c1.getContext("2d")).Line(data1, {
+				  scaleOverride: true,
+				  scaleSteps: 8, // 원하는 스텝 수 설정
+				  scaleStepWidth: 200000, // 스텝 너비 설정
+				  scaleStartValue: 0
+				});
+
+
+			
 		</script>
 	</body>
 </html>
