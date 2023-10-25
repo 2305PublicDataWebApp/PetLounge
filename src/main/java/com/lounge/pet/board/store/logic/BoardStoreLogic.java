@@ -141,6 +141,12 @@ public class BoardStoreLogic implements BoardStore {
 		return count;
 	}
 
+	@Override
+	public List<FReply> selectFRCList(SqlSession session) {
+		List<FReply> fRCList = session.selectList("BoardMapper.selectFRCList");
+		return fRCList;
+	}
+
 
 
 }

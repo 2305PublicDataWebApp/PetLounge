@@ -91,6 +91,7 @@
 							if(fList.length > 0) {
 // 								for(let f in fList) {
 
+
 								freeBoardList += `
 						            <div id="notice">
 						                    <table>
@@ -120,6 +121,7 @@
 							        var fCreate = f.fCreate;
 							        var fViewCount = f.fViewCount;
 							        var fWriter = f.fWriter;
+							        var fRCount = f.fRCount;
 							        
 							     // 날짜 문자열에서 월, 일, 연도를 추출
 							        var dateParts = fCreate.match(/(\d{1,2})월 (\d{1,2}), (\d{4})/);
@@ -145,7 +147,7 @@
 														+"</tr>"
 														+"<tr>"
 														+"<td class='right2'>" + fNo + "</td>"
-														+"<td class='right1'>" + "<a href='/board/freeDetail.pet?fNo=" + fNo + "'>" + (fTitle.length > 21 ? fTitle.substring(0, 20) + '...' : fTitle) + "</a>" + "</td>"
+														+"<td class='right1'>" + "<a href='/board/freeDetail.pet?fNo=" + fNo + "'>" + (fTitle.length > 21 ? fTitle.substring(0, 20) + '...' : fTitle) + " (" + fRCount + ")" + "</a>" + "</td>"
 														+"<td class='right2'>" + (fWriter.length > 11 ? fWriter.substring(0, 10) + '...' : fWriter) + "</td>"
 														+"<td class='right2'>" + formattedDate + "</td>"
 														+"<td class='right2'>" + fViewCount + "</td>"

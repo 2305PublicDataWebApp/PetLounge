@@ -155,6 +155,12 @@ public interface BoardService {
 	 */
 	int getFreeBoardSearchTotalCount(Board searchKey);
 
+	/**
+	 * 댓글개수 조회
+	 * @return
+	 */
+	List<FReply> selectFRCList();
+
 
 
 

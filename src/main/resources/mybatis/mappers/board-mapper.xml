@@ -6,7 +6,22 @@
 <mapper namespace="BoardMapper">
 
 	<select id="selectFreeBoardList" resultType="Board">
-		SELECT * FROM FREE_TBL WHERE F_STATUS = 'Y' ORDER BY F_NO DESC
+        SELECT F.*, NVL(FR.F_RCOUNT,0) AS F_RCOUNT FROM FREE_TBL F
+			LEFT JOIN (SELECT F_NO, COUNT(F_R_CONTENT) AS F_RCOUNT
+						FROM 
+							F_REPLY_TBL WHERE F_R_STATUS = 'Y'
+			      GROUP BY
+			        F_NO) FR ON F.F_NO = FR.F_NO
+			WHERE F_STATUS = 'Y'
+		ORDER BY F.F_NO DESC
+	</select>
+	 
+	<select id="selectFRCList" resultType="FReply">
+		SELECT F_NO, COUNT(F_R_CONTENT) AS F_R_CONTENT
+			FROM 
+				F_REPLY_TBL
+		    GROUP BY
+		        F_NO
 	</select> 
 
 	<select id="getSearchCount" resultType="_int">

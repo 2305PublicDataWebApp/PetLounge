@@ -171,4 +171,11 @@ public class BoardServiceImpl implements BoardService {
 		return count;
 	}
 
+
+	@Override
+	public List<FReply> selectFRCList() {
+		List<FReply> fRCList = bStore.selectFRCList(session);
+		return fRCList;
+	}
+
 }

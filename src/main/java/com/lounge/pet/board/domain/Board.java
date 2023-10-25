@@ -19,7 +19,7 @@ public class Board {
 	private String fWriter;
 	private String fProfileImg;
 	private String fSearchKeyword;
-	
+	private String fRCount;
 	
 	
 	public Board() {
@@ -121,7 +121,14 @@ public class Board {
 	}
 	public void setfSearchKeyword(String fSearchKeyword) {
 		this.fSearchKeyword = fSearchKeyword;
+	}	
+	public String getfRCount() {
+		return fRCount;
 	}
+	public void setfRCount(String fRCount) {
+		this.fRCount = fRCount;
+	}
+
 	@Override
 	public String toString() {
 		return "자유게시판 [글번호=" + fNo + ", 아이디=" + uId + ", 제목=" + fTitle + ", 내용=" + fContent + ", 작성일="

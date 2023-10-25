@@ -177,6 +177,13 @@ public interface BoardStore {
 	 */
 	int getFreeBoardSearchTotalCount(SqlSession session, Board searchKey);
 
+	/**
+	 * 댓글 개수 조회
+	 * @param session
+	 * @return
+	 */
+	List<FReply> selectFRCList(SqlSession session);
+
 
 
 }
