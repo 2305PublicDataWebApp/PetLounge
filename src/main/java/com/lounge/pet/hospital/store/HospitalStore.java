@@ -83,7 +83,7 @@ public interface HospitalStore {
 	List<HReview> selectHReviewList(SqlSession session, int hNo);
 
 	/**
-	 * 기본 주소 기준으로 동물병원 5개 불러오기 Store
+	 * 기본 주소 기준으로 동물병원 불러오기 Store
 	 * @param session
 	 * @param userLocation
 	 * @return

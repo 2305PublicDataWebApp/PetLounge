@@ -79,7 +79,7 @@ public interface HospitalService {
 	List<Hospital> selectFiveHos(Hospital userLocation);
 
 	/**
-	 * 검색어로 동물병원 5개 불러오기 Service
+	 * 검색어로 동물병원 불러오기 Service
 	 * @param userSearchLocation
 	 * @return
 	 */
