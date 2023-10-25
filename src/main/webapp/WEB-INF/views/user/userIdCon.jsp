@@ -62,10 +62,6 @@
 													<br> <input type="text" name="uPw"value="${uOne.uId }" readonly
 														id="input"><br> <br>
 	
-													<!-- <button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button><br> -->
-	
-													<!-- <button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button><br> -->
-	
 												</div>
 											</div>
 	

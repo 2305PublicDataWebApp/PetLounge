@@ -111,7 +111,6 @@
 										<tr onclick="window.location.href='${detailUrl}'" id="tr">
 										<td>${(totalCount - i.index) - ((aInfo.currentPage - 1) * aInfo.recordCountPerPage)}</td> 
 											<td>${hList.hName }</td>
-<%-- 											<td>${hList.hAddr}</td> --%>
 											<c:set var="inputString" value="${hList.hAddr}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
 											<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
 											    <c:choose>

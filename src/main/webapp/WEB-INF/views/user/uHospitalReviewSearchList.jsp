@@ -123,7 +123,6 @@
 										<tr onclick="window.location.href='${detailUrl}'" id="tr">
 											<td>${(totalCount - i.index) - ((aInfo.currentPage - 1) * aInfo.recordCountPerPage)}</td>
 											 <td>${hRList.hName}</td>
-<%-- 											<td>${hRList.hRContent }</td> --%>
 											<c:set var="inputString" value="${hRList.hRContent}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
 											<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
 											    <c:choose>
@@ -140,7 +139,6 @@
 											<c:set var="dateParts" value="${fn:split(formattedDate[0], '-')}"/>
 											<td>${dateParts[0]}.${dateParts[1]}.${dateParts[2]}</td>	
 												<td>${modifiedDate}</td>
-<%-- 											<td>${hRList.hRCreate}</td> --%>
 										</tr>
 									</c:forEach>                      		
                         		</c:otherwise>

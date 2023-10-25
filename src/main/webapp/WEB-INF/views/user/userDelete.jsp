@@ -71,8 +71,7 @@
 						<div>
 							<form action="/user/delete.pet" method="post">
 								<article class="find1">
-									<!-- <h2>회원가입</h2> -->
-									<!-- <p>펫 라운지 회원정보수정<br>회원님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인해주세요.</p> -->
+									
 	
 									<div>
 	
@@ -82,8 +81,7 @@
 											<div>
 												<div>
 													<p>탈퇴안내</p>
-													<!-- <p style="margin-top: 45px;">비밀번호</p> -->
-													<!-- <p>비밀번호 확인</p> -->
+													
 													<p style="margin-top: 334px;">비밀번호</p>
 													<p style="margin-top: 66px;">탈퇴사유</p>
 												</div>

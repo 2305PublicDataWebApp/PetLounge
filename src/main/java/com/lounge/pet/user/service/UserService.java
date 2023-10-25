@@ -25,20 +25,6 @@ public interface UserService {
 	int insertUser(User user);
 
 	/**
-	 * 로그인
-	 * @param user
-	 * @return
-	 */
-	User userLogin(User user);
-
-	/**
-	 * 회원정보조회
-	 * @param uId
-	 * @return
-	 */
-	User selectOneById(String uId);
-
-	/**
 	 * 회원정보수정
 	 * @param user
 	 * @return
@@ -51,6 +37,20 @@ public interface UserService {
 	 * @return
 	 */
 	int deleteUser(String sessionId);
+
+	/**
+	 * 로그인
+	 * @param user
+	 * @return
+	 */
+	User userLogin(User user);
+
+	/**
+	 * 회원정보조회
+	 * @param uId
+	 * @return
+	 */
+	User selectOneById(String uId);
 
 	/**
 	 * 아이디 중복체크

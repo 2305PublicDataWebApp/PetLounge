@@ -210,7 +210,6 @@
 										<c:param name="uId" value="${sessionScope.uId}"></c:param>
 									</c:url>
 									 &nbsp;<li class="boardLi"><a class="page-link" id="pageBtn" href="${nextUrl }"><img src="/resources/images/user/next.png" style="width: 13px;"></a></li>
-<%-- 						            <li><a href="${nextUrl }">Next</a></li> --%>
 					            </c:if>
 				            </ul>
 				           </div> 
