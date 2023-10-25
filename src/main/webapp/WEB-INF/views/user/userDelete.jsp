@@ -107,7 +107,7 @@
 															별도로 고객행복센터(1644-1107)를 통해서 가능합니다. 직접 해지를 요청하지 않으면 해지 처리가
 															되지 않습니다.</li>
 													</ul>
-													<br> <br> <input type="text" name="uPw"
+													<br> <br> <input type="password" name="uPw"
 														placeholder="비밀번호를 입력하세요."><br> <br> <br>
 													<br>
 													<div>
