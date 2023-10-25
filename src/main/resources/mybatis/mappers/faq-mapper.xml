@@ -11,29 +11,30 @@
 		VALUES(FAQ_SEQ_NO.NEXTVAL, #{ faqTitle }, #{ faqContent }, DEFAULT, DEFAULT, DEFAULT)
 	</insert>
 	
-	<!-- faq 글 목록 조회 -->
-	<select id="getFaqList" resultType="Faq">
-		SELECT * FROM FAQ_TBL WHERE FAQ_STATUS = 'Y'ORDER BY FAQ_NO ASC
-	</select>
-	
-	<!-- faq 글 목록 갯수 조회 -->
-	<select id="getFaqCount" resultType="_int">
-		SELECT COUNT(*) FROM FAQ_TBL WHERE FAQ_STATUS = 'Y'
-	</select>
+	<!-- faq 글 수정 -->
+	<update id="modifyFaq">
+		UPDATE FAQ_TBL SET FAQ_TITLE = #{ faqTitle }, FAQ_CONTENT = #{ faqContent } WHERE FAQ_NO = #{ faqNo }
+	</update>
 	
 	<!-- faq 글 삭제 -->
 	<update id="deleteFaq">
 		UPDATE FAQ_TBL SET FAQ_STATUS = 'N' WHERE FAQ_NO = #{ faqNo }
 	</update>
 	
+	<!-- faq 글 목록 갯수 조회 -->
+	<select id="getFaqCount" resultType="_int">
+		SELECT COUNT(*) FROM FAQ_TBL WHERE FAQ_STATUS = 'Y'
+	</select>
+	
+	<!-- faq 글 목록 조회 -->
+	<select id="getFaqList" resultType="Faq">
+		SELECT * FROM FAQ_TBL WHERE FAQ_STATUS = 'Y'ORDER BY FAQ_NO ASC
+	</select>
+
+	
 	<!-- faq 수정페이지 정보 불러오기 -->
 	<select id="selectOneByNo" resultType="Faq">
 		SELECT * FROM FAQ_TBL WHERE FAQ_NO = #{ faqNo }
 	</select>
-	
-	<!-- faq 글 수정 -->
-	<update id="modifyFaq">
-		UPDATE FAQ_TBL SET FAQ_TITLE = #{ faqTitle }, FAQ_CONTENT = #{ faqContent } WHERE FAQ_NO = #{ faqNo }
-	</update>
 	
 </mapper>

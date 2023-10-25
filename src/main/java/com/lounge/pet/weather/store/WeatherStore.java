@@ -16,10 +16,25 @@ public interface WeatherStore {
 	int insertTmi(SqlSession session, Weather tmi);
 
 	/**
+	 * tmi 목록 삭제
+	 * @param session
+	 * @param tmiNo
+	 * @return
+	 */
+	int deleteTmiList(SqlSession session, Integer tmiNo);
+
+	/**
 	 * tmi 조회
 	 * @return
 	 */
 	List<Weather> selectTmiList(SqlSession session);
+
+	/**
+	 * tmi 랜덤 출력
+	 * @param session
+	 * @return
+	 */
+	Weather selectOneByTmi(SqlSession session);
 
 
 }

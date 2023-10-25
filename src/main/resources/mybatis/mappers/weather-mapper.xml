@@ -10,10 +10,28 @@
 		VALUES(SEQ_TMI_NO.NEXTVAL, #{ tmiContent }, DEFAULT)
 	</insert>
 	
+	<!-- tmi 목록 삭제 -->
+	<update id="deleteTmiList">
+		UPDATE TMI_TBL
+		SET TMI_STATUS = 'N'
+		WHERE TMI_NO = #{ tmiNo }
+	</update>
+	
 	<!-- tmi 조회 -->
 	<select id="selectTmiList" resultType="Weather">
 		SELECT * 
-		FROM TMI_TBL ORDER BY DESC;
+		FROM TMI_TBL 
+		WHERE TMI_STATUS = 'Y' ORDER BY TMI_NO DESC
 	</select>
 	
+	<!-- tmi 랜덤 출력 -->
+	<select id="selectOneByTmi" resultType="Weather">
+		SELECT * FROM
+		(SELECT * 
+		FROM TMI_TBL 
+		WHERE TMI_STATUS = 'Y'
+		ORDER BY DBMS_RANDOM.RANDOM)
+		WHERE ROWNUM = 1
+	</select>
+
 </mapper>

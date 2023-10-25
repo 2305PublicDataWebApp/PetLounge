@@ -25,18 +25,11 @@ public class FaqServiceImpl implements FaqService{
 		return result;
 	}
 
-	// faq 목록 조회
+	// faq 글 수정
 	@Override
-	public List<Faq> getFaqList(Integer faqNo) {
-		List<Faq> faqList = fStore.getFaqList(session, faqNo); 
-		return faqList;
-	}
-
-	// faq 목록 갯수 조회
-	@Override
-	public int getFaqCount() {
-		int faqCount = fStore.getFaqCount(session);
-		return faqCount;
+	public int modifyFaq(Faq faq) {
+		int result = fStore.modifyFaq(session, faq);
+		return result;
 	}
 
 	// faq 글 삭제
@@ -46,18 +39,25 @@ public class FaqServiceImpl implements FaqService{
 		return result;
 	}
 
+	// faq 목록 갯수 조회
+	@Override
+	public int getFaqCount() {
+		int faqCount = fStore.getFaqCount(session);
+		return faqCount;
+	}
+
+	// faq 목록 조회
+	@Override
+	public List<Faq> getFaqList(Integer faqNo) {
+		List<Faq> faqList = fStore.getFaqList(session, faqNo); 
+		return faqList;
+	}
+
 	// faq 수정페이지 정보 불러오기
 	@Override
 	public Faq selectOneByNo(Faq faqNo) {
 		Faq faq = fStore.selectOneByNo(session, faqNo);
 		return faq;
-	}
-
-	// faq 글 수정
-	@Override
-	public int modifyFaq(Faq faq) {
-		int result = fStore.modifyFaq(session, faq);
-		return result;
 	}
 
 }

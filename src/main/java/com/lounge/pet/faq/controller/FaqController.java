@@ -25,57 +25,6 @@ public class FaqController {
 	@Autowired
 	private FaqService fService;
 	
-	// faq 리스트 조회
-	@ResponseBody
-	@GetMapping("/show.pet")
-	public String showFaqView(Integer faqNo) {
-        List<Faq> faqList = fService.getFaqList(faqNo);
-        Gson gson = new Gson();
-        return gson.toJson(faqList);
-	}
-	
-	// faq 목록 페이지로 이동
-	@GetMapping("/list.pet")
-	public String showFaqView() {
-        return "faq/list";
-	}
-	
-	// faq 등록 페이지로 이동
-	@GetMapping("/insert.pet")
-	public String showFaqInsert() {
-		return "faq/insert";
-	}
-	
-	// faq 수정 페이지로 이동
-	@GetMapping("/modify.pet")
-	public String showFaqModify(Faq faqNo
-			, HttpSession session
-			, Model model) {
-		try {
-			String sessionId = (String)session.getAttribute("uId"); // 세션 id
-			if(sessionId.equals("admin") && !sessionId.isEmpty()) {
-				Faq faq = fService.selectOneByNo(faqNo);
-				if(faq != null) {
-					model.addAttribute("faq", faq);
-					return "faq/modify";
-				} else {
-					model.addAttribute("msg", "페이지 이동에 실패하였습니다.");
-					model.addAttribute("url", "/faq/modify.pet?faqNo="+faqNo);
-					return "common/message";
-				}
-			} else {
-				model.addAttribute("msg", "로그인 후 이용 가능합니다.");
-				model.addAttribute("url", "/user/login.pet");
-				return "common/message";
-			}
-			
-		} catch (Exception e) {
-			model.addAttribute("msg", "페이지 이동에 오류가 발생하였습니다..");
-			model.addAttribute("url", "/faq/modify.pet?faqNo="+faqNo);
-			return "common/message";
-		}
-	}
-	
 	// faq 글 등록
 	@ResponseBody
 	@PostMapping("/insert.pet")
@@ -159,6 +108,57 @@ public class FaqController {
 			}
 		} else {
 			return "fail";
+		}
+	}
+
+	// faq 리스트 조회
+	@ResponseBody
+	@GetMapping("/show.pet")
+	public String showFaqView(Integer faqNo) {
+	    List<Faq> faqList = fService.getFaqList(faqNo);
+	    Gson gson = new Gson();
+	    return gson.toJson(faqList);
+	}
+
+	// faq 목록 페이지로 이동
+	@GetMapping("/list.pet")
+	public String showFaqView() {
+	    return "faq/list";
+	}
+
+	// faq 등록 페이지로 이동
+	@GetMapping("/insert.pet")
+	public String showFaqInsert() {
+		return "faq/insert";
+	}
+
+	// faq 수정 페이지로 이동
+	@GetMapping("/modify.pet")
+	public String showFaqModify(Faq faqNo
+			, HttpSession session
+			, Model model) {
+		try {
+			String sessionId = (String)session.getAttribute("uId"); // 세션 id
+			if(sessionId.equals("admin") && !sessionId.isEmpty()) {
+				Faq faq = fService.selectOneByNo(faqNo);
+				if(faq != null) {
+					model.addAttribute("faq", faq);
+					return "faq/modify";
+				} else {
+					model.addAttribute("msg", "페이지 이동에 실패하였습니다.");
+					model.addAttribute("url", "/faq/modify.pet?faqNo="+faqNo);
+					return "common/message";
+				}
+			} else {
+				model.addAttribute("msg", "로그인 후 이용 가능합니다.");
+				model.addAttribute("url", "/user/login.pet");
+				return "common/message";
+			}
+			
+		} catch (Exception e) {
+			model.addAttribute("msg", "페이지 이동에 오류가 발생하였습니다..");
+			model.addAttribute("url", "/faq/modify.pet?faqNo="+faqNo);
+			return "common/message";
 		}
 	}
 	

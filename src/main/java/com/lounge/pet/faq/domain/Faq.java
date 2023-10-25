@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class Faq {
 
+	// 필드
 	private int faqNo;
 	private String faqTitle;
 	private String faqContent;
@@ -11,11 +12,13 @@ public class Faq {
 	private Date faqUpdate;
 	private String faqStatus;
 	
+	// 기본 생성자
 	public Faq() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
+	// 매개변수 생성자
 	public Faq(int faqNo, String faqTitle, String faqContent, Date faqCreate, Date faqUpdate, String faqStatus) {
 		super();
 		this.faqNo = faqNo;
@@ -26,6 +29,8 @@ public class Faq {
 		this.faqStatus = faqStatus;
 	}
 	
+	
+	// getter, setter 메소드
 	public Faq(String faqTitle, String faqContent) {
 		super();
 		this.faqTitle = faqTitle;
@@ -69,6 +74,7 @@ public class Faq {
 		this.faqStatus = faqStatus;
 	}
 	
+	// toString() 오버라이드 - 정보 확인용
 	@Override
 	public String toString() {
 		return "자주 묻는 질문 [글 번호=" + faqNo + ", 글 제목=" + faqTitle + ", 글 내용=" + faqContent + ", 작성일="

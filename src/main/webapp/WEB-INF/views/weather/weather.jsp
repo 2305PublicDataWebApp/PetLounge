@@ -14,26 +14,6 @@
         <title>산책 날씨 예보</title>
         <script src="http://code.jquery.com/jquery-1.7.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-		<style>
-        /* 모달 스타일 */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-        .modal-content {
-            background-color: white;
-            width: 700px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-	</style>
     </head>
     <body>
         <jsp:include page="../include/header.jsp"></jsp:include>
@@ -148,44 +128,44 @@
 		                
 					<!-- 버튼을 클릭하여 모달 창 열기 -->
 					<!-- 모달 창 -->
-<%-- 					<c:if test="${ sessionScope.uId eq 'admin' }"> --%>
-<!-- 						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"> -->
-<!-- 						TMI 등록 -->
-<!-- 						</button> -->
-<%-- 					</c:if> --%>
-	
-<!-- 					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-<!-- 						<div class="modal-dialog"> -->
-<!-- 							<div class="modal-content"> -->
-<!-- 								<div class="modal-header"> -->
-<!-- 									<h5 class="modal-title" id="exampleModalLabel">펫 라운지 TMI</h5> -->
-<!-- 									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
-<!-- 								</div> -->
-<!-- 								<div class="modal-body"> -->
-<!-- 								<input type="text" name="tmiContent" id="tmiContent"> -->
-<!-- 								</div> -->
-<!-- 								<div class="modal-footer"> -->
-<!-- 									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button> -->
-<!-- 									<button type="button" class="btn btn-primary" id="add-tmi">추가하기</button> -->
-									
-<!-- 									TMI 목록을 검색하는 버튼을 추가합니다. -->
-<!--  									<button type="button" class="btn btn-primary" id="get-tmi-list">TMI 목록 조회</button> -->
-<!-- 					                이 부분에 리스트를 추가할 div -->
-<!-- 					                <div id="tmiListDiv"> -->
-<!-- 					                    <ul id="tmiList"> -->
-<!-- 					                    </ul> -->
-<!-- 					                </div> -->
-									
-<!-- 								</div> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
+					<c:if test="${ sessionScope.uId eq 'admin' }">
+						<button type="button" id="modal-btn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+						TMI 등록
+						</button>
+					</c:if>
+					
+					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">펫 라운지 TMI</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<input type="text" name="tmiContent" id="tmiContent">
+								</div>
+								<div class="modal-footer">
+									<div>
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+										<button type="button" class="btn btn-primary" id="add-tmi">추가하기</button>
+									</div>
+								</div>
+								
+								<!-- 이 부분에 리스트를 추가할 div -->
+				                <div id="tmiListDiv">
+				                    <ul id="tmiList">
+				                    </ul>
+				                </div>
+				                
+							</div>
+						</div>
+					</div>
 					
 	                <!-- 오늘의 tmi -->
 	                <section class="today-tmi">
 		                <div class="tmi-text">
 							<img class="free-img" src="/resources/images/weather/jong.png">
-							<div class="tmi" id="randomTmi"></div>
+							<div class="tmi" id="randomTmi">곧 tmi가 출력됩니다.</div>
 		                </div>
 
 						<div class="img-area">
@@ -206,11 +186,8 @@
 				                        
 				                        	<!-- 날씨 아이콘 동적으로 수정 예정 -->
 				                        	
-				                        	<!-- 로딩 중 아이콘 -->
-<!-- 				                        	<img id="loadingIcon" src="/resources/images/weather/loading.gif" alt="로딩 중 아이콘" style="display: none;"> -->
-				                        	
 				                        	<!-- 날씨 아이콘 -->
-				                        	<img id="weather-icon" src="" alt="날씨 아이콘">
+				                        	<img id="weather-icon" src="../resources/images/weather/loading.gif" alt="날씨 아이콘">
 											<div id="tIcon"></div>
 				                            <span class="tTemp"></span>
 				                        </div>
@@ -247,7 +224,7 @@
 										<c:forEach begin="0" end="5" varStatus="i">
 				                    		<li>
 				                    			<div class="time" id="weather${i.index }"></div>
-				                    			<img class="time-icon" id="time-${i.index }-icon" src="" alt="날씨 아이콘">
+				                    			<img class="time-icon" id="time-${i.index }-icon" src="../resources/images/weather/loading.gif" alt="날씨 아이콘">
 				                    			<span class="time" id="time-today${i.index }"></span>
 				                    		</li>
 										</c:forEach>
@@ -358,7 +335,30 @@
             	  // 버튼을 찾았을 경우 클릭 이벤트를 발생시킴
             	  buttonToClick.click();
             	}
-	        	
+            	// TMI 목록 불러오기
+				$.ajax({
+				    url: "/weather/show.pet", // TMI 목록을 가져올 URL
+				    type: "GET",
+				    success: function (result) {
+				        const tmiList = $("#tmiList"); // UL 엘리먼트 선택
+				        tmiList.empty(); // 기존 목록을 비웁니다.
+
+				        // 서버에서 받은 JSON 응답을 파싱합니다.
+				        const tmiArray = JSON.parse(result);
+
+				        // tmiArray를 순회하며 목록을 업데이트합니다.
+				        tmiArray.forEach(function (tmi) {
+				            const listItem = $("<li>").text(tmi.tmiContent);
+				            const deleteIcon = $("<span id='delete-icon' class='material-symbols-outlined delete-icon' data-tmino="+tmi.tmiNo+" style='color: rgb(255, 112, 112);'>delete_forever</span>");
+			                // 삭제 아이콘을 리스트 아이템에 추가합니다.
+			                listItem.append(deleteIcon);
+				            tmiList.append(listItem);
+				        });
+				    },
+				    error: function () {
+				        alert("시스템 오류");
+				    }
+				});
             });
             
             const selectRegion = document.getElementById("select-region");
@@ -442,6 +442,7 @@
 	            const url = apiUrl + "?q=" +  city + "&appid=" + apiKey + "&units=metric";
 
 	            $.getJSON (url, function(data){
+// 	            	$("#load-icon").attr("src", "");
 	            	const celsius = "℃";
 	            	
 	            	let iconUrl;
@@ -604,6 +605,8 @@
 					$('#tomorrow-temp-min').empty().append(tmoTempMin).append(celsius);		  // 내일 최저 기온(일별)
 					$('#aft-tomorrow-temp-min').empty().append(aftTempMin).append(celsius);	  // 모레 최저 기온(일별)
 					
+					
+					
 					// ********************* 현재 날씨 아이콘 *********************
 					if (rainValue == "0") {
 						// 오전 7시부터 오후 5시까지는 해 이미지
@@ -626,6 +629,8 @@
 							$("#weather-icon").attr("src", "https://bmcdn.nl/assets/weather-icons/v3.0/fill/svg/partly-cloudy-night-rain.svg");
 						}
 					}
+					
+					
 					// ********************* 시간별 날씨 아이콘 *********************
 					let hour = parseInt(checkHour).toString().padStart(2, '0');
 					for(let i = 0; i < 6; i++) {
@@ -668,65 +673,106 @@
 	            
 	            
 	            // tmi 등록
-// 	            const registerButton = $("#add-tmi");
-// 				registerButton.on("click", function() {
-// 	            	var tmiContent = $("#tmiContent").val();
-// 	            	$.ajax({
-// 	            		url : "/weather/insertTmi.pet",
-// 	            		data : { tmiContent : tmiContent },
-// 	            		type : "POST",
-// 	            		success: function(result) {
-// 	                        if (result == "success") {
-// 	                            alert("TMI 등록 성공!");
+	            const registerButton = $("#add-tmi");
+				registerButton.on("click", function() {
+	            	var tmiContent = $("#tmiContent").val();
+	            	$.ajax({
+	            		url : "/weather/insertTmi.pet",
+	            		data : { tmiContent : tmiContent },
+	            		type : "POST",
+	            		success: function(result) {
+	                        if (result == "success") {
+	                            alert("TMI 등록 성공!");
+	                            
+	                            // TMI 등록 성공 시, 목록 새로고침
+	                            refreshTmiList();
+	                            
+	                            $("#tmiContent").val("");
 
-// 	                            // TMI를 등록할 때마다 목록에 추가
-// // 	                            const tmiListDiv = $("#tmiListDiv");
-// // 	                            const listItem = $("<li>").text(tmiContent);
-// // 	                            tmiListDiv.append(listItem);
-// 	                        } else {
-// 	                            alert("TMI 등록 실패!");
-// 	                        }
-// 	                    },
-// 	                    error: function() {
-// 	                        alert("시스템 오류");
-// 	                    }
-// 	            	});
-// 	            });
+	                        } else {
+	                            alert("TMI 등록 실패!");
+	                        }
+	                    },
+	                    error: function() {
+	                        alert("시스템 오류");
+	                    }
+	            	});
+	            });
 				
-				// tmi 리스트 조회
 				// TMI 목록 불러오기
-// 				$.ajax({
-// 				    url: "/weather/show.pet", // TMI 목록을 가져올 URL
-// 				    type: "GET",
-// 				    success: function (result) {
-// 				        // 서버에서 받은 JSON 응답을 파싱합니다.
-// 				        const tmiArray = JSON.parse(result);
+				function refreshTmiList() {
+					
+					$.ajax({
+					    url: "/weather/show.pet", // TMI 목록을 가져올 URL
+					    type: "GET",
+					    success: function (result) {
+					        // 서버에서 받은 JSON 응답을 파싱합니다.
+					        const tmiArray = JSON.parse(result);
+	
+					        const tmiListDiv = $("#tmiList");
+					        tmiListDiv.empty();
+					        // tmiArray를 순회하며 목록을 업데이트합니다.
+					        tmiArray.forEach(function (tmi) {
+					            const listItem = $("<li>").text(tmi.tmiContent);
+					            const deleteIcon = $("<span id='delete-icon' class='material-symbols-outlined delete-icon' data-tmino="+tmi.tmiNo+" style='color: rgb(255, 112, 112);'>delete_forever</span>");
+				                
+				                // 삭제 아이콘을 리스트 아이템에 추가합니다.
+				                listItem.append(deleteIcon);
 
-// 				        const tmiListDiv = $("#tmiListDiv");
+				                // 리스트 아이템을 목록에 추가합니다.
+				                tmiListDiv.append(listItem);
+					        });
+					    },
+					    error: function () {
+					        alert("시스템 오류");
+					    }
+					});
+					
+				}
+				// TMI 삭제하기
+				$(document).on("click", ".delete-icon", function() {
+					const listItem = $(this).closest("li"); // 클릭한 아이콘의 부모 리스트 아이템을 가져옴
+					const tmiNo = $(this).data("tmino"); // TMI 항목의 고유 ID를 데이터 속성으로 가져옴
+					
+					$.ajax({
+						url: "/weather/deleteTmi.pet",
+						type: "POST",
+						data: { tmiNo: tmiNo }, // 삭제할 TMI 항목의 ID를 서버에 전달
+						success: function(result) {
+							if(result === "success") {
+								alert("TMI 항목 삭제 성공!");
+								listItem.remove();	// 항목 삭제
+								refreshTmiList();	// 목록 새로고침
+							} else {
+								alert("TMI 항목 삭제 실패!");
+							}
+						},
+						error: function() {
+							alert("시스템 오류");
+						}
+					});
+				});
+				
+	 		setInterval(function() {
+				$.ajax({
+					url : "/weather/randomTmi.pet",
+					type : "get",
+					dataType : "json",
+					success : function(data) {
+						$("#randomTmi").text(data.tmiContent);
+					},
+					error : function() {
+						alert("관리자에게 문의바랍니다.");
+					}
+				})
+				
+			}, 5000);
 
-// 				        // tmiArray를 순회하며 목록을 업데이트합니다.
-// 				        tmiArray.forEach(function (tmi) {
-// 				            const listItem = $("<li>").text(tmi.tmiContent);
-// 				            tmiListDiv.append(listItem);
-// 				        });
-// 				    },
-// 				    error: function () {
-// 				        alert("시스템 오류");
-// 				    }
-// 				});
 
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
+
+				
 			}
-			
+
         </script>
         <script type="text/javascript" src="../resources/js/weather/tmi.js"></script>
     </body>

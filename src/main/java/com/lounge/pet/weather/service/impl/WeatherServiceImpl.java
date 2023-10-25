@@ -25,11 +25,25 @@ public class WeatherServiceImpl implements WeatherService{
 		return result;
 	}
 
+	// tmi 목록 삭제
+	@Override
+	public int deleteTmiList(Integer tmiNo) {
+		int result = wStore.deleteTmiList(session, tmiNo);
+		return result;
+	}
+
 	// tmi 조회
 	@Override
 	public List<Weather> selectTmiList() {
 		List<Weather> tmiList = wStore.selectTmiList(session);
 		return tmiList;
+	}
+
+	// tmi 랜덤 출력
+	@Override
+	public Weather selectOneByTmi() {
+		Weather tmi = wStore.selectOneByTmi(session);
+		return tmi;
 	}
 
 }
