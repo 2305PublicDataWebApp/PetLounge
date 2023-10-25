@@ -96,7 +96,6 @@
 										<th style="border-bottom: 1px solid #dee2e6;">제목</th>
 										<th style="border-bottom: 1px solid #dee2e6;">내용</th>
 										<th style="border-bottom: 1px solid #dee2e6;">작성일</th>
-<!-- 										<th style="border-bottom: 1px solid #dee2e6;">작성자</th> -->
 									</tr>
 								</thead>
 								<tbody>
@@ -120,7 +119,6 @@
 											<tr onclick="window.location.href='${detailUrl}'" id="tr">
 											<td>${(totalCount - i.index) - ((aInfo.currentPage - 1) * aInfo.recordCountPerPage)}</td> 
 	
-	<%-- 											<td>${sRList.sTitle }</td> --%>
 												<c:set var="inputString" value="${sRList.sTitle}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
 												<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
 												    <c:choose>
@@ -133,7 +131,6 @@
 												        </c:otherwise>
 												    </c:choose>
 												</td>
-	<%-- 											<td>${sRList.sRContent}</td> --%>
 												<c:set var="inputString" value="${sRList.sRContent}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
 												<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
 												    <c:choose>
@@ -147,7 +144,6 @@
 												    </c:choose>
 												</td>
 												<td><fmt:formatDate value="${sRList.sRCreate}" pattern="yyyy.MM.dd" /></td>
-	<%-- 											<td>${sRList.sRCreate}</td> --%>
 											</tr>
 										</c:forEach>		                    		
 	                        		</c:otherwise>

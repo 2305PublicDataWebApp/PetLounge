@@ -338,43 +338,6 @@
         });
 
 
-// $(document).ready(function() {
-//     var prevNickName = $("#uNickName").val(); // 이전 닉네임을 저장
-
-//     $("#join2").on("click", function(event) {
-//         // 이전 닉네임과 현재 입력된 닉네임 비교
-//         if (prevNickName !== $("#uNickName").val()) {
-//             // 닉네임이 변경되었을 때만 ajax 요청 실행
-//             prevNickName = $("#uNickName").val(); // 현재 입력된 닉네임으로 업데이트
-//             // 이후 ajax 요청 및 유효성 검사 코드를 실행
-//             $.ajax({
-//                 url: "/user/checkNick.pet",
-//                 type: "POST",
-//                 data: {
-//                     "uNickName": prevNickName
-//                 },
-//                 async: false,
-//                 success: function(data) {
-//                     // ...
-//                 },
-//                 error: function() {
-//                     // ...
-//                 }
-//             });
-//         }
-
-//         // 이후의 유효성 검사 및 가입 처리 코드를 실행
-//         // ...
-//     });
-// });
-
-
-
-
-
-
-
-
         
       
       	//이메일 중복확인 및 유효성 검사

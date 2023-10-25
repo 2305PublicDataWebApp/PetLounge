@@ -127,7 +127,6 @@
 											</td>
 								          
 								        <td style="text-align: right;"><fmt:formatNumber value="${sList.sHAmount}" pattern="#,###" />원</td>
-<%-- 								        <td>${sList.sHAmount}</td> --%>
 								        <c:set var="formattedDate" value="${fn:split(sList.sHPaydate, ' ')}" />
 										<c:set var="dateParts" value="${fn:split(formattedDate[0], '-')}"/>
 										<td>${dateParts[0]}.${dateParts[1]}.${dateParts[2]}</td>
@@ -138,7 +137,6 @@
 										    <c:otherwise>${sList.sHPaytype}</c:otherwise>
 										  </c:choose>
 										</td>
-<%-- 								        <td>${sList.sHPaytype}</td> --%>
 								    </tr>
 								</c:forEach>
 

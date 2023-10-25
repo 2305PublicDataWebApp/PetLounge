@@ -28,22 +28,6 @@ public interface UserStore {
 	int insertUser(SqlSession session, User user);
 
 	/**
-	 * 로그인
-	 * @param session
-	 * @param user
-	 * @return int
-	 */
-	User userLogin(SqlSession session, User user);
-
-	/**
-	 * 회원정보조회
-	 * @param session
-	 * @param uId
-	 * @return
-	 */
-	User selectOneById(SqlSession session, String uId);
-
-	/**
 	 * 회원정보수정
 	 * @param session
 	 * @param user
@@ -58,6 +42,22 @@ public interface UserStore {
 	 * @return
 	 */
 	int deleteUser(SqlSession session, String sessionId);
+
+	/**
+	 * 로그인
+	 * @param session
+	 * @param user
+	 * @return int
+	 */
+	User userLogin(SqlSession session, User user);
+
+	/**
+	 * 회원정보조회
+	 * @param session
+	 * @param uId
+	 * @return
+	 */
+	User selectOneById(SqlSession session, String uId);
 
 	/**
 	 * 아이디 중복체크

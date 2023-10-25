@@ -205,27 +205,7 @@
 	         });
 	      });
 	        
-// 	        function confirmNumber(){
-// 	           var num1 = $("#user-email-check").val();
-// 	           var num2 = $("#send-certification-num").val();
-// 	           if(num1 == "" || num2 == "") {
-// 	        	   alert("인증번호 전송 버튼을 눌러주세요.");
-// 	           } else {
-// 	        	   if(num1 == num2) {
-// 	                   alert("인증이 완료되었습니다.");
-// 	                   //일치할 때 유효성 체크 여부 확인을 위해서 값을 true로 넣어줌
-// 	                   $("#check-certification-num").attr("value", "true");
-// 	                   $("#user-email-check").attr("readonly", "true");
-// 	                   $("#duplEmailResult").text("인증완료").removeClass("error").addClass("success").css("color", "green");
-// 	                   conNumMsg = "success";
-// 	                } else {
-// 	                   alert("작성한 인증번호가 다릅니다.");
-// 	                   $("#check-certification-num").attr("value", "false");
-// 	                   $("#duplEmailResult").text("인증실패").removeClass("success").addClass("error").css("color", "red");
-// 	                }
-// 	           }
-	           
-// 	        }
+
 	        
 	        
 	        

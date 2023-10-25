@@ -98,15 +98,10 @@
 												<div style="width: 357.5px;">
 													<input type="text" value="${ user.uId }" readonly><br>
 													<br>
-													<!-- <button class="중복확인버튼">중복확인</button><br> -->
-													<!-- <input type="password" placeholder="영문, 숫자 조합 6~12자"><br><br> -->
-													<!-- <input type="password" placeholder="영문, 숫자 조합 6~12자"><br><br> -->
 													<input type="text" value="${ user.uName }" readonly><br>
 													<br> <input type="text" value="${ user.uNickName }" readonly><br>
 													<br>
-													<!-- <button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button><br> -->
 													<input type="email" value="${ user.uEmail }" readonly style="width: 357.5px;"><br><br>
-													<!-- <button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button><br> -->
 													<input type="tel" value="${ user.uPhone }" readonly><br>
 													<br>
 												</div>

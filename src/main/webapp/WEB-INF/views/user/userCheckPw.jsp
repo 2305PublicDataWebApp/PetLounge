@@ -82,8 +82,6 @@
 											<div>
 												<div>
 													<p>아이디</p>
-													<!-- <p style="margin-top: 45px;">비밀번호</p> -->
-													<!-- <p>비밀번호 확인</p> -->
 													<p>비밀번호</p>
 	
 	
@@ -93,10 +91,6 @@
 													<input type="text"  value="${uId }" name="uId"  id="input" readonly><br>
 													<br> <input type="password" name="uPw" placeholder="비밀번호를 입력하세요."
 														id="input"><br> <br>
-	
-													<!-- <button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button><br> -->
-	
-													<!-- <button class="중복확인버튼" style="margin-bottom: 17px;">중복확인</button><br> -->
 	
 												</div>
 											</div>

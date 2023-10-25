@@ -107,7 +107,6 @@
 									<th style="border-bottom: 1px solid #dee2e6;">게시글 제목</th>
 									<th style="border-bottom: 1px solid #dee2e6;">댓글 내용</th>
 									<th style="border-bottom: 1px solid #dee2e6;">작성일</th>
-<!-- 									<th style="border-bottom: 1px solid #dee2e6;">대댓글 여부</th> -->
 								</tr>
 							</thead>
 							<tbody>
@@ -145,7 +144,6 @@
 											        </c:otherwise>
 											    </c:choose>
 											</td>
-<%-- 										<td>${bRList.fTitle}</td> --%>
 											<c:set var="inputString" value="${bRList.fRContent}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
 											<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
 											    <c:choose>

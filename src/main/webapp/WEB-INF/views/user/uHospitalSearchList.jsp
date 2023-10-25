@@ -81,11 +81,6 @@
 											<option value="name" <c:if test="${param.searchCondition == 'name' }">selected</c:if>>병원명</option>
 											<option value="addr" <c:if test="${param.searchCondition == 'addr' }">selected</c:if>>주소</option>
 											<option value="phone" <c:if test="${param.searchCondition == 'phone' }">selected</c:if>>전화번호</option>   
-
-<!-- 											<option value="all">전체</option> -->
-<!-- 											<option value="name">이름</option> -->
-<!-- 											<option value="id">아이디</option> -->
-<!-- 											<option value="nickname">닉네임</option> -->
 										</select> <input class="form-control" type="text" name="searchKeyword"
 											placeholder="검색" value="${paramMap.searchKeyword }"
 											style="width: 73%; height: 28px; text-indent: 5px; border-radius: 20px; margin-left: 10px; border-color: #FFD370; padding-top: 10px; margin-right: 10px;" />

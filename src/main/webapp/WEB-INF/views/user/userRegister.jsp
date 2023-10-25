@@ -261,22 +261,7 @@ section[id^="content"]:target {
 										
 								</div>
 							</div>
-<!-- 							<div class="join2"> -->
-<!-- 								<h5></h5> -->
-<!-- 								<div> -->
-<!-- 									<div> -->
-<!-- 										<p>주소</p> -->
-<!-- 									</div> -->
 
-<!-- 									<div> -->
-<!-- 										<input type="address" id="userZipcode" name="uAddrNo" placeholder="우편번호" -->
-<!-- 											required> -->
-<!-- 										<button id="addrsearch" onclick="sample4_exeDaumPostcode()">주소검색</button> -->
-<!-- 										<br> <input type="address" name="uAddr" id="userAddr" -->
-<!-- 											placeholder="도로명주소" required><br> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 							</div> -->
 
 
 

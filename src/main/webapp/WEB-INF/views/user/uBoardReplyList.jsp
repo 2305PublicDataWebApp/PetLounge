@@ -130,7 +130,6 @@
 											        </c:otherwise>
 											    </c:choose>
 											</td>
-<%-- 										<td>${bRList.fTitle}</td> --%>
 											<c:set var="inputString" value="${bRList.fRContent}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
 											<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
 											    <c:choose>
@@ -143,7 +142,6 @@
 											        </c:otherwise>
 											    </c:choose>
 											</td>
-<%-- 										<td style="text-align: left;">${bRList.fRContent}</td> --%>
 										<td><fmt:formatDate value="${bRList.fRCreate}" pattern="yyyy.MM.dd" /></td>
 									</tr>
 								</c:forEach>

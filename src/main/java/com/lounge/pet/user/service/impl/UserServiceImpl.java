@@ -36,18 +36,6 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User userLogin(User user) {
-		User uOne = uStore.userLogin(session, user);
-		return uOne;
-	}
-
-	@Override
-	public User selectOneById(String uId) {
-		User user = uStore.selectOneById(session, uId);
-		return user;
-	}
-
-	@Override
 	public int UpdateUser(User user) {
 		int result = uStore.updateUser(session, user);
 		return result;
@@ -57,6 +45,18 @@ public class UserServiceImpl implements UserService{
 	public int deleteUser(String sessionId) {
 		int result = uStore.deleteUser(session, sessionId);
 		return result;
+	}
+
+	@Override
+	public User userLogin(User user) {
+		User uOne = uStore.userLogin(session, user);
+		return uOne;
+	}
+
+	@Override
+	public User selectOneById(String uId) {
+		User user = uStore.selectOneById(session, uId);
+		return user;
 	}
 
 	@Override

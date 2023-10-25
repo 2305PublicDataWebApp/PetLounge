@@ -98,7 +98,6 @@
 									<tr>
 										<th style="border-bottom: 1px solid #dee2e6;">No</th>
 										<th style="border-bottom: 1px solid #dee2e6;">제목</th>
-<!-- 										<th style="border-bottom: 1px solid #dee2e6;">작성자</th> -->
 										<th style="border-bottom: 1px solid #dee2e6;">작성일</th>
 										<th style="border-bottom: 1px solid #dee2e6;">조회수</th>
 									</tr>
@@ -110,7 +109,6 @@
 										</c:url>
 										 <tr onclick="window.location.href='${detailUrl}'" id="tr"  style="cursor: pointer;">
 											<td>${(totalCount - i.index) - ((aInfo.currentPage - 1) * aInfo.recordCountPerPage)}</td>
-<%-- 											<td>${bList.fTitle }</td> --%>
 											<c:set var="inputString" value="${bList.fTitle}" /> <!-- sList.sTitle 값을 inputString 변수에 저장 -->
 											<td style="text-align: left; padding-left: 25px;"> <!-- 왼쪽 정렬 스타일을 적용 -->
 											    <c:choose>
@@ -123,10 +121,8 @@
 											        </c:otherwise>
 											    </c:choose>
 											</td>
-<%-- 											<td>${bList.uId}</td> --%>
 											<c:set var="formattedDate" value="${fn:split(bList.fCreate, '-')}" />
 											<td>${formattedDate[0]}.${formattedDate[1]}.${formattedDate[2]}</td>
-<%-- 											<td>${bList.fCreate}</td> --%>
 											<td>${bList.fViewCount}</td>
 										</tr>
 									</c:forEach>
