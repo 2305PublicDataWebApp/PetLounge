@@ -13,17 +13,17 @@ public interface WeatherService {
 	int insertTmi(Weather tmi);
 
 	/**
-	 * tmi 조회
-	 * @return
-	 */
-	List<Weather> selectTmiList();
-
-	/**
 	 * tmi 목록 삭제
 	 * @param tmiNo
 	 * @return
 	 */
 	int deleteTmiList(Integer tmiNo);
+
+	/**
+	 * tmi 조회
+	 * @return
+	 */
+	List<Weather> selectTmiList();
 
 	/**
 	 * tmi 랜덤 출력

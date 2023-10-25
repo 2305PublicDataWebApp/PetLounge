@@ -31,8 +31,41 @@ public class WeatherController {
 	@Autowired
 	private WeatherService wService;
 
+	// tmi 추가
+	@ResponseBody
+	@PostMapping(value="/insertTmi.pet")
+	public String insertTmi(
+			@RequestParam("tmiContent") String tmiContent
+			, HttpSession session
+			, Model model) {
+		Weather tmi = new Weather();
+		tmi.setTmiContent(tmiContent);
+		int result = wService.insertTmi(tmi);
+		if(result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+
+
+	// tmi 목록 삭제
+	@ResponseBody
+	@PostMapping(value="/deleteTmi.pet")
+	public String deleteTmiList(
+			@RequestParam("tmiNo") Integer tmiNo
+			, Model model) {
+		int result = wService.deleteTmiList(tmiNo);
+		if(result > 0) {
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+
+
 	// 산책 날씨 예보 페이지로 이동
-	// 회원DB에서 주소 호출
+	// 회원DB에서 회원 정보 호출
 	@GetMapping("/weather.pet")
 	public String showFaqView(User user
 			, HttpSession sessoin
@@ -58,23 +91,6 @@ public class WeatherController {
 	}
 	
 	
-	// tmi 추가
-	@ResponseBody
-	@PostMapping(value="/insertTmi.pet")
-	public String insertTmi(
-			@RequestParam("tmiContent") String tmiContent
-			, HttpSession session
-			, Model model) {
-		Weather tmi = new Weather();
-		tmi.setTmiContent(tmiContent);
-		int result = wService.insertTmi(tmi);
-		if(result > 0) {
-			return "success";
-		} else {
-			return "fail";
-		}
-	}
-	
 	// tmi 조회
 	@ResponseBody
 	@GetMapping(value="/show.pet")
@@ -84,20 +100,6 @@ public class WeatherController {
 		return gson.toJson(tmiList);
 	}
 	
-	
-	// tmi 목록 삭제
-	@ResponseBody
-	@PostMapping(value="/deleteTmi.pet")
-	public String deleteTmiList(
-			@RequestParam("tmiNo") Integer tmiNo
-			, Model model) {
-		int result = wService.deleteTmiList(tmiNo);
-		if(result > 0) {
-			return "success";
-		} else {
-			return "fail";
-		}
-	}
 	
 	// tmi 랜덤 출력
 	@ResponseBody

@@ -18,18 +18,18 @@ public class WeatherStoreLogic implements WeatherStore{
 		return result;
 	}
 
-	// tmi 조회
-	@Override
-	public List<Weather> selectTmiList(SqlSession session) {
-		List<Weather> tmiList = session.selectList("WeatherMapper.selectTmiList");
-		return tmiList;
-	}
-
 	// tmi 목록 삭제
 	@Override
 	public int deleteTmiList(SqlSession session, Integer tmiNo) {
 		int result = session.update("WeatherMapper.deleteTmiList", tmiNo);
 		return result;
+	}
+
+	// tmi 조회
+	@Override
+	public List<Weather> selectTmiList(SqlSession session) {
+		List<Weather> tmiList = session.selectList("WeatherMapper.selectTmiList");
+		return tmiList;
 	}
 
 	// tmi 랜덤 출력
