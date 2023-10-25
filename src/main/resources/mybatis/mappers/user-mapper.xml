@@ -205,7 +205,7 @@
 		<if test="searchCondition == 'date'">
 			AND F_CREATE LIKE '%'||#{searchKeyword}||'%'
 		</if>
-		ORDER BY F_CREATE DESCS
+		ORDER BY F_CREATE DESC
 	</select>
 
 
