@@ -392,7 +392,7 @@ hr {
 .custom-text-box {
 	background-color: #ffffff;
     width: 99%;
-    height: 300px;
+    height: auto;
     border: 1px solid #ffd370;
     outline: none;
     border-radius: 10px;

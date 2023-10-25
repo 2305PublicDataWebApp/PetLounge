@@ -29,7 +29,8 @@ h1 {
 }
 
 .custom-main {
-	height: 100vh;
+/* 	height: 100vh; */
+	height: auto;
 		}
 
 h2 {
@@ -195,7 +196,8 @@ input[type="text"]::placeholder {
 .custom-text-box {
 	background-color: #ffffff;
     width: 99%;
-    height: 300px;
+/*     height: 300px; */
+    height: auto;
     border: 1px solid #ffd370;
     outline: none;
     border-radius: 10px;
@@ -254,4 +256,8 @@ input[type="text"]::placeholder {
 }
 .menu span:nth-child(1) {
     margin-right: 0px;
+}
+
+.n-content {
+	height: auto;
 }
