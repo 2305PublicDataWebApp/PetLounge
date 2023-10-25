@@ -25,6 +25,7 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		registry.addInterceptor(loginInterceptor).addPathPatterns("/support/payment.pet", "/support/complete.pet");
 		registry.addInterceptor(adminInterceptor).addPathPatterns("/support/insert.pet", "/support/update.pet", "/support/delete.pet");
 		registry.addInterceptor(adminInterceptor).addPathPatterns("/faq/insert.pet", "/faq/moidfy.pet", "/faq/delete.pet");
+		registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/board.pet", "/admin/stats.pet", "/admin/user.pet", "/admin/support.pet");
 		
 		
 		WebMvcConfigurer.super.addInterceptors(registry);

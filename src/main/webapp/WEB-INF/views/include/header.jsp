@@ -200,20 +200,14 @@
 	    document.getElementById('boardLink').classList.remove('active');
 	}
     
-    if (currentPath === '/user/idpwFind.pet') {
+    if (adminPattern.test(currentPath)) {
+    	document.getElementById('adminLink').classList.add('active');
+	} 
+    
+    if (currentPath === '/user/idpwFind.pet' || currentPath === '/user/findId.pet' || currentPath === '/user/findPw.pet') {
         document.getElementById('loginLink').classList.add('active');
         document.getElementById('userLink').classList.remove('active');
     } else if (userPattern.test(currentPath) && currentPath !== '/user/login.pet') {
-//         document.getElementById('loginLink').classList.remove('active');
         document.getElementById('userLink').classList.add('active');
-    } else {
-        document.getElementById('loginLink').classList.remove('active');
-        document.getElementById('userLink').classList.remove('active');
     }
-    
-    if (adminPattern.test(currentPath)) {
-    	document.getElementById('adminLink').classList.add('active');
-	} else {
-	    document.getElementById('adminLink').classList.remove('active');
-	}
 </script>
