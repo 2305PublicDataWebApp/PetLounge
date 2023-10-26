@@ -184,20 +184,22 @@ FAQ 게시판 | 회원과 비회원은 FAQ 목록 페이지에서 조회가 가�
 ### 6. FAQ
 ![03  FAQ 목록 조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/1130a4e5-1662-473f-938a-5833adacf0b5)
 **관리자**
-![04  FAQ 목록 조회 - 관리자](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/cc78c99c-5740-4250-a6b1-47629e350867)
+![04  FAQ 목록 조회 - 관리자](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/b6db8816-c11e-44a6-bef1-34092a46abc5)
+![05  FAQ 등록 - 관리자](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/0bf43b54-101f-40cf-8a86-cbb575734887)
+![06  FAQ 수정 - 관리자](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/b67e3643-da11-443a-b91c-f226d6a6ad13)
 
 ### 7. 자유게시판
-![자유게시판_목록조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/8e64a044-53c7-49da-bde1-2d6d9a5b3d7e)
-![자유게시판_게시글 등록](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/ff3f0ff5-4032-4c1b-9024-709a430518f7)
-![자유게시판_게시글 수정](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/a8bbbf37-bb83-4023-94ac-1cf778ba1fe9)
-![자유게시판_게시글 삭제](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/0484fab6-c5f0-4682-aaf4-2269b3d04780)
-![자유게시판_게시글 상세조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/48c4be87-c6d8-4294-8817-573c175c721f)
+![자유게시판_목록조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/c33a140d-3f7d-49ea-a15b-2a74d652cfd2)
+![자유게시판_게시글 상세조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/5e8c85aa-c5cc-4324-be3a-f81e70696749)
+![자유게시판_게시글 등록](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/5c6178ea-cc2f-4d2f-a792-5ce68a62961f)
+![자유게시판_게시글 수정](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/0a89e3cb-f8cc-4955-9b5b-2316b613db84)
+![자유게시판_게시글 삭제](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/3265c55e-54d0-429c-9712-c9b5c82996c5)
 **게시글 북마크**
-![자유게시판_게시글 북마크](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/1b75fd43-c637-49c9-85a8-9e03575cdc95)
+![자유게시판_게시글 북마크](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/d900ed77-1142-4e95-af9f-e0531ee4e1d5)
 **댓글**
-![자유게시판_댓글 목록조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/e166632c-492d-4889-aafd-3aeb89643e36)
-![자유게시판_댓글 검색](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/9afd4534-d655-4332-941a-13db0577b076)
-![자유게시판_댓글 수정](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/eb6cc213-566f-4ff6-9aba-304caaac233d)
+![자유게시판_댓글 목록조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/922b55fe-0b1d-4a46-bd3e-83b650e59a23)
+![자유게시판_댓글 검색](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/e7e473a6-d209-4122-b4ac-5e01247f22ea)
+![자유게시판_댓글 수정](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/1db37fd3-a0fa-4fa8-a3af-e84007de3832)
 
 ### 8. 로그인
 ![login pet](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/2b20ee8f-da23-459a-835b-17212459a9e0)
