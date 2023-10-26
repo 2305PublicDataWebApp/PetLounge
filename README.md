@@ -1,7 +1,7 @@
 # Pet Lounge
 동물의 숲 - 파이널 프로젝트
 <br>
-![PetLounge_Logo](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/78d79668-a454-472f-b8e5-6c66994b9edb)
+![Pet_Lounge](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/54f5c424-9e7b-455a-a42b-1edbd786a547)
 
 ## 🐾 프로젝트 소개
 펫 라운지(Pet Lounge)는 반려동물을 사랑하는 모두에게 유용한 정보와 커뮤니티를 제공하여, <br>
@@ -18,7 +18,8 @@
 <br><br>
 
 ## 🧑‍🤝‍🧑 멤버구성 및 담당 기능
-![동물의숲_역할분담](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/9ecf6122-9287-4282-b2f1-c08a75cacf1b)
+![동물의숲_역할분담](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/06152fce-8b26-4ed1-b833-3dd477dcb2f5)
+<br>
 ❤ **박예지** https://github.com/Ennakoida <br>
 💛 **박선우** https://github.com/PSW8246082 <br>
 💚 **이지연** https://github.com/Powerbobo <br>
@@ -110,64 +111,62 @@ FAQ 게시판 | 회원과 비회원은 FAQ 목록 페이지에서 조회가 가�
 
 ## 💻 실행화면
 ### 1. 메인화면
-![메인화면](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/f158d115-6b35-436a-a466-7f7f4344c1de)
-![동물병원안내](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/4fff48be-adf8-4d05-8132-a311ee159741)
-![산책날씨예보](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/7913e3c7-980b-407b-b020-711f2b58eae5)
-![펫라운지모금함](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/07e2ed2b-5173-4571-a019-baf12c31c83d)
-![메인화면 메뉴](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/ddf432c6-7d21-4c95-83b6-63ce49d7c84e)
+![메인화면](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/8a2c58e0-561e-4fba-9863-cbfc35e9b7aa)
+![동물병원안내](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/d2e30749-4dbf-4f1b-9fa1-afad5757afbd)
+![산책날씨예보](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/006adee9-4ba5-4c58-aca8-bdc3987897bb)
+![펫라운지모금함](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/69a64d76-7b2d-4b56-bc3a-0d5bbae43f07)
+![메인화면 메뉴](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/b4c7d497-c105-4b22-be0f-a4a403f8b4b2)
 <br><br>
 
 ### 2. 동물 병원 안내
-![동물병원안내](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/de0b7eaf-9ef5-4252-9e9d-c44d72e927fa)
-![동물병원검색](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/16f4106c-0ee1-4312-9eef-89e31f818c69) 
+![동물병원안내](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/81edb17e-e6ac-47e0-b30a-f20b8975b6cc)
+![동물병원검색](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/9577b73a-4f32-4cc7-a63b-f257fbdebef1)
 <br>
 **로그인 시 (즐겨찾기)**
-![동물병원안내-로그인시](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/5da26725-f339-40ac-9e01-b683010a52c1)
+![동물병원안내-로그인시](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/82ed135a-cfaf-4b45-a600-5da0ec63d10a)
 <br>
 **길찾기**
-![동물병원안내-길찾기](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/e1206e18-0b9f-4139-8596-002ffcc9b140)
+![동물병원안내-길찾기](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/d976c76f-705a-4208-9ae8-616bf363b38b)
 <br><br>
 
 ### 2-1. 동물 병원 안내 - 상세 조회
-![동물병원안내-상세조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/cca9fec5-b09b-4591-b7cb-93b03ba7a784)
-![동물병원안내-후기수정](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/38e07f61-ef41-4cf4-8a77-22377125a443)
+![동물병원안내-상세조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/e92cf0cf-1da6-47a1-a1a7-2c452a4348b2)
+![동물병원안내-후기수정](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/51cd00ca-7025-4576-87e7-2138e0a1f2cf)
 <br>
 **로드뷰**
-![동물병원안내-로드뷰](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/21ea4f69-bdbd-4326-8ff8-e2e87438eb0b)
+![동물병원안내-로드뷰](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/0b3ca2f4-27c0-4a98-a15f-0412b5162616)
 
 ### 3. 산책 날씨 예보
-![01  날씨페이지](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/5c2a1981-a01e-45c4-adbb-85e51ada0ae9)
-![02  TMI리스트](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/e181402f-36d2-411f-b653-ad31f60b8fe5)
+![01  날씨페이지](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/59b97fe5-e019-43b5-af49-8353d8d043fc)
+![02  TMI리스트](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/853c383b-ca11-4e3a-a4ef-2973be77c5ac)
 
 ### 4. 펫 라운지 모금함
-![목록 건강 모금률 높은 순](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/81462cf4-a0a5-489c-b714-489b767b3673)
-![후원 등록](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/22cd0834-9457-4b6a-9048-0f23019f6bf3)
-![후원 수정](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/a8d5ec14-12c7-4924-bf1b-527d75b3b9ad)
+![목록 건강 모금률 높은 순](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/f48c8e08-8818-4e9a-9806-c9b29236f5f4)
+![후원 등록](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/53aa33bf-f70a-4aa2-875b-78cdab040f6d)
+![후원 수정](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/59fe2ea2-df03-487b-9250-ca803de65c15)
 
 ### 4-1. 펫 라운지 모금함 - 상세 페이지
-![상세페이지 댓글](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/b8ca618c-cc17-4525-b238-2c71545061c4)
-![상세페이지 후원내역](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/b190c89d-1d08-4d76-b91e-548956f34e7d)
+![상세페이지 댓글](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/d1a83eb4-ce05-44b2-91ba-f8056817ce62)
+![상세페이지 후원내역](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/1e4b69c9-d27a-4cbf-9e69-3b93ecfe43e1)
 **후원 결제**
-![결제 페이지](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/84753b5d-7eb3-40c8-8197-043fa67472ff)
-![결제창 카카오페이](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/63ccac38-9a2e-452b-baad-015bd5999221)
-![결제창 신용카드](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/78c5ce2d-9c0f-452e-9cf5-cba964507888)
-![결제 완료](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/e955fa98-595e-48bb-a5ef-f0154537daf9)
-![후원내역 메일](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/ea6befe7-6c82-405f-a6ed-48f7e546985e)
+![결제 페이지](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/c00322dd-ca65-4713-bd32-beaa3d26acf7)
+![결제창 카카오페이](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/5408379b-faec-4035-b8bb-becfc60f21d7)
+![결제창 신용카드](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/15e5a393-06a8-401c-b35f-59b91058295c)
+![결제 완료](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/1c037bdc-a970-4b7a-b2cf-92630aede024)
+![후원내역 메일](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/131c0dfe-0148-482a-8fcf-bf58a7088118)
 
 ### 5. 공지사항
-![공지사항_목록 조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/4a302584-853f-45d6-bf10-61377a0005b8)
-![공지사항_게시글 검색](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/081a3960-f8ec-4843-9ca6-e4d1c0f11846)
-![공지사항_게시글 등록](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/119ff510-72d7-4d60-b76f-4506b49fa81f)
-![공지사항_게시글 수정](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/d9c89960-1274-43b6-a741-613d28151fa3)
-![공지사항_게시글 삭제](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/59d62098-3ea3-43b2-9bfb-fe90e90679c0)
-![공지사항_게시글 상세조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/25c0b828-b7f4-4d08-a629-334ffb73b75c)
+![공지사항_목록 조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/f7b7a9a0-2955-4e45-965c-17c21608e8a3)
+![공지사항_게시글 검색](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/2ed36bcd-32ac-47b1-8543-81f4c61562ce)
+![공지사항_게시글 등록](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/4f97ced7-8209-4da1-a7e4-06f789ee4af0)
+![공지사항_게시글 수정](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/d39c9073-8d0f-4cef-9aa7-3765b21e6788)
+![공지사항_게시글 삭제](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/dc3b0e35-f28d-43b8-a3f9-e9f7d156d83b)
+![공지사항_게시글 상세조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/29dfffda-2542-48b6-bc5d-0dae80a599de)
 
 ### 6. FAQ
-![03  FAQ 목록 조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/d58f97a1-a739-4ed7-838c-4c33f8a9b9f7)
+![03  FAQ 목록 조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/1130a4e5-1662-473f-938a-5833adacf0b5)
 **관리자**
-![04  FAQ 목록 조회 - 관리자](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/eee2db24-21b0-47aa-beee-b12076b5a9e0)
-![05  FAQ 등록 - 관리자](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/7e81b65d-d489-4c5b-9a93-2b885ca70098)
-![06  FAQ 수정 - 관리자](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/fb51239b-792c-4624-8697-816801c2a95a)
+![04  FAQ 목록 조회 - 관리자](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/cc78c99c-5740-4250-a6b1-47629e350867)
 
 ### 7. 자유게시판
 ![자유게시판_목록조회](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/8e64a044-53c7-49da-bde1-2d6d9a5b3d7e)
@@ -198,7 +197,6 @@ FAQ 게시판 | 회원과 비회원은 FAQ 목록 페이지에서 조회가 가�
 ![idpwFind pet](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/5185f819-691e-4f0c-9cad-e32c4dd54c0e)
 **비밀번호 찾기**
 ![idpwFind pet (1)](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/396b2f8c-e391-4a42-85d3-b02c146d40a1)
-![checkPw pet](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/2a17255f-3d09-4caf-8025-5701419eadc8)
 ![findPw pet](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/9e24a5f8-5451-4dab-a148-af35ad4c5eba)
 
 ### 11. 마이페이지
@@ -216,10 +214,10 @@ FAQ 게시판 | 회원과 비회원은 FAQ 목록 페이지에서 조회가 가�
 ![uHosReview pet](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/0722a3bb-4066-4104-b004-415ed1cba33b)
 
 ### 12. 관리자 페이지
-![관리자페이지_통계관리](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/fd346a5b-c227-499c-85a1-60e712ddb5c8)
-![관리자페이지_회원관리](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/73d35ebb-88a0-455a-b582-f654c04cd6e5)
-![관리자페이지 후원관리](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/65f3a7ae-5726-4cfc-8f85-cd1f34b85eb7)
-![관리자페이지 후원관리 2](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/238dc6f2-34d8-4251-978e-8a8131a58c81)
+![관리자페이지_통계관리](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/b2744a41-494a-4448-8d27-ea6cc3840058)
+![관리자페이지_회원관리](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/683b49c1-d0a5-418f-bb1d-b52859873c1f)
+![관리자페이지 후원관리](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/efd628f9-7b01-4b18-82f3-2f9fc8b3dc13)
+![관리자페이지 후원관리 2](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/4e4abac3-9d69-4c43-8032-3f76022ebc25)
 
 ### 13. 에러 페이지
-![펫라운지-에러페이지](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/f81c103f-e9cb-4899-9413-8213fd70b190)
+![펫라운지-에러페이지](https://github.com/2305PublicDataWebApp/PetLounge/assets/134674257/e2e45566-9692-4e94-9478-acacb692acd9)
